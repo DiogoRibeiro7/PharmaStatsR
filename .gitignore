@@ -1,0 +1,12 @@
+# History files
+.Rhistory
+.RData
+
+# RStudio files
+.Rproj.user
+
+# Build output
+.Rbuildignore
+build/
+PharmaTestR.Rcheck/
+*.tar.gz

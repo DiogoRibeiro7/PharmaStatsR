@@ -1,0 +1,14 @@
+Package: PharmaTestR
+Type: Package
+Title: Statistical Test Suites for the Pharmaceutical Industry
+Version: 0.0.0.9000
+Authors@R: person(given = "Diogo", family = "Ribeiro",
+    email = "diogo.debastos.ribeiro@gmail.com", role = c("aut", "cre"),
+    comment = c(ORCID = "0009-0001-2022-7072",
+                 affiliation = "ESMAD Instituto Politecnico do Porto"))
+Description: Provides basic statistical test utilities relevant to the pharmaceutical industry.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat
+RoxygenNote: 7.2.3
