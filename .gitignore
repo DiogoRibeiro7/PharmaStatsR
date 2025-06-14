@@ -6,7 +6,6 @@
 .Rproj.user
 
 # Build output
-.Rbuildignore
 build/
 PharmaTestSuite.Rcheck/
 *.tar.gz

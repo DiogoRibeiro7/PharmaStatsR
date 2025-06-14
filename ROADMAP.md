@@ -11,7 +11,7 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
   - [x] logistic regression
 - [x] Provide a small example dataset (`pharma_sample`) for demonstration purposes.
 - [x] Write unit tests using **testthat** for each exported function.
-- [ ] Set up continuous integration (GitHub Actions) to run `R CMD check` on push and pull requests.
+- [x] Set up continuous integration (GitHub Actions) to run `R CMD check` on push and pull requests.
 
 ## Medium Term (3-6 months)
 - [ ] Incorporate de-identified pharmaceutical datasets for realistic examples.

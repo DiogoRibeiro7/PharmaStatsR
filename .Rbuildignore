@@ -1,0 +1,5 @@
+^\.github$
+^\.gitignore$
+^NEWS\.md$
+^ROADMAP\.md$
+^tests$
