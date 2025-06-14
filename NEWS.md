@@ -5,3 +5,4 @@
 - Added t-test and chi-square wrappers for basic analyses.
 - Added ANOVA and logistic regression helpers.
 - Included example dataset `pharma_sample`.
+- Added crossover dataset `pharma_crossover` for realistic examples.

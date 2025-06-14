@@ -14,7 +14,7 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
 - [x] Set up continuous integration (GitHub Actions) to run `R CMD check` on push and pull requests.
 
 ## Medium Term (3-6 months)
-- [ ] Incorporate de-identified pharmaceutical datasets for realistic examples.
+- [x] Incorporate de-identified pharmaceutical datasets for realistic examples.
 - [ ] Add regulatory compliance helpers (e.g., checks for ICH guideline adherence).
 - [ ] Expand the test suite with survival analysis functions and repeated measures designs.
 - [ ] Create vignettes that walk through typical pharmaceutical workflows from data cleaning to reporting.

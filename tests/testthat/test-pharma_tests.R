@@ -23,3 +23,8 @@ test_that("pharma_sample is a data.frame", {
   expect_true(is.data.frame(pharma_sample))
   expect_equal(nrow(pharma_sample), 20)
 })
+
+test_that("pharma_crossover is a data.frame", {
+  expect_true(is.data.frame(pharma_crossover))
+  expect_equal(nrow(pharma_crossover), 20)
+})

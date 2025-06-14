@@ -19,8 +19,9 @@ PharmaTestSuite is not yet available on CRAN. You can install the development ve
 library(PharmaTestSuite)
 pharma_greeting()
 
-# built-in dataset
+# built-in datasets
 data(pharma_sample)
+data(pharma_crossover)
 
 pharma_t_test(rnorm(10), rnorm(10))
 pharma_chisq_test(matrix(c(10,5,6,9), nrow=2))
