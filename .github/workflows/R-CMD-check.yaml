@@ -28,9 +28,19 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      MAINTAINER_NAME: "Diogo Ribeiro"
+      MAINTAINER_EMAIL: "diogo.debastos.ribeiro@gmail.com"
+      MAINTAINER_ORCID: "0009-0001-2022-7072"
+      MAINTAINER_AFFILIATION: "ESMAD, Instituto Politecnico do Porto"
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Show maintainer details
+        run: |
+          echo "Maintainer: $MAINTAINER_NAME <$MAINTAINER_EMAIL>"
+          echo "Affiliation: $MAINTAINER_AFFILIATION"
+          echo "ORCID: $MAINTAINER_ORCID"
 
       - uses: r-lib/actions/setup-pandoc@v2
 
