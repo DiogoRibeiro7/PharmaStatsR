@@ -10,5 +10,6 @@ Description: Provides basic statistical test utilities relevant to the pharmaceu
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: survival
 Suggests: testthat
 RoxygenNote: 7.2.3

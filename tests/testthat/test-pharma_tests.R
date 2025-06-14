@@ -28,3 +28,23 @@ test_that("pharma_crossover is a data.frame", {
   expect_true(is.data.frame(pharma_crossover))
   expect_equal(nrow(pharma_crossover), 20)
 })
+
+test_that("pharma_survival_fit returns coxph", {
+  res <- pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
+  expect_s3_class(res, "coxph")
+})
+
+test_that("pharma_repeated_anova returns aov", {
+  res <- pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
+  expect_s3_class(res, "aov")
+})
+
+test_that("pharma_survival is a data.frame", {
+  expect_true(is.data.frame(pharma_survival))
+  expect_equal(nrow(pharma_survival), 30)
+})
+
+test_that("pharma_repeated is a data.frame", {
+  expect_true(is.data.frame(pharma_repeated))
+  expect_equal(nrow(pharma_repeated), 20)
+})

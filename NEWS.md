@@ -6,3 +6,4 @@
 - Added ANOVA and logistic regression helpers.
 - Included example dataset `pharma_sample`.
 - Added crossover dataset `pharma_crossover` for realistic examples.
+- Added survival and repeated measures helpers with corresponding datasets.
