@@ -8,5 +8,5 @@
 # Build output
 .Rbuildignore
 build/
-PharmaTestR.Rcheck/
+PharmaTestSuite.Rcheck/
 *.tar.gz

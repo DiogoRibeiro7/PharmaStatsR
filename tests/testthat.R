@@ -1,4 +1,4 @@
 library(testthat)
-library(PharmaTestR)
+library(PharmaTestSuite)
 
-test_check("PharmaTestR")
+test_check("PharmaTestSuite")

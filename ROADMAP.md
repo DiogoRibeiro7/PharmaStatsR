@@ -1,6 +1,6 @@
 # Roadmap
 
-This file outlines planned milestones for PharmaTestR. The timelines are approximate and may shift as the project evolves.
+This file outlines planned milestones for PharmaTestSuite. The timelines are approximate and may shift as the project evolves.
 
 ## Short Term (0-3 months)
 - Finalize the package skeleton with proper documentation and examples.
