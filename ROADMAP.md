@@ -7,9 +7,9 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
 - [ ] Implement wrappers for common statistical tests:
   - [x] t-test
   - [x] chi-square
-  - [ ] ANOVA
-  - [ ] logistic regression
-- [ ] Provide a small example dataset (`pharma_sample`) for demonstration purposes.
+  - [x] ANOVA
+  - [x] logistic regression
+- [x] Provide a small example dataset (`pharma_sample`) for demonstration purposes.
 - [x] Write unit tests using **testthat** for each exported function.
 - [ ] Set up continuous integration (GitHub Actions) to run `R CMD check` on push and pull requests.
 

@@ -16,8 +16,14 @@ PharmaTestSuite is not yet available on CRAN. You can install the development ve
 ```r
 library(PharmaTestSuite)
 pharma_greeting()
+
+# built-in dataset
+data(pharma_sample)
+
 pharma_t_test(rnorm(10), rnorm(10))
 pharma_chisq_test(matrix(c(10,5,6,9), nrow=2))
+pharma_anova(response ~ treatment, data = pharma_sample)
+pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
 ```
 
 See `ROADMAP.md` for planned features.

@@ -8,3 +8,18 @@ test_that("pharma_chisq_test returns htest", {
   res <- pharma_chisq_test(tbl)
   expect_s3_class(res, "htest")
 })
+
+test_that("pharma_anova returns aov", {
+  res <- pharma_anova(response ~ treatment, data = pharma_sample)
+  expect_s3_class(res, "aov")
+})
+
+test_that("pharma_logistic_regression returns glm", {
+  res <- pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
+  expect_s3_class(res, "glm")
+})
+
+test_that("pharma_sample is a data.frame", {
+  expect_true(is.data.frame(pharma_sample))
+  expect_equal(nrow(pharma_sample), 20)
+})

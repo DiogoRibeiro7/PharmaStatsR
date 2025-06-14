@@ -1,3 +1,6 @@
 export(pharma_greeting)
 export(pharma_t_test)
 export(pharma_chisq_test)
+export(pharma_anova)
+export(pharma_logistic_regression)
+export(pharma_sample)
