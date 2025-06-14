@@ -16,6 +16,8 @@ PharmaTestR is not yet available on CRAN. You can install the development versio
 ```r
 library(PharmaTestR)
 pharma_greeting()
+pharma_t_test(rnorm(10), rnorm(10))
+pharma_chisq_test(matrix(c(10,5,6,9), nrow=2))
 ```
 
 See `ROADMAP.md` for planned features.
