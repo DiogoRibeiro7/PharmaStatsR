@@ -7,9 +7,19 @@
 check_ich_columns(data, required = c("subject", "treatment", "dose"))
 }
 \arguments{
-  \item{data}{A data frame to check.}
-  \item{required}{Character vector of required column names. Defaults to \code{c("subject", "treatment", "dose")}.}
+\item{data}{A data frame to check.}
+
+\item{required}{Character vector of required column names.
+Defaults to `c("subject", "treatment", "dose")`.}
 }
-\value{\code{TRUE} if all required columns are present. Otherwise an error is thrown.}
-\description{This helper verifies that a dataset contains key columns commonly required for regulatory submissions under ICH guidelines.}
-\examples{check_ich_columns(pharma_sample)}
+\value{
+`TRUE` if all required columns are present; otherwise an error is
+  thrown listing the missing columns.
+}
+\description{
+This helper verifies that a dataset contains key columns commonly required for
+regulatory submissions under ICH guidelines.
+}
+\examples{
+check_ich_columns(pharma_sample)
+}

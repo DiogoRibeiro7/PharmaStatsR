@@ -1,6 +1,9 @@
 #' Simulated repeated measures dataset
 #'
-#' Example data for a simple two-condition repeated measures design.
+#' Example data for a simple two-condition repeated measures design used
+#' to showcase repeated measures analysis utilities in PharmaTestSuite.
+#'
+#' @description Simulated repeated measures dataset
 #'
 #' @format A data frame with 20 rows and 3 variables:
 #' \describe{

@@ -7,10 +7,18 @@
 pharma_survival_fit(formula, data, ...)
 }
 \arguments{
-  \item{formula}{Model formula of the form \code{Surv(time, status) ~ predictors}.}
-  \item{data}{Data frame containing the variables in the formula.}
-  \item{...}{Additional arguments passed to \code{coxph}.}
+\item{formula}{A model formula of the form `Surv(time, status) ~ predictors`.}
+
+\item{data}{A data frame containing the variables used in the model.}
+
+\item{...}{Additional arguments passed to `survival::coxph`.}
 }
-\value{A \code{coxph} object.}
-\description{Wrapper around \code{survival::coxph} for time-to-event analysis.}
-\examples{pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)}
+\value{
+A `coxph` object.
+}
+\description{
+Provides a thin wrapper around `survival::coxph` for time-to-event analyses.
+}
+\examples{
+pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
+}

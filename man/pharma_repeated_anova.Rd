@@ -7,10 +7,19 @@
 pharma_repeated_anova(formula, data, ...)
 }
 \arguments{
-  \item{formula}{Model formula specifying within-subject error terms.}
-  \item{data}{Data frame containing the variables used in the model.}
-  \item{...}{Additional arguments passed to \code{aov}.}
+\item{formula}{A model formula specifying within-subject error terms, e.g.,
+`response ~ condition + Error(subject)`.}
+
+\item{data}{A data frame containing the variables in the formula.}
+
+\item{...}{Additional arguments passed to `stats::aov`.}
 }
-\value{An object of class \code{aov}.}
-\description{Wrapper around \code{stats::aov} for repeated measures designs.}
-\examples{pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)}
+\value{
+An `aov` object.
+}
+\description{
+Simplifies calls to `stats::aov` for repeated measures designs.
+}
+\examples{
+pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
+}

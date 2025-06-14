@@ -38,4 +38,7 @@ See `ROADMAP.md` for planned features.
 
 ## Contact
 
-For questions or feedback, please contact Diogo Ribeiro (<diogo.debastos.ribeiro@gmail.com>).
+For questions or feedback, please contact Diogo Ribeiro
+(<diogo.debastos.ribeiro@gmail.com>),
+ESMAD, Instituto Politécnico do Porto.
+ORCID: <https://orcid.org/0009-0001-2022-7072>.
