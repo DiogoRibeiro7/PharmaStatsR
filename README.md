@@ -2,7 +2,7 @@
 
 [![R-CMD-check](https://github.com/DiogoRibeiro7/PharmaTestSuite/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaTestSuite/actions/workflows/R-CMD-check.yaml)
 
-PharmaTestSuite provides statistical test utilities tailored for the pharmaceutical industry. The package aims to simplify the design and execution of common analysis workflows.
+PharmaTestSuite provides statistical test utilities tailored for the pharmaceutical industry. The package aims to simplify the design and execution of common analysis workflows and includes helpers for basic regulatory compliance checks.
 
 ## Installation
 
@@ -31,6 +31,7 @@ pharma_anova(response ~ treatment, data = pharma_sample)
 pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
 pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
 pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
+check_ich_columns(pharma_sample)
 ```
 
 See `ROADMAP.md` for planned features.

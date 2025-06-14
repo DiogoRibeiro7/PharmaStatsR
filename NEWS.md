@@ -7,3 +7,4 @@
 - Included example dataset `pharma_sample`.
 - Added crossover dataset `pharma_crossover` for realistic examples.
 - Added survival and repeated measures helpers with corresponding datasets.
+- Introduced `check_ich_columns` for basic ICH compliance checks.

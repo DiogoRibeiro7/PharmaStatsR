@@ -4,7 +4,7 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
 
 ## Short Term (0-3 months)
 - [x] Finalize the package skeleton with proper documentation and examples.
-- [ ] Implement wrappers for common statistical tests:
+- [x] Implement wrappers for common statistical tests:
   - [x] t-test
   - [x] chi-square
   - [x] ANOVA
@@ -15,7 +15,7 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
 
 ## Medium Term (3-6 months)
 - [x] Incorporate de-identified pharmaceutical datasets for realistic examples.
-- [ ] Add regulatory compliance helpers (e.g., checks for ICH guideline adherence).
+- [x] Add regulatory compliance helpers (e.g., checks for ICH guideline adherence).
 - [x] Expand the test suite with survival analysis functions and repeated measures designs.
 - [ ] Create vignettes that walk through typical pharmaceutical workflows from data cleaning to reporting.
 - [ ] Gather user feedback and refine function interfaces and documentation accordingly.

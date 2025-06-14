@@ -48,3 +48,10 @@ test_that("pharma_repeated is a data.frame", {
   expect_true(is.data.frame(pharma_repeated))
   expect_equal(nrow(pharma_repeated), 20)
 })
+
+test_that("check_ich_columns validates datasets", {
+  expect_true(check_ich_columns(pharma_sample))
+  bad <- pharma_sample
+  names(bad)[1] <- "id"
+  expect_error(check_ich_columns(bad), "Missing required columns")
+})
