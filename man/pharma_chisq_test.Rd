@@ -1,0 +1,13 @@
+\name{pharma_chisq_test}
+\alias{pharma_chisq_test}
+\title{Conduct a chi-square test}
+\usage{pharma_chisq_test(x, ...)}
+\arguments{
+  \item{x}{A matrix or table of counts.}
+  \item{...}{Additional arguments passed to \code{chisq.test}.}
+}
+\value{An object of class \code{htest}.}
+\description{Wrapper for \code{stats::chisq.test} to analyze contingency tables.}
+\examples{
+pharma_chisq_test(matrix(c(12,5,7,9), nrow = 2))
+}

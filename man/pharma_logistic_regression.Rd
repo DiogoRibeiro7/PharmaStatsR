@@ -1,0 +1,12 @@
+\name{pharma_logistic_regression}
+\alias{pharma_logistic_regression}
+\title{Fit a logistic regression model}
+\usage{pharma_logistic_regression(formula, data, ...)}
+\arguments{
+  \item{formula}{Model formula.}
+  \item{data}{Data frame with variables.}
+  \item{...}{Additional arguments passed to \code{glm}.}
+}
+\value{A \code{glm} object.}
+\description{Convenience wrapper around \code{stats::glm} with binomial family.}
+\examples{pharma_logistic_regression(outcome ~ dose, data = pharma_sample)}
