@@ -1,5 +1,7 @@
 citHeader("To cite the PharmaTestSuite package in publications use:")
 
+meta <- utils::packageDescription("PharmaTestSuite")
+
 bibentry(
   "Manual",
   title = "PharmaTestSuite: Statistical Test Suites for the Pharmaceutical Industry",

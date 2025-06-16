@@ -1,0 +1,26 @@
+---
+title: "Pharmaceutical Workflow Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Pharmaceutical Workflow Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette illustrates a typical workflow in pharmaceutical data analysis using functions from **PharmaTestSuite**.
+
+```{r setup, include=FALSE}
+library(PharmaTestSuite)
+```
+
+## Data Cleaning
+
+Use the provided datasets to demonstrate cleaning steps.
+
+## Statistical Analysis
+
+Examples of t-tests, ANOVA, and logistic regression.
+
+## Reporting
+
+Summarize results and generate basic plots.

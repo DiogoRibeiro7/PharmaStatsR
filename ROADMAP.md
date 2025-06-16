@@ -17,7 +17,7 @@ This file outlines planned milestones for PharmaTestSuite. The timelines are app
 - [x] Incorporate de-identified pharmaceutical datasets for realistic examples.
 - [x] Add regulatory compliance helpers (e.g., checks for ICH guideline adherence).
 - [x] Expand the test suite with survival analysis functions and repeated measures designs.
-- [ ] Create vignettes that walk through typical pharmaceutical workflows from data cleaning to reporting.
+- [x] Create vignettes that walk through typical pharmaceutical workflows from data cleaning to reporting.
 - [ ] Gather user feedback and refine function interfaces and documentation accordingly.
 
 ## Long Term (6-12 months)
