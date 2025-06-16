@@ -17,6 +17,7 @@ test_that("pharma_anova returns aov", {
 test_that("pharma_logistic_regression returns glm", {
   res <- pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
   expect_s3_class(res, "glm")
+  expect_equal(family(res)$family, "binomial")
 })
 
 test_that("pharma_sample is a data.frame", {

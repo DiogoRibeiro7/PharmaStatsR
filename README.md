@@ -33,6 +33,7 @@ pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_surv
 pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
 check_ich_columns(pharma_sample)
 ```
+**Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
 See `ROADMAP.md` for planned features.
 
