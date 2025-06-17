@@ -33,7 +33,7 @@
   - Group-sequential boundaries (O’Brien–Fleming, Pocock)  
   - Sample-size re-estimation  
   - Bayesian adaptive stopping rules  
-- [ ] **Design of experiments**  
+- [x] **Design of experiments**  
   - Factorial ANOVA, response-surface methods  
   - Crossover and Latin-square analyses  
 - [ ] **Missing data & imputation**  

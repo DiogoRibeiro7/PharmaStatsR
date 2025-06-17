@@ -60,3 +60,10 @@
 - Added Bayesian adaptive stopping helper `pharma_bayes_stopping`.
 - README now demonstrates these adaptive design functions.
 - Roadmap item for adaptive and sequential designs marked complete.
+
+## 0.1.10
+- Added design of experiments helpers `pharma_factorial_anova`, `pharma_crossover_anova`,
+  `pharma_latin_square_anova`, and `pharma_response_surface`.
+- Included a new dataset `pharma_latin_square`.
+- README showcases these functions with example calls.
+- Roadmap item for design of experiments marked complete.
