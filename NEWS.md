@@ -22,3 +22,7 @@
 ## 0.1.2
 - Added `pharma_parametric_survival()` wrapper for parametric survival models.
 - Updated tests and README with examples for the new function.
+
+## 0.1.3
+- Added `pharma_lmm()` wrapper around `lme4::lmer` for linear mixed-effects models.
+- Marked the roadmap item for linear mixed models as complete.

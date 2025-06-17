@@ -72,3 +72,8 @@ test_that("pharma_parametric_survival returns survreg", {
   expect_s3_class(res, "survreg")
   expect_equal(res$dist, "weibull")
 })
+
+test_that("pharma_lmm returns lmerMod", {
+  res <- pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
+  expect_s4_class(res, "lmerMod")
+})

@@ -17,7 +17,7 @@
   - Parametric survival (Weibull, exponential, Gompertz)
   - Competing-risks and landmark analysis
 - [ ] **Mixed & repeated measures**  
-  - Linear mixed models (`lme4`)  
+  - [x] Linear mixed models (`lme4`)
   - Generalized estimating equations (GEE)  
   - Repeated-measures ANOVA / MANOVA  
 - [ ] **Bayesian statistics**  

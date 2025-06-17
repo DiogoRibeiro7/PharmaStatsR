@@ -12,3 +12,4 @@ export(pharma_t_test)
 
 export(pharma_kaplan_meier)
 export(pharma_parametric_survival)
+export(pharma_lmm)

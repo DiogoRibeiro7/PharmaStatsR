@@ -34,6 +34,7 @@ pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
                           data = pharma_survival,
                           dist = "weibull")
 pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
+pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
 check_ich_columns(pharma_sample)
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
