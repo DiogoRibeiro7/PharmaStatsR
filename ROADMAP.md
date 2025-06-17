@@ -14,7 +14,7 @@
 - [ ] **Survival analysis**  
   - [x] Kaplan–Meier with log-rank tests  
   - Cox proportional hazards (time-varying covariates)  
-  - Parametric survival (Weibull, exponential, Gompertz)  
+  - [x] Parametric survival (Weibull, exponential, Gompertz)
   - Competing-risks and landmark analysis  
 - [ ] **Mixed & repeated measures**  
   - Linear mixed models (`lme4`)  

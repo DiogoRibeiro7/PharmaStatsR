@@ -30,6 +30,9 @@ pharma_chisq_test(matrix(c(10,5,6,9), nrow=2))
 pharma_anova(response ~ treatment, data = pharma_sample)
 pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
 pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
+pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
+                          data = pharma_survival,
+                          dist = "weibull")
 pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
 check_ich_columns(pharma_sample)
 ```

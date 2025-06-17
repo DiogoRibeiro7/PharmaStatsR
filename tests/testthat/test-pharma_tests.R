@@ -62,3 +62,13 @@ test_that("pharma_kaplan_meier returns survfit and survdiff", {
   expect_s3_class(res$fit, "survfit")
   expect_s3_class(res$test, "survdiff")
 })
+
+test_that("pharma_parametric_survival returns survreg", {
+  res <- pharma_parametric_survival(
+    survival::Surv(time, status) ~ treatment,
+    data = pharma_survival,
+    dist = "weibull"
+  )
+  expect_s3_class(res, "survreg")
+  expect_equal(res$dist, "weibull")
+})

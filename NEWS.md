@@ -18,3 +18,7 @@
 
 ## 0.1.1
 - Added Kaplan-Meier helper with log-rank test.
+
+## 0.1.2
+- Added `pharma_parametric_survival()` wrapper for parametric survival models.
+- Updated tests and README with examples for the new function.

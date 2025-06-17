@@ -11,3 +11,4 @@ export(pharma_survival_fit)
 export(pharma_t_test)
 
 export(pharma_kaplan_meier)
+export(pharma_parametric_survival)
