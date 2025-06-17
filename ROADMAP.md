@@ -11,34 +11,34 @@
 - [x] GitHub Actions: R CMD check, code coverage, linting.
 
 ## ⬜ Medium Term (3–6 months)
-- [ ] **Survival analysis**
+- [x] **Survival analysis**
   - [x] Kaplan–Meier with log-rank tests
   - [x] Cox proportional hazards (time-varying covariates)
   - [x] Parametric survival (Weibull, exponential, Gompertz)
   - [x] Competing-risks and landmark analysis
-- [ ] **Mixed & repeated measures**  
+- [x] **Mixed & repeated measures**
   - [x] Linear mixed models (`lme4`)
   - [x] Generalized estimating equations (GEE)
   - [x] Repeated-measures ANOVA / MANOVA
-- [x] **Bayesian statistics**  
-  - MCMC via `brms` / `rstanarm`  
-  - Posterior summaries, credible intervals, posterior predictive checks  
+- [x] **Bayesian statistics**
+  - [x] MCMC via `brms` / `rstanarm`
+  - [x] Posterior summaries, credible intervals, posterior predictive checks
 - [x] **Meta-analysis**
-  - Fixed- and random-effects models (`metafor`)
-  - Forest plots, funnel plots, meta-regression
+  - [x] Fixed- and random-effects models (`metafor`)
+  - [x] Forest plots, funnel plots, meta-regression
 - [x] **Dose–response & PK/PD**
-  - Emax, sigmoid Emax models
-  - Nonlinear regression (`nls`), nlme
-- [x] **Adaptive & sequential designs**  
-  - Group-sequential boundaries (O’Brien–Fleming, Pocock)  
-  - Sample-size re-estimation  
-  - Bayesian adaptive stopping rules  
-- [x] **Design of experiments**  
-  - Factorial ANOVA, response-surface methods  
-  - Crossover and Latin-square analyses  
+  - [x] Emax, sigmoid Emax models
+  - [x] Nonlinear regression (`nls`), nlme
+- [x] **Adaptive & sequential designs**
+  - [x] Group-sequential boundaries (O’Brien–Fleming, Pocock)
+  - [x] Sample-size re-estimation
+  - [x] Bayesian adaptive stopping rules
+- [x] **Design of experiments**
+  - [x] Factorial ANOVA, response-surface methods
+  - [x] Crossover and Latin-square analyses
 - [x] **Missing data & imputation**
-  - Multiple imputation (`mice`)
-  - Sensitivity analyses
+  - [x] Multiple imputation (`mice`)
+  - [x] Sensitivity analyses
 
 ## ⬜ Long Term (6–12 months)
 - [ ] **Trial simulation engine**  
