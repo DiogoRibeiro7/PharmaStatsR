@@ -12,7 +12,7 @@
 #'   \item{response}{Numeric response}
 #' }
 #' @source Simulated data.
-"pharma_repeated" <- data.frame(
+pharma_repeated <- data.frame(
   subject = rep(1:10, each = 2),
   condition = rep(c("A","B"), times = 10),
   response = c(5.1,5.5,5.0,5.4,4.9,5.3,5.2,5.6,5.1,5.5,
