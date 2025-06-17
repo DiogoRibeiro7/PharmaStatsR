@@ -21,6 +21,11 @@ Use the provided datasets to demonstrate cleaning steps.
 
 Examples of t-tests, ANOVA, and logistic regression.
 
+```{r bayes-example, eval=FALSE}
+fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500, chains = 2)
+pharma_posterior_summary(fit)
+```
+
 ## Reporting
 
 Summarize results and generate basic plots.

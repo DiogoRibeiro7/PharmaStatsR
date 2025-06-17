@@ -20,7 +20,7 @@
   - [x] Linear mixed models (`lme4`)
   - [x] Generalized estimating equations (GEE)
   - [x] Repeated-measures ANOVA / MANOVA
-- [ ] **Bayesian statistics**  
+- [x] **Bayesian statistics**  
   - MCMC via `brms` / `rstanarm`  
   - Posterior summaries, credible intervals, posterior predictive checks  
 - [ ] **Meta-analysis**  

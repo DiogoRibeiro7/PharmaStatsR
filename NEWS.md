@@ -36,3 +36,9 @@
 ## 0.1.5
 - Added `pharma_gee()` wrapper for generalized estimating equations.
 - Marked roadmap items for GEE and repeated measures as complete.
+
+## 0.1.6
+- Added Bayesian wrappers using `rstanarm` including `pharma_bayesian_glm`,
+  `pharma_posterior_summary`, and `pharma_pp_check`.
+- README shows examples of Bayesian analysis.
+- Roadmap item for Bayesian statistics marked complete.
