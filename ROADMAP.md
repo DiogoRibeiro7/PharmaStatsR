@@ -11,11 +11,11 @@
 - [x] GitHub Actions: R CMD check, code coverage, linting.
 
 ## ⬜ Medium Term (3–6 months)
-- [ ] **Survival analysis**  
-  - [x] Kaplan–Meier with log-rank tests  
-  - Cox proportional hazards (time-varying covariates)  
-  - [x] Parametric survival (Weibull, exponential, Gompertz)
-  - Competing-risks and landmark analysis  
+- [ ] **Survival analysis**
+  - Kaplan–Meier with log-rank tests
+  - Cox proportional hazards (time-varying covariates)
+  - Parametric survival (Weibull, exponential, Gompertz)
+  - Competing-risks and landmark analysis
 - [ ] **Mixed & repeated measures**  
   - Linear mixed models (`lme4`)  
   - Generalized estimating equations (GEE)  
