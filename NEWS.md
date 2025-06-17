@@ -77,3 +77,8 @@
 - Added `pharma_trial_simulate()` to generate simple clinical trial simulations
   with randomization, dropout, and event times.
 - Roadmap item for the trial simulation engine marked complete.
+
+## 0.1.13
+- Added wild and block bootstrap helpers for advanced resampling.
+- README now demonstrates usage of the new bootstrap functions.
+- Roadmap item for advanced resampling marked complete.

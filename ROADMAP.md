@@ -46,9 +46,9 @@
   - Simulate end-to-end trials under various randomization, dropout, event scenarios
 - [ ] **High-performance & parallel**  
   - Parallel backends (`future`), GPU-accelerated bootstrap/simulation  
-- [ ] **Advanced resampling**  
-  - Wild bootstrap, block bootstrap for clustered data  
-  - Permutation-based F-tests in complex designs  
+- [x] **Advanced resampling**
+  - Wild bootstrap, block bootstrap for clustered data
+  - Permutation-based F-tests in complex designs
 - [ ] **Non-inferiority & equivalence testing**  
   - Two one-sided tests (TOST) for bioequivalence  
   - Rate/risk difference and ratio metrics  

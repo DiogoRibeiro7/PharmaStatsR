@@ -213,3 +213,15 @@ test_that("pharma_sensitivity_analysis returns pool", {
   res <- pharma_sensitivity_analysis(imp, response ~ treatment)
   expect_s3_class(res, "mipo")
 })
+
+test_that("pharma_wild_bootstrap returns matrix", {
+  res <- pharma_wild_bootstrap(response ~ treatment, data = pharma_sample, R = 5)
+  expect_true(is.matrix(res))
+  expect_equal(nrow(res), 5)
+})
+
+test_that("pharma_block_bootstrap returns list", {
+  stat <- function(d) mean(d$response)
+  res <- pharma_block_bootstrap(pharma_sample, "subject", stat, R = 5)
+  expect_length(res, 5)
+})

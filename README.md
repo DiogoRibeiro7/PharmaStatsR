@@ -70,6 +70,9 @@ if (requireNamespace("mice", quietly = TRUE)) {
   imp <- pharma_mice_impute(dat_na, m = 2, maxit = 1)
   pharma_sensitivity_analysis(imp, response ~ treatment)
 }
+wild <- pharma_wild_bootstrap(response ~ treatment, data = pharma_sample, R = 10)
+block_stat <- function(d) mean(d$response)
+pharma_block_bootstrap(pharma_sample, "subject", block_stat, R = 10)
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
