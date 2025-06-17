@@ -114,3 +114,21 @@ test_that("pharma_bayesian_glm returns stanreg", {
   summ <- pharma_posterior_summary(fit)
   expect_s3_class(summ, "summary.stanreg")
 })
+
+test_that("pharma_meta_analysis returns rma", {
+  skip_if_not_installed("metafor")
+  res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
+  expect_s3_class(res, "rma")
+})
+
+test_that("pharma_forest_plot runs", {
+  skip_if_not_installed("metafor")
+  res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
+  expect_silent(pharma_forest_plot(res))
+})
+
+test_that("pharma_funnel_plot runs", {
+  skip_if_not_installed("metafor")
+  res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
+  expect_silent(pharma_funnel_plot(res))
+})

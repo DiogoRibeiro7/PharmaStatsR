@@ -23,9 +23,9 @@
 - [x] **Bayesian statistics**  
   - MCMC via `brms` / `rstanarm`  
   - Posterior summaries, credible intervals, posterior predictive checks  
-- [ ] **Meta-analysis**  
-  - Fixed- and random-effects models (`metafor`)  
-  - Forest plots, funnel plots, meta-regression  
+- [x] **Meta-analysis**
+  - Fixed- and random-effects models (`metafor`)
+  - Forest plots, funnel plots, meta-regression
 - [ ] **Dose–response & PK/PD**  
   - Emax, sigmoid Emax models  
   - Nonlinear regression (`nls`), nlme  

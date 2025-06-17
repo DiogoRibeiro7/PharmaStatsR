@@ -21,3 +21,8 @@ export(pharma_landmark_analysis)
 export(pharma_bayesian_glm)
 export(pharma_posterior_summary)
 export(pharma_pp_check)
+
+export(pharma_meta_analysis)
+export(pharma_forest_plot)
+export(pharma_funnel_plot)
+export(pharma_meta_regression)

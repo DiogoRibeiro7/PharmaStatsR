@@ -42,3 +42,9 @@
   `pharma_posterior_summary`, and `pharma_pp_check`.
 - README shows examples of Bayesian analysis.
 - Roadmap item for Bayesian statistics marked complete.
+
+## 0.1.7
+- Added meta-analysis helpers using `metafor` including `pharma_meta_analysis`,
+  `pharma_meta_regression`, `pharma_forest_plot`, and `pharma_funnel_plot`.
+- README demonstrates a basic meta-analysis call.
+- Roadmap item for meta-analysis marked complete.
