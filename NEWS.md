@@ -72,3 +72,8 @@
 - Added `pharma_mice_impute()` wrapper for multiple imputation using the `mice` package.
 - Added `pharma_sensitivity_analysis()` for pooling models across imputations.
 - Updated README with examples and marked missing-data tasks complete in the roadmap.
+
+## 0.1.12
+- Added `pharma_trial_simulate()` to generate simple clinical trial simulations
+  with randomization, dropout, and event times.
+- Roadmap item for the trial simulation engine marked complete.

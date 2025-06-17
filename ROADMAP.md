@@ -41,8 +41,8 @@
   - [x] Sensitivity analyses
 
 ## ⬜ Long Term (6–12 months)
-- [ ] **Trial simulation engine**  
-  - Simulate end-to-end trials under various randomization, dropout, event scenarios  
+- [x] **Trial simulation engine**
+  - Simulate end-to-end trials under various randomization, dropout, event scenarios
 - [ ] **High-performance & parallel**  
   - Parallel backends (`future`), GPU-accelerated bootstrap/simulation  
 - [ ] **Advanced resampling**  

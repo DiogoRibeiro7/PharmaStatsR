@@ -198,6 +198,13 @@ test_that("pharma_mice_impute returns mids", {
   expect_s3_class(imp, "mids")
 })
 
+test_that("pharma_trial_simulate returns data.frame", {
+  sim <- pharma_trial_simulate(30)
+  expect_true(is.data.frame(sim))
+  expect_equal(ncol(sim), 5)
+  expect_true(all(c("id", "treatment", "time", "status", "dropout") %in% names(sim)))
+})
+
 test_that("pharma_sensitivity_analysis returns pool", {
   skip_if_not_installed("mice")
   dat <- pharma_sample

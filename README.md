@@ -50,6 +50,8 @@ pharma_factorial_anova(response ~ treatment * dose, data = pharma_sample)
 pharma_crossover_anova(response ~ treatment + period + subject, data = pharma_crossover)
 pharma_latin_square_anova(response ~ treatment + row + column, data = pharma_latin_square)
 pharma_response_surface(pharma_dose_response$dose, pharma_dose_response$dose, pharma_dose_response$response)
+sim <- pharma_trial_simulate(100)
+head(sim)
 meta_res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1),
                                 vi = c(0.05, 0.04, 0.06))
 pharma_forest_plot(meta_res)
