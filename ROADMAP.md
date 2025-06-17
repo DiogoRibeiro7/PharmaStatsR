@@ -12,7 +12,7 @@
 
 ## ⬜ Medium Term (3–6 months)
 - [ ] **Survival analysis**  
-  - Kaplan–Meier with log-rank tests  
+  - [x] Kaplan–Meier with log-rank tests  
   - Cox proportional hazards (time-varying covariates)  
   - Parametric survival (Weibull, exponential, Gompertz)  
   - Competing-risks and landmark analysis  

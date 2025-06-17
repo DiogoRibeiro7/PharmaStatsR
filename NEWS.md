@@ -15,3 +15,6 @@
 - Logistic regression tests now verify the binomial family.
 - Removed quotes from dataset objects for consistent style.
 - Expanded roadmap and created a workflow vignette.
+
+## 0.1.1
+- Added Kaplan-Meier helper with log-rank test.

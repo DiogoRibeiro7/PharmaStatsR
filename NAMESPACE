@@ -9,3 +9,5 @@ export(pharma_repeated_anova)
 export(pharma_sample)
 export(pharma_survival_fit)
 export(pharma_t_test)
+
+export(pharma_kaplan_meier)

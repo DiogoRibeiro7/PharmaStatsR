@@ -56,3 +56,9 @@ test_that("check_ich_columns validates datasets", {
   names(bad)[1] <- "id"
   expect_error(check_ich_columns(bad), "Missing required columns")
 })
+
+test_that("pharma_kaplan_meier returns survfit and survdiff", {
+  res <- pharma_kaplan_meier(survival::Surv(time, status) ~ treatment, data = pharma_survival)
+  expect_s3_class(res$fit, "survfit")
+  expect_s3_class(res$test, "survdiff")
+})
