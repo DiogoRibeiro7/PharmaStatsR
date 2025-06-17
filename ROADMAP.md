@@ -13,9 +13,9 @@
 ## ⬜ Medium Term (3–6 months)
 - [ ] **Survival analysis**
   - [x] Kaplan–Meier with log-rank tests
-  - [ ] Cox proportional hazards (time-varying covariates)
+  - [x] Cox proportional hazards (time-varying covariates)
   - [x] Parametric survival (Weibull, exponential, Gompertz)
-  - [ ] Competing-risks and landmark analysis
+  - [x] Competing-risks and landmark analysis
 - [ ] **Mixed & repeated measures**  
   - [x] Linear mixed models (`lme4`)
   - Generalized estimating equations (GEE)  
