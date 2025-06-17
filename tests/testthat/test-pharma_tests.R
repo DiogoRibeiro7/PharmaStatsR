@@ -77,3 +77,27 @@ test_that("pharma_lmm returns lmerMod", {
   res <- pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
   expect_s4_class(res, "lmerMod")
 })
+
+test_that("pharma_cox_timevarying returns coxph", {
+  dat <- data.frame(start = c(0, 5, 0, 7),
+                    stop = c(5, 10, 7, 12),
+                    status = c(0, 1, 0, 1),
+                    treatment = c(0, 0, 1, 1))
+  res <- pharma_cox_timevarying(Surv(start, stop, status) ~ treatment, data = dat)
+  expect_s3_class(res, "coxph")
+})
+
+test_that("pharma_competing_risks returns crr", {
+  dat <- pharma_survival
+  res <- pharma_competing_risks(Surv(time, status) ~ treatment, data = dat)
+  expect_s3_class(res, "crr")
+})
+
+test_that("pharma_landmark_analysis returns coxph", {
+  res <- pharma_landmark_analysis(
+    Surv(time, status) ~ treatment,
+    data = pharma_survival,
+    landmark = 5
+  )
+  expect_s3_class(res, "coxph")
+})

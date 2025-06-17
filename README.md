@@ -33,6 +33,13 @@ pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_surv
 pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
                           data = pharma_survival,
                           dist = "weibull")
+pharma_cox_timevarying(Surv(start, stop, status) ~ treatment,
+                       data = pharma_survival)
+pharma_competing_risks(Surv(time, status) ~ treatment,
+                       data = pharma_survival)
+pharma_landmark_analysis(Surv(time, status) ~ treatment,
+                         data = pharma_survival,
+                         landmark = 12)
 pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
 pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
 check_ich_columns(pharma_sample)

@@ -1,0 +1,14 @@
+\name{pharma_cox_timevarying}
+\alias{pharma_cox_timevarying}
+\title{Fit a Cox model with time-varying covariates}
+\usage{pharma_cox_timevarying(formula, data, ...)}
+\arguments{
+  \item{formula}{A \code{Surv(start, stop, status) ~ predictors} formula.}
+  \item{data}{Data frame with model variables.}
+  \item{...}{Additional arguments passed to \code{coxph}.}
+}
+\value{A \code{coxph} object.}
+\description{Wrapper around \code{survival::coxph} for counting-process data.}
+\examples{
+# pharma_cox_timevarying(Surv(start, stop, status) ~ x, df)
+}

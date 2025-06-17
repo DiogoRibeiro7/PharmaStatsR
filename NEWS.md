@@ -26,3 +26,9 @@
 ## 0.1.3
 - Added `pharma_lmm()` wrapper around `lme4::lmer` for linear mixed-effects models.
 - Marked the roadmap item for linear mixed models as complete.
+
+## 0.1.4
+- Added `pharma_cox_timevarying()` for Cox models with time-varying covariates.
+- Added `pharma_competing_risks()` wrapper for Fine-Gray models.
+- Added `pharma_landmark_analysis()` for simple landmark analyses.
+- Updated README examples and roadmap accordingly.

@@ -13,3 +13,7 @@ export(pharma_t_test)
 export(pharma_kaplan_meier)
 export(pharma_parametric_survival)
 export(pharma_lmm)
+
+export(pharma_cox_timevarying)
+export(pharma_competing_risks)
+export(pharma_landmark_analysis)
