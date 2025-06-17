@@ -32,3 +32,7 @@
 - Added `pharma_competing_risks()` wrapper for Fine-Gray models.
 - Added `pharma_landmark_analysis()` for simple landmark analyses.
 - Updated README examples and roadmap accordingly.
+
+## 0.1.5
+- Added `pharma_gee()` wrapper for generalized estimating equations.
+- Marked roadmap items for GEE and repeated measures as complete.

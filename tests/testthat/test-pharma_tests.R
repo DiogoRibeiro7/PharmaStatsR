@@ -78,6 +78,11 @@ test_that("pharma_lmm returns lmerMod", {
   expect_s4_class(res, "lmerMod")
 })
 
+test_that("pharma_gee returns geeglm", {
+  res <- pharma_gee(response ~ condition, id = subject, data = pharma_repeated)
+  expect_s3_class(res, "geeglm")
+})
+
 test_that("pharma_cox_timevarying returns coxph", {
   dat <- data.frame(start = c(0, 5, 0, 7),
                     stop = c(5, 10, 7, 12),

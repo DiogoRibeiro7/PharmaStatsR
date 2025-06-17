@@ -18,8 +18,8 @@
   - [x] Competing-risks and landmark analysis
 - [ ] **Mixed & repeated measures**  
   - [x] Linear mixed models (`lme4`)
-  - Generalized estimating equations (GEE)  
-  - Repeated-measures ANOVA / MANOVA  
+  - [x] Generalized estimating equations (GEE)
+  - [x] Repeated-measures ANOVA / MANOVA
 - [ ] **Bayesian statistics**  
   - MCMC via `brms` / `rstanarm`  
   - Posterior summaries, credible intervals, posterior predictive checks  
