@@ -6,7 +6,7 @@ bibentry(
   "Manual",
   title = "PharmaTestSuite: Statistical Test Suites for the Pharmaceutical Industry",
   author = person(given = "Diogo", family = "Ribeiro"),
-  year = "2024",
+  year = "2025",
   note = paste("R package version", meta$Version),
   url = "https://github.com/DiogoRibeiro7/PharmaTestSuite"
 )
