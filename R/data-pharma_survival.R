@@ -13,7 +13,7 @@
 #'   \item{treatment}{Treatment group}
 #' }
 #' @source Simulated data.
-"pharma_survival" <- data.frame(
+pharma_survival <- data.frame(
   subject = 1:30,
   time = c(5,6,4,3,10,9,8,6,7,5,
            12,11,13,10,9,8,14,13,12,11,

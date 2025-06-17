@@ -1,15 +1,20 @@
 Package: PharmaTestSuite
 Type: Package
-Title: Statistical Test Suites for the Pharmaceutical Industry
-Version: 0.0.0.9000
+Title: Statistical Test Suites and Workflows for Pharmaceutical Research
+Version: 0.1.15
 Authors@R: person(given = "Diogo", family = "Ribeiro",
     email = "diogo.debastos.ribeiro@gmail.com", role = c("aut", "cre"),
     comment = c(ORCID = "0009-0001-2022-7072",
                  affiliation = "ESMAD Instituto Politecnico do Porto"))
-Description: Provides basic statistical test utilities relevant to the pharmaceutical industry.
+Description: Provides statistical wrappers, datasets, and example workflows to
+    demonstrate common analyses used in pharmaceutical research and
+    development.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: survival
-Suggests: testthat
+URL: https://github.com/DiogoRibeiro7/PharmaTestSuite
+BugReports: https://github.com/DiogoRibeiro7/PharmaTestSuite/issues
+Imports: survival, stats, utils, graphics, lme4, geepack, metafor, nlme
+Suggests: testthat, knitr, rmarkdown, rstanarm, bayesplot, mice
+VignetteBuilder: knitr
 RoxygenNote: 7.3.1
