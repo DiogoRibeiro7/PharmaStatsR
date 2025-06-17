@@ -67,3 +67,8 @@
 - Included a new dataset `pharma_latin_square`.
 - README showcases these functions with example calls.
 - Roadmap item for design of experiments marked complete.
+
+## 0.1.11
+- Added `pharma_mice_impute()` wrapper for multiple imputation using the `mice` package.
+- Added `pharma_sensitivity_analysis()` for pooling models across imputations.
+- Updated README with examples and marked missing-data tasks complete in the roadmap.

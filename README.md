@@ -62,6 +62,12 @@ if (requireNamespace("bayesplot", quietly = TRUE)) {
   pharma_pp_check(fit)
 }
 check_ich_columns(pharma_sample)
+if (requireNamespace("mice", quietly = TRUE)) {
+  dat_na <- pharma_sample
+  dat_na$response[1] <- NA
+  imp <- pharma_mice_impute(dat_na, m = 2, maxit = 1)
+  pharma_sensitivity_analysis(imp, response ~ treatment)
+}
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 

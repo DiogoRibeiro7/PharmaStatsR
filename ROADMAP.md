@@ -36,9 +36,9 @@
 - [x] **Design of experiments**  
   - Factorial ANOVA, response-surface methods  
   - Crossover and Latin-square analyses  
-- [ ] **Missing data & imputation**  
-  - Multiple imputation (`mice`)  
-  - Sensitivity analyses  
+- [x] **Missing data & imputation**
+  - Multiple imputation (`mice`)
+  - Sensitivity analyses
 
 ## ⬜ Long Term (6–12 months)
 - [ ] **Trial simulation engine**  

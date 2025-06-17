@@ -189,3 +189,20 @@ test_that("pharma_latin_square_anova returns aov", {
   expect_s3_class(res, "aov")
 })
 
+
+test_that("pharma_mice_impute returns mids", {
+  skip_if_not_installed("mice")
+  dat <- pharma_sample
+  dat$response[1] <- NA
+  imp <- pharma_mice_impute(dat, m = 2, maxit = 1)
+  expect_s3_class(imp, "mids")
+})
+
+test_that("pharma_sensitivity_analysis returns pool", {
+  skip_if_not_installed("mice")
+  dat <- pharma_sample
+  dat$response[1] <- NA
+  imp <- pharma_mice_impute(dat, m = 2, maxit = 1)
+  res <- pharma_sensitivity_analysis(imp, response ~ treatment)
+  expect_s3_class(res, "mipo")
+})

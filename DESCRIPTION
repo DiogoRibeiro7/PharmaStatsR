@@ -1,7 +1,7 @@
 Package: PharmaTestSuite
 Type: Package
 Title: Statistical Test Suites and Workflows for Pharmaceutical Research
-Version: 0.1.10
+Version: 0.1.11
 Authors@R: person(given = "Diogo", family = "Ribeiro",
     email = "diogo.debastos.ribeiro@gmail.com", role = c("aut", "cre"),
     comment = c(ORCID = "0009-0001-2022-7072",
@@ -15,6 +15,6 @@ LazyData: true
 URL: https://github.com/DiogoRibeiro7/PharmaTestSuite
 BugReports: https://github.com/DiogoRibeiro7/PharmaTestSuite/issues
 Imports: survival, stats, utils, graphics, lme4, geepack, metafor, nlme
-Suggests: testthat, knitr, rmarkdown, rstanarm, bayesplot
+Suggests: testthat, knitr, rmarkdown, rstanarm, bayesplot, mice
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
