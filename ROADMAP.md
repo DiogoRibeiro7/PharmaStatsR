@@ -29,7 +29,7 @@
 - [x] **Dose–response & PK/PD**
   - Emax, sigmoid Emax models
   - Nonlinear regression (`nls`), nlme
-- [ ] **Adaptive & sequential designs**  
+- [x] **Adaptive & sequential designs**  
   - Group-sequential boundaries (O’Brien–Fleming, Pocock)  
   - Sample-size re-estimation  
   - Bayesian adaptive stopping rules  

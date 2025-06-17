@@ -53,3 +53,10 @@
 - Added dose-response helpers `pharma_emax`, `pharma_sigmoid_emax`, and `pharma_emax_nlme`.
 - Included a new example dataset `pharma_dose_response` for nonlinear models.
 - Roadmap item for dose-response and PK/PD analyses marked complete.
+
+## 0.1.9
+- Added group-sequential design utilities `pharma_group_seq`.
+- Added `pharma_sample_reestimate` for simple sample-size updating.
+- Added Bayesian adaptive stopping helper `pharma_bayes_stopping`.
+- README now demonstrates these adaptive design functions.
+- Roadmap item for adaptive and sequential designs marked complete.

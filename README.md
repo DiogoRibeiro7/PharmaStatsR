@@ -43,6 +43,9 @@ pharma_competing_risks(Surv(time, status) ~ treatment,
 pharma_landmark_analysis(Surv(time, status) ~ treatment,
                          data = pharma_survival,
                          landmark = 12)
+pharma_group_seq(k = 4)
+pharma_sample_reestimate(50, 0.4, 1)
+pharma_bayes_stopping(1, 1, 8, 10)
 meta_res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1),
                                 vi = c(0.05, 0.04, 0.06))
 pharma_forest_plot(meta_res)

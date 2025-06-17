@@ -155,3 +155,21 @@ test_that("pharma_emax_nlme returns lme", {
                           subject = pharma_dose_response$subject)
   expect_s4_class(res, "lme")
 })
+
+test_that("pharma_group_seq returns numeric", {
+  res <- pharma_group_seq(k = 3)
+  expect_type(res, "double")
+  expect_length(res, 3)
+})
+
+test_that("pharma_sample_reestimate returns numeric", {
+  res <- pharma_sample_reestimate(50, 0.5, 1)
+  expect_type(res, "double")
+  expect_true(res >= 50)
+})
+
+test_that("pharma_bayes_stopping returns list", {
+  out <- pharma_bayes_stopping(1, 1, 5, 10)
+  expect_type(out$prob, "double")
+  expect_type(out$stop, "logical")
+})
