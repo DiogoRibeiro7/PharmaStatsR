@@ -5,9 +5,10 @@
 - [x] Basic wrappers: t-test, chi-square, one-way ANOVA, logistic regression.  
 - [x] Non-parametric tests: Wilcoxon rank-sum, Kruskal–Wallis.  
 - [x] Power & sample-size calculators for t, ANOVA, survival.  
-- [x] Multiple comparisons corrections: Bonferroni, Holm, Benjamini–Hochberg FDR.  
-- [x] Bootstrap CIs and permutation tests for arbitrary statistics.  
-- [x] Unit tests (`testthat`) covering ≥ 90 % of exported functions.  
+- [x] Multiple comparisons corrections: Bonferroni, Holm, Benjamini–Hochberg FDR.
+- [x] Bootstrap CIs and permutation tests for arbitrary statistics.
+- [x] Created a CITATION file and added dataset disclaimers in the README.
+- [x] Unit tests (`testthat`) covering ≥ 90 % of exported functions.
 - [x] GitHub Actions: R CMD check, code coverage, linting.
 
 ## ⬜ Medium Term (3–6 months)
