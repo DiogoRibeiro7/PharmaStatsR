@@ -50,6 +50,11 @@ test_that("pharma_repeated is a data.frame", {
   expect_equal(nrow(pharma_repeated), 20)
 })
 
+test_that("pharma_dose_response is a data.frame", {
+  expect_true(is.data.frame(pharma_dose_response))
+  expect_equal(nrow(pharma_dose_response), 30)
+})
+
 test_that("check_ich_columns validates datasets", {
   expect_true(check_ich_columns(pharma_sample))
   bad <- pharma_sample
@@ -131,4 +136,22 @@ test_that("pharma_funnel_plot runs", {
   skip_if_not_installed("metafor")
   res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
   expect_silent(pharma_funnel_plot(res))
+})
+
+test_that("pharma_emax returns nls", {
+  res <- pharma_emax(pharma_dose_response$dose, pharma_dose_response$response)
+  expect_s3_class(res, "nls")
+})
+
+test_that("pharma_sigmoid_emax returns nls", {
+  res <- pharma_sigmoid_emax(pharma_dose_response$dose, pharma_dose_response$response)
+  expect_s3_class(res, "nls")
+})
+
+test_that("pharma_emax_nlme returns lme", {
+  skip_if_not_installed("nlme")
+  res <- pharma_emax_nlme(pharma_dose_response$dose,
+                          pharma_dose_response$response,
+                          subject = pharma_dose_response$subject)
+  expect_s4_class(res, "lme")
 })

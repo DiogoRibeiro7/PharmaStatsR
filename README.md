@@ -24,11 +24,14 @@ data(pharma_sample)
 data(pharma_crossover)
 data(pharma_survival)
 data(pharma_repeated)
+data(pharma_dose_response)
 
 pharma_t_test(rnorm(10), rnorm(10))
 pharma_chisq_test(matrix(c(10,5,6,9), nrow=2))
 pharma_anova(response ~ treatment, data = pharma_sample)
 pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
+pharma_emax(pharma_dose_response$dose, pharma_dose_response$response)
+pharma_sigmoid_emax(pharma_dose_response$dose, pharma_dose_response$response)
 pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
 pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
                           data = pharma_survival,

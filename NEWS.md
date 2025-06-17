@@ -48,3 +48,8 @@
   `pharma_meta_regression`, `pharma_forest_plot`, and `pharma_funnel_plot`.
 - README demonstrates a basic meta-analysis call.
 - Roadmap item for meta-analysis marked complete.
+
+## 0.1.8
+- Added dose-response helpers `pharma_emax`, `pharma_sigmoid_emax`, and `pharma_emax_nlme`.
+- Included a new example dataset `pharma_dose_response` for nonlinear models.
+- Roadmap item for dose-response and PK/PD analyses marked complete.

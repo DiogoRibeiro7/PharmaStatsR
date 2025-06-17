@@ -26,9 +26,9 @@
 - [x] **Meta-analysis**
   - Fixed- and random-effects models (`metafor`)
   - Forest plots, funnel plots, meta-regression
-- [ ] **Dose–response & PK/PD**  
-  - Emax, sigmoid Emax models  
-  - Nonlinear regression (`nls`), nlme  
+- [x] **Dose–response & PK/PD**
+  - Emax, sigmoid Emax models
+  - Nonlinear regression (`nls`), nlme
 - [ ] **Adaptive & sequential designs**  
   - Group-sequential boundaries (O’Brien–Fleming, Pocock)  
   - Sample-size re-estimation  

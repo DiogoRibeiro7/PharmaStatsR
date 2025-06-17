@@ -26,3 +26,8 @@ export(pharma_meta_analysis)
 export(pharma_forest_plot)
 export(pharma_funnel_plot)
 export(pharma_meta_regression)
+
+export(pharma_emax)
+export(pharma_sigmoid_emax)
+export(pharma_emax_nlme)
+export(pharma_dose_response)
