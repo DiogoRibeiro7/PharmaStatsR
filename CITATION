@@ -5,7 +5,16 @@ meta <- utils::packageDescription("PharmaTestSuite")
 bibentry(
   "Manual",
   title = "PharmaTestSuite: Statistical Test Suites for the Pharmaceutical Industry",
-  author = person(given = "Diogo", family = "Ribeiro"),
+  author = person(
+    given = "Diogo",
+    family = "Ribeiro",
+    email = "dfr@esmad.ipp.pt",
+    role = c("aut", "cre"),
+    comment = c(
+      ORCID = "0009-0001-2022-7072",
+      Affiliation = "ESMAD - Instituto Politécnico do Porto"
+    )
+  ),
   year = "2025",
   note = paste("R package version", meta$Version),
   url = "https://github.com/DiogoRibeiro7/PharmaTestSuite"
