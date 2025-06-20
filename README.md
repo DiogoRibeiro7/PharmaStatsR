@@ -81,6 +81,17 @@ pharma_rate_metrics(10, 100, 12, 110)
 
 See `ROADMAP.md` for planned features.
 
+## Parallel computation
+
+The `pharma_parallel_bootstrap` function distributes bootstrap iterations
+across multiple cores using the `future` framework.
+
+```r
+stat <- function(d) mean(d$response)
+pharma_parallel_bootstrap(pharma_sample, stat, R = 100,
+                          plan = "multisession")
+```
+
 ## Contact
 
 For questions or feedback, please contact Diogo Ribeiro
