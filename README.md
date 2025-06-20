@@ -87,3 +87,7 @@ For questions or feedback, please contact Diogo Ribeiro
 (<diogo.debastos.ribeiro@gmail.com>),
 ESMAD, Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
+
+## Versioning
+
+The project uses a simple helper script to update version numbers across the package metadata. Run `scripts/bump_version.sh <new-version>` to increment the version in `DESCRIPTION` and `CITATION.cff`, append a section to `NEWS.md`, commit the change, and create a matching Git tag.
