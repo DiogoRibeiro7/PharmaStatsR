@@ -1,8 +1,9 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  push:
+  pull_request:
     branches: [main]
+    types: [closed]
 
 name: R-CMD-check
 
@@ -10,6 +11,7 @@ permissions: read-all
 
 jobs:
   R-CMD-check:
+    if: github.event.pull_request.merged == true
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -28,7 +30,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       MAINTAINER_NAME: "Diogo Ribeiro"
-      MAINTAINER_EMAIL: "diogo.debastos.ribeiro@gmail.com"
+      MAINTAINER_EMAIL: "dfr@esmad.ipp.pt"
       MAINTAINER_ORCID: "0009-0001-2022-7072"
       MAINTAINER_AFFILIATION: "ESMAD, Instituto Politecnico do Porto"
 
