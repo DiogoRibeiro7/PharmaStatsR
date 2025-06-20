@@ -105,9 +105,15 @@ pharma_model_diagnostics(fit)
 ## Contact
 
 For questions or feedback, please contact Diogo Ribeiro
-(<diogo.debastos.ribeiro@gmail.com>),
-ESMAD, Instituto Politécnico do Porto.
+(<dfr@esmad.ipp.pt>),
+ESMAD - Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
+
+## Citation
+
+To cite **PharmaTestSuite** in publications, please refer to the
+`CITATION` file included in the package or the `CITATION.cff` metadata on
+GitHub.
 
 ## Versioning
 

@@ -9,6 +9,10 @@ vignette: >
 
 This vignette illustrates a typical workflow in pharmaceutical data analysis using functions from **PharmaTestSuite**.
 
+> **Note:** The examples in this vignette use simulated data and are intended
+> for educational purposes only. They should not be relied on for
+> clinical decision making.
+
 ```{r setup, include=FALSE}
 library(PharmaTestSuite)
 ```
@@ -20,6 +24,23 @@ Use the provided datasets to demonstrate cleaning steps.
 ## Statistical Analysis
 
 Examples of t-tests, ANOVA, and logistic regression.
+
+```{r lm-example}
+fit <- lm(response ~ treatment + dose, data = pharma_sample)
+```
+
+### Diagnostics
+
+```{r diag-example}
+pharma_model_diagnostics(fit)
+```
+
+### Parallel bootstrap
+
+```{r boot-example, eval=FALSE}
+stat <- function(d) mean(d$response)
+pharma_parallel_bootstrap(pharma_sample, stat, R = 100)
+```
 
 ```{r bayes-example, eval=FALSE}
 fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500, chains = 2)
