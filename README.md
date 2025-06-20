@@ -92,6 +92,16 @@ pharma_parallel_bootstrap(pharma_sample, stat, R = 100,
                           plan = "multisession")
 ```
 
+## Model diagnostics
+
+Use `pharma_model_diagnostics()` to examine residuals and identify influential
+observations in fitted models.
+
+```r
+fit <- lm(response ~ treatment + dose, data = pharma_sample)
+pharma_model_diagnostics(fit)
+```
+
 ## Contact
 
 For questions or feedback, please contact Diogo Ribeiro

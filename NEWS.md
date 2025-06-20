@@ -87,9 +87,13 @@
 - Added `pharma_perm_f_test()` for permutation-based F-tests in complex designs.
 - Example usage of the permutation test included in the README.
 - Roadmap subtask for permutation-based F-tests marked complete.
-
 ## 0.1.15
 - Added `pharma_tost()` for two one-sided tests of equivalence.
 - Added `pharma_rate_metrics()` to compute risk difference and risk ratio with confidence intervals.
 - Examples for both functions are shown in the README.
 - Non-inferiority and equivalence testing milestone marked complete in the roadmap.
+
+## 0.1.16
+- Added `pharma_model_diagnostics()` for residual and influence checks.
+- Roadmap milestone for model diagnostics marked complete.
+

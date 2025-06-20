@@ -55,9 +55,9 @@
 - [ ] **Joint & multistate models**  
   - Joint longitudinal‐survival models  
   - Multistate illness-death processes  
-- [ ] **Model diagnostics & QC**  
-  - Residual analysis, influence measures, control charts  
-  - Automated flagging of outliers & data errors  
+- [x] **Model diagnostics & QC**
+  - Residual analysis, influence measures, control charts
+  - Automated flagging of outliers & data errors
 - [ ] **Statistical reporting**  
   - Auto-generate APA/ICH-style tables of estimates, CIs, p-values  
   - Export to Word/Excel with formatting  
