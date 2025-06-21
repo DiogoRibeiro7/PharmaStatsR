@@ -81,9 +81,40 @@ pharma_rate_metrics(10, 100, 12, 110)
 
 See `ROADMAP.md` for planned features.
 
+## Parallel computation
+
+The `pharma_parallel_bootstrap` function distributes bootstrap iterations
+across multiple cores using the `future` framework.
+
+```r
+stat <- function(d) mean(d$response)
+pharma_parallel_bootstrap(pharma_sample, stat, R = 100,
+                          plan = "multisession")
+```
+
+## Model diagnostics
+
+Use `pharma_model_diagnostics()` to examine residuals and identify influential
+observations in fitted models.
+
+```r
+fit <- lm(response ~ treatment + dose, data = pharma_sample)
+pharma_model_diagnostics(fit)
+```
+
 ## Contact
 
 For questions or feedback, please contact Diogo Ribeiro
-(<diogo.debastos.ribeiro@gmail.com>),
-ESMAD, Instituto Politécnico do Porto.
+(<dfr@esmad.ipp.pt>),
+ESMAD - Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
+
+## Citation
+
+To cite **PharmaTestSuite** in publications, please refer to the
+`CITATION` file included in the package or the `CITATION.cff` metadata on
+GitHub.
+
+## Versioning
+
+The project uses a simple helper script to update version numbers across the package metadata. Run `scripts/bump_version.sh <new-version>` to increment the version in `DESCRIPTION` and `CITATION.cff`, append a section to `NEWS.md`, commit the change, and create a matching Git tag.

@@ -44,8 +44,8 @@
 ## ⬜ Long Term (6–12 months)
 - [x] **Trial simulation engine**
   - Simulate end-to-end trials under various randomization, dropout, event scenarios
-- [ ] **High-performance & parallel**  
-  - Parallel backends (`future`), GPU-accelerated bootstrap/simulation  
+- [x] **High-performance & parallel**
+  - Parallel backends (`future`), GPU-accelerated bootstrap/simulation
 - [x] **Advanced resampling**
   - Wild bootstrap, block bootstrap for clustered data
   - [x] Permutation-based F-tests in complex designs
@@ -55,9 +55,9 @@
 - [ ] **Joint & multistate models**  
   - Joint longitudinal‐survival models  
   - Multistate illness-death processes  
-- [ ] **Model diagnostics & QC**  
-  - Residual analysis, influence measures, control charts  
-  - Automated flagging of outliers & data errors  
+- [x] **Model diagnostics & QC**
+  - Residual analysis, influence measures, control charts
+  - Automated flagging of outliers & data errors
 - [ ] **Statistical reporting**  
   - Auto-generate APA/ICH-style tables of estimates, CIs, p-values  
   - Export to Word/Excel with formatting  

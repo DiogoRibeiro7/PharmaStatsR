@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "PharmaTestSuite: Statistical Test Suites for Pharmaceutical Research"
+authors:
+  - family-names: Ribeiro
+    given-names: Diogo
+    orcid: "https://orcid.org/0009-0001-2022-7072"
+    affiliation: "ESMAD - Instituto Politécnico do Porto"
+    email: dfr@esmad.ipp.pt
+version: "0.1.16"
+type: software
+license: MIT
+repository-code: https://github.com/DiogoRibeiro7/PharmaTestSuite
+url: https://github.com/DiogoRibeiro7/PharmaTestSuite
+date-released: "2025-06-20"
