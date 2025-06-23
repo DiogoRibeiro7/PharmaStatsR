@@ -133,3 +133,7 @@
   package datasets interactively.
 - Marked the interactive dashboard task complete in `ROADMAP.md`.
 - Bumped version and citation metadata.
+
+## 0.1.25
+- Added plugin API for community-contributed methods via new helper functions.
+- Marked the plugin roadmap item complete and updated README with usage examples.

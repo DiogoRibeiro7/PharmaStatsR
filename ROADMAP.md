@@ -66,7 +66,7 @@
 - [x] AI-driven model selection and hyperparameter tuning
 - [x] Automatic statistical analysis plan (SAP) generation  
 - [x] Interactive R Markdown dashboard for exploring results  
-- [ ] Plugin API for community-contributed tests and methods  
+- [x] Plugin API for community-contributed tests and methods  
 - [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate`  
 - [ ] Blockchain-backed audit trail of all analyses  
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  

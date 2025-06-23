@@ -97,6 +97,13 @@ pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 pharma_multistate_model(cox_ms, trans_matrix)
 
 pharma_dashboard(launch = FALSE)
+
+# Register a custom plugin
+my_summary <- function(x) mean(x)
+pharma_register_plugin("avg", my_summary)
+pharma_run_plugin("avg", 1:10)
+pharma_list_plugins()
+pharma_unregister_plugin("avg")
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
