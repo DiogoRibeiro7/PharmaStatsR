@@ -18,6 +18,7 @@
 #' pharma_report_table(fit)
 #'
 pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
+  # get tidy summary of the model with confidence intervals
   res <- broom::tidy(model, conf.int = TRUE, conf.level = conf.level)
   res <- res[, c("term", "estimate", "conf.low", "conf.high", "p.value")]
 
@@ -26,12 +27,14 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
       if (!requireNamespace("openxlsx", quietly = TRUE)) {
         stop("Package 'openxlsx' is required to write .xlsx files")
       }
+      # write results to an Excel workbook
       openxlsx::write.xlsx(res, file)
     } else if (grepl("\\.docx$", file, ignore.case = TRUE)) {
       if (!requireNamespace("flextable", quietly = TRUE) ||
           !requireNamespace("officer", quietly = TRUE)) {
         stop("Packages 'flextable' and 'officer' are required to write .docx files")
       }
+      # build Word document containing the table
       ft <- flextable::flextable(res)
       doc <- officer::read_docx()
       doc <- flextable::body_add_flextable(doc, ft)
@@ -39,6 +42,7 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
     } else {
       stop("file must end with .xlsx or .docx")
     }
+    # return invisibly if writing to disk
     return(invisible(res))
   }
 

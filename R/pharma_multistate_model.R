@@ -25,5 +25,10 @@ pharma_multistate_model <- function(coxFit, trans, ...) {
   if (!requireNamespace("mstate", quietly = TRUE)) {
     stop("Package 'mstate' is required for pharma_multistate_model()")
   }
+  if (!inherits(trans, "matrix") && !inherits(trans, "transMat")) {
+    stop("trans must be a transition matrix produced by mstate::transMat")
+  }
+
+  # delegate to mstate::msfit
   mstate::msfit(coxFit, trans = trans, ...)
 }

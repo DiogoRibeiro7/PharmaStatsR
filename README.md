@@ -78,8 +78,13 @@ pharma_tost(rnorm(30), rnorm(30, 0.1), -0.5, 0.5)
 pharma_rate_metrics(10, 100, 12, 110)
 pharma_report_table(lm(response ~ treatment, data = pharma_sample))
 pharma_scipy_ttest(rnorm(20), rnorm(20))
-pharma_generate_sap()
-pharma_ai_model_select(response ~ treatment, data = pharma_sample)
+pharma_generate_sap(objectives = "Assess efficacy and safety")
+pharma_ai_model_select(
+  response ~ treatment,
+  data = pharma_sample,
+  models = c("glm", "rf", "svmLinear"),
+  metric = "Accuracy"
+)
 
 pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 pharma_multistate_model(cox_ms, trans_matrix)

@@ -25,5 +25,16 @@ pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
   if (!requireNamespace("JM", quietly = TRUE)) {
     stop("Package 'JM' is required for pharma_joint_model()")
   }
+  if (!inherits(lmeFit, c("lme", "lmerMod"))) {
+    stop("lmeFit must be a mixed-effects model of class 'lme' or 'lmerMod'")
+  }
+  if (!inherits(coxFit, "coxph")) {
+    stop("coxFit must be a 'coxph' object")
+  }
+  if (!is.character(timeVar) || length(timeVar) != 1) {
+    stop("timeVar must be a single character string")
+  }
+
+  # delegate to JM::jointModel
   JM::jointModel(lmeFit, coxFit, timeVar = timeVar, ...)
 }

@@ -18,7 +18,12 @@
 #'
 #' @examples
 #' if (requireNamespace("caret", quietly = TRUE)) {
-#'   pharma_ai_model_select(response ~ treatment, data = pharma_sample)
+#'   pharma_ai_model_select(
+    response ~ treatment,
+    data = pharma_sample,
+    models = c("glm", "rf", "svmLinear"),
+    metric = "Accuracy"
+  )
 #' }
 pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
                                    metric = "Accuracy", trControl = NULL, ...) {
@@ -34,18 +39,42 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
 
   # fit each candidate model using caret::train
   fits <- lapply(models, function(meth) {
-    caret::train(formula, data = data, method = meth, metric = metric,
-                 trControl = trControl, ...)
+    tryCatch(
+      caret::train(formula, data = data, method = meth, metric = metric,
+                   trControl = trControl, ...),
+      error = function(e) {
+        warning(sprintf("Model %s failed to fit: %s", meth, e$message))
+        NULL
+      }
+    )
   })
   names(fits) <- models
+  # drop models that failed during training
+  fits <- Filter(Negate(is.null), fits)
+
+  # ensure we have at least one successfully fitted model
+  if (length(fits) == 0) {
+    stop("None of the candidate models could be fit")
+  }
+
+  # validate that the requested metric exists in the results
+  available_metrics <- unique(unlist(lapply(fits, function(f) names(f$results))))
+  if (!metric %in% available_metrics) {
+    stop(sprintf(
+      "Metric '%s' not found in model results. Available metrics: %s",
+      metric, paste(available_metrics, collapse = ", ")
+    ))
+  }
 
   # identify the model with the best metric value
   get_metric <- function(fit) {
     res <- fit$results[[metric]]
     if (is.null(res)) NA_real_ else max(res, na.rm = TRUE)
   }
+  # compute the chosen metric for all candidate models
   scores <- vapply(fits, get_metric, numeric(1))
   best_idx <- which.max(scores)
 
+  # return best-performing model and all candidate fits
   list(best_model = fits[[best_idx]], all_models = fits)
 }
