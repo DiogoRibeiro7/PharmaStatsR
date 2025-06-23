@@ -137,3 +137,7 @@
 ## 0.1.25
 - Added plugin API for community-contributed methods via new helper functions.
 - Marked the plugin roadmap item complete and updated README with usage examples.
+
+## 0.1.26
+- Annotated completed roadmap tasks with version numbers for easier tracking.
+- Bumped package version and citation metadata.

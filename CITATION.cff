@@ -7,9 +7,9 @@ authors:
     orcid: "https://orcid.org/0009-0001-2022-7072"
     affiliation: "ESMAD - Instituto Politécnico do Porto"
     email: dfr@esmad.ipp.pt
-version: "0.1.25"
+version: "0.1.26"
 type: software
 license: MIT
 repository-code: https://github.com/DiogoRibeiro7/PharmaTestSuite
 url: https://github.com/DiogoRibeiro7/PharmaTestSuite
-date-released: "2025-06-25"
+date-released: "2025-06-26"

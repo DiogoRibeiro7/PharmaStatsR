@@ -42,32 +42,32 @@
   - [x] Sensitivity analyses
 
 ## ⬜ Long Term (6–12 months)
-- [x] **Trial simulation engine**
+- [x] **Trial simulation engine** (v0.1.12)
   - Simulate end-to-end trials under various randomization, dropout, event scenarios
 - [x] **High-performance & parallel**
   - Parallel backends (`future`), GPU-accelerated bootstrap/simulation
-- [x] **Advanced resampling**
+- [x] **Advanced resampling** (v0.1.13)
   - Wild bootstrap, block bootstrap for clustered data
   - [x] Permutation-based F-tests in complex designs
-  - [x] **Non-inferiority & equivalence testing**
+  - [x] **Non-inferiority & equivalence testing** (v0.1.15)
     - Two one-sided tests (TOST) for bioequivalence
     - Rate/risk difference and ratio metrics
-- [x] **Joint & multistate models**
+- [x] **Joint & multistate models** (v0.1.18)
   - Joint longitudinal‐survival models  
   - Multistate illness-death processes  
-- [x] **Model diagnostics & QC**
+- [x] **Model diagnostics & QC** (v0.1.16)
   - Residual analysis, influence measures, control charts
   - Automated flagging of outliers & data errors
-- [x] **Statistical reporting**  
+- [x] **Statistical reporting** (v0.1.17)
   - Auto-generate APA/ICH-style tables of estimates, CIs, p-values  
   - Export to Word/Excel with formatting  
 
 ## ⬜ Extended Vision (>12 months)
-- [x] AI-driven model selection and hyperparameter tuning
-- [x] Automatic statistical analysis plan (SAP) generation  
-- [x] Interactive R Markdown dashboard for exploring results  
-- [x] Plugin API for community-contributed tests and methods  
-- [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate`  
+- [x] AI-driven model selection and hyperparameter tuning (v0.1.21)
+- [x] Automatic statistical analysis plan (SAP) generation (v0.1.20)
+- [x] Interactive R Markdown dashboard for exploring results (v0.1.24)
+- [x] Plugin API for community-contributed tests and methods (v0.1.25)
+- [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate` (v0.1.19)
 - [ ] Blockchain-backed audit trail of all analyses  
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  
 - [ ] Real-time interim monitoring dashboards  
