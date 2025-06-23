@@ -113,3 +113,7 @@
 ## 0.1.20
 - Added `pharma_generate_sap()` to create statistical analysis plan templates.
 - Roadmap item for SAP generation marked complete.
+
+## 0.1.21
+- Added `pharma_ai_model_select()` for automated model selection using `caret`.
+- Roadmap task for AI-driven model selection marked complete.

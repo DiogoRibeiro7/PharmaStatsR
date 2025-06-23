@@ -63,7 +63,7 @@
   - Export to Word/Excel with formatting  
 
 ## ⬜ Extended Vision (>12 months)
-- [ ] AI-driven model selection and hyperparameter tuning  
+- [x] AI-driven model selection and hyperparameter tuning
 - [x] Automatic statistical analysis plan (SAP) generation  
 - [ ] Interactive R Markdown dashboard for exploring results  
 - [ ] Plugin API for community-contributed tests and methods  
