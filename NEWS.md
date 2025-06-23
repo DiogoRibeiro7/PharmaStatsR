@@ -123,3 +123,7 @@
 
 ## 0.1.22
 - Minor documentation updates and version bump.
+
+
+## 0.1.23
+- Updated release metadata and fixed citation date.
