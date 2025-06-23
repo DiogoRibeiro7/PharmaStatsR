@@ -64,7 +64,7 @@
 
 ## ⬜ Extended Vision (>12 months)
 - [ ] AI-driven model selection and hyperparameter tuning  
-- [ ] Automatic statistical analysis plan (SAP) generation  
+- [x] Automatic statistical analysis plan (SAP) generation  
 - [ ] Interactive R Markdown dashboard for exploring results  
 - [ ] Plugin API for community-contributed tests and methods  
 - [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate`  

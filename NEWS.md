@@ -109,3 +109,7 @@
 ## 0.1.19
 - Added `pharma_scipy_ttest()` to integrate Python's SciPy for two-sample t-tests.
 - Roadmap item for Python integration marked complete.
+
+## 0.1.20
+- Added `pharma_generate_sap()` to create statistical analysis plan templates.
+- Roadmap item for SAP generation marked complete.

@@ -1,7 +1,7 @@
 Package: PharmaTestSuite
 Type: Package
 Title: Statistical Test Suites and Workflows for Pharmaceutical Research
-Version: 0.1.19
+Version: 0.1.20
 Authors@R: person(given = "Diogo", family = "Ribeiro",
     email = "dfr@esmad.ipp.pt", role = c("aut", "cre"),
     comment = c(ORCID = "0009-0001-2022-7072",
