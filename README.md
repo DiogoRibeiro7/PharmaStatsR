@@ -79,6 +79,13 @@ pharma_rate_metrics(10, 100, 12, 110)
 pharma_report_table(lm(response ~ treatment, data = pharma_sample))
 pharma_scipy_ttest(rnorm(20), rnorm(20))
 pharma_generate_sap(objectives = "Assess efficacy and safety")
+# Customize the SAP with additional sections
+pharma_generate_sap(
+  objectives = "Assess efficacy",
+  endpoints = "Overall survival",
+  extra_sections = list(Timeline = "Visit schedule"),
+  include_sections = c("Objectives", "Endpoints", "Planned Analyses")
+)
 pharma_ai_model_select(
   response ~ treatment,
   data = pharma_sample,
@@ -92,6 +99,9 @@ pharma_multistate_model(cox_ms, trans_matrix)
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
 See `ROADMAP.md` for planned features.
+
+Additional worked examples can be found in the vignette
+[`Pharmaceutical Workflow Example`](vignettes/pharma_workflow.Rmd).
 
 ## Parallel computation
 

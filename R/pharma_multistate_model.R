@@ -29,6 +29,11 @@ pharma_multistate_model <- function(coxFit, trans, ...) {
     stop("trans must be a transition matrix produced by mstate::transMat")
   }
 
+  # Basic validation of transition matrix dimensions
+  if (is.matrix(trans) && ncol(trans) != nrow(trans)) {
+    stop("trans must be a square transition matrix")
+  }
+
   # delegate to mstate::msfit
   mstate::msfit(coxFit, trans = trans, ...)
 }

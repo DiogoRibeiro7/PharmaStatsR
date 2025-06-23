@@ -19,6 +19,8 @@
 #' @param criteria Text describing inclusion/exclusion criteria.
 #' @param software Text describing the software to be used.
 #' @param extra_sections Named list of additional sections and their contents.
+#' @param include_sections Character vector giving the order of default sections
+#'   to include. Set to `NULL` to omit all defaults.
 #'
 #' @return A character vector containing the SAP in Markdown format. If
 #'   `path` is provided, the text is invisibly returned after being written
@@ -47,31 +49,33 @@ pharma_generate_sap <- function(path = NULL,
                                 methods = "Outline the statistical methods that will be used, including any adjustments for multiplicity or interim analyses.",
                                 criteria = "Specify key inclusion and exclusion criteria.",
                                 software = "Specify the software packages and versions that will be used.",
-                                extra_sections = NULL) {
-  # base sections for the SAP template
+                                extra_sections = NULL,
+                                include_sections = c("Objectives", "Endpoints", "Analysis Populations",
+                                                     "Inclusion/Exclusion Criteria", "Planned Analyses", "Software")) {
+  # Begin assembling the SAP text with the title and author information
   sap_text <- c(
     paste0("# Statistical Analysis Plan - ", title),
     "",
-    paste0("Author: ", author),
-    "",
-    "## Objectives",
-    objectives,
-    "",
-    "## Endpoints",
-    endpoints,
-    "",
-    "## Analysis Populations",
-    populations,
-    "",
-    "## Inclusion/Exclusion Criteria",
-    criteria,
-    "",
-    "## Planned Analyses",
-    methods,
-    "",
-    "## Software",
-    software
+    paste0("Author: ", author)
   )
+
+  # Named list of the default sections and their contents
+  defaults <- list(
+    "Objectives" = objectives,
+    "Endpoints" = endpoints,
+    "Analysis Populations" = populations,
+    "Inclusion/Exclusion Criteria" = criteria,
+    "Planned Analyses" = methods,
+    "Software" = software
+  )
+
+  # Add each requested section in the specified order
+  if (!is.null(include_sections)) {
+    for (sec in include_sections) {
+      if (!sec %in% names(defaults)) next
+      sap_text <- c(sap_text, "", paste0("## ", sec), defaults[[sec]])
+    }
+  }
 
   # append any user-defined sections
   if (!is.null(extra_sections) && length(extra_sections) > 0) {

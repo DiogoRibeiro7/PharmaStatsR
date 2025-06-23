@@ -118,3 +118,5 @@
 - Added `pharma_ai_model_select()` for automated model selection using `caret`.
 - Roadmap task for AI-driven model selection marked complete.
 - Improved error handling for model selection and SAP generation.
+- Added template customization options to `pharma_generate_sap()` and
+  enhanced README with vignette links.

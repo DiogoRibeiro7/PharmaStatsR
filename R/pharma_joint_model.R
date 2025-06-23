@@ -35,6 +35,12 @@ pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
     stop("timeVar must be a single character string")
   }
 
+  # Verify that the time variable is present in the longitudinal data
+  lme_data <- tryCatch(lmeFit$data, error = function(e) NULL)
+  if (!is.null(lme_data) && !timeVar %in% names(lme_data)) {
+    stop("timeVar not found in the longitudinal model's data")
+  }
+
   # delegate to JM::jointModel
   JM::jointModel(lmeFit, coxFit, timeVar = timeVar, ...)
 }

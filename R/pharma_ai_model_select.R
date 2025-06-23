@@ -27,10 +27,19 @@
 #' }
 pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
                                    metric = "Accuracy", trControl = NULL, ...) {
-  # verify caret is available
+  # Attempt to load caret for model training. If unavailable, fall back to a
+  # simple `glm` fit and return that model only.
   if (!requireNamespace("caret", quietly = TRUE)) {
-    stop("Package 'caret' is required for pharma_ai_model_select()")
+    warning(
+      "Package 'caret' is not installed; falling back to glm() without tuning."
+    )
+    base_fit <- stats::glm(formula, data = data, family = stats::binomial())
+    return(list(best_model = base_fit, all_models = list(glm = base_fit)))
   }
+
+  # Ensure the formula references columns present in `data` before training.
+  tryCatch(stats::model.frame(formula, data = data),
+           error = function(e) stop("Invalid formula: ", e$message))
 
   # default to 5-fold cross-validation if no control object supplied
   if (is.null(trControl)) {
