@@ -52,22 +52,22 @@
   - [x] **Non-inferiority & equivalence testing**
     - Two one-sided tests (TOST) for bioequivalence
     - Rate/risk difference and ratio metrics
-- [ ] **Joint & multistate models**  
+- [x] **Joint & multistate models**
   - Joint longitudinal‐survival models  
   - Multistate illness-death processes  
 - [x] **Model diagnostics & QC**
   - Residual analysis, influence measures, control charts
   - Automated flagging of outliers & data errors
-- [ ] **Statistical reporting**  
+- [x] **Statistical reporting**  
   - Auto-generate APA/ICH-style tables of estimates, CIs, p-values  
   - Export to Word/Excel with formatting  
 
 ## ⬜ Extended Vision (>12 months)
-- [ ] AI-driven model selection and hyperparameter tuning  
-- [ ] Automatic statistical analysis plan (SAP) generation  
+- [x] AI-driven model selection and hyperparameter tuning
+- [x] Automatic statistical analysis plan (SAP) generation  
 - [ ] Interactive R Markdown dashboard for exploring results  
 - [ ] Plugin API for community-contributed tests and methods  
-- [ ] Integration with Python’s `scipy`/`statsmodels` via `reticulate`  
+- [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate`  
 - [ ] Blockchain-backed audit trail of all analyses  
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  
 - [ ] Real-time interim monitoring dashboards  

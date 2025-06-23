@@ -97,3 +97,24 @@
 - Added `pharma_model_diagnostics()` for residual and influence checks.
 - Roadmap milestone for model diagnostics marked complete.
 
+
+## 0.1.17
+- Added `pharma_report_table()` for generating APA/ICH-style model summaries.
+
+## 0.1.18
+- Added `pharma_joint_model()` and `pharma_multistate_model()` for joint and
+  multistate analyses.
+- Roadmap milestone for joint & multistate models marked complete.
+
+## 0.1.19
+- Added `pharma_scipy_ttest()` to integrate Python's SciPy for two-sample t-tests.
+- Roadmap item for Python integration marked complete.
+
+## 0.1.20
+- Added `pharma_generate_sap()` to create statistical analysis plan templates.
+- Roadmap item for SAP generation marked complete.
+
+## 0.1.21
+- Added `pharma_ai_model_select()` for automated model selection using `caret`.
+- Roadmap task for AI-driven model selection marked complete.
+- Improved error handling for model selection and SAP generation.
