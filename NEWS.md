@@ -127,3 +127,9 @@
 
 ## 0.1.23
 - Updated release metadata and fixed citation date.
+
+## 0.1.24
+- Added `pharma_dashboard()` and an accompanying flexdashboard to explore
+  package datasets interactively.
+- Marked the interactive dashboard task complete in `ROADMAP.md`.
+- Bumped version and citation metadata.

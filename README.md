@@ -95,6 +95,8 @@ pharma_ai_model_select(
 
 pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 pharma_multistate_model(cox_ms, trans_matrix)
+
+pharma_dashboard(launch = FALSE)
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
@@ -102,6 +104,7 @@ See `ROADMAP.md` for planned features.
 
 Additional worked examples can be found in the vignette
 [`Pharmaceutical Workflow Example`](vignettes/pharma_workflow.Rmd).
+A demo dashboard can be launched with `pharma_dashboard()`.
 
 ## Parallel computation
 
