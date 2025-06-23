@@ -19,6 +19,7 @@
 #'   pharma_multistate_model(cfit, tmat)
 #' }
 pharma_multistate_model <- function(coxFit, trans, ...) {
+  # Validate inputs before calling into the mstate package
   if (!inherits(coxFit, "coxph")) {
     stop("coxFit must be a 'coxph' object")
   }
@@ -34,6 +35,6 @@ pharma_multistate_model <- function(coxFit, trans, ...) {
     stop("trans must be a square transition matrix")
   }
 
-  # delegate to mstate::msfit
+  # All checks passed; delegate to mstate::msfit for model fitting
   mstate::msfit(coxFit, trans = trans, ...)
 }

@@ -33,15 +33,20 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
     warning(
       "Package 'caret' is not installed; falling back to glm() without tuning."
     )
+    # Fit a basic logistic regression as a simple fallback so the user
+    # still receives a reasonable model object.
     base_fit <- stats::glm(formula, data = data, family = stats::binomial())
     return(list(best_model = base_fit, all_models = list(glm = base_fit)))
   }
 
-  # Ensure the formula references columns present in `data` before training.
+  # Ensure the formula references columns present in `data` before training
+  # to avoid hard-to-debug errors during caret model fitting.
   tryCatch(stats::model.frame(formula, data = data),
            error = function(e) stop("Invalid formula: ", e$message))
 
-  # default to 5-fold cross-validation if no control object supplied
+  # Default to 5-fold cross-validation if the caller did not supply a
+  # custom trainControl object. This provides reasonable resampling
+  # without requiring users to understand caret internals.
   if (is.null(trControl)) {
     trControl <- caret::trainControl(method = "cv", number = 5)
   }
@@ -80,7 +85,8 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
     res <- fit$results[[metric]]
     if (is.null(res)) NA_real_ else max(res, na.rm = TRUE)
   }
-  # compute the chosen metric for all candidate models
+  # compute the chosen metric for all candidate models so we can
+  # determine which one performed the best during resampling
   scores <- vapply(fits, get_metric, numeric(1))
   best_idx <- which.max(scores)
 

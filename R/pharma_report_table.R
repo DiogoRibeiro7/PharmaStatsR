@@ -18,7 +18,7 @@
 #' pharma_report_table(fit)
 #'
 pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
-  # get tidy summary of the model with confidence intervals
+  # Generate a tidy summary of the model with confidence intervals
   res <- broom::tidy(model, conf.int = TRUE, conf.level = conf.level)
   res <- res[, c("term", "estimate", "conf.low", "conf.high", "p.value")]
 
@@ -42,9 +42,11 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
     } else {
       stop("file must end with .xlsx or .docx")
     }
-    # return invisibly if writing to disk
+    # Return invisibly if writing to disk so the function can be used
+    # in pipelines without printing the table to the console.
     return(invisible(res))
   }
 
+  # Return the tidy results as a data frame when no output file is requested
   res
 }

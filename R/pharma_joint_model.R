@@ -22,6 +22,7 @@
 #'   pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 #' }
 pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
+  # Ensure the JM package is available before proceeding
   if (!requireNamespace("JM", quietly = TRUE)) {
     stop("Package 'JM' is required for pharma_joint_model()")
   }
@@ -41,6 +42,6 @@ pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
     stop("timeVar not found in the longitudinal model's data")
   }
 
-  # delegate to JM::jointModel
+  # All checks passed; delegate to JM::jointModel for the heavy lifting
   JM::jointModel(lmeFit, coxFit, timeVar = timeVar, ...)
 }

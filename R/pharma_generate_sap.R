@@ -59,7 +59,8 @@ pharma_generate_sap <- function(path = NULL,
     paste0("Author: ", author)
   )
 
-  # Named list of the default sections and their contents
+  # Named list of the default sections and their contents. Users can
+  # select a subset of these sections or reorder them via include_sections.
   defaults <- list(
     "Objectives" = objectives,
     "Endpoints" = endpoints,
@@ -69,7 +70,8 @@ pharma_generate_sap <- function(path = NULL,
     "Software" = software
   )
 
-  # Add each requested section in the specified order
+  # Add each requested section in the specified order. Unknown section
+  # names are ignored so callers can easily customise the output.
   if (!is.null(include_sections)) {
     for (sec in include_sections) {
       if (!sec %in% names(defaults)) next
@@ -77,14 +79,15 @@ pharma_generate_sap <- function(path = NULL,
     }
   }
 
-  # append any user-defined sections
+  # Append any user-defined sections supplied in the named list
+  # `extra_sections`. These are inserted after the default sections.
   if (!is.null(extra_sections) && length(extra_sections) > 0) {
     for (nm in names(extra_sections)) {
       sap_text <- c(sap_text, "", paste0("## ", nm), extra_sections[[nm]])
     }
   }
 
-  # optionally write the template to disk
+  # Optionally write the template to disk if a path is provided.
   if (!is.null(path)) {
     writeLines(sap_text, path)
     return(invisible(sap_text))
