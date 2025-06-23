@@ -141,3 +141,7 @@
 ## 0.1.26
 - Annotated completed roadmap tasks with version numbers for easier tracking.
 - Bumped package version and citation metadata.
+
+## 0.1.26
+- Annotated completed roadmap tasks with version numbers for easier tracking.
+- Bumped package version and citation metadata.
