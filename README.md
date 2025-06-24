@@ -76,10 +76,42 @@ pharma_block_bootstrap(pharma_sample, "subject", block_stat, R = 10)
 pharma_perm_f_test(response ~ treatment * period, data = pharma_crossover, R = 50)
 pharma_tost(rnorm(30), rnorm(30, 0.1), -0.5, 0.5)
 pharma_rate_metrics(10, 100, 12, 110)
+pharma_report_table(lm(response ~ treatment, data = pharma_sample))
+pharma_scipy_ttest(rnorm(20), rnorm(20))
+pharma_generate_sap(objectives = "Assess efficacy and safety")
+# Customize the SAP with additional sections
+pharma_generate_sap(
+  objectives = "Assess efficacy",
+  endpoints = "Overall survival",
+  extra_sections = list(Timeline = "Visit schedule"),
+  include_sections = c("Objectives", "Endpoints", "Planned Analyses")
+)
+pharma_ai_model_select(
+  response ~ treatment,
+  data = pharma_sample,
+  models = c("glm", "rf", "svmLinear"),
+  metric = "Accuracy"
+)
+
+pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
+pharma_multistate_model(cox_ms, trans_matrix)
+
+pharma_dashboard(launch = FALSE)
+
+# Register a custom plugin
+my_summary <- function(x) mean(x)
+pharma_register_plugin("avg", my_summary)
+pharma_run_plugin("avg", 1:10)
+pharma_list_plugins()
+pharma_unregister_plugin("avg")
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
 See `ROADMAP.md` for planned features.
+
+Additional worked examples can be found in the vignette
+[`Pharmaceutical Workflow Example`](vignettes/pharma_workflow.Rmd).
+A demo dashboard can be launched with `pharma_dashboard()`.
 
 ## Parallel computation
 

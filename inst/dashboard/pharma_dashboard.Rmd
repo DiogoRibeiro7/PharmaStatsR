@@ -1,0 +1,36 @@
+---
+title: "PharmaTestSuite Dashboard"
+output: flexdashboard::flex_dashboard
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+library(PharmaTestSuite)
+```
+
+## Dataset Preview
+
+```{r}
+inputPanel(
+  selectInput("dataset", "Choose dataset:",
+              choices = c("pharma_sample", "pharma_survival"))
+)
+
+renderTable({
+  ds <- get(input$dataset, asNamespace("PharmaTestSuite"))
+  head(ds)
+})
+```
+
+## Plot
+
+```{r}
+renderPlot({
+  ds <- get(input$dataset, asNamespace("PharmaTestSuite"))
+  if ("response" %in% names(ds)) {
+    hist(ds$response, main = "Response Distribution")
+  } else if ("time" %in% names(ds)) {
+    plot(ds$time, ds$status, main = "Time vs Status")
+  }
+})
+```
