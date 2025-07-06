@@ -6,8 +6,9 @@ authors:
     given-names: Diogo
     orcid: "https://orcid.org/0009-0001-2022-7072"
     affiliation: "ESMAD - Instituto Politécnico do Porto"
-    email: dfr@esmad.ipp.pt
-version: "0.1.26"
+    email: diogo.debastos.ribeiro@gmail.com
+    alias: DiogoRibeiro7
+version: "0.1.27"
 type: software
 license: MIT
 repository-code: https://github.com/DiogoRibeiro7/PharmaTestSuite

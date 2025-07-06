@@ -68,6 +68,6 @@
 - [x] Interactive R Markdown dashboard for exploring results (v0.1.24)
 - [x] Plugin API for community-contributed tests and methods (v0.1.25)
 - [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate` (v0.1.19)
-- [ ] Blockchain-backed audit trail of all analyses  
+- [x] Blockchain-backed audit trail of all analyses (v0.1.27)
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  
 - [ ] Real-time interim monitoring dashboards  

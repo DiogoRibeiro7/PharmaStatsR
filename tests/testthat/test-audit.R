@@ -1,0 +1,10 @@
+test_that("audit blockchain records entries", {
+  pharma_audit_init()
+  res <- t.test(1:5, 6:10)
+  pharma_audit_log("t_test", res)
+  chain <- pharma_audit_get()
+  expect_equal(nrow(chain), 2)
+  expect_equal(chain$name[1], "genesis")
+  expect_equal(chain$name[2], "t_test")
+  expect_true(!is.na(chain$hash[2]))
+})

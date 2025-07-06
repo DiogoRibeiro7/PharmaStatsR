@@ -142,6 +142,11 @@
 - Annotated completed roadmap tasks with version numbers for easier tracking.
 - Bumped package version and citation metadata.
 
+## 0.1.27
+- Added blockchain-backed audit trail helpers.
+- Updated README with an example.
+- Marked roadmap task complete and bumped version.
+
 ## 0.1.26
 - Annotated completed roadmap tasks with version numbers for easier tracking.
 - Bumped package version and citation metadata.

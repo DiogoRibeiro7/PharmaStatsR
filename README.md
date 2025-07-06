@@ -104,6 +104,11 @@ pharma_register_plugin("avg", my_summary)
 pharma_run_plugin("avg", 1:10)
 pharma_list_plugins()
 pharma_unregister_plugin("avg")
+
+# Audit analyses with a blockchain ledger
+pharma_audit_init()
+pharma_audit_log("t_test", t.test(rnorm(5), rnorm(5)))
+pharma_audit_get()
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
