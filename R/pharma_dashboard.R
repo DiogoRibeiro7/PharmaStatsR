@@ -19,7 +19,8 @@
 #' }
 pharma_dashboard <- function(launch = interactive()) {
   dash_path <- system.file("dashboard", "pharma_dashboard.Rmd",
-                           package = "PharmaTestSuite")
+    package = "PharmaTestSuite"
+  )
   if (dash_path == "") {
     stop("Dashboard file not found")
   }

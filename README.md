@@ -17,6 +17,8 @@ PharmaTestSuite is not yet available on CRAN. You can install the development ve
 
 ```r
 library(PharmaTestSuite)
+library(survival)
+library(lme4)
 pharma_greeting()
 
 # built-in datasets
@@ -104,6 +106,17 @@ pharma_register_plugin("avg", my_summary)
 pharma_run_plugin("avg", 1:10)
 pharma_list_plugins()
 pharma_unregister_plugin("avg")
+
+- `pharma_audit_log()` records analysis steps with SHA256 hashed entries.
+- `pharma_audit_verify()` recomputes hashes to detect any tampering.
+- `pharma_validation_report()` checks a dataset for required columns.
+- `pharma_interim_dashboard()` launches a simple Shiny dashboard.
+pharma_audit_log("Loaded data")
+pharma_audit_verify()
+pharma_validation_report(pharma_sample, "Treatment effect")
+pharma_interim_dashboard(launch = FALSE)
+This log provides basic tamper-evident tracking only and is not a full
+blockchain implementation.
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
@@ -133,6 +146,10 @@ observations in fitted models.
 fit <- lm(response ~ treatment + dose, data = pharma_sample)
 pharma_model_diagnostics(fit)
 ```
+
+## Development and testing
+
+Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Continuous integration runs the same checks via GitHub Actions in `R-CMD-check.yaml`.
 
 ## Contact
 

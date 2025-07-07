@@ -13,9 +13,11 @@
 #' @examples
 #' if (requireNamespace("mstate", quietly = TRUE)) {
 #'   tmat <- mstate::transMat(list(c(2, 3), c(3), c()),
-#'                            names = c("Healthy", "Ill", "Dead"))
+#'     names = c("Healthy", "Ill", "Dead")
+#'   )
 #'   cfit <- survival::coxph(Surv(Tstart, Tstop, status) ~ treatment + strata(trans),
-#'                           data = mstate_example, method = "breslow")
+#'     data = mstate_example, method = "breslow"
+#'   )
 #'   pharma_multistate_model(cfit, tmat)
 #' }
 pharma_multistate_model <- function(coxFit, trans, ...) {

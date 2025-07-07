@@ -12,15 +12,20 @@
 #' @export
 #'
 #' @examples
-#' pharma_emax(pharma_dose_response$dose,
-#'             pharma_dose_response$response)
+#' pharma_emax(
+#'   pharma_dose_response$dose,
+#'   pharma_dose_response$response
+#' )
 pharma_emax <- function(dose, response,
-                        start = list(e0 = min(response),
-                                     emax = max(response) - min(response),
-                                     ed50 = stats::median(dose)),
+                        start = list(
+                          e0 = min(response),
+                          emax = max(response) - min(response),
+                          ed50 = stats::median(dose)
+                        ),
                         ...) {
   stats::nls(response ~ e0 + (emax * dose) / (ed50 + dose),
-             start = start, ...)
+    start = start, ...
+  )
 }
 
 #' Fit a sigmoid Emax model
@@ -36,16 +41,21 @@ pharma_emax <- function(dose, response,
 #' @export
 #'
 #' @examples
-#' pharma_sigmoid_emax(pharma_dose_response$dose,
-#'                     pharma_dose_response$response)
+#' pharma_sigmoid_emax(
+#'   pharma_dose_response$dose,
+#'   pharma_dose_response$response
+#' )
 pharma_sigmoid_emax <- function(dose, response,
-                                start = list(e0 = min(response),
-                                             emax = max(response) - min(response),
-                                             ed50 = stats::median(dose),
-                                             h = 1),
+                                start = list(
+                                  e0 = min(response),
+                                  emax = max(response) - min(response),
+                                  ed50 = stats::median(dose),
+                                  h = 1
+                                ),
                                 ...) {
-  stats::nls(response ~ e0 + (emax * dose^h)/(ed50^h + dose^h),
-             start = start, ...)
+  stats::nls(response ~ e0 + (emax * dose^h) / (ed50^h + dose^h),
+    start = start, ...
+  )
 }
 
 #' Fit a mixed-effects Emax model using nlme
@@ -63,8 +73,9 @@ pharma_sigmoid_emax <- function(dose, response,
 #'
 #' @examples
 #' pharma_emax_nlme(pharma_dose_response$dose,
-#'                  pharma_dose_response$response,
-#'                  subject = pharma_dose_response$subject)
+#'   pharma_dose_response$response,
+#'   subject = pharma_dose_response$subject
+#' )
 pharma_emax_nlme <- function(dose, response, subject,
                              start = NULL,
                              ...) {
@@ -73,18 +84,22 @@ pharma_emax_nlme <- function(dose, response, subject,
   }
   data <- data.frame(subject = subject, dose = dose, response = response)
   if (is.null(start)) {
-    nls_fit <- stats::nls(response ~ e0 + (emax * dose)/(ed50 + dose),
-                         data = data,
-                         start = list(e0 = min(response),
-                                      emax = max(response) - min(response),
-                                      ed50 = stats::median(dose)))
+    nls_fit <- stats::nls(response ~ e0 + (emax * dose) / (ed50 + dose),
+      data = data,
+      start = list(
+        e0 = min(response),
+        emax = max(response) - min(response),
+        ed50 = stats::median(dose)
+      )
+    )
     start <- coef(nls_fit)
   }
-  nlme::nlme(response ~ e0 + (emax * dose)/(ed50 + dose),
-             data = data,
-             fixed = e0 + emax + ed50 ~ 1,
-             random = e0 + emax + ed50 ~ 1 | subject,
-             start = start,
-             control = nlme::nlmeControl(returnObject = TRUE),
-             ...)
+  nlme::nlme(response ~ e0 + (emax * dose) / (ed50 + dose),
+    data = data,
+    fixed = e0 + emax + ed50 ~ 1,
+    random = e0 + emax + ed50 ~ 1 | subject,
+    start = start,
+    control = nlme::nlmeControl(returnObject = TRUE),
+    ...
+  )
 }

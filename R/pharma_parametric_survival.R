@@ -12,8 +12,9 @@
 #'
 #' @examples
 #' pharma_parametric_survival(Surv(time, status) ~ treatment,
-#'                            data = pharma_survival,
-#'                            dist = "weibull")
+#'   data = pharma_survival,
+#'   dist = "weibull"
+#' )
 pharma_parametric_survival <- function(formula, data, dist = "weibull", ...) {
   survival::survreg(formula = formula, data = data, dist = dist, ...)
 }
