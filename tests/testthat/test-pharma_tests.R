@@ -4,7 +4,7 @@ test_that("pharma_t_test returns htest", {
 })
 
 test_that("pharma_chisq_test returns htest", {
-  tbl <- matrix(c(10,5,6,9), nrow = 2)
+  tbl <- matrix(c(10, 5, 6, 9), nrow = 2)
   res <- pharma_chisq_test(tbl)
   expect_s3_class(res, "htest")
 })
@@ -79,7 +79,7 @@ test_that("pharma_parametric_survival returns survreg", {
 })
 
 test_that("pharma_lmm returns lmerMod", {
-  res <- pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
+  res <- pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
   expect_s4_class(res, "lmerMod")
 })
 
@@ -90,10 +90,12 @@ test_that("pharma_gee returns geeglm", {
 })
 
 test_that("pharma_cox_timevarying returns coxph", {
-  dat <- data.frame(start = c(0, 5, 0, 7),
-                    stop = c(5, 10, 7, 12),
-                    status = c(0, 1, 0, 1),
-                    treatment = c(0, 0, 1, 1))
+  dat <- data.frame(
+    start = c(0, 5, 0, 7),
+    stop = c(5, 10, 7, 12),
+    status = c(0, 1, 0, 1),
+    treatment = c(0, 0, 1, 1)
+  )
   res <- pharma_cox_timevarying(survival::Surv(start, stop, status) ~ treatment, data = dat)
   expect_s3_class(res, "coxph")
 })
@@ -155,8 +157,9 @@ test_that("pharma_emax_nlme returns lme", {
   skip_if_not_installed("nlme")
   skip("unstable fit on this platform")
   res <- pharma_emax_nlme(pharma_dose_response$dose,
-                          pharma_dose_response$response,
-                          subject = pharma_dose_response$subject)
+    pharma_dose_response$response,
+    subject = pharma_dose_response$subject
+  )
   expect_s4_class(res, "lme")
 })
 

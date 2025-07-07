@@ -31,7 +31,7 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
       openxlsx::write.xlsx(res, file)
     } else if (grepl("\\.docx$", file, ignore.case = TRUE)) {
       if (!requireNamespace("flextable", quietly = TRUE) ||
-          !requireNamespace("officer", quietly = TRUE)) {
+        !requireNamespace("officer", quietly = TRUE)) {
         stop("Packages 'flextable' and 'officer' are required to write .docx files")
       }
       # build Word document containing the table

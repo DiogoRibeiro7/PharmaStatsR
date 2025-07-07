@@ -33,6 +33,8 @@ pharma_rate_metrics <- function(event1, n1, event2, n2, conf.level = 0.95) {
     se_log_rr <- sqrt((1 - p1) / (event1) + (1 - p2) / (event2))
     rr_ci <- exp(log(rr) + c(-1, 1) * z * se_log_rr)
   }
-  list(risk_difference = rd, rd_ci = rd_ci,
-       risk_ratio = rr, rr_ci = rr_ci)
+  list(
+    risk_difference = rd, rd_ci = rd_ci,
+    risk_ratio = rr, rr_ci = rr_ci
+  )
 }

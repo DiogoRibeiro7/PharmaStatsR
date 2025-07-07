@@ -142,6 +142,26 @@
 - Annotated completed roadmap tasks with version numbers for easier tracking.
 - Bumped package version and citation metadata.
 
-## 0.1.26
-- Annotated completed roadmap tasks with version numbers for easier tracking.
-- Bumped package version and citation metadata.
+## 0.1.27
+- Added blockchain audit logging, regulatory validation reports and interim monitoring dashboard.
+
+## 0.1.28
+- Added pharma_audit_verify to check audit log integrity.
+- Improved setup.sh to install R packages via install.packages and removed apt-get usage.
+
+## 0.1.29
+- setup.sh now installs R automatically if missing.
+
+## 0.1.30
+- Improved README examples with library calls and added testing instructions.
+- Unchecked incomplete roadmap items for audit logging, validation, and interim monitoring.
+- setup.sh now installs packages only via install.packages instead of apt-get.
+
+## 0.1.31
+- Added documentation for all new features and ensured `setup.sh` runs tests without errors.
+- Generated missing Rd files and formatted code with `styler`.
+
+## 0.1.32
+- Switched audit log to SHA256 hashing and validate message integrity.
+- Added checks that tampering with any log entry fails verification.
+- Updated README and examples to clarify the log is only tamper-evident.

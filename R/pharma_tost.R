@@ -35,6 +35,8 @@ pharma_tost <- function(x, y, low_eqbound, high_eqbound, alpha = 0.05) {
   p_value <- max(p1, p2)
   crit <- stats::qt(1 - alpha, df = df)
   ci <- diff + c(-1, 1) * crit * se
-  list(statistic = c(t1 = t1, t2 = t2), p.value = p_value,
-       diff = diff, conf.int = ci, df = df)
+  list(
+    statistic = c(t1 = t1, t2 = t2), p.value = p_value,
+    diff = diff, conf.int = ci, df = df
+  )
 }

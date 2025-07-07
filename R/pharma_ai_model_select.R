@@ -19,11 +19,11 @@
 #' @examples
 #' if (requireNamespace("caret", quietly = TRUE)) {
 #'   pharma_ai_model_select(
-    response ~ treatment,
-    data = pharma_sample,
-    models = c("glm", "rf", "svmLinear"),
-    metric = "Accuracy"
-  )
+#'     response ~ treatment,
+#'     data = pharma_sample,
+#'     models = c("glm", "rf", "svmLinear"),
+#'     metric = "Accuracy"
+#'   )
 #' }
 pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
                                    metric = "Accuracy", trControl = NULL, ...) {
@@ -42,7 +42,15 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
   # Ensure the formula references columns present in `data` before training
   # to avoid hard-to-debug errors during caret model fitting.
   tryCatch(stats::model.frame(formula, data = data),
-           error = function(e) stop("Invalid formula: ", e$message))
+    error = function(e) stop("Invalid formula: ", e$message)
+  )
+
+  # Convert a numeric binary response to factor if using a classification metric
+  response_var <- all.vars(formula)[1]
+  if (metric == "Accuracy" && is.numeric(data[[response_var]]) &&
+    length(unique(data[[response_var]])) == 2) {
+    data[[response_var]] <- factor(data[[response_var]])
+  }
 
   # Default to 5-fold cross-validation if the caller did not supply a
   # custom trainControl object. This provides reasonable resampling
@@ -54,8 +62,10 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
   # fit each candidate model using caret::train
   fits <- lapply(models, function(meth) {
     tryCatch(
-      caret::train(formula, data = data, method = meth, metric = metric,
-                   trControl = trControl, ...),
+      caret::train(formula,
+        data = data, method = meth, metric = metric,
+        trControl = trControl, ...
+      ),
       error = function(e) {
         warning(sprintf("Model %s failed to fit: %s", meth, e$message))
         NULL

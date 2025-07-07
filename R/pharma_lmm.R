@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
+#' pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
 pharma_lmm <- function(formula, data, ...) {
   lme4::lmer(formula = formula, data = data, ...)
 }

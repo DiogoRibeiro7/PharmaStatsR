@@ -1,0 +1,19 @@
+---
+title: "Interim Monitoring Dashboard"
+output: flexdashboard::flex_dashboard
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+library(PharmaTestSuite)
+```
+
+## Enrollment
+
+```{r}
+renderPlot({
+  plot(cumsum(rbinom(100, 1, 0.05)), type = "l",
+       xlab = "Day", ylab = "Participants",
+       main = "Simulated Enrollment Over Time")
+})
+```

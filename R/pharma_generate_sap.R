@@ -32,8 +32,9 @@
 #' cat(sap, sep = "\n")
 #'
 #' pharma_generate_sap("analysis_plan.md",
-#'                     title = "Clinical Trial",
-#'                     author = "Diogo Ribeiro")
+#'   title = "Clinical Trial",
+#'   author = "Diogo Ribeiro"
+#' )
 #'
 #' pharma_generate_sap(
 #'   objectives = "Assess efficacy and safety",
@@ -50,8 +51,10 @@ pharma_generate_sap <- function(path = NULL,
                                 criteria = "Specify key inclusion and exclusion criteria.",
                                 software = "Specify the software packages and versions that will be used.",
                                 extra_sections = NULL,
-                                include_sections = c("Objectives", "Endpoints", "Analysis Populations",
-                                                     "Inclusion/Exclusion Criteria", "Planned Analyses", "Software")) {
+                                include_sections = c(
+                                  "Objectives", "Endpoints", "Analysis Populations",
+                                  "Inclusion/Exclusion Criteria", "Planned Analyses", "Software"
+                                )) {
   # Begin assembling the SAP text with the title and author information
   sap_text <- c(
     paste0("# Statistical Analysis Plan - ", title),
