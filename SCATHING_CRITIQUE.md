@@ -1,9 +1,62 @@
-The current state of PharmaTestSuite demonstrates an alarming disregard for software engineering fundamentals. The so-called blockchain audit log is nothing more than a CSV file with naive hashing. It offers zero protection against tampering and lacks any mechanism for verifying the integrity of previous entries. Advertising this as a security feature is misleading at best.
+This document outlines issues that require attention in the PharmaTestSuite
+project and proposes actions to resolve them. Each point below summarises the
+problem followed by a suggested approach.
 
-The setup process is equally dismal. `setup.sh` tries to install system packages using sudo without checking for network connectivity or appropriate privileges. In any shared or locked-down environment this fails immediately, leaving contributors unsure how to proceed. A simple explanation of required dependencies or a containerized approach would be vastly more reliable.
+## Audit log security
 
-Documentation continues to lag behind the code. Examples in the README omit necessary library calls and gloss over function arguments. There is no mention of continuous integration even though tests are supposedly mandatory. The ROADMAP proudly marks half‑implemented features as complete, obscuring the fact that many tasks remain unfinished.
+**Issue**: The current audit log is a CSV file with simple hashing. It does not
+prevent tampering or provide verification of previous entries, yet it is
+presented as a security feature.
 
-Version management is inconsistent: NEWS lists updates for version 0.1.31 while the DESCRIPTION file still shows 0.1.30. This sort of oversight erodes confidence that releases are actually tested and vetted before tagging.
+**Recommendation**: Implement a true append-only log where each entry includes
+the hash of the previous record. Consider using existing packages such as
+`digest` for hashing and document a verification function that users can run to
+check integrity.
 
-In short, the repository needs a thorough cleanup: finalize features before advertising them, provide clear setup instructions, maintain consistent versioning, and improve the documentation. Without these basics, the workflow will remain chaotic and error‑prone.
+## Setup script reliability
+
+**Issue**: `setup.sh` installs system packages via `sudo` without checking for
+network access or privileges. This often fails on locked-down systems, leaving
+contributors without guidance.
+
+**Recommendation**: Provide clear dependency instructions in the README and
+offer a containerised setup (for example, via Docker). The script should exit
+gracefully when prerequisites are missing and link to the setup guide.
+
+## Documentation and examples
+
+**Issue**: Examples lack necessary `library()` calls and some function
+arguments are undocumented. Continuous integration is not mentioned despite the
+project relying on tests. The ROADMAP lists partially implemented items as
+complete.
+
+**Recommendation**: Update the README and vignettes with complete code examples
+and document all arguments using roxygen2. Clarify the CI process and mark
+ROADMAP items accurately to reflect real progress.
+
+## Version management
+
+**Issue**: VERSION numbers in DESCRIPTION and NEWS have drifted. This causes
+confusion around which features are included in each release.
+
+**Recommendation**: Use the provided `scripts/bump_version.sh` to keep version
+information consistent across files, and verify NEWS entries before tagging a
+release.
+
+## Dataset quality
+
+**Issue**: The example datasets contain many placeholders that inflate the
+package size and cause runtime errors when used in analyses.
+
+**Recommendation**: Remove placeholder data and supply smaller, well documented
+examples. Functions depending on these datasets should include robust checks and
+clear error messages.
+
+## Regulatory disclaimers
+
+**Issue**: The README hints at compliance but only provides vague, one-line
+disclaimers.
+
+**Recommendation**: Replace the vague statements with a concise section that
+explains the package offers helper functions but does not guarantee compliance.
+Point users to relevant regulatory documents for formal guidance.

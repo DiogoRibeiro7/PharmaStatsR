@@ -1,15 +1,15 @@
 #' Record an analysis step in a blockchain-like audit trail
 #'
 #' Appends a hashed entry to a CSV log file. Each entry stores the
-#' SHA256 hash of the previous entry so that tampering with any record
-#' invalidates the subsequent chain. This provides a lightweight
-#' approximation of a blockchain-backed audit trail. The hash is
-#' computed from the message, timestamp and previous hash, allowing the
-#' chain to be verified later.
+#' SHA256 hash of the message, timestamp and previous hash so that
+#' tampering with any record invalidates the subsequent chain. This
+#' provides a lightweight append-only log using the `digest` package.
 #'
 #' @param message Character string describing the analysis step.
 #' @param file Path to the CSV log file. If the file does not exist, a
 #'   new log is created with a genesis block.
+#' @param key Deprecated and ignored. It is kept for backward compatibility
+#'   but no longer used.
 #'
 #' @return Invisibly returns the path to the log file.
 #' @export
@@ -19,7 +19,9 @@
 #' pharma_audit_log("Load data", tmp)
 #' pharma_audit_log("Fit model", tmp)
 #' read.csv(tmp)
-pharma_audit_log <- function(message, file = "audit.log") {
+pharma_audit_log <- function(message,
+                             file = "audit.log",
+                             key = NULL) {
   if (!is.character(message) || length(message) != 1) {
     stop("message must be a single character string")
   }

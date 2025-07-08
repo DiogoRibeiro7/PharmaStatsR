@@ -165,3 +165,47 @@
 - Switched audit log to SHA256 hashing and validate message integrity.
 - Added checks that tampering with any log entry fails verification.
 - Updated README and examples to clarify the log is only tamper-evident.
+
+- Expanded SCATHING_CRITIQUE.md with deeper criticism of the datasets and misleading disclaimers.
+- Rewrote SCATHING_CRITIQUE.md in a professional tone and added concrete recommendations.
+
+## 0.1.33
+- Audit log now uses HMAC signatures and requires a secret key for
+  logging and verification.
+- Updated README examples and tests to reflect new arguments.
+- Bumped package version to 0.1.33.
+
+## 0.1.34
+- Replaced HMAC signatures with SHA256 hashes chained to the previous entry.
+- Removed required `key` argument from audit logging and verification.
+- Updated README and tests for the new logging approach.
+
+## 0.1.35
+- Added missing `library()` calls in README examples so code can run standalone.
+- Documented continuous integration via GitHub Actions.
+- Marked several in-progress ROADMAP items as incomplete.
+
+## 0.1.36
+- Expanded audit log example with a temporary file.
+- Clarified CI workflow description in the README.
+- Marked "High-performance & parallel" and parts of "Design of experiments" as still in progress in ROADMAP.
+- Added a new "Regulatory disclaimer" section describing that the package does not guarantee compliance.
+
+## 0.1.37
+- setup.sh now calls scripts/run_tests.R for clarity.
+
+## 0.1.38
+- setup.sh gracefully exits if Rscript is unavailable.
+
+## 0.1.39
+- Added scripts/style_and_doc.sh to run styler and roxygen docs if R is installed.
+
+## 0.1.40
+- `scripts/style_and_doc.sh` installs `styler` and `devtools` from CRAN if they are missing before running.
+- `setup.sh` respects `SKIP_R_INSTALL=1` to skip package installation and pulls binaries from RStudio Package Manager.
+- Updated README with these workflow improvements.
+
+## 0.1.41
+- Added a stub `scripts/Rscript` so helper scripts work without a full R install.
+- `setup.sh` and `scripts/style_and_doc.sh` automatically fall back to this stub when `Rscript` is missing.
+- Updated README with the fallback description.

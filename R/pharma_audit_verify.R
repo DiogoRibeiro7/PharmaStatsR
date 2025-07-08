@@ -7,6 +7,8 @@
 #' detected. Returns `TRUE` if the chain is valid.
 #'
 #' @param file Path to the CSV log file. Defaults to "audit.log".
+#' @param key Deprecated and ignored. It is kept for backward compatibility
+#'   but not used.
 #'
 #' @return Logical `TRUE` if the log is intact, otherwise `FALSE`.
 #' @export
@@ -16,7 +18,7 @@
 #' pharma_audit_log("start", f)
 #' pharma_audit_log("next", f)
 #' pharma_audit_verify(f)
-pharma_audit_verify <- function(file = "audit.log") {
+pharma_audit_verify <- function(file = "audit.log", key = NULL) {
   if (!file.exists(file)) {
     stop("Log file does not exist")
   }

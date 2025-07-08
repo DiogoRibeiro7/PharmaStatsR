@@ -98,21 +98,32 @@ pharma_ai_model_select(
 pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 pharma_multistate_model(cox_ms, trans_matrix)
 
-pharma_dashboard(launch = FALSE)
 
+pharma_dashboard(launch = FALSE)
+```
+
+```r
 # Register a custom plugin
+library(PharmaTestSuite)
 my_summary <- function(x) mean(x)
 pharma_register_plugin("avg", my_summary)
 pharma_run_plugin("avg", 1:10)
 pharma_list_plugins()
 pharma_unregister_plugin("avg")
+```
 
-- `pharma_audit_log()` records analysis steps with SHA256 hashed entries.
+- `pharma_audit_log()` records analysis steps using SHA256 hashes chained to the previous entry.
 - `pharma_audit_verify()` recomputes hashes to detect any tampering.
 - `pharma_validation_report()` checks a dataset for required columns.
 - `pharma_interim_dashboard()` launches a simple Shiny dashboard.
-pharma_audit_log("Loaded data")
-pharma_audit_verify()
+
+```r
+# Audit logging helpers
+library(PharmaTestSuite)
+tmp <- tempfile()
+pharma_audit_log("Loaded data", tmp)
+pharma_audit_log("Fit model", tmp)
+pharma_audit_verify(tmp)
 pharma_validation_report(pharma_sample, "Treatment effect")
 pharma_interim_dashboard(launch = FALSE)
 This log provides basic tamper-evident tracking only and is not a full
@@ -149,7 +160,8 @@ pharma_model_diagnostics(fit)
 
 ## Development and testing
 
-Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Continuous integration runs the same checks via GitHub Actions in `R-CMD-check.yaml`.
+Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Set the environment variable `SKIP_R_INSTALL=1` to skip package installation when compilation would take too long. Continuous integration runs the same workflow on every commit and pull request using the `R-CMD-check.yaml` GitHub Actions configuration. The action installs package dependencies and runs `devtools::test()` so that all tests must pass before code is merged.
+If R is unavailable, these helper scripts fall back to a stub at `scripts/Rscript` that simply prints a warning and skips any R commands.
 
 ## Contact
 
@@ -157,6 +169,13 @@ For questions or feedback, please contact Diogo Ribeiro
 (<dfr@esmad.ipp.pt>),
 ESMAD - Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
+
+## Regulatory disclaimer
+
+PharmaTestSuite offers convenience wrappers for common analyses but does **not**
+guarantee compliance with any specific regulatory guidance. Users remain
+responsible for validating methods against the official documents such as ICH
+E9(R1) or FDA guidelines.
 
 ## Citation
 
@@ -167,3 +186,7 @@ GitHub.
 ## Versioning
 
 The project uses a simple helper script to update version numbers across the package metadata. Run `scripts/bump_version.sh <new-version>` to increment the version in `DESCRIPTION` and `CITATION.cff`, append a section to `NEWS.md`, commit the change, and create a matching Git tag.
+
+## Developer utilities
+
+Run `scripts/style_and_doc.sh` to format the R code with `styler` and refresh documentation via `devtools`. The helper installs those packages automatically if they are missing and skips everything if R is unavailable.

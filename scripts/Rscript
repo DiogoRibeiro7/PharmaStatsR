@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Stub Rscript for environments without R.
+# It prints a warning and exits successfully so helper scripts can continue.
+
+echo "Warning: stub Rscript invoked; real R is unavailable." >&2
+exit 0
