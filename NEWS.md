@@ -214,3 +214,6 @@
 - README examples now include `library(PharmaTestSuite)` for clarity and
   mention the GitHub Actions CI workflow.
 - ROADMAP items for the dashboard and plugin API are marked as in progress.
+
+## 0.1.43
+- Synced version numbers across DESCRIPTION, CITATION.cff, and NEWS using scripts/bump_version.sh.
