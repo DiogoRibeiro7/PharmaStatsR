@@ -7,8 +7,8 @@ if command -v Rscript >/dev/null; then
 elif [ -x "$script_dir/scripts/Rscript" ]; then
   RSCRIPT="$script_dir/scripts/Rscript"
 else
-  echo "Rscript not found. Skipping R package installation and tests." >&2
-  exit 0
+  echo "Rscript not found. Install R to run tests and package installation." >&2
+  exit 1
 fi
 
 # Install required R packages if missing and run tests
@@ -31,4 +31,5 @@ if [ ${#missing_pkgs[@]} -gt 0 ]; then
 fi
 
 "$RSCRIPT" scripts/run_tests.R
+
 

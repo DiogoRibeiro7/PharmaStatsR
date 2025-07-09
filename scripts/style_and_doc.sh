@@ -7,8 +7,8 @@ if command -v Rscript >/dev/null; then
 elif [ -x "$script_dir/Rscript" ]; then
   RSCRIPT="$script_dir/Rscript"
 else
-  echo "Rscript not found. Skipping style and documentation." >&2
-  exit 0
+  echo "Rscript not found. Skipping style and documentation because Rscript is missing. Install R to enable this step." >&2
+  exit 1
 fi
 
 need_pkg() {

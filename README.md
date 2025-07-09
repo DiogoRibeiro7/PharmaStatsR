@@ -165,7 +165,7 @@ pharma_model_diagnostics(fit)
 ## Development and testing
 
 Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Set the environment variable `SKIP_R_INSTALL=1` to skip package installation when compilation would take too long. Continuous integration runs the same workflow on every commit and pull request using the `R-CMD-check.yaml` GitHub Actions configuration. The action installs package dependencies and runs `devtools::test()` so that all tests must pass before code is merged.
-If R is unavailable, these helper scripts fall back to a stub at `scripts/Rscript` that simply prints a warning and skips any R commands.
+These helper scripts require a working R installation. If `Rscript` is not found, they exit with an error instructing you to install R.
 
 ## Contact
 

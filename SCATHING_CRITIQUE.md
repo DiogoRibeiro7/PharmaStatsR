@@ -22,6 +22,7 @@ contributors without guidance.
 **Recommendation**: Provide clear dependency instructions in the README and
 offer a containerised setup (for example, via Docker). The script should exit
 gracefully when prerequisites are missing and link to the setup guide.
+Additionally, the stub `Rscript` previously exited successfully, allowing tests to be skipped unnoticed. The script now fails when R is missing to avoid false positives.
 
 ## Documentation and examples
 

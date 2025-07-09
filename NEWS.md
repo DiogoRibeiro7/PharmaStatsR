@@ -217,3 +217,9 @@
 
 ## 0.1.43
 - Synced version numbers across DESCRIPTION, CITATION.cff, and NEWS using scripts/bump_version.sh.
+
+## 0.1.44
+- Stub Rscript now exits with error so tests fail when R is missing.
+- setup.sh and scripts/style_and_doc.sh require a real R installation.
+- README instructs contributors to install R before running these scripts.
+- SCATHING_CRITIQUE notes remaining audit log and setup issues.
