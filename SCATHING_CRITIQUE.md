@@ -62,3 +62,9 @@ disclaimers.
 **Recommendation**: Replace the vague statements with a concise section that
 explains the package offers helper functions but does not guarantee compliance.
 Point users to relevant regulatory documents for formal guidance.
+
+## Continuous integration
+
+**Issue**: Test failures are ignored because setup scripts skip R CMD check when packages are missing. This hides real problems from contributors.
+
+**Recommendation**: Configure CI to fail fast whenever any dependency is missing and ensure the full test suite always runs in a clean environment.

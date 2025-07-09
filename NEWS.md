@@ -252,3 +252,7 @@
 ## 0.1.49
 - Fixed audit log tests to use the new `key` argument so `setup.sh` no longer fails when tests run.
 
+
+## 0.1.50
+- SCATHING_CRITIQUE expanded with a section on continuous integration failures.
+
