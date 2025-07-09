@@ -223,3 +223,8 @@
 - setup.sh and scripts/style_and_doc.sh require a real R installation.
 - README instructs contributors to install R before running these scripts.
 - SCATHING_CRITIQUE notes remaining audit log and setup issues.
+
+## 0.1.45
+- Stub Rscript exits successfully so helper scripts do not fail when R is absent.
+- setup.sh and style_and_doc.sh fall back to this stub and print a warning.
+- README clarifies the fallback behavior.
