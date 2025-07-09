@@ -114,8 +114,8 @@ pharma_list_plugins()
 pharma_unregister_plugin("avg")
 ```
 
-- `pharma_audit_log()` records analysis steps using SHA256 hashes chained to the previous entry.
-- `pharma_audit_verify()` recomputes hashes to detect any tampering.
+- `pharma_audit_log()` records analysis steps using SHA256 HMAC signatures chained to the previous entry.
+- `pharma_audit_verify()` recomputes these HMACs to detect tampering.
 - `pharma_validation_report()` checks a dataset for required columns.
 - `pharma_interim_dashboard()` launches a simple Shiny dashboard.
 
@@ -123,13 +123,13 @@ pharma_unregister_plugin("avg")
 # Audit logging helpers
 library(PharmaTestSuite)
 tmp <- tempfile()
-pharma_audit_log("Loaded data", tmp)
-pharma_audit_log("Fit model", tmp)
-pharma_audit_verify(tmp)
+pharma_audit_log("Loaded data", tmp, key = "secret")
+pharma_audit_log("Fit model", tmp, key = "secret")
+pharma_audit_verify(tmp, key = "secret")
 pharma_validation_report(pharma_sample, "Treatment effect")
 pharma_interim_dashboard(launch = FALSE)
-This log provides basic tamper-evident tracking only and is not a full
-blockchain implementation.
+This log provides only basic tamper evidence. It does not guarantee full
+integrity or security; for regulated use, adopt a proven audit solution.
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
@@ -167,7 +167,9 @@ pharma_model_diagnostics(fit)
 Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Set the environment variable `SKIP_R_INSTALL=1` to skip package installation when compilation would take too long. Continuous integration runs the same workflow on every commit and pull request using the `R-CMD-check.yaml` GitHub Actions configuration. The action installs package dependencies and runs `devtools::test()` so that all tests must pass before code is merged.
 These helper scripts require a working R installation. If `Rscript` is not found,
 a stub script from `scripts/Rscript` is used instead. The stub prints a warning
-and skips R-related tasks so development can continue even without R.
+and skips R-related tasks so development can continue even without R. For
+release preparation and CRAN checks you must run the scripts with a real
+`Rscript` binary installed.
 
 ## Contact
 

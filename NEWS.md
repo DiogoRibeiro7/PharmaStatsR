@@ -228,3 +228,11 @@
 - Stub Rscript exits successfully so helper scripts do not fail when R is absent.
 - setup.sh and style_and_doc.sh fall back to this stub and print a warning.
 - README clarifies the fallback behavior.
+
+## 0.1.46
+- Audit log now signs entries with SHA256 HMACs and requires a `key` argument.
+- README examples updated to show the key and warn that this log is not a full
+  security solution.
+- ROADMAP labels previously "in progress" items as planned.
+- SCATHING_CRITIQUE notes that the CSV log remains weak without secure key
+  management.

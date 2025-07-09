@@ -4,9 +4,9 @@ problem followed by a suggested approach.
 
 ## Audit log security
 
-**Issue**: The current audit log is a CSV file with simple hashing. It does not
-prevent tampering or provide verification of previous entries, yet it is
-presented as a security feature.
+**Issue**: The audit log now uses SHA256 HMACs chained together, but entries are
+still stored in a plain CSV file without secure key management. This remains
+easy to tamper with and should not be advertised as a robust security feature.
 
 **Recommendation**: Implement a true append-only log where each entry includes
 the hash of the previous record. Consider using existing packages such as
