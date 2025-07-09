@@ -1,70 +1,49 @@
-This document outlines issues that require attention in the PharmaTestSuite
-project and proposes actions to resolve them. Each point below summarises the
-problem followed by a suggested approach.
+This document summarises outstanding issues in the PharmaTestSuite project and proposes concrete actions for each topic.
 
 ## Audit log security
-
-**Issue**: The audit log now uses SHA256 HMACs chained together, but entries are
-still stored in a plain CSV file without secure key management. This remains
-easy to tamper with and should not be advertised as a robust security feature.
-
-**Recommendation**: Implement a true append-only log where each entry includes
-the hash of the previous record. Consider using existing packages such as
-`digest` for hashing and document a verification function that users can run to
-check integrity.
+Current Status: The audit log uses SHA256 HMACs chained together but relies on a CSV file with no key management.
+Action items:
+- Investigate append-only log formats and link entries using the `digest` package.
+- Provide a verification function that recalculates hashes.
+- Document the minimal security guarantees clearly in the README.
 
 ## Setup script reliability
-
-**Issue**: `setup.sh` installs system packages via `sudo` without checking for
-network access or privileges. This often fails on locked-down systems, leaving
-contributors without guidance.
-
-**Recommendation**: Provide clear dependency instructions in the README and
-offer a containerised setup (for example, via Docker). The script should exit
-gracefully when prerequisites are missing and link to the setup guide.
-The helper scripts now require a real `Rscript` binary and exit with an error if
-it is missing. This prevents tests from being bypassed when R is unavailable.
+Current Status: `setup.sh` installs packages via `sudo` and assumes network access.
+Action items:
+- Add prerequisite instructions in the README.
+- Detect missing privileges or offline environments and exit with guidance.
+- Offer a Docker-based setup for consistent environments.
+- Ensure scripts halt if R or dependencies are unavailable.
 
 ## Documentation and examples
-
-**Issue**: Examples lack necessary `library()` calls and some function
-arguments are undocumented. Continuous integration is not mentioned despite the
-project relying on tests. The ROADMAP lists partially implemented items as
-complete.
-
-**Recommendation**: Update the README and vignettes with complete code examples
-and document all arguments using roxygen2. Clarify the CI process and mark
-ROADMAP items accurately to reflect real progress.
+Current Status: Examples sometimes omit `library()` calls and not all parameters are documented. Continuous integration is mentioned only briefly.
+Action items:
+- Include `library(PharmaTestSuite)` in every example.
+- Document all function arguments using roxygen2 with runnable examples.
+- Explain the GitHub Actions workflow in the README.
+- Mark unimplemented ROADMAP items as planned or in progress rather than complete.
 
 ## Version management
-
-**Issue**: VERSION numbers in DESCRIPTION and NEWS have drifted. This causes
-confusion around which features are included in each release.
-
-**Recommendation**: Use the provided `scripts/bump_version.sh` to keep version
-information consistent across files, and verify NEWS entries before tagging a
-release.
+Current Status: Version numbers occasionally drift between DESCRIPTION and NEWS.
+Action items:
+- Always use `scripts/bump_version.sh` when changing the version.
+- Verify NEWS entries reflect the implemented features before tagging a release.
 
 ## Dataset quality
-
-**Issue**: The example datasets previously contained placeholders that inflated
-the package size.
-
-**Resolution**: Datasets have been trimmed to small simulated examples and now
-include usage examples and documentation. Functions validate inputs and throw
-clear errors when data is missing.
+Current Status: Early datasets were placeholders that inflated the package size.
+Action items:
+- Keep datasets small and simulated.
+- Document usage examples for each dataset.
+- Validate dataset structure in tests.
 
 ## Regulatory disclaimers
-
-**Issue**: The README hints at compliance but only provides vague, one-line
-disclaimers.
-
-**Recommendation**: Replace the vague statements with a concise section that
-explains the package offers helper functions but does not guarantee compliance.
-Point users to relevant regulatory documents for formal guidance.
+Current Status: The README previously contained vague statements about compliance.
+Action items:
+- Provide a concise disclaimer referencing ICH E9(R1) and FDA guidance.
+- Clarify that PharmaTestSuite facilitates analysis but does not ensure compliance.
 
 ## Continuous integration
-
-**Issue**: Test failures are ignored because setup scripts skip R CMD check when packages are missing. This hides real problems from contributors.
-
-**Recommendation**: Configure CI to fail fast whenever any dependency is missing and ensure the full test suite always runs in a clean environment.
+Current Status: Tests may be skipped when dependencies are missing.
+Action items:
+- Configure CI to fail fast if any package installation fails.
+- Run `R CMD check` on every commit to ensure a clean test environment.

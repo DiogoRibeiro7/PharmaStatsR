@@ -256,3 +256,6 @@
 ## 0.1.50
 - SCATHING_CRITIQUE expanded with a section on continuous integration failures.
 
+
+## 0.1.51
+- Rewrote SCATHING_CRITIQUE into a professional action plan.
