@@ -248,3 +248,7 @@
 ## 0.1.48
 - `scripts/Rscript` now wraps the system Rscript and errors if none is
   available, addressing feedback that the previous stub did nothing.
+
+## 0.1.49
+- Fixed audit log tests to use the new `key` argument so `setup.sh` no longer fails when tests run.
+
