@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Ensure Rscript is available. If not, instruct the user to install R.
-if ! command -v Rscript >/dev/null; then
-  echo "Rscript not found. Please install R and rerun this script." >&2
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if command -v Rscript >/dev/null; then
+  RSCRIPT="Rscript"
+else
+  echo "Rscript not found. Install R to run tests and package installation." >&2
   exit 1
 fi
 
@@ -11,23 +13,21 @@ fi
 packages=(devtools testthat)
 missing_pkgs=()
 for pkg in "${packages[@]}"; do
-  if ! Rscript -e "quit(status = ifelse(requireNamespace('$pkg', quietly=TRUE), 0, 1))" >/dev/null; then
+  if ! "$RSCRIPT" -e "quit(status = ifelse(requireNamespace('$pkg', quietly=TRUE), 0, 1))" >/dev/null; then
     missing_pkgs+=("$pkg")
   fi
 done
 
 # Install any missing packages from CRAN
 if [ ${#missing_pkgs[@]} -gt 0 ]; then
+  if [ -n "${SKIP_R_INSTALL:-}" ]; then
+    echo "Missing packages: ${missing_pkgs[*]}. SKIP_R_INSTALL is set; skipping installation." >&2
+    exit 0
+  fi
   pkgs=$(printf '"%s", ' "${missing_pkgs[@]}" | sed 's/, $//')
-  Rscript -e "install.packages(c($pkgs), repos='https://cloud.r-project.org')"
+  "$RSCRIPT" -e "install.packages(c($pkgs), repos='https://packagemanager.rstudio.com/all/latest')"
 fi
 
-Rscript - <<'RSCRIPT'
-required <- c("devtools", "testthat")
-missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
-if (length(missing)) {
-  install.packages(missing, repos = "https://cloud.r-project.org")
-}
-devtools::test()
-RSCRIPT
+"$RSCRIPT" scripts/run_tests.R
+
 

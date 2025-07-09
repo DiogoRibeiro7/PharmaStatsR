@@ -12,6 +12,9 @@
 #'   \item{response}{Numeric response}
 #' }
 #' @source Simulated data.
+#' @examples
+#' data(pharma_repeated)
+#' head(pharma_repeated)
 pharma_repeated <- data.frame(
   subject = rep(1:10, each = 2),
   condition = rep(c("A","B"), times = 10),

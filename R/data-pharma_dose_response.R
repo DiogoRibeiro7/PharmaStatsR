@@ -9,6 +9,9 @@
 #'   \item{response}{Observed response}
 #' }
 #' @source Simulated data.
+#' @examples
+#' data(pharma_dose_response)
+#' plot(pharma_dose_response$dose, pharma_dose_response$response)
 pharma_dose_response <- local({
   set.seed(123)
   dose <- rep(c(0, 10, 20, 50, 100), each = 6)

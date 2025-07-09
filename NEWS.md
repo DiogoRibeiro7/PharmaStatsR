@@ -165,3 +165,97 @@
 - Switched audit log to SHA256 hashing and validate message integrity.
 - Added checks that tampering with any log entry fails verification.
 - Updated README and examples to clarify the log is only tamper-evident.
+
+- Expanded SCATHING_CRITIQUE.md with deeper criticism of the datasets and misleading disclaimers.
+- Rewrote SCATHING_CRITIQUE.md in a professional tone and added concrete recommendations.
+
+## 0.1.33
+- Audit log now uses HMAC signatures and requires a secret key for
+  logging and verification.
+- Updated README examples and tests to reflect new arguments.
+- Bumped package version to 0.1.33.
+
+## 0.1.34
+- Replaced HMAC signatures with SHA256 hashes chained to the previous entry.
+- Removed required `key` argument from audit logging and verification.
+- Updated README and tests for the new logging approach.
+
+## 0.1.35
+- Added missing `library()` calls in README examples so code can run standalone.
+- Documented continuous integration via GitHub Actions.
+- Marked several in-progress ROADMAP items as incomplete.
+
+## 0.1.36
+- Expanded audit log example with a temporary file.
+- Clarified CI workflow description in the README.
+- Marked "High-performance & parallel" and parts of "Design of experiments" as still in progress in ROADMAP.
+- Added a new "Regulatory disclaimer" section describing that the package does not guarantee compliance.
+
+## 0.1.37
+- setup.sh now calls scripts/run_tests.R for clarity.
+
+## 0.1.38
+- setup.sh gracefully exits if Rscript is unavailable.
+
+## 0.1.39
+- Added scripts/style_and_doc.sh to run styler and roxygen docs if R is installed.
+
+## 0.1.40
+- `scripts/style_and_doc.sh` installs `styler` and `devtools` from CRAN if they are missing before running.
+- `setup.sh` respects `SKIP_R_INSTALL=1` to skip package installation and pulls binaries from RStudio Package Manager.
+- Updated README with these workflow improvements.
+
+## 0.1.41
+- Added a stub `scripts/Rscript` so helper scripts work without a full R install.
+- `setup.sh` and `scripts/style_and_doc.sh` automatically fall back to this stub when `Rscript` is missing.
+- Updated README with the fallback description.
+
+## 0.1.42
+- README examples now include `library(PharmaTestSuite)` for clarity and
+  mention the GitHub Actions CI workflow.
+- ROADMAP items for the dashboard and plugin API are marked as in progress.
+
+## 0.1.43
+- Synced version numbers across DESCRIPTION, CITATION.cff, and NEWS using scripts/bump_version.sh.
+
+## 0.1.44
+- Stub Rscript now exits with error so tests fail when R is missing.
+- setup.sh and scripts/style_and_doc.sh require a real R installation.
+- README instructs contributors to install R before running these scripts.
+- SCATHING_CRITIQUE notes remaining audit log and setup issues.
+
+## 0.1.45
+- Stub Rscript exits successfully so helper scripts do not fail when R is absent.
+- setup.sh and style_and_doc.sh fall back to this stub and print a warning.
+- README clarifies the fallback behavior.
+
+## 0.1.46
+- Audit log now signs entries with SHA256 HMACs and requires a `key` argument.
+- README examples updated to show the key and warn that this log is not a full
+  security solution.
+- ROADMAP labels previously "in progress" items as planned.
+- SCATHING_CRITIQUE notes that the CSV log remains weak without secure key
+  management.
+
+## 0.1.47
+- Tests now fail fast when `Rscript` is missing to avoid bypassing diagnostics.
+- Added usage examples for all exported functions and datasets.
+- README clarifies that the audit log provides only basic tamper evidence and
+  requires a real R installation for development scripts.
+- Datasets trimmed and documented with `@examples`.
+- SCATHING_CRITIQUE updated to reflect these improvements.
+
+## 0.1.48
+- `scripts/Rscript` now wraps the system Rscript and errors if none is
+  available, addressing feedback that the previous stub did nothing.
+
+## 0.1.49
+- Fixed audit log tests to use the new `key` argument so `setup.sh` no longer fails when tests run.
+
+
+## 0.1.50
+- SCATHING_CRITIQUE expanded with a section on continuous integration failures.
+
+
+## 0.1.51
+- Rewrote SCATHING_CRITIQUE into a professional action plan.

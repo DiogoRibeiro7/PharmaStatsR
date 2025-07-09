@@ -7,6 +7,9 @@
 #' detected. Returns `TRUE` if the chain is valid.
 #'
 #' @param file Path to the CSV log file. Defaults to "audit.log".
+#' @param key Character string with the secret key used when logging.
+#'   The verification recalculates HMAC signatures with this key and
+#'   ensures each entry links to the previous one.
 #'
 #' @return Logical `TRUE` if the log is intact, otherwise `FALSE`.
 #' @export
@@ -16,9 +19,12 @@
 #' pharma_audit_log("start", f)
 #' pharma_audit_log("next", f)
 #' pharma_audit_verify(f)
-pharma_audit_verify <- function(file = "audit.log") {
+pharma_audit_verify <- function(file = "audit.log", key) {
   if (!file.exists(file)) {
     stop("Log file does not exist")
+  }
+  if (missing(key) || !is.character(key) || length(key) != 1) {
+    stop("key must be a single character string")
   }
   if (!requireNamespace("digest", quietly = TRUE)) {
     stop("Package 'digest' is required for pharma_audit_verify()")
@@ -32,7 +38,8 @@ pharma_audit_verify <- function(file = "audit.log") {
       if (log$step[i] != "genesis") {
         return(FALSE)
       }
-      expected <- digest::digest(
+      expected <- digest::hmac(
+        key,
         paste("genesis", log$timestamp[i], NA_character_),
         algo = "sha256"
       )
@@ -44,7 +51,8 @@ pharma_audit_verify <- function(file = "audit.log") {
       if (log$previous_hash[i] != prev) {
         return(FALSE)
       }
-      expected <- digest::digest(
+      expected <- digest::hmac(
+        key,
         paste(log$step[i], log$timestamp[i], prev),
         algo = "sha256"
       )

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Wrapper for invoking a real Rscript binary when available.
+# This ensures setup helpers call the user's R installation if present
+# and otherwise fail with a clear message.
+
+if command -v Rscript >/dev/null; then
+  exec Rscript "$@"
+else
+  echo "Error: Rscript not found. Install R to run this project." >&2
+  exit 1
+fi
+

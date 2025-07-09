@@ -1,9 +1,49 @@
-The current state of PharmaTestSuite demonstrates an alarming disregard for software engineering fundamentals. The so-called blockchain audit log is nothing more than a CSV file with naive hashing. It offers zero protection against tampering and lacks any mechanism for verifying the integrity of previous entries. Advertising this as a security feature is misleading at best.
+This document summarises outstanding issues in the PharmaTestSuite project and proposes concrete actions for each topic.
 
-The setup process is equally dismal. `setup.sh` tries to install system packages using sudo without checking for network connectivity or appropriate privileges. In any shared or locked-down environment this fails immediately, leaving contributors unsure how to proceed. A simple explanation of required dependencies or a containerized approach would be vastly more reliable.
+## Audit log security
+Current Status: The audit log uses SHA256 HMACs chained together but relies on a CSV file with no key management.
+Action items:
+- Investigate append-only log formats and link entries using the `digest` package.
+- Provide a verification function that recalculates hashes.
+- Document the minimal security guarantees clearly in the README.
 
-Documentation continues to lag behind the code. Examples in the README omit necessary library calls and gloss over function arguments. There is no mention of continuous integration even though tests are supposedly mandatory. The ROADMAP proudly marks half‑implemented features as complete, obscuring the fact that many tasks remain unfinished.
+## Setup script reliability
+Current Status: `setup.sh` installs packages via `sudo` and assumes network access.
+Action items:
+- Add prerequisite instructions in the README.
+- Detect missing privileges or offline environments and exit with guidance.
+- Offer a Docker-based setup for consistent environments.
+- Ensure scripts halt if R or dependencies are unavailable.
 
-Version management is inconsistent: NEWS lists updates for version 0.1.31 while the DESCRIPTION file still shows 0.1.30. This sort of oversight erodes confidence that releases are actually tested and vetted before tagging.
+## Documentation and examples
+Current Status: Examples sometimes omit `library()` calls and not all parameters are documented. Continuous integration is mentioned only briefly.
+Action items:
+- Include `library(PharmaTestSuite)` in every example.
+- Document all function arguments using roxygen2 with runnable examples.
+- Explain the GitHub Actions workflow in the README.
+- Mark unimplemented ROADMAP items as planned or in progress rather than complete.
 
-In short, the repository needs a thorough cleanup: finalize features before advertising them, provide clear setup instructions, maintain consistent versioning, and improve the documentation. Without these basics, the workflow will remain chaotic and error‑prone.
+## Version management
+Current Status: Version numbers occasionally drift between DESCRIPTION and NEWS.
+Action items:
+- Always use `scripts/bump_version.sh` when changing the version.
+- Verify NEWS entries reflect the implemented features before tagging a release.
+
+## Dataset quality
+Current Status: Early datasets were placeholders that inflated the package size.
+Action items:
+- Keep datasets small and simulated.
+- Document usage examples for each dataset.
+- Validate dataset structure in tests.
+
+## Regulatory disclaimers
+Current Status: The README previously contained vague statements about compliance.
+Action items:
+- Provide a concise disclaimer referencing ICH E9(R1) and FDA guidance.
+- Clarify that PharmaTestSuite facilitates analysis but does not ensure compliance.
+
+## Continuous integration
+Current Status: Tests may be skipped when dependencies are missing.
+Action items:
+- Configure CI to fail fast if any package installation fails.
+- Run `R CMD check` on every commit to ensure a clean test environment.

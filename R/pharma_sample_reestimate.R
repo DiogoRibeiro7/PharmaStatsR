@@ -10,6 +10,8 @@
 #'
 #' @return New total sample size recommendation.
 #' @export
+#' @examples
+#' pharma_sample_reestimate(50, 0.4, 1)
 pharma_sample_reestimate <- function(current_n, effect, variance,
                                      target_power = 0.8, alpha = 0.05) {
   z_alpha <- qnorm(1 - alpha / 2)

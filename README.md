@@ -4,6 +4,8 @@
 
 PharmaTestSuite provides statistical test utilities tailored for the pharmaceutical industry. The package aims to simplify the design and execution of common analysis workflows and includes helpers for basic regulatory compliance checks.
 
+All changes are checked automatically via GitHub Actions, which runs the full test suite on every commit.
+
 ## Installation
 
 PharmaTestSuite is not yet available on CRAN. You can install the development version from GitHub:
@@ -98,25 +100,36 @@ pharma_ai_model_select(
 pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
 pharma_multistate_model(cox_ms, trans_matrix)
 
-pharma_dashboard(launch = FALSE)
 
+pharma_dashboard(launch = FALSE)
+```
+
+```r
 # Register a custom plugin
+library(PharmaTestSuite)
 my_summary <- function(x) mean(x)
 pharma_register_plugin("avg", my_summary)
 pharma_run_plugin("avg", 1:10)
 pharma_list_plugins()
 pharma_unregister_plugin("avg")
+```
 
-- `pharma_audit_log()` records analysis steps with SHA256 hashed entries.
-- `pharma_audit_verify()` recomputes hashes to detect any tampering.
+- `pharma_audit_log()` records analysis steps using SHA256 HMAC signatures chained to the previous entry. This provides only basic tamper evidence.
+- `pharma_audit_verify()` recomputes these HMACs to detect tampering.
 - `pharma_validation_report()` checks a dataset for required columns.
 - `pharma_interim_dashboard()` launches a simple Shiny dashboard.
-pharma_audit_log("Loaded data")
-pharma_audit_verify()
+
+```r
+# Audit logging helpers
+library(PharmaTestSuite)
+tmp <- tempfile()
+pharma_audit_log("Loaded data", tmp, key = "secret")
+pharma_audit_log("Fit model", tmp, key = "secret")
+pharma_audit_verify(tmp, key = "secret")
 pharma_validation_report(pharma_sample, "Treatment effect")
 pharma_interim_dashboard(launch = FALSE)
-This log provides basic tamper-evident tracking only and is not a full
-blockchain implementation.
+This log provides only basic tamper evidence. It does not guarantee full
+integrity or security; for regulated use, adopt a proven audit solution.
 ```
 **Note:** All datasets included in PharmaTestSuite are simulated examples only and should not be used to make clinical decisions. The package is intended for demonstration and educational purposes.
 
@@ -132,6 +145,7 @@ The `pharma_parallel_bootstrap` function distributes bootstrap iterations
 across multiple cores using the `future` framework.
 
 ```r
+library(PharmaTestSuite)
 stat <- function(d) mean(d$response)
 pharma_parallel_bootstrap(pharma_sample, stat, R = 100,
                           plan = "multisession")
@@ -143,13 +157,19 @@ Use `pharma_model_diagnostics()` to examine residuals and identify influential
 observations in fitted models.
 
 ```r
+library(PharmaTestSuite)
 fit <- lm(response ~ treatment + dose, data = pharma_sample)
 pharma_model_diagnostics(fit)
 ```
 
 ## Development and testing
 
-Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Continuous integration runs the same checks via GitHub Actions in `R-CMD-check.yaml`.
+Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Set the environment variable `SKIP_R_INSTALL=1` to skip package installation when compilation would take too long. Continuous integration runs the same workflow on every commit and pull request using the `R-CMD-check.yaml` GitHub Actions configuration. The action installs package dependencies and runs `devtools::test()` so that all tests must pass before code is merged.
+These helper scripts require a working R installation. A small wrapper script
+(`scripts/Rscript`) forwards arguments to your system `Rscript` and fails with a
+clear error if none is available. This ensures tests are not bypassed. For
+release preparation and CRAN checks you must have a real `Rscript` binary
+installed.
 
 ## Contact
 
@@ -157,6 +177,13 @@ For questions or feedback, please contact Diogo Ribeiro
 (<dfr@esmad.ipp.pt>),
 ESMAD - Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
+
+## Regulatory disclaimer
+
+PharmaTestSuite offers convenience wrappers for common analyses but does **not**
+guarantee compliance with any specific regulatory guidance. Users remain
+responsible for validating methods against the official documents such as ICH
+E9(R1) or FDA guidelines.
 
 ## Citation
 
@@ -167,3 +194,7 @@ GitHub.
 ## Versioning
 
 The project uses a simple helper script to update version numbers across the package metadata. Run `scripts/bump_version.sh <new-version>` to increment the version in `DESCRIPTION` and `CITATION.cff`, append a section to `NEWS.md`, commit the change, and create a matching Git tag.
+
+## Developer utilities
+
+Run `scripts/style_and_doc.sh` to format the R code with `styler` and refresh documentation via `devtools`. The helper installs those packages automatically if they are missing and skips everything if R is unavailable.

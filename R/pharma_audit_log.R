@@ -1,15 +1,16 @@
 #' Record an analysis step in a blockchain-like audit trail
 #'
 #' Appends a hashed entry to a CSV log file. Each entry stores the
-#' SHA256 hash of the previous entry so that tampering with any record
-#' invalidates the subsequent chain. This provides a lightweight
-#' approximation of a blockchain-backed audit trail. The hash is
-#' computed from the message, timestamp and previous hash, allowing the
-#' chain to be verified later.
+#' SHA256 hash of the message, timestamp and previous hash so that
+#' tampering with any record invalidates the subsequent chain. This
+#' provides a lightweight append-only log using the `digest` package.
 #'
 #' @param message Character string describing the analysis step.
 #' @param file Path to the CSV log file. If the file does not exist, a
 #'   new log is created with a genesis block.
+#' @param key Character string used as the secret key for the HMAC
+#'   signature. Each entry is signed with this key so any
+#'   modification can be detected during verification.
 #'
 #' @return Invisibly returns the path to the log file.
 #' @export
@@ -19,9 +20,14 @@
 #' pharma_audit_log("Load data", tmp)
 #' pharma_audit_log("Fit model", tmp)
 #' read.csv(tmp)
-pharma_audit_log <- function(message, file = "audit.log") {
+pharma_audit_log <- function(message,
+                             file = "audit.log",
+                             key) {
   if (!is.character(message) || length(message) != 1) {
     stop("message must be a single character string")
+  }
+  if (missing(key) || !is.character(key) || length(key) != 1) {
+    stop("key must be a single character string")
   }
 
   if (!requireNamespace("digest", quietly = TRUE)) {
@@ -30,7 +36,8 @@ pharma_audit_log <- function(message, file = "audit.log") {
 
   if (!file.exists(file)) {
     genesis_timestamp <- format(Sys.time(), tz = "UTC", usetz = TRUE)
-    genesis_hash <- digest::digest(
+    genesis_hash <- digest::hmac(
+      key,
       paste("genesis", genesis_timestamp, NA_character_),
       algo = "sha256"
     )
@@ -48,7 +55,7 @@ pharma_audit_log <- function(message, file = "audit.log") {
 
   timestamp <- format(Sys.time(), tz = "UTC", usetz = TRUE)
   prev_hash <- tail(log$hash, 1)
-  entry_hash <- digest::digest(paste(message, timestamp, prev_hash), algo = "sha256")
+  entry_hash <- digest::hmac(key, paste(message, timestamp, prev_hash), algo = "sha256")
   entry <- data.frame(
     step = message,
     timestamp = timestamp,

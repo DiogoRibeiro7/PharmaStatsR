@@ -12,6 +12,9 @@
 #'   \item{outcome}{Binary outcome}
 #' }
 #' @source Simulated data.
+#' @examples
+#' data(pharma_sample)
+#' head(pharma_sample)
 pharma_sample <- data.frame(
   subject = 1:20,
   treatment = rep(c("A", "B"), each = 10),

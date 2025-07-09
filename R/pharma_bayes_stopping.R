@@ -10,6 +10,8 @@
 #'
 #' @return Posterior probability of success.
 #' @export
+#' @examples
+#' pharma_bayes_stopping(1, 1, successes = 8, trials = 10)
 pharma_bayes_stopping <- function(prior_alpha, prior_beta, successes,
                                   trials, threshold = 0.95) {
   post_alpha <- prior_alpha + successes

@@ -34,9 +34,9 @@
   - [x] Group-sequential boundaries (O’Brien–Fleming, Pocock)
   - [x] Sample-size re-estimation
   - [x] Bayesian adaptive stopping rules
-- [x] **Design of experiments**
+- [ ] **Design of experiments** (planned)
   - [x] Factorial ANOVA, response-surface methods
-  - [x] Crossover and Latin-square analyses
+  - [ ] Crossover and Latin-square analyses
 - [x] **Missing data & imputation**
   - [x] Multiple imputation (`mice`)
   - [x] Sensitivity analyses
@@ -44,7 +44,7 @@
 ## ⬜ Long Term (6–12 months)
 - [x] **Trial simulation engine** (v0.1.12)
   - Simulate end-to-end trials under various randomization, dropout, event scenarios
-- [x] **High-performance & parallel**
+- [ ] **High-performance & parallel** (planned)
   - Parallel backends (`future`), GPU-accelerated bootstrap/simulation
 - [x] **Advanced resampling** (v0.1.13)
   - Wild bootstrap, block bootstrap for clustered data
@@ -63,11 +63,11 @@
   - Export to Word/Excel with formatting  
 
 ## ⬜ Extended Vision (>12 months)
-- [x] AI-driven model selection and hyperparameter tuning (v0.1.21)
-- [x] Automatic statistical analysis plan (SAP) generation (v0.1.20)
-- [x] Interactive R Markdown dashboard for exploring results (v0.1.24)
-- [x] Plugin API for community-contributed tests and methods (v0.1.25)
-- [x] Integration with Python’s `scipy`/`statsmodels` via `reticulate` (v0.1.19)
+- [ ] AI-driven model selection and hyperparameter tuning (v0.1.21)
+- [ ] Automatic statistical analysis plan (SAP) generation (v0.1.20)
+- [ ] Interactive R Markdown dashboard for exploring results (planned)
+- [ ] Plugin API for community-contributed tests and methods (planned)
+- [ ] Integration with Python’s `scipy`/`statsmodels` via `reticulate` (v0.1.19)
 - [ ] Blockchain-backed audit trail of all analyses  
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  
 - [ ] Real-time interim monitoring dashboards  
