@@ -4,8 +4,6 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if command -v Rscript >/dev/null; then
   RSCRIPT="Rscript"
-elif [ -x "$script_dir/scripts/Rscript" ]; then
-  RSCRIPT="$script_dir/scripts/Rscript"
 else
   echo "Rscript not found. Install R to run tests and package installation." >&2
   exit 1

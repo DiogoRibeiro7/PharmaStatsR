@@ -8,6 +8,10 @@
 #'
 #' @return A `stanreg` object
 #' @export
+#' @examples
+#' \dontrun{
+#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#' }
 pharma_bayesian_glm <- function(formula, data, ...) {
   if (!requireNamespace("rstanarm", quietly = TRUE)) {
     stop("Package 'rstanarm' is required for pharma_bayesian_glm()")
@@ -25,6 +29,11 @@ pharma_bayesian_glm <- function(formula, data, ...) {
 #'
 #' @return Summary object
 #' @export
+#' @examples
+#' \dontrun{
+#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#'   pharma_posterior_summary(fit)
+#' }
 pharma_posterior_summary <- function(model, prob = 0.95) {
   if (!requireNamespace("rstanarm", quietly = TRUE)) {
     stop("Package 'rstanarm' is required for pharma_posterior_summary()")
@@ -43,6 +52,11 @@ pharma_posterior_summary <- function(model, prob = 0.95) {
 #'
 #' @return A `ggplot` object
 #' @export
+#' @examples
+#' \dontrun{
+#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#'   pharma_pp_check(fit)
+#' }
 pharma_pp_check <- function(model, ...) {
   if (!requireNamespace("bayesplot", quietly = TRUE)) {
     stop("Package 'bayesplot' is required for pharma_pp_check()")

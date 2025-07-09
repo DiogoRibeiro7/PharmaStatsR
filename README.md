@@ -114,7 +114,7 @@ pharma_list_plugins()
 pharma_unregister_plugin("avg")
 ```
 
-- `pharma_audit_log()` records analysis steps using SHA256 HMAC signatures chained to the previous entry.
+- `pharma_audit_log()` records analysis steps using SHA256 HMAC signatures chained to the previous entry. This provides only basic tamper evidence.
 - `pharma_audit_verify()` recomputes these HMACs to detect tampering.
 - `pharma_validation_report()` checks a dataset for required columns.
 - `pharma_interim_dashboard()` launches a simple Shiny dashboard.
@@ -165,10 +165,9 @@ pharma_model_diagnostics(fit)
 ## Development and testing
 
 Run `./setup.sh` to install any missing R packages with `install.packages()` and execute the test suite. Set the environment variable `SKIP_R_INSTALL=1` to skip package installation when compilation would take too long. Continuous integration runs the same workflow on every commit and pull request using the `R-CMD-check.yaml` GitHub Actions configuration. The action installs package dependencies and runs `devtools::test()` so that all tests must pass before code is merged.
-These helper scripts require a working R installation. If `Rscript` is not found,
-a stub script from `scripts/Rscript` is used instead. The stub prints a warning
-and skips R-related tasks so development can continue even without R. For
-release preparation and CRAN checks you must run the scripts with a real
+These helper scripts require a working R installation. If `Rscript` is not
+available, the scripts exit with an error to ensure tests are not bypassed.
+For release preparation and CRAN checks you must run the scripts with a real
 `Rscript` binary installed.
 
 ## Contact

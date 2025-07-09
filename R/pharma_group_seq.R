@@ -8,6 +8,8 @@
 #'
 #' @return A numeric vector of critical z-values for each look.
 #' @export
+#' @examples
+#' pharma_group_seq(k = 3)
 pharma_group_seq <- function(k = 4, alpha = 0.05,
                              method = c("obrien-fleming", "pocock")) {
   method <- match.arg(method)

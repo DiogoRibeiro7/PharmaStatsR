@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Stub Rscript for environments without R.
-# Prints a warning and exits successfully so helper scripts can continue
-# gracefully without a real R installation.
+# Fails explicitly so package tests cannot be bypassed when R is absent.
 
-echo "Warning: stub Rscript invoked; real R is unavailable." >&2
-exit 0
+echo "Error: real Rscript not found. Install R to run these scripts." >&2
+exit 1
 

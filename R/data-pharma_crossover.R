@@ -11,6 +11,9 @@
 #'   \item{outcome}{Binary outcome}
 #' }
 #' @source Simulated data.
+#' @examples
+#' data(pharma_crossover)
+#' head(pharma_crossover)
 pharma_crossover <- data.frame(
   subject = rep(1:10, each = 2),
   period = rep(1:2, times = 10),

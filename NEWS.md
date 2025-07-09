@@ -236,3 +236,11 @@
 - ROADMAP labels previously "in progress" items as planned.
 - SCATHING_CRITIQUE notes that the CSV log remains weak without secure key
   management.
+
+## 0.1.47
+- Tests now fail fast when `Rscript` is missing to avoid bypassing diagnostics.
+- Added usage examples for all exported functions and datasets.
+- README clarifies that the audit log provides only basic tamper evidence and
+  requires a real R installation for development scripts.
+- Datasets trimmed and documented with `@examples`.
+- SCATHING_CRITIQUE updated to reflect these improvements.

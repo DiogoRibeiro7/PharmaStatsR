@@ -4,10 +4,8 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if command -v Rscript >/dev/null; then
   RSCRIPT="Rscript"
-elif [ -x "$script_dir/Rscript" ]; then
-  RSCRIPT="$script_dir/Rscript"
 else
-  echo "Rscript not found. Skipping style and documentation because Rscript is missing. Install R to enable this step." >&2
+  echo "Rscript not found. Install R to run style and documentation steps." >&2
   exit 1
 fi
 

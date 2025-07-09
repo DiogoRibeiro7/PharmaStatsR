@@ -22,9 +22,8 @@ contributors without guidance.
 **Recommendation**: Provide clear dependency instructions in the README and
 offer a containerised setup (for example, via Docker). The script should exit
 gracefully when prerequisites are missing and link to the setup guide.
-Additionally, the helper scripts now ship a stub `Rscript` that exits
-successfully with a warning. This prevents hard failures in locked-down
-environments while still reminding contributors that real R is unavailable.
+The helper scripts now require a real `Rscript` binary and exit with an error if
+it is missing. This prevents tests from being bypassed when R is unavailable.
 
 ## Documentation and examples
 
@@ -48,12 +47,12 @@ release.
 
 ## Dataset quality
 
-**Issue**: The example datasets contain many placeholders that inflate the
-package size and cause runtime errors when used in analyses.
+**Issue**: The example datasets previously contained placeholders that inflated
+the package size.
 
-**Recommendation**: Remove placeholder data and supply smaller, well documented
-examples. Functions depending on these datasets should include robust checks and
-clear error messages.
+**Resolution**: Datasets have been trimmed to small simulated examples and now
+include usage examples and documentation. Functions validate inputs and throw
+clear errors when data is missing.
 
 ## Regulatory disclaimers
 

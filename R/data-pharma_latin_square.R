@@ -10,6 +10,9 @@
 #'   \item{response}{Numeric response}
 #' }
 #' @source Simulated data.
+#' @examples
+#' data(pharma_latin_square)
+#' summary(pharma_latin_square)
 pharma_latin_square <- local({
   set.seed(123)
   design <- data.frame(
