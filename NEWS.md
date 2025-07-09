@@ -209,3 +209,8 @@
 - Added a stub `scripts/Rscript` so helper scripts work without a full R install.
 - `setup.sh` and `scripts/style_and_doc.sh` automatically fall back to this stub when `Rscript` is missing.
 - Updated README with the fallback description.
+
+## 0.1.42
+- README examples now include `library(PharmaTestSuite)` for clarity and
+  mention the GitHub Actions CI workflow.
+- ROADMAP items for the dashboard and plugin API are marked as in progress.

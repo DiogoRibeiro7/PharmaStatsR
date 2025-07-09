@@ -65,8 +65,8 @@
 ## ⬜ Extended Vision (>12 months)
 - [ ] AI-driven model selection and hyperparameter tuning (v0.1.21)
 - [ ] Automatic statistical analysis plan (SAP) generation (v0.1.20)
-- [x] Interactive R Markdown dashboard for exploring results (v0.1.24)
-- [x] Plugin API for community-contributed tests and methods (v0.1.25)
+- [ ] Interactive R Markdown dashboard for exploring results (in progress)
+- [ ] Plugin API for community-contributed tests and methods (in progress)
 - [ ] Integration with Python’s `scipy`/`statsmodels` via `reticulate` (v0.1.19)
 - [ ] Blockchain-backed audit trail of all analyses  
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)  

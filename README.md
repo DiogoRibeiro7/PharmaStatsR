@@ -4,6 +4,8 @@
 
 PharmaTestSuite provides statistical test utilities tailored for the pharmaceutical industry. The package aims to simplify the design and execution of common analysis workflows and includes helpers for basic regulatory compliance checks.
 
+All changes are checked automatically via GitHub Actions, which runs the full test suite on every commit.
+
 ## Installation
 
 PharmaTestSuite is not yet available on CRAN. You can install the development version from GitHub:
@@ -143,6 +145,7 @@ The `pharma_parallel_bootstrap` function distributes bootstrap iterations
 across multiple cores using the `future` framework.
 
 ```r
+library(PharmaTestSuite)
 stat <- function(d) mean(d$response)
 pharma_parallel_bootstrap(pharma_sample, stat, R = 100,
                           plan = "multisession")
@@ -154,6 +157,7 @@ Use `pharma_model_diagnostics()` to examine residuals and identify influential
 observations in fitted models.
 
 ```r
+library(PharmaTestSuite)
 fit <- lm(response ~ treatment + dose, data = pharma_sample)
 pharma_model_diagnostics(fit)
 ```
