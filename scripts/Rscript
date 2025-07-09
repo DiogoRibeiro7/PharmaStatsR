@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-# Stub Rscript for environments without R.
-# Fails explicitly so package tests cannot be bypassed when R is absent.
+# Wrapper for invoking a real Rscript binary when available.
+# This ensures setup helpers call the user's R installation if present
+# and otherwise fail with a clear message.
 
-echo "Error: real Rscript not found. Install R to run these scripts." >&2
-exit 1
+if command -v Rscript >/dev/null; then
+  exec Rscript "$@"
+else
+  echo "Error: Rscript not found. Install R to run this project." >&2
+  exit 1
+fi
 

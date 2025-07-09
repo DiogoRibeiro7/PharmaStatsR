@@ -244,3 +244,7 @@
   requires a real R installation for development scripts.
 - Datasets trimmed and documented with `@examples`.
 - SCATHING_CRITIQUE updated to reflect these improvements.
+
+## 0.1.48
+- `scripts/Rscript` now wraps the system Rscript and errors if none is
+  available, addressing feedback that the previous stub did nothing.
