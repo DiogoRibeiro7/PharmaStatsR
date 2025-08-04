@@ -143,6 +143,18 @@ test_that("pharma_funnel_plot runs", {
   expect_silent(pharma_funnel_plot(res))
 })
 
+test_that("pharma_network_meta_analysis returns netmeta", {
+  skip_if_not_installed("netmeta")
+  df <- data.frame(
+    treat1 = c("A", "A", "B"),
+    treat2 = c("B", "C", "C"),
+    TE = c(0.2, 0.5, -0.1),
+    seTE = c(0.1, 0.2, 0.1)
+  )
+  res <- pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
+  expect_s3_class(res, "netmeta")
+})
+
 test_that("pharma_emax returns nls", {
   res <- pharma_emax(pharma_dose_response$dose, pharma_dose_response$response)
   expect_s3_class(res, "nls")
@@ -208,8 +220,17 @@ test_that("pharma_mice_impute returns mids", {
 test_that("pharma_trial_simulate returns data.frame", {
   sim <- pharma_trial_simulate(30)
   expect_true(is.data.frame(sim))
-  expect_equal(ncol(sim), 5)
-  expect_true(all(c("id", "treatment", "time", "status", "dropout") %in% names(sim)))
+  expect_equal(ncol(sim), 6)
+  expect_true(all(c("id", "treatment", "enroll_time", "time", "status", "dropout") %in% names(sim)))
+})
+
+test_that("pharma_trial_simulate supports Weibull events", {
+  sim <- pharma_trial_simulate(30,
+    event_dist = "weibull", event_shape = 1.5,
+    accrual_period = 6, follow_up = 18
+  )
+  expect_true(max(sim$enroll_time) <= 6)
+  expect_true(all(sim$time >= 0))
 })
 
 test_that("pharma_sensitivity_analysis returns pool", {

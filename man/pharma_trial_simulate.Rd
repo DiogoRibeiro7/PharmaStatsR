@@ -4,13 +4,20 @@
 \alias{pharma_trial_simulate}
 \title{Simulate a clinical trial dataset}
 \usage{
-pharma_trial_simulate(n, arms = c("control", "treatment"), dropout_rate = 0.02,
-  hazard_control = 0.1, hazard_treatment = 0.08, follow_up = 12)
+pharma_trial_simulate(n, arms = c("control", "treatment"),
+  accrual_period = 12, enroll_shape = 1, dropout_rate = 0.02,
+  hazard_control = 0.1, hazard_treatment = 0.08,
+  event_dist = c("exponential", "weibull"), event_shape = 1,
+  follow_up = 24)
 }
 \arguments{
 \item{n}{Number of subjects to simulate.}
 
 \item{arms}{Character vector of treatment arms.}
+
+\item{accrual_period}{Study accrual period during which subjects enroll.}
+
+\item{enroll_shape}{Shape parameter controlling enrollment over time. Values \textless{} 1 front-load enrollment, \textgreater{} 1 back-load enrollment.}
 
 \item{dropout_rate}{Hazard for dropout (per unit time).}
 
@@ -18,11 +25,19 @@ pharma_trial_simulate(n, arms = c("control", "treatment"), dropout_rate = 0.02,
 
 \item{hazard_treatment}{Event hazard in the treatment arm.}
 
-\item{follow_up}{Follow-up time for censoring.}
+\item{event_dist}{Distribution for event times. Either \code{"exponential"} or \code{"weibull"}.}
+
+\item{event_shape}{Shape parameter for Weibull event times.}
+
+\item{follow_up}{Total study duration from start to end of follow-up.}
 }
-\value{A \code{data.frame} with columns \code{id}, \code{treatment}, \code{time}, \code{status}, and \code{dropout}.}
-\description{Simulate a clinical trial dataset with randomization, event times, and dropout.}
+\value{A \code{data.frame} with columns \code{id}, \code{treatment}, \code{enroll_time}, \code{time}, \code{status}, and \code{dropout}.}
+\description{Simulate a clinical trial dataset with staggered enrollment, flexible event time distributions, and dropout.}
 \examples{
 sim <- pharma_trial_simulate(50)
 head(sim)
+
+sim2 <- pharma_trial_simulate(50, event_dist = "weibull", event_shape = 1.5,
+                             enroll_shape = 2)
+head(sim2)
 }
