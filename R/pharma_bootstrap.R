@@ -68,6 +68,8 @@ pharma_wild_bootstrap <- function(formula, data, R = 1000) {
 #' @param statistic Function computing the statistic of interest. It must accept
 #'   the data frame as its first argument.
 #' @param R Number of bootstrap replicates.
+#' @param progress Display a progress indicator when `TRUE` (default
+#'   `interactive()`).
 #' @param ... Additional arguments passed to `statistic`.
 #'
 #' @return A list of bootstrap statistics with length `R`.
@@ -76,7 +78,8 @@ pharma_wild_bootstrap <- function(formula, data, R = 1000) {
 #' @examples
 #' stat <- function(d) stats::coef(stats::lm(response ~ treatment, data = d))[2]
 #' res <- pharma_block_bootstrap(pharma_sample, "subject", stat, R = 10)
-pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000, ...) {
+pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
+                                   progress = interactive(), ...) {
   pharma_log("INFO", "Running pharma_block_bootstrap")
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame; got ", class(data)[1])
@@ -112,11 +115,24 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000, ...) {
   groups <- split(seq_len(nrow(data)), clust)
   uniq <- names(groups)
   results <- vector("list", R)
+  prog <- if (progress) pharma_progress(R, "Bootstrap") else NULL
   for (i in seq_len(R)) {
-    sampled <- sample(uniq, length(uniq), replace = TRUE)
-    indices <- unlist(groups[sampled], use.names = FALSE)
-    boot_dat <- data[indices, , drop = FALSE]
+    sampled_clusters <- sample.int(length(uniq), length(uniq), replace = TRUE)
+    sampled_groups <- uniq[sampled_clusters]
+    indices <- unlist(groups[sampled_groups], use.names = FALSE)
+    if (nrow(data) > 10000 && requireNamespace("data.table", quietly = TRUE)) {
+      dt <- data.table::as.data.table(data)
+      boot_dat <- dt[indices]
+    } else {
+      boot_dat <- data[indices, , drop = FALSE]
+    }
     results[[i]] <- statistic(boot_dat, ...)
+    if (!is.null(prog)) {
+      prog$update()
+    }
+  }
+  if (!is.null(prog)) {
+    prog$finish()
   }
   results
 }

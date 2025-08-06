@@ -30,6 +30,22 @@
 #' sim2 <- pharma_trial_simulate(50, event_dist = "weibull", event_shape = 1.5,
 #'                              enroll_shape = 2)
 #' head(sim2)
+simulate_enrollment <- function(n, accrual_period, shape) {
+  accrual_period * stats::rbeta(n, shape, 1)
+}
+
+simulate_events <- function(n, hazard, dist, shape) {
+  if (dist == "exponential") {
+    stats::rexp(n, rate = hazard)
+  } else {
+    stats::rweibull(n, shape = shape, scale = (1 / hazard)^(1 / shape))
+  }
+}
+
+simulate_dropouts <- function(n, rate) {
+  stats::rexp(n, rate = rate)
+}
+
 pharma_trial_simulate <- function(n, arms = c("control", "treatment"),
                                   accrual_period = 12,
                                   enroll_shape = 1,
@@ -43,16 +59,11 @@ pharma_trial_simulate <- function(n, arms = c("control", "treatment"),
   if (follow_up <= accrual_period) {
     stop("`follow_up` must be greater than `accrual_period`")
   }
-  enroll_time <- accrual_period * stats::rbeta(n, enroll_shape, 1)
+  enroll_time <- simulate_enrollment(n, accrual_period, enroll_shape)
   arm <- sample(arms, n, replace = TRUE)
   haz <- ifelse(arm == arms[1], hazard_control, hazard_treatment)
-  if (event_dist == "exponential") {
-    event_time <- stats::rexp(n, rate = haz)
-  } else {
-    event_time <- stats::rweibull(n, shape = event_shape,
-                                  scale = (1 / haz)^(1 / event_shape))
-  }
-  dropout_time <- stats::rexp(n, rate = dropout_rate)
+  event_time <- simulate_events(n, haz, event_dist, event_shape)
+  dropout_time <- simulate_dropouts(n, dropout_rate)
   available <- follow_up - enroll_time
   time <- pmin(event_time, dropout_time, available)
   status <- ifelse(time == event_time & event_time <= available, 1, 0)

@@ -81,3 +81,43 @@ pharma_log <- function(level = "INFO", msg) {
   }
   invisible(NULL)
 }
+
+#' Display progress for long-running operations
+#'
+#' Creates a simple progress reporter that outputs status messages to the
+#' console when running interactively.
+#'
+#' @param max_value Total number of steps.
+#' @param msg Base message to display with progress updates.
+#' @keywords internal
+pharma_progress <- function(max_value, msg = "Progress") {
+  if (!interactive()) {
+    return(NULL)
+  }
+  env <- new.env(parent = emptyenv())
+  env$current <- 0
+  env$max <- max_value
+  env$start <- Sys.time()
+  list(
+    update = function(value = NULL, message = NULL) {
+      if (!is.null(value)) {
+        env$current <- value
+      } else {
+        env$current <- env$current + 1
+      }
+      elapsed <- difftime(Sys.time(), env$start, units = "secs")
+      pct <- env$current / env$max * 100
+      base_msg <- if (!is.null(message)) message else msg
+      cat(sprintf("\r%s: %.1f%% (%d/%d) - %.1fs elapsed", base_msg, pct, env$current, env$max, elapsed))
+      if (env$current >= env$max) {
+        cat("\n")
+      }
+      utils::flush.console()
+    },
+    finish = function(message = "Complete") {
+      elapsed <- difftime(Sys.time(), env$start, units = "secs")
+      cat(sprintf("\r%s: 100%% - %.1fs elapsed\n", message, elapsed))
+      utils::flush.console()
+    }
+  )
+}

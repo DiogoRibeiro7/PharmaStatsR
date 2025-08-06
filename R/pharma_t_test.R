@@ -1,8 +1,15 @@
-#' Conduct a two-sample t-test
+#' Perform a two-sample t-test
 #'
-#' Provides a simple wrapper around `stats::t.test` for comparing two numeric
-#' samples. The function returns the full result from `stats::t.test` so users
-#' can inspect p-values and confidence intervals.
+#' Provides a flexible interface for comparing two numeric samples, supporting
+#' both vector and formula interfaces. The function returns the full result from
+#' `stats::t.test` with p-values and confidence intervals.
+#'
+#' @section Methods:
+#' This function is S3 generic with two methods:
+#' \describe{
+#'   \item{default}{Vector interface for direct comparison of two numeric vectors.}
+#'   \item{formula}{Formula interface for comparing groups within a data frame.}
+#' }
 #'
 #' @param x Numeric vector of observations from the first group.
 #' @param y Numeric vector of observations from the second group.
@@ -14,8 +21,23 @@
 #' @export
 #'
 #' @examples
-#' # Vector interface
-#' pharma_t_test(rnorm(10), rnorm(10))
+#' # Comprehensive example showing a complete analysis
+#' # 1. Data preparation
+#' grp_a <- rnorm(20, mean = 5, sd = 1)
+#' grp_b <- rnorm(20, mean = 5.5, sd = 1)
+#'
+#' # 2. Statistical test
+#' result <- pharma_t_test(grp_a, grp_b)
+#'
+#' # 3. Interpretation
+#' if (result$p.value < 0.05) {
+#'   cat("Significant difference detected\n")
+#' } else {
+#'   cat("No significant difference\n")
+#' }
+#'
+#' # 4. Visualization
+#' boxplot(list(A = grp_a, B = grp_b), main = "Group Comparison")
 #'
 #' # Formula interface
 #' pharma_t_test(response ~ treatment, data = pharma_sample)
@@ -34,6 +56,9 @@ pharma_t_test.default <- function(x, y, ...) {
   check_numeric_vector(y, "y")
   if (length(x) < 2 || length(y) < 2) {
     stop("`x` and `y` must each contain at least two observations")
+  }
+  if (any(abs(c(x, y)) > 1e6)) {
+    warning("extreme values detected; results may be unstable")
   }
   stats::t.test(x, y, ...)
 }

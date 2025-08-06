@@ -22,7 +22,20 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
   if (!is.character(method) || length(method) != 1) {
     stop("`method` must be a single character string")
   }
-  metafor::rma(yi = yi, vi = vi, method = method, ...)
+  if (length(yi) < 3) {
+    warning("Meta-analysis with fewer than 3 studies may be unreliable")
+  }
+  tryCatch(
+    metafor::rma(yi = yi, vi = vi, method = method, ...),
+    error = function(e) {
+      if (grepl("singular", e$message)) {
+        message("Attempting fallback with FE model due to estimation issues")
+        metafor::rma(yi = yi, vi = vi, method = "FE", ...)
+      } else {
+        stop("Meta-analysis failed: ", e$message)
+      }
+    }
+  )
 }
 
 #' Forest plot for a meta-analysis

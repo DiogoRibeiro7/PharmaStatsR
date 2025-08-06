@@ -296,3 +296,20 @@
   comparing multiple treatments across studies.
 - Resolved logging helper naming conflict, optimized bootstrap resampling, and
   tightened dataset and network meta-analysis validations.
+
+## 0.1.61
+- Expanded `pharma_config()` with additional defaults and introduced
+  `with_pharma_config()` for temporary option scoping.
+- Refactored `pharma_trial_simulate()` into composable enrollment, event, and
+  dropout generators for clearer workflows.
+- Optimised `pharma_block_bootstrap()` with pre-computed clusters, optional
+  progress reporting, and data.table sampling for large datasets.
+- Enhanced `pharma_meta_analysis()` with informative warnings and a fallback to
+  fixed-effects models when random-effects estimation fails.
+- Documented `pharma_t_test()` with a comprehensive example and added extreme
+  value warnings.
+- Added `pharma_progress()` utility, a CRAN preparation script, and new tests
+  covering t-test edge cases and meta-analysis properties.
+
+## 0.1.61
+- Add release notes here.
