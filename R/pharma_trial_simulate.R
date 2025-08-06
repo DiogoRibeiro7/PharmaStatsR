@@ -4,18 +4,18 @@
 #' time distributions, and dropout. Events may follow exponential or Weibull
 #' hazards that differ by arm.
 #'
-#' @param n Number of subjects to simulate.
-#' @param arms Character vector of treatment arms.
-#' @param accrual_period Study accrual period during which subjects enroll.
-#' @param enroll_shape Shape parameter controlling enrollment over time. Values
-#'   < 1 front-load enrollment, > 1 back-load enrollment.
-#' @param dropout_rate Hazard for dropout (per unit time).
-#' @param hazard_control Event hazard in the control arm.
-#' @param hazard_treatment Event hazard in the treatment arm.
-#' @param event_dist Distribution for event times. Either "exponential" or
+#' @param n integer number of subjects to simulate.
+#' @param arms character vector of treatment arms.
+#' @param accrual_period numeric study accrual period during which subjects enroll.
+#' @param enroll_shape numeric shape parameter controlling enrollment over time.
+#'   Values < 1 front-load enrollment, > 1 back-load enrollment.
+#' @param dropout_rate numeric hazard for dropout (per unit time).
+#' @param hazard_control numeric event hazard in the control arm.
+#' @param hazard_treatment numeric event hazard in the treatment arm.
+#' @param event_dist character distribution for event times. Either "exponential" or
 #'   "weibull".
-#' @param event_shape Shape parameter for Weibull event times.
-#' @param follow_up Total study duration from start to end of follow-up.
+#' @param event_shape numeric shape parameter for Weibull event times.
+#' @param follow_up numeric total study duration from start to end of follow-up.
 #'
 #' @return A data.frame with subject id, treatment, enrollment time, observed
 #'   time, event status, and dropout flag.
@@ -68,7 +68,9 @@ pharma_trial_simulate <- function(n, arms = c("control", "treatment"),
   time <- pmin(event_time, dropout_time, available)
   status <- ifelse(time == event_time & event_time <= available, 1, 0)
   dropout <- ifelse(time == dropout_time & dropout_time < event_time &
-                      dropout_time < available, 1, 0)
-  data.frame(id = seq_len(n), treatment = arm, enroll_time = enroll_time,
-             time = time, status = status, dropout = dropout)
+    dropout_time < available, 1, 0)
+  data.frame(
+    id = seq_len(n), treatment = arm, enroll_time = enroll_time,
+    time = time, status = status, dropout = dropout
+  )
 }

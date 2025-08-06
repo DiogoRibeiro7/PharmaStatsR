@@ -10,9 +10,9 @@ NULL
 #' Applies the Rademacher wild bootstrap to obtain resampled coefficient
 #' estimates for a linear model.
 #'
-#' @param formula Model formula for `lm`.
-#' @param data Data frame containing the variables.
-#' @param R Number of bootstrap replicates.
+#' @param formula formula for `stats::lm`.
+#' @param data data.frame containing the variables.
+#' @param R integer number of bootstrap replicates.
 #'
 #' @return A matrix of bootstrap coefficients with one row per replicate.
 #' @export
@@ -63,14 +63,14 @@ pharma_wild_bootstrap <- function(formula, data, R = 1000) {
 #' Resample clusters with replacement to compute bootstrap replicates of a
 #' user-supplied statistic.
 #'
-#' @param data Data frame.
-#' @param cluster Vector or column name defining clusters.
-#' @param statistic Function computing the statistic of interest. It must accept
+#' @param data data.frame to resample.
+#' @param cluster character or vector defining clusters.
+#' @param statistic function computing the statistic of interest. It must accept
 #'   the data frame as its first argument.
-#' @param R Number of bootstrap replicates.
-#' @param progress Display a progress indicator when `TRUE` (default
+#' @param R integer number of bootstrap replicates.
+#' @param progress logical; display a progress indicator when `TRUE` (default
 #'   `interactive()`).
-#' @param ... Additional arguments passed to `statistic`.
+#' @param ... additional arguments passed to `statistic`.
 #'
 #' @return A list of bootstrap statistics with length `R`.
 #' @export
@@ -143,13 +143,13 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #' `future` framework. This function mirrors `pharma_block_bootstrap` but
 #' distributes iterations across the available workers for speed.
 #'
-#' @param data A data frame containing the sample.
-#' @param statistic Function computing the statistic of interest. It must accept
+#' @param data data.frame containing the sample.
+#' @param statistic function computing the statistic of interest. It must accept
 #'   the data frame as its first argument.
-#' @param R Integer. Number of bootstrap replicates.
-#' @param plan Character or call to define the future plan. Defaults to
+#' @param R integer number of bootstrap replicates.
+#' @param plan character, function, or call defining the future plan. Defaults to
 #'   `"multisession"`.
-#' @param ... Additional arguments passed to `statistic`.
+#' @param ... additional arguments passed to `statistic`.
 #'
 #' @return A list of bootstrap statistics with length `R`.
 #' @export

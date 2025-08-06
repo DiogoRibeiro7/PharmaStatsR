@@ -311,5 +311,5 @@
 - Added `pharma_progress()` utility, a CRAN preparation script, and new tests
   covering t-test edge cases and meta-analysis properties.
 
-## 0.1.61
-- Add release notes here.
+## 0.1.62
+- Improved documentation with explicit parameter type annotations for bootstrap utilities, trial simulation, and shared helpers.
