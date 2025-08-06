@@ -1,9 +1,9 @@
 #' Record an analysis step in a blockchain-like audit trail
 #'
 #' Appends a hashed entry to a CSV log file. Each entry stores the
-#' SHA256 hash of the message, timestamp and previous hash so that
+#' HMAC-SHA256 hash of the message, timestamp and previous hash so that
 #' tampering with any record invalidates the subsequent chain. This
-#' provides a lightweight append-only log using the `digest` package.
+#' provides a lightweight append-only log using the `openssl` package.
 #'
 #' @param message Character string describing the analysis step.
 #' @param file Path to the CSV log file. If the file does not exist, a
@@ -17,8 +17,8 @@
 #'
 #' @examples
 #' tmp <- tempfile()
-#' pharma_audit_log("Load data", tmp)
-#' pharma_audit_log("Fit model", tmp)
+#' pharma_audit_log("Load data", tmp, key = "secret")
+#' pharma_audit_log("Fit model", tmp, key = "secret")
 #' read.csv(tmp)
 pharma_audit_log <- function(message,
                              file = "audit.log",
@@ -30,16 +30,15 @@ pharma_audit_log <- function(message,
     stop("key must be a single character string")
   }
 
-  if (!requireNamespace("digest", quietly = TRUE)) {
-    stop("Package 'digest' is required for pharma_audit_log()")
+  if (!requireNamespace("openssl", quietly = TRUE)) {
+    stop("Package 'openssl' is required for pharma_audit_log()")
   }
 
   if (!file.exists(file)) {
     genesis_timestamp <- format(Sys.time(), tz = "UTC", usetz = TRUE)
-    genesis_hash <- digest::hmac(
-      key,
+    genesis_hash <- openssl::sha256(
       paste("genesis", genesis_timestamp, NA_character_),
-      algo = "sha256"
+      key = key
     )
     log <- data.frame(
       step = "genesis",
@@ -55,7 +54,10 @@ pharma_audit_log <- function(message,
 
   timestamp <- format(Sys.time(), tz = "UTC", usetz = TRUE)
   prev_hash <- tail(log$hash, 1)
-  entry_hash <- digest::hmac(key, paste(message, timestamp, prev_hash), algo = "sha256")
+  entry_hash <- openssl::sha256(
+    paste(message, timestamp, prev_hash),
+    key = key
+  )
   entry <- data.frame(
     step = message,
     timestamp = timestamp,

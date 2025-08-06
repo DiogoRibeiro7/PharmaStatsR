@@ -7,9 +7,10 @@
 pharma_ai_model_select(
   formula,
   data,
-  models = c("glm", "rf"),
+  models = c("glm", "rf", "svmLinear", "gbm"),
   metric = "Accuracy",
   trControl = NULL,
+  explain = FALSE,
   ...
 )
 }
@@ -18,19 +19,26 @@ pharma_ai_model_select(
 
 \item{data}{Data frame containing the variables in \code{formula}.}
 
-\item{models}{Character vector of caret model names. Default includes
-logistic regression (\code{"glm"}) and random forest (\code{"rf"}).}
+\item{models}{Character vector of caret model names. Default explores
+logistic regression (\code{"glm"}), random forest (\code{"rf"}),
+support vector machines (\code{"svmLinear"}), and gradient boosting
+(\code{"gbm"}).}
 
 \item{metric}{Performance metric to optimize. Defaults to \code{"Accuracy"}.}
 
 \item{trControl}{Optional \code{caret::trainControl} object. If \code{NULL},
 5-fold cross-validation is used.}
 
+\item{explain}{Logical; if \code{TRUE}, compute variable importance for each
+fitted model using \code{caret::varImp}.}
+
 \item{...}{Additional arguments passed to \code{caret::train}.}
 }
 \value{
-A list with two elements: \code{best_model}, the highest performing
-  caret model object, and \code{all_models}, the list of all fitted models.
+A list with up to three elements: \code{best_model}, the highest
+  performing caret model object; \code{all_models}, the list of all fitted
+  models; and \code{variable_importance}, a list of variable importance
+  objects when \code{explain = TRUE}.
 }
 \description{
 Uses \code{caret::train} to evaluate multiple algorithms with cross-validation
@@ -41,8 +49,8 @@ if (requireNamespace("caret", quietly = TRUE)) {
   pharma_ai_model_select(
     response ~ treatment,
     data = pharma_sample,
-    models = c("glm", "rf", "svmLinear"),
-    metric = "Accuracy"
+    metric = "Accuracy",
+    explain = TRUE
   )
 }
 }

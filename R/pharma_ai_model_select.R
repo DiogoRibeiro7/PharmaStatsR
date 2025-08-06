@@ -5,15 +5,21 @@
 #'
 #' @param formula Model formula specifying the response and predictors.
 #' @param data Data frame containing the variables in \code{formula}.
-#' @param models Character vector of caret model names. Default includes
-#'   logistic regression (\code{"glm"}) and random forest (\code{"rf"}).
+#' @param models Character vector of caret model names. Default explores
+#'   logistic regression (\code{"glm"}), random forest (\code{"rf"}),
+#'   support vector machines (\code{"svmLinear"}), and gradient boosting
+#'   (\code{"gbm"}).
 #' @param metric Performance metric to optimize. Defaults to \code{"Accuracy"}.
 #' @param trControl Optional \code{caret::trainControl} object. If \code{NULL},
 #'   5-fold cross-validation is used.
+#' @param explain Logical; if \code{TRUE}, compute variable importance for each
+#'   fitted model using \code{caret::varImp}.
 #' @param ... Additional arguments passed to \code{caret::train}.
 #'
-#' @return A list with two elements: \code{best_model}, the highest performing
-#'   caret model object, and \code{all_models}, the list of all fitted models.
+#' @return A list with up to three elements: \code{best_model}, the highest
+#'   performing caret model object; \code{all_models}, the list of all fitted
+#'   models; and \code{variable_importance}, a list of variable importance
+#'   objects when \code{explain = TRUE}.
 #' @export
 #'
 #' @examples
@@ -21,12 +27,14 @@
 #'   pharma_ai_model_select(
 #'     response ~ treatment,
 #'     data = pharma_sample,
-#'     models = c("glm", "rf", "svmLinear"),
-#'     metric = "Accuracy"
+#'     metric = "Accuracy",
+#'     explain = TRUE
 #'   )
 #' }
-pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
-                                   metric = "Accuracy", trControl = NULL, ...) {
+pharma_ai_model_select <- function(formula, data,
+                                   models = c("glm", "rf", "svmLinear", "gbm"),
+                                   metric = "Accuracy", trControl = NULL,
+                                   explain = FALSE, ...) {
   # Attempt to load caret for model training. If unavailable, fall back to a
   # simple `glm` fit and return that model only.
   if (!requireNamespace("caret", quietly = TRUE)) {
@@ -100,6 +108,30 @@ pharma_ai_model_select <- function(formula, data, models = c("glm", "rf"),
   scores <- vapply(fits, get_metric, numeric(1))
   best_idx <- which.max(scores)
 
-  # return best-performing model and all candidate fits
-  list(best_model = fits[[best_idx]], all_models = fits)
+  # compute variable importance for each model if requested
+  variable_importance <- NULL
+  if (explain) {
+    variable_importance <- lapply(seq_along(fits), function(i) {
+      meth <- names(fits)[i]
+      fit <- fits[[i]]
+      tryCatch(
+        caret::varImp(fit),
+        error = function(e) {
+          warning(sprintf(
+            "Variable importance failed for model %s: %s",
+            meth, e$message
+          ))
+          NULL
+        }
+      )
+    })
+    names(variable_importance) <- names(fits)
+  }
+
+  # return best-performing model, all candidate fits, and importance metrics
+  list(
+    best_model = fits[[best_idx]],
+    all_models = fits,
+    variable_importance = variable_importance
+  )
 }

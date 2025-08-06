@@ -259,3 +259,57 @@
 
 ## 0.1.51
 - Rewrote SCATHING_CRITIQUE into a professional action plan.
+
+## 0.1.52
+- Consolidated bootstrap helpers into a single file and added shared `check_dataset` utility.
+- Improved input validation for bootstrap functions and `pharma_tost`.
+- Ensured consistent use of package namespaces for external calls.
+
+## 0.1.53
+- Added comprehensive workflow examples to `pharma_anova`.
+- Standardized function interfaces with S3 generics for `pharma_t_test` and `pharma_tost`.
+
+## 0.1.54
+- Introduced a basic logging system and instrumented key functions for traceability.
+
+## 0.1.55
+- Made error messages more informative and actionable across bootstrap utilities, `pharma_tost()`, `pharma_t_test()`, and `pharma_anova()`.
+
+## 0.1.56
+- Added `pharma_config()` for managing package-wide options such as log verbosity.
+
+## 0.1.57
+- Expanded input validation across t-test, TOST, ANOVA, bootstrap, and meta-analysis helpers.
+
+## 0.1.58
+- Introduced a plugin system (`pharma_register_stat()`/`pharma_run_stat()`) for adding custom statistical methods.
+- Strengthened audit logging by switching to `openssl`-backed HMAC-SHA256 signatures for tamper-evident chains.
+
+## 0.1.59
+- Expanded `pharma_ai_model_select()` with additional default algorithms and
+  optional variable-importance explainability metrics via `caret::varImp`.
+- Enhanced `pharma_trial_simulate()` to model staggered enrollment patterns and
+  allow Weibull event-time distributions for more realistic trials.
+
+## 0.1.60
+- Added network meta-analysis support via `pharma_network_meta_analysis()` for
+  comparing multiple treatments across studies.
+- Resolved logging helper naming conflict, optimized bootstrap resampling, and
+  tightened dataset and network meta-analysis validations.
+
+## 0.1.61
+- Expanded `pharma_config()` with additional defaults and introduced
+  `with_pharma_config()` for temporary option scoping.
+- Refactored `pharma_trial_simulate()` into composable enrollment, event, and
+  dropout generators for clearer workflows.
+- Optimised `pharma_block_bootstrap()` with pre-computed clusters, optional
+  progress reporting, and data.table sampling for large datasets.
+- Enhanced `pharma_meta_analysis()` with informative warnings and a fallback to
+  fixed-effects models when random-effects estimation fails.
+- Documented `pharma_t_test()` with a comprehensive example and added extreme
+  value warnings.
+- Added `pharma_progress()` utility, a CRAN preparation script, and new tests
+  covering t-test edge cases and meta-analysis properties.
+
+## 0.1.62
+- Refined documentation with explicit type annotations across bootstrap helpers, utilities, and trial simulation; internal simulation steps are now documented.
