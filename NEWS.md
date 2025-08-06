@@ -312,4 +312,4 @@
   covering t-test edge cases and meta-analysis properties.
 
 ## 0.1.62
-- Improved documentation with explicit parameter type annotations for bootstrap utilities, trial simulation, and shared helpers.
+- Refined documentation with explicit type annotations across bootstrap helpers, utilities, and trial simulation; internal simulation steps are now documented.

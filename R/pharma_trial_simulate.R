@@ -30,10 +30,31 @@
 #' sim2 <- pharma_trial_simulate(50, event_dist = "weibull", event_shape = 1.5,
 #'                              enroll_shape = 2)
 #' head(sim2)
+#' Simulate enrollment times
+#'
+#' Generate subject enrollment times using a Beta distribution scaled to the
+#' accrual period.
+#'
+#' @param n integer number of subjects.
+#' @param accrual_period numeric total accrual duration.
+#' @param shape numeric shape parameter controlling accrual pattern.
+#' @return numeric vector of enrollment times.
+#' @keywords internal
 simulate_enrollment <- function(n, accrual_period, shape) {
   accrual_period * stats::rbeta(n, shape, 1)
 }
 
+#' Simulate event times
+#'
+#' Draw event times from exponential or Weibull distributions based on the
+#' provided hazard and shape parameters.
+#'
+#' @param n integer number of subjects.
+#' @param hazard numeric event hazard.
+#' @param dist character distribution name ("exponential" or "weibull").
+#' @param shape numeric shape parameter for Weibull events.
+#' @return numeric vector of event times.
+#' @keywords internal
 simulate_events <- function(n, hazard, dist, shape) {
   if (dist == "exponential") {
     stats::rexp(n, rate = hazard)
@@ -42,6 +63,15 @@ simulate_events <- function(n, hazard, dist, shape) {
   }
 }
 
+#' Simulate dropout times
+#'
+#' Generate dropout times from an exponential distribution with the specified
+#' hazard rate.
+#'
+#' @param n integer number of subjects.
+#' @param rate numeric dropout hazard.
+#' @return numeric vector of dropout times.
+#' @keywords internal
 simulate_dropouts <- function(n, rate) {
   stats::rexp(n, rate = rate)
 }

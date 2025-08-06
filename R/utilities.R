@@ -2,8 +2,8 @@
 #'
 #' Helper functions used across the package.
 #'
-#' @param data data.frame to validate.
-#' @param required_columns character vector of required column names.
+#' @param data **data.frame** to validate.
+#' @param required_columns **character** vector of required column names.
 #' @return Invisible `TRUE` when all required columns are present.
 #' @keywords internal
 check_dataset <- function(data, required_columns) {
@@ -24,8 +24,8 @@ check_dataset <- function(data, required_columns) {
 #'
 #' Ensures an argument is a numeric vector with no missing or infinite values.
 #'
-#' @param x numeric vector to validate.
-#' @param name character string used in error messages.
+#' @param x **numeric** vector to validate.
+#' @param name **character** string used in error messages.
 #' @return Invisible `TRUE` when validation succeeds.
 #' @keywords internal
 check_numeric_vector <- function(x, name) {
@@ -48,10 +48,10 @@ check_numeric_vector <- function(x, name) {
 #'
 #' Ensures an argument is a finite numeric scalar within optional bounds.
 #'
-#' @param x numeric scalar to validate.
-#' @param name character string used in error messages.
-#' @param lower numeric lower bound (exclusive).
-#' @param upper numeric upper bound (exclusive).
+#' @param x **numeric** scalar to validate.
+#' @param name **character** string used in error messages.
+#' @param lower **numeric** lower bound (exclusive).
+#' @param upper **numeric** upper bound (exclusive).
 #' @return Invisible `TRUE` when validation succeeds.
 #' @keywords internal
 check_numeric_scalar <- function(x, name, lower = -Inf, upper = Inf) {
@@ -70,8 +70,8 @@ check_numeric_scalar <- function(x, name, lower = -Inf, upper = Inf) {
 #' `pharma_config()` via the `log_level` option. Levels in increasing
 #' order are "DEBUG", "INFO", "WARN", and "ERROR".
 #'
-#' @param level character log level for the message.
-#' @param msg character string to output.
+#' @param level **character** log level for the message.
+#' @param msg **character** string to output.
 #' @return Invisible `NULL`.
 #' @keywords internal
 pharma_log <- function(level = "INFO", msg) {
@@ -93,8 +93,8 @@ pharma_log <- function(level = "INFO", msg) {
 #' Creates a simple progress reporter that outputs status messages to the
 #' console when running interactively.
 #'
-#' @param max_value integer total number of steps.
-#' @param msg character base message to display with progress updates.
+#' @param max_value **integer** total number of steps.
+#' @param msg **character** base message to display with progress updates.
 #' @return A list with `update` and `finish` functions.
 #' @keywords internal
 pharma_progress <- function(max_value, msg = "Progress") {
