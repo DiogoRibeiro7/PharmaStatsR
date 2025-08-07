@@ -10,7 +10,7 @@ else
 fi
 
 # Install required R packages if missing and run tests
-packages=(devtools testthat)
+packages=(devtools testthat geepack cmprsk survival rstanarm metafor netmeta nlme mice openxlsx reticulate)
 missing_pkgs=()
 for pkg in "${packages[@]}"; do
   if ! "$RSCRIPT" -e "quit(status = ifelse(requireNamespace('$pkg', quietly=TRUE), 0, 1))" >/dev/null; then

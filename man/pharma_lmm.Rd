@@ -17,7 +17,9 @@ pharma_lmm(formula, data, ...)
 An `lmerMod` object.
 }
 \description{
-Provides a wrapper around `lme4::lmer` for mixed-effects modeling.
+Provides a wrapper around `lme4::lmer` for mixed-effects modeling. The
+function validates inputs and checks that `lme4` is installed before
+fitting the model.
 }
 \examples{
 pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)

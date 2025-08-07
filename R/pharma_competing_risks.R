@@ -13,12 +13,26 @@
 #' @export
 #'
 #' @examples
-#' pharma_competing_risks(Surv(time, status) ~ treatment, data = df)
+#' if (requireNamespace("cmprsk", quietly = TRUE)) {
+#'   df <- data.frame(
+#'     time = c(5, 6, 7),
+#'     status = c(1, 2, 0),
+#'     treatment = c(0, 1, 1)
+#'   )
+#'   pharma_competing_risks(survival::Surv(time, status) ~ treatment, df)
+#' }
 pharma_competing_risks <- function(formula, data, failcode = 1, cencode = 0, ...) {
-  mf <- model.frame(formula, data)
-  y <- model.response(mf)
+  validate_inputs(data, formula)
+  if (!requireNamespace("cmprsk", quietly = TRUE)) {
+    stop(
+      "Package 'cmprsk' is required for this function.\n",
+      "Please install it with: install.packages('cmprsk')"
+    )
+  }
+  mf <- stats::model.frame(formula, data)
+  y <- stats::model.response(mf)
   time <- y[, 1]
   status <- y[, 2]
-  covariates <- model.matrix(attr(mf, "terms"), mf)[, -1, drop = FALSE]
+  covariates <- stats::model.matrix(attr(mf, "terms"), mf)[, -1, drop = FALSE]
   cmprsk::crr(time, status, covariates, failcode = failcode, cencode = cencode, ...)
 }
