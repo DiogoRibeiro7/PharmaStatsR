@@ -15,6 +15,7 @@ A plot.
 }
 \description{
 Create a forest plot from an \code{rma} object.
+Requires the 'metafor' package to be installed.
 }
 \examples{
 res <- pharma_meta_analysis(yi = c(0.2,0.1,-0.1), vi=c(0.05,0.04,0.06))

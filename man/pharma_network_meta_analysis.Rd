@@ -19,6 +19,7 @@ A \code{netmeta} object.
 }
 \description{
 Fit a network meta-analysis using \code{netmeta::netmeta} to compare multiple treatments across studies.
+Requires the 'netmeta' package to be installed.
 }
 \examples{
 df <- data.frame(

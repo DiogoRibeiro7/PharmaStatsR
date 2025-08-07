@@ -332,3 +332,6 @@
   inputs.
 - Added tests for configuration utilities, Bayesian posterior checks, Python SciPy bridge, plugin statistics, response-surface modeling, report table exports, joint and multistate model guards, and logging/progress helpers to improve coverage.
 - `pharma_gee()` now validates inputs, requires `geepack` at runtime, and both `geepack` and `lme4` were moved to Suggests for softer dependencies.
+- Meta-analysis helpers now check for `metafor`/`netmeta` at runtime and
+  `pharma_network_meta_analysis()` reuses `validate_inputs()`; both packages
+  were moved to Suggests.
