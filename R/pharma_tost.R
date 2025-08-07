@@ -67,12 +67,7 @@ pharma_tost.default <- function(x, y, low_eqbound, high_eqbound, alpha = 0.05, .
 #' @export
 pharma_tost.formula <- function(formula, data, low_eqbound, high_eqbound, alpha = 0.05, ...) {
   pharma_log("INFO", "Running pharma_tost.formula")
-  if (!inherits(formula, "formula")) {
-    stop("`formula` must be a valid formula, e.g., response ~ group")
-  }
-  if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
-  }
+  validate_inputs(data, formula)
   mf <- stats::model.frame(formula, data)
   if (ncol(mf) != 2) {
     stop(
