@@ -335,3 +335,4 @@
 - Meta-analysis helpers now check for `metafor`/`netmeta` at runtime and
   `pharma_network_meta_analysis()` reuses `validate_inputs()`; both packages
   were moved to Suggests.
+- README now highlights the project's motivation.

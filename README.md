@@ -4,6 +4,10 @@
 
 PharmaTestSuite provides statistical test utilities tailored for the pharmaceutical industry. The package aims to simplify the design and execution of common analysis workflows and includes helpers for basic regulatory compliance checks.
 
+## Motivation
+
+Pharmaceutical statisticians often juggle a patchwork of R packages with inconsistent interfaces and limited validation. PharmaTestSuite was created to provide a unified, well-tested toolkit that streamlines analyses, promotes reproducibility, and lowers the barrier to regulatory-minded practice. By wrapping common methods and bundling helpers for logging, auditing, and configuration, the suite delivers a single home for routine clinical research tasks.
+
 All changes are checked automatically via GitHub Actions, which runs the full test suite on every commit.
 
 ## Installation
@@ -174,7 +178,7 @@ installed.
 ## Contact
 
 For questions or feedback, please contact Diogo Ribeiro
-(<dfr@esmad.ipp.pt>),
+(<dfr@esmad.ipp.pt> or <diogo.debastos.ribeiro@gmail.com>),
 ESMAD - Instituto Politécnico do Porto.
 ORCID: <https://orcid.org/0009-0001-2022-7072>.
 
