@@ -313,3 +313,26 @@
 
 ## 0.1.62
 - Refined documentation with explicit type annotations across bootstrap helpers, utilities, and trial simulation; internal simulation steps are now documented.
+- Added CRAN preparation roadmap.
+- Expanded roadmap with an extended long-term vision section.
+- Introduced `validate_inputs()` for centralized data and formula checks and applied it to `pharma_t_test()`.
+- `pharma_anova()` and `pharma_kaplan_meier()` now call `validate_inputs()` for
+  consistent argument checking, and the Kaplan-Meier helper verifies that the
+  `survival` package is installed before execution.
+- `pharma_tost()`'s formula method now uses `validate_inputs()` for consistent
+  data and formula validation.
+- `pharma_lmm()` now validates its inputs and confirms that the `lme4` package
+  is available before fitting models.
+- `pharma_competing_risks()` now validates inputs and confirms that the `cmprsk`
+  package is installed before fitting models.
+- Added tests for optional dependencies (e.g., geepack, cmprsk, survival, nlme, mice, openxlsx, reticulate) and updated the setup script to install them, enabling positive-path coverage.
+- Added tests covering `validate_inputs()` and ensuring key helpers error on
+  invalid datasets or formulas.
+- Extended input validation tests to check that helpers reject non-data-frame
+  inputs.
+- Added tests for configuration utilities, Bayesian posterior checks, Python SciPy bridge, plugin statistics, response-surface modeling, report table exports, joint and multistate model guards, and logging/progress helpers to improve coverage.
+- `pharma_gee()` now validates inputs, requires `geepack` at runtime, and both `geepack` and `lme4` were moved to Suggests for softer dependencies.
+- Meta-analysis helpers now check for `metafor`/`netmeta` at runtime and
+  `pharma_network_meta_analysis()` reuses `validate_inputs()`; both packages
+  were moved to Suggests.
+- README now highlights the project's motivation.

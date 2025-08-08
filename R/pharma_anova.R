@@ -19,13 +19,7 @@
 #' TukeyHSD(model)
 pharma_anova <- function(formula, data, ...) {
   pharma_log("INFO", "Running pharma_anova")
-  if (!inherits(formula, "formula")) {
-    stop("`formula` must be a valid formula, e.g., response ~ group")
-  }
-  if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
-  }
-  check_dataset(data, all.vars(formula))
+  validate_inputs(data, formula)
   mf <- stats::model.frame(formula, data)
   if (anyNA(mf)) {
     stop("Variables in `data` used by `formula` contain NA values; remove or impute them before calling `pharma_anova`")

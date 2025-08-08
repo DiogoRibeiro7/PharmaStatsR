@@ -18,6 +18,7 @@ A \code{rma} object.
 }
 \description{
 Wrapper around \code{metafor::rma} to fit a meta-regression with moderators.
+Requires the 'metafor' package to be installed.
 }
 \examples{
 mods <- cbind(size = c(100,120,80))

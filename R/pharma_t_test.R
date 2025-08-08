@@ -67,13 +67,7 @@ pharma_t_test.default <- function(x, y, ...) {
 #' @export
 pharma_t_test.formula <- function(formula, data, ...) {
   pharma_log("INFO", "Running pharma_t_test.formula")
-  if (!inherits(formula, "formula")) {
-    stop("`formula` must be a valid formula, e.g., response ~ group")
-  }
-  if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
-  }
-  check_dataset(data, all.vars(formula))
+  validate_inputs(data = data, formula = formula)
   mf <- stats::model.frame(formula, data)
   if (ncol(mf) != 2) {
     stop("`formula` must specify one response and one grouping variable")

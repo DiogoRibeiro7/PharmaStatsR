@@ -19,6 +19,8 @@ A \code{geeglm} object.
 }
 \description{
 Convenience wrapper around \code{geepack::geeglm} for correlated response data.
+The function validates inputs and checks that the \code{geepack} package is
+installed before fitting the model.
 }
 \examples{
 pharma_gee(response ~ condition, id = subject, data = pharma_repeated)

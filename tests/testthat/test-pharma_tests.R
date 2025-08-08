@@ -84,7 +84,7 @@ test_that("pharma_lmm returns lmerMod", {
 })
 
 test_that("pharma_gee returns geeglm", {
-  skip("geepack not fully functional in this environment")
+  skip_if_not_installed("geepack")
   res <- pharma_gee(response ~ condition, id = pharma_repeated$subject, data = pharma_repeated)
   expect_s3_class(res, "geeglm")
 })
@@ -101,14 +101,15 @@ test_that("pharma_cox_timevarying returns coxph", {
 })
 
 test_that("pharma_competing_risks returns crr", {
-  skip("crr function unavailable in this environment")
+  skip_if_not_installed("cmprsk")
+  skip_if_not_installed("survival")
   dat <- pharma_survival
-  res <- pharma_competing_risks(Surv(time, status) ~ treatment, data = dat)
+  res <- pharma_competing_risks(survival::Surv(time, status) ~ treatment, data = dat)
   expect_s3_class(res, "crr")
 })
 
 test_that("pharma_landmark_analysis returns coxph", {
-  skip("unstable on this platform")
+  skip_if_not_installed("survival")
   res <- pharma_landmark_analysis(
     survival::Surv(time, status) ~ treatment,
     data = pharma_survival,
@@ -167,8 +168,8 @@ test_that("pharma_sigmoid_emax returns nls", {
 
 test_that("pharma_emax_nlme returns lme", {
   skip_if_not_installed("nlme")
-  skip("unstable fit on this platform")
-  res <- pharma_emax_nlme(pharma_dose_response$dose,
+  res <- pharma_emax_nlme(
+    pharma_dose_response$dose,
     pharma_dose_response$response,
     subject = pharma_dose_response$subject
   )
@@ -234,8 +235,7 @@ test_that("pharma_trial_simulate supports Weibull events", {
 })
 
 test_that("pharma_sensitivity_analysis returns pool", {
-  skip_if_not_installed("mice")
-  skip("mice package lacks with.mids in this environment")
+  skip_if_not_installed("mice", minimum_version = "3.15.0")
   dat <- pharma_sample
   dat$response[1] <- NA
   imp <- pharma_mice_impute(dat, m = 2, maxit = 1)

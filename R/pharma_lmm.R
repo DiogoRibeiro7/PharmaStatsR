@@ -1,8 +1,11 @@
 #' Fit a linear mixed-effects model
 #'
-#' Provides a wrapper around `lme4::lmer` for mixed-effects modeling.
+#' Provides a wrapper around `lme4::lmer` for mixed-effects modeling. The
+#' function validates its inputs and ensures that `lme4` is installed
+#' before fitting the model.
 #'
-#' @param formula Model formula including random effects, e.g., `response ~ treatment + (1|subject)`.
+#' @param formula Model formula including random effects, e.g.,
+#'   `response ~ treatment + (1|subject)`.
 #' @param data A data frame containing variables referenced in the formula.
 #' @param ... Additional arguments passed to `lme4::lmer`.
 #'
@@ -12,5 +15,12 @@
 #' @examples
 #' pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
 pharma_lmm <- function(formula, data, ...) {
+  validate_inputs(data, formula)
+  if (!requireNamespace("lme4", quietly = TRUE)) {
+    stop(
+      "Package 'lme4' is required for `pharma_lmm()`.\n",
+      "Please install it with: install.packages('lme4')"
+    )
+  }
   lme4::lmer(formula = formula, data = data, ...)
 }

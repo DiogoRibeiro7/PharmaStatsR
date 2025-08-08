@@ -1,6 +1,7 @@
 #' Conduct a meta-analysis
 #'
 #' Wrapper around `metafor::rma` to fit fixed- or random-effects models.
+#' Requires the 'metafor' package to be installed.
 #'
 #' @param yi Numeric vector of effect size estimates.
 #' @param vi Numeric vector of effect size variances.
@@ -14,6 +15,13 @@
 #' @examples
 #' pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
+  if (!requireNamespace("metafor", quietly = TRUE)) {
+    stop(
+      "Package 'metafor' is required for pharma_meta_analysis().\n",
+      "Please install it with install.packages('metafor')",
+      call. = FALSE
+    )
+  }
   check_numeric_vector(yi, "yi")
   check_numeric_vector(vi, "vi")
   if (length(yi) != length(vi)) {
@@ -41,6 +49,7 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' Forest plot for a meta-analysis
 #'
 #' Create a forest plot from an `rma` object.
+#' Requires the 'metafor' package.
 #'
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::forest].
@@ -52,6 +61,13 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 #' pharma_forest_plot(res)
 pharma_forest_plot <- function(model, ...) {
+  if (!requireNamespace("metafor", quietly = TRUE)) {
+    stop(
+      "Package 'metafor' is required for pharma_forest_plot().\n",
+      "Please install it with install.packages('metafor')",
+      call. = FALSE
+    )
+  }
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
@@ -61,6 +77,7 @@ pharma_forest_plot <- function(model, ...) {
 #' Funnel plot for a meta-analysis
 #'
 #' Create a funnel plot from an `rma` object.
+#' Requires the 'metafor' package.
 #'
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::funnel].
@@ -72,6 +89,13 @@ pharma_forest_plot <- function(model, ...) {
 #' res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 #' pharma_funnel_plot(res)
 pharma_funnel_plot <- function(model, ...) {
+  if (!requireNamespace("metafor", quietly = TRUE)) {
+    stop(
+      "Package 'metafor' is required for pharma_funnel_plot().\n",
+      "Please install it with install.packages('metafor')",
+      call. = FALSE
+    )
+  }
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
@@ -81,6 +105,7 @@ pharma_funnel_plot <- function(model, ...) {
 #' Meta-regression
 #'
 #' Wrapper around `metafor::rma` to fit a meta-regression with moderators.
+#' Requires the 'metafor' package.
 #'
 #' @param yi Effect size estimates.
 #' @param vi Effect size variances.
@@ -99,6 +124,13 @@ pharma_funnel_plot <- function(model, ...) {
 #'   mods = mods
 #' )
 pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
+  if (!requireNamespace("metafor", quietly = TRUE)) {
+    stop(
+      "Package 'metafor' is required for pharma_meta_regression().\n",
+      "Please install it with install.packages('metafor')",
+      call. = FALSE
+    )
+  }
   check_numeric_vector(yi, "yi")
   check_numeric_vector(vi, "vi")
   if (length(yi) != length(vi)) {
@@ -117,6 +149,7 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #'
 #' Fit a network meta-analysis using [netmeta::netmeta] to compare multiple
 #' treatments across studies.
+#' Requires the 'netmeta' package.
 #'
 #' @param TE Numeric vector of treatment effect estimates.
 #' @param seTE Numeric vector of standard errors for the effect estimates.
@@ -143,6 +176,13 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #' pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
 pharma_network_meta_analysis <- function(TE, seTE, treat1, treat2, data = NULL,
                                          sm = "MD", random = TRUE, ...) {
+  if (!requireNamespace("netmeta", quietly = TRUE)) {
+    stop(
+      "Package 'netmeta' is required for pharma_network_meta_analysis().\n",
+      "Please install it with install.packages('netmeta')",
+      call. = FALSE
+    )
+  }
   if (!is.null(data)) {
     required <- c(
       deparse(substitute(TE)),
@@ -150,7 +190,7 @@ pharma_network_meta_analysis <- function(TE, seTE, treat1, treat2, data = NULL,
       deparse(substitute(treat1)),
       deparse(substitute(treat2))
     )
-    check_dataset(data, required)
+    validate_inputs(data, required_cols = required)
     TE <- data[[required[1]]]
     seTE <- data[[required[2]]]
     treat1 <- data[[required[3]]]
