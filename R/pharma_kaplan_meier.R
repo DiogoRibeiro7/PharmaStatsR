@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' pharma_kaplan_meier(Surv(time, status) ~ treatment, data = pharma_survival)
+#' pharma_kaplan_meier(survival::Surv(time, status) ~ treatment, data = pharma_survival)
 pharma_kaplan_meier <- function(formula, data, log_rank = TRUE, ...) {
   validate_inputs(data, formula)
   if (!requireNamespace("survival", quietly = TRUE)) {

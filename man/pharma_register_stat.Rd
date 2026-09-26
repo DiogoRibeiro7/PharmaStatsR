@@ -4,7 +4,7 @@
 \alias{pharma_list_stats}
 \alias{pharma_run_stat}
 \title{Register and manage custom statistical methods}
-\description{Utilities to register, list, run, and unregister custom statistical methods for PharmaTestSuite.}
+\description{Utilities to register, list, run, and unregister custom statistical methods for PharmaStatsR.}
 \usage{
 pharma_register_stat(name, fun)
 pharma_unregister_stat(name)

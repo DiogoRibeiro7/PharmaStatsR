@@ -1,4 +1,4 @@
-#' Launch the interactive PharmaTestSuite dashboard
+#' Launch the interactive PharmaStatsR dashboard
 #'
 #' Starts a Shiny dashboard built with `flexdashboard` to explore example
 #' datasets included in the package. The dashboard is rendered from an R Markdown
@@ -19,7 +19,7 @@
 #' }
 pharma_dashboard <- function(launch = interactive()) {
   dash_path <- system.file("dashboard", "pharma_dashboard.Rmd",
-    package = "PharmaTestSuite"
+    package = "PharmaStatsR"
   )
   if (dash_path == "") {
     stop("Dashboard file not found")

@@ -4,28 +4,28 @@
 \alias{pharma_audit_log}
 \title{Record an analysis step in a blockchain-like audit trail}
 \usage{
-pharma_audit_log(message, file = "audit.log")
+pharma_audit_log(message, file = "audit.log", key)
 }
 \arguments{
 \item{message}{Character string describing the analysis step.}
-
 \item{file}{Path to the CSV log file. If the file does not exist, a
 new log is created with a genesis block.}
+\item{key}{Character string used as the secret key for the HMAC
+signature. Each entry is signed with this key so any
+modification can be detected during verification.}
 }
 \value{
 Invisibly returns the path to the log file.
 }
 \description{
 Appends a hashed entry to a CSV log file. Each entry stores the
-SHA256 hash of the previous entry so that tampering with any record
-invalidates the subsequent chain. The hash includes the message,
-timestamp and previous hash so entries can be verified later. This
-provides a lightweight approximation of a blockchain-backed audit
-trail.
+HMAC-SHA256 hash of the message, timestamp and previous hash so that
+tampering with any record invalidates the subsequent chain. This
+provides a lightweight append-only log using the \code{openssl} package.
 }
 \examples{
 tmp <- tempfile()
-pharma_audit_log("Load data", tmp)
-pharma_audit_log("Fit model", tmp)
+pharma_audit_log("Load data", tmp, key = "secret")
+pharma_audit_log("Fit model", tmp, key = "secret")
 read.csv(tmp)
 }

@@ -53,7 +53,7 @@ pharma_audit_log <- function(message,
   }
 
   timestamp <- format(Sys.time(), tz = "UTC", usetz = TRUE)
-  prev_hash <- tail(log$hash, 1)
+  prev_hash <- utils::tail(log$hash, 1)
   entry_hash <- openssl::sha256(
     paste(message, timestamp, prev_hash),
     key = key

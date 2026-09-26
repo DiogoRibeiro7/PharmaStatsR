@@ -1,4 +1,4 @@
-#' Manage PharmaTestSuite configuration
+#' Manage PharmaStatsR configuration
 #'
 #' `pharma_config()` gets or sets package-wide options such as logging
 #' verbosity and defaults used throughout the package.
@@ -47,7 +47,7 @@ pharma_config <- function(...) {
     }
     new$log_level <- lvl
   }
-  current <- modifyList(current, new)
+  current <- utils::modifyList(current, new)
   options(pharma = current)
   invisible(current)
 }
@@ -62,7 +62,7 @@ pharma_config <- function(...) {
 #' @return The result of `expr`.
 #' @examples
 #' with_pharma_config(list(log_level = "DEBUG"), {
-#'   pharma_log("debug message", level = "DEBUG")
+#'   pharma_config()$log_level
 #' })
 #' @export
 with_pharma_config <- function(options, expr) {

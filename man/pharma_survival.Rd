@@ -21,9 +21,12 @@ pharma_survival
 }
 \description{
 Simulated survival dataset used to illustrate survival
-functions in PharmaTestSuite.
+functions in PharmaStatsR.
 }
 \details{
 A small time-to-event dataset for demonstrating survival analysis.
 }
 \keyword{datasets}
+\examples{
+summary(pharma_survival)
+}

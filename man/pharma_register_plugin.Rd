@@ -2,7 +2,7 @@
 % Please edit documentation in R/pharma_plugin_api.R
 \name{pharma_register_plugin}
 \alias{pharma_register_plugin}
-\title{Register a custom PharmaTestSuite plugin}
+\title{Register a custom PharmaStatsR plugin}
 \usage{
 pharma_register_plugin(name, fun)
 }
@@ -16,7 +16,7 @@ Invisible `TRUE` on success.
 }
 \description{
 Allows users to add their own statistical tests or helpers to the
-PharmaTestSuite environment. Registered plugins can be listed and
+PharmaStatsR environment. Registered plugins can be listed and
 executed via convenience wrappers.
 }
 \examples{

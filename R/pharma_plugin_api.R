@@ -1,7 +1,7 @@
-#' Register a custom PharmaTestSuite plugin
+#' Register a custom PharmaStatsR plugin
 #'
 #' Allows users to add their own statistical tests or helpers to the
-#' PharmaTestSuite environment. Registered plugins can be listed and
+#' PharmaStatsR environment. Registered plugins can be listed and
 #' executed via convenience wrappers.
 #'
 #' @param name Character string giving the plugin name.
@@ -25,7 +25,7 @@ pharma_register_plugin <- function(name, fun) {
   invisible(TRUE)
 }
 
-#' Unregister a PharmaTestSuite plugin
+#' Unregister a PharmaStatsR plugin
 #'
 #' Removes a previously registered plugin from the internal environment.
 #'
@@ -42,7 +42,7 @@ pharma_unregister_plugin <- function(name) {
   invisible(TRUE)
 }
 
-#' List registered PharmaTestSuite plugins
+#' List registered PharmaStatsR plugins
 #'
 #' @return Character vector of plugin names.
 #' @examples
@@ -77,7 +77,7 @@ pharma_run_plugin <- function(name, ...) {
 
 #' Register a custom statistical method
 #'
-#' Extend PharmaTestSuite with bespoke statistical routines that can be
+#' Extend PharmaStatsR with bespoke statistical routines that can be
 #' invoked through `pharma_run_stat()`.
 #'
 #' @inheritParams pharma_register_plugin

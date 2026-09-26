@@ -2,7 +2,7 @@
 % Please edit documentation in R/pharma_plugin_api.R
 \name{pharma_unregister_plugin}
 \alias{pharma_unregister_plugin}
-\title{Unregister a PharmaTestSuite plugin}
+\title{Unregister a PharmaStatsR plugin}
 \usage{
 pharma_unregister_plugin(name)
 }

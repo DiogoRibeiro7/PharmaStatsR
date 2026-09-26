@@ -1,7 +1,7 @@
 #' Example pharmaceutical dataset
 #'
 #' A small simulated dataset included for demonstrating the statistical
-#' tests in PharmaTestSuite.
+#' tests in PharmaStatsR.
 #'
 #' @format A data frame with 20 rows and 5 variables:
 #' \describe{

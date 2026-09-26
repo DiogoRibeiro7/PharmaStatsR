@@ -22,6 +22,7 @@ Fit a network meta-analysis using \code{netmeta::netmeta} to compare multiple tr
 Requires the 'netmeta' package to be installed.
 }
 \examples{
+if (requireNamespace("netmeta", quietly = TRUE)) {
 df <- data.frame(
   treat1 = c("A", "A", "B"),
   treat2 = c("B", "C", "C"),
@@ -29,4 +30,5 @@ df <- data.frame(
   seTE = c(0.1, 0.2, 0.1)
 )
 pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
+}
 }

@@ -1,4 +1,4 @@
-This document summarises outstanding issues in the PharmaTestSuite project and proposes concrete actions for each topic.
+This document summarises outstanding issues in the PharmaStatsR project and proposes concrete actions for each topic.
 
 ## Audit log security
 Current Status: The audit log uses SHA256 HMACs chained together but relies on a CSV file with no key management.
@@ -18,7 +18,7 @@ Action items:
 ## Documentation and examples
 Current Status: Examples sometimes omit `library()` calls and not all parameters are documented. Continuous integration is mentioned only briefly.
 Action items:
-- Include `library(PharmaTestSuite)` in every example.
+- Include `library(PharmaStatsR)` in every example.
 - Document all function arguments using roxygen2 with runnable examples.
 - Explain the GitHub Actions workflow in the README.
 - Mark unimplemented ROADMAP items as planned or in progress rather than complete.
@@ -40,7 +40,7 @@ Action items:
 Current Status: The README previously contained vague statements about compliance.
 Action items:
 - Provide a concise disclaimer referencing ICH E9(R1) and FDA guidance.
-- Clarify that PharmaTestSuite facilitates analysis but does not ensure compliance.
+- Clarify that PharmaStatsR facilitates analysis but does not ensure compliance.
 
 ## Continuous integration
 Current Status: Tests may be skipped when dependencies are missing.

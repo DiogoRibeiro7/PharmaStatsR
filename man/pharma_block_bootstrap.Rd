@@ -4,13 +4,15 @@
 \alias{pharma_block_bootstrap}
 \title{Block bootstrap for clustered data}
 \usage{
-pharma_block_bootstrap(data, cluster, statistic, R = 1000, ...)
+pharma_block_bootstrap(data, cluster, statistic, R = 1000,
+  progress = interactive(), ...)
 }
 \arguments{
   \item{data}{Data frame to resample.}
   \item{cluster}{Vector or column name indicating cluster membership.}
   \item{statistic}{Function computing the statistic of interest.}
   \item{R}{Number of bootstrap replicates.}
+  \item{progress}{Logical; display a progress indicator when \code{TRUE}.}
   \item{...}{Additional arguments passed to \code{statistic}.}
 }
 \value{A list of bootstrap statistics.}

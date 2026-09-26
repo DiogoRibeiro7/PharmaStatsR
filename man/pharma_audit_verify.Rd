@@ -4,24 +4,27 @@
 \alias{pharma_audit_verify}
 \title{Verify a blockchain-like audit trail}
 \usage{
-pharma_audit_verify(file = "audit.log")
+pharma_audit_verify(file = "audit.log", key)
 }
 \arguments{
 \item{file}{Path to the CSV log file. Defaults to "audit.log".}
+\item{key}{Character string with the secret key used when logging.
+The verification recalculates HMAC signatures with this key and
+ensures each entry links to the previous one.}
 }
 \value{
-Logical `TRUE` if the log is intact, otherwise `FALSE`.
+Logical \code{TRUE} if the log is intact, otherwise \code{FALSE}.
 }
 \description{
 Checks that each entry in an audit log created with
-`pharma_audit_log()` correctly links to the previous entry via its
-SHA256 hash. The hash is recomputed from the message, timestamp and
-previous hash so any tampering is detected. Returns `TRUE` if the
-chain is valid.
+\code{pharma_audit_log()} correctly links to the previous entry via its
+HMAC-SHA256 hash. The hash is recomputed from the stored message,
+timestamp and previous hash so any tampering with the log is
+detected. Returns \code{TRUE} if the chain is valid.
 }
 \examples{
 f <- tempfile()
-pharma_audit_log("start", f)
-pharma_audit_log("next", f)
-pharma_audit_verify(f)
+pharma_audit_log("start", f, key = "secret")
+pharma_audit_log("next", f, key = "secret")
+pharma_audit_verify(f, key = "secret")
 }

@@ -1,7 +1,7 @@
 #' Simulated repeated measures dataset
 #'
 #' Example data for a simple two-condition repeated measures design used
-#' to showcase repeated measures analysis utilities in PharmaTestSuite.
+#' to showcase repeated measures analysis utilities in PharmaStatsR.
 #'
 #' @description Simulated repeated measures dataset
 #'

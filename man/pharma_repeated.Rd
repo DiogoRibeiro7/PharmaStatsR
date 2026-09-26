@@ -23,6 +23,6 @@ Simulated repeated measures dataset
 }
 \details{
 Example data for a simple two-condition repeated measures design used
-to showcase repeated measures analysis utilities in PharmaTestSuite.
+to showcase repeated measures analysis utilities in PharmaStatsR.
 }
 \keyword{datasets}

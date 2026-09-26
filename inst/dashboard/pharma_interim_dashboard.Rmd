@@ -5,7 +5,7 @@ runtime: shiny
 ---
 
 ```{r global, include=FALSE}
-library(PharmaTestSuite)
+library(PharmaStatsR)
 ```
 
 ## Enrollment

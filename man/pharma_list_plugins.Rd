@@ -2,7 +2,7 @@
 % Please edit documentation in R/pharma_plugin_api.R
 \name{pharma_list_plugins}
 \alias{pharma_list_plugins}
-\title{List registered PharmaTestSuite plugins}
+\title{List registered PharmaStatsR plugins}
 \usage{
 pharma_list_plugins()
 }
@@ -10,7 +10,7 @@ pharma_list_plugins()
 Character vector of plugin names.
 }
 \description{
-List registered PharmaTestSuite plugins
+List registered PharmaStatsR plugins
 }
 \examples{
 pharma_list_plugins()

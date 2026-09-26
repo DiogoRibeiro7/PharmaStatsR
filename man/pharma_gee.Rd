@@ -4,7 +4,7 @@
 \alias{pharma_gee}
 \title{Fit a generalized estimating equations (GEE) model}
 \usage{
-pharma_gee(formula, id, data, family = gaussian, corstr = "independence", ...)
+pharma_gee(formula, id, data, family = stats::gaussian, corstr = "independence", ...)
 }
 \arguments{
   \item{formula}{Model formula specifying the mean structure.}
@@ -23,5 +23,7 @@ The function validates inputs and checks that the \code{geepack} package is
 installed before fitting the model.
 }
 \examples{
+if (requireNamespace("geepack", quietly = TRUE)) {
 pharma_gee(response ~ condition, id = subject, data = pharma_repeated)
+}
 }

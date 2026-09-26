@@ -2,7 +2,7 @@
 % Please edit documentation in R/pharma_dashboard.R
 \name{pharma_dashboard}
 \alias{pharma_dashboard}
-\title{Launch the interactive PharmaTestSuite dashboard}
+\title{Launch the interactive PharmaStatsR dashboard}
 \usage{
 pharma_dashboard(launch = interactive())
 }

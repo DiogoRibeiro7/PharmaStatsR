@@ -21,6 +21,8 @@ Wrapper around \code{metafor::rma} to fit a meta-regression with moderators.
 Requires the 'metafor' package to be installed.
 }
 \examples{
+if (requireNamespace("metafor", quietly = TRUE)) {
 mods <- cbind(size = c(100,120,80))
 pharma_meta_regression(yi=c(0.2,0.1,-0.1), vi=c(0.05,0.04,0.06), mods=mods)
+}
 }

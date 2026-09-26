@@ -22,5 +22,7 @@ function validates inputs and checks that `lme4` is installed before
 fitting the model.
 }
 \examples{
+if (requireNamespace("lme4", quietly = TRUE)) {
 pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
+}
 }

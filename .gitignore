@@ -7,5 +7,5 @@
 
 # Build output
 build/
-PharmaTestSuite.Rcheck/
+PharmaStatsR.Rcheck/
 *.tar.gz

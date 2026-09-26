@@ -1,8 +1,8 @@
-# PharmaTestSuite
+# PharmaStatsR
 
-[![R-CMD-check](https://github.com/DiogoRibeiro7/PharmaTestSuite/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaTestSuite/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml)
 
-PharmaTestSuite is an R package with statistical wrappers and simulated example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
+PharmaStatsR is an R package with statistical wrappers and simulated example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
 
 The package is under development and is **not on CRAN**. Its methods and sample data are intended for demonstration and research. They have not been validated for clinical decisions or regulatory compliance.
 
@@ -12,15 +12,19 @@ You need R and access to this repository. From an R session with GitHub authenti
 
 ```r
 install.packages("remotes")
-remotes::install_github("DiogoRibeiro7/PharmaTestSuite")
+remotes::install_github("DiogoRibeiro7/PharmaStatsR")
 ```
 
 An alternative for local development is `devtools::load_all()` from the repository root. Optional modelling backends can be installed as needed; see `DESCRIPTION` for the list.
 
+## Migration from PharmaTestSuite
+
+The repository and R package were previously named `PharmaTestSuite`. Reinstall from the URL above and replace `library(PharmaTestSuite)` with `library(PharmaStatsR)` and `citation("PharmaTestSuite")` with `citation("PharmaStatsR")` in existing scripts. Exported `pharma_*` function names have not changed.
+
 ## Quick start
 
 ```r
-library(PharmaTestSuite)
+library(PharmaStatsR)
 
 # The included data are small, simulated examples.
 head(pharma_sample)
@@ -50,4 +54,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURI
 
 The helpers do not establish compliance with ICH or FDA guidance. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the simulated datasets for clinical decisions or include patient data in issues.
 
-Use `citation("PharmaTestSuite")` after installation for citation details. The project is licensed under MIT; see [LICENSE](LICENSE).
+Use `citation("PharmaStatsR")` after installation for citation details. The project is licensed under MIT; see [LICENSE.md](LICENSE.md).

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
-title: "PharmaTestSuite: Statistical Test Suites for Pharmaceutical Research"
+title: "PharmaStatsR: Statistical Methods for Pharmaceutical Research"
 authors:
   - family-names: Ribeiro
     given-names: Diogo
@@ -10,6 +10,5 @@ authors:
 version: "0.1.62"
 type: software
 license: MIT
-repository-code: https://github.com/DiogoRibeiro7/PharmaTestSuite
-url: https://github.com/DiogoRibeiro7/PharmaTestSuite
-date-released: "2025-06-27"
+repository-code: https://github.com/DiogoRibeiro7/PharmaStatsR
+url: https://github.com/DiogoRibeiro7/PharmaStatsR

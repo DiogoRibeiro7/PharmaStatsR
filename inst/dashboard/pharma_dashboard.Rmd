@@ -1,11 +1,11 @@
 ---
-title: "PharmaTestSuite Dashboard"
+title: "PharmaStatsR Dashboard"
 output: flexdashboard::flex_dashboard
 runtime: shiny
 ---
 
 ```{r global, include=FALSE}
-library(PharmaTestSuite)
+library(PharmaStatsR)
 ```
 
 ## Dataset Preview
@@ -17,7 +17,7 @@ inputPanel(
 )
 
 renderTable({
-  ds <- get(input$dataset, asNamespace("PharmaTestSuite"))
+  ds <- get(input$dataset, asNamespace("PharmaStatsR"))
   head(ds)
 })
 ```
@@ -26,7 +26,7 @@ renderTable({
 
 ```{r}
 renderPlot({
-  ds <- get(input$dataset, asNamespace("PharmaTestSuite"))
+  ds <- get(input$dataset, asNamespace("PharmaStatsR"))
   if ("response" %in% names(ds)) {
     hist(ds$response, main = "Response Distribution")
   } else if ("time" %in% names(ds)) {

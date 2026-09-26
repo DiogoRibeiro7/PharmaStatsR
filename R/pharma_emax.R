@@ -66,6 +66,7 @@ pharma_sigmoid_emax <- function(dose, response,
 #' @param response Numeric vector of responses.
 #' @param subject Subject identifier for random effects.
 #' @param start Named vector of starting values for \code{e0}, \code{emax}, and \code{ed50}.
+#' @param random Random-effects formula. Defaults to a subject-specific baseline.
 #' @param ... Additional arguments passed to \code{nlme::nlme}.
 #'
 #' @return An \code{nlme} object inheriting from \code{lme}.
@@ -78,7 +79,7 @@ pharma_sigmoid_emax <- function(dose, response,
 #' )
 pharma_emax_nlme <- function(dose, response, subject,
                              start = NULL,
-                             ...) {
+                             random = e0 ~ 1 | subject, ...) {
   if (!requireNamespace("nlme", quietly = TRUE)) {
     stop("Package 'nlme' is required for pharma_emax_nlme()")
   }
@@ -92,12 +93,12 @@ pharma_emax_nlme <- function(dose, response, subject,
         ed50 = stats::median(dose)
       )
     )
-    start <- coef(nls_fit)
+    start <- stats::coef(nls_fit)
   }
   nlme::nlme(response ~ e0 + (emax * dose) / (ed50 + dose),
     data = data,
     fixed = e0 + emax + ed50 ~ 1,
-    random = e0 + emax + ed50 ~ 1 | subject,
+    random = random,
     start = start,
     control = nlme::nlmeControl(returnObject = TRUE),
     ...

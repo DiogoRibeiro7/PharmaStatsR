@@ -13,7 +13,10 @@
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("lme4", quietly = TRUE)) {
 #' pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
+#' }
+
 pharma_lmm <- function(formula, data, ...) {
   validate_inputs(data, formula)
   if (!requireNamespace("lme4", quietly = TRUE)) {

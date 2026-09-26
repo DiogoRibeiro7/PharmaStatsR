@@ -155,8 +155,11 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("future.apply", quietly = TRUE)) {
 #' stat <- function(d) mean(d$response)
 #' pharma_parallel_bootstrap(pharma_sample, stat, R = 10)
+#' }
+
 pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
                                       plan = "multisession", ...) {
   pharma_log("INFO", "Running pharma_parallel_bootstrap")

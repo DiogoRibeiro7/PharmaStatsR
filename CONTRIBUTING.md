@@ -1,6 +1,6 @@
 # Contributing
 
-PharmaTestSuite is an R package for statistical demonstrations and research workflows. Contributions to statistical methods should describe assumptions, estimands, input validation, and the interpretation of results. Keep examples based on simulated or public data; do not include patient data.
+PharmaStatsR is an R package for statistical demonstrations and research workflows. Contributions to statistical methods should describe assumptions, estimands, input validation, and the interpretation of results. Keep examples based on simulated or public data; do not include patient data.
 
 1. Open an issue for substantial new methods so the interface and validation plan can be reviewed first.
 2. Make changes in a short-lived branch and open a pull request into `main`. Do not push directly to `main` or create release tags as part of a feature change.
