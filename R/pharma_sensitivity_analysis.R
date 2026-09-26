@@ -20,10 +20,16 @@
 #'   pharma_sensitivity_analysis(imp, response ~ treatment)
 #' }
 pharma_sensitivity_analysis <- function(mids_obj, formula, family = NULL, ...) {
-  if (is.null(family)) {
-    fit <- mice:::with.mids(mids_obj, stats::lm(formula, data = data, ...))
-  } else {
-    fit <- mice:::with.mids(mids_obj, stats::glm(formula, family = family, data = data, ...))
+  if (!requireNamespace("mice", quietly = TRUE)) {
+    stop("Package 'mice' is required for pharma_sensitivity_analysis()")
   }
-  mice::pool(fit)
+  completed <- mice::complete(mids_obj, action = "all")
+  fits <- lapply(completed, function(dataset) {
+    if (is.null(family)) {
+      stats::lm(formula, data = dataset, ...)
+    } else {
+      stats::glm(formula, data = dataset, family = family, ...)
+    }
+  })
+  mice::pool(fits)
 }

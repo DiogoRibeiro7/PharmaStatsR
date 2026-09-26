@@ -16,9 +16,9 @@ pharma_group_seq <- function(k = 4, alpha = 0.05,
   if (k < 1) stop("k must be >= 1")
   if (method == "obrien-fleming") {
     probs <- (1:k) / k
-    z <- qnorm(1 - alpha / 2 / sqrt(probs))
+    z <- stats::qnorm(1 - alpha / 2 / sqrt(probs))
   } else {
-    z <- rep(qnorm(1 - alpha / 2 / k), k)
+    z <- rep(stats::qnorm(1 - alpha / 2 / k), k)
   }
   z
 }

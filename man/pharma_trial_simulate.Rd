@@ -17,7 +17,7 @@ pharma_trial_simulate(n, arms = c("control", "treatment"),
 
 \item{accrual_period}{Study accrual period during which subjects enroll.}
 
-\item{enroll_shape}{Shape parameter controlling enrollment over time. Values \textless{} 1 front-load enrollment, \textgreater{} 1 back-load enrollment.}
+\item{enroll_shape}{Shape parameter controlling enrollment over time. Values below 1 front-load enrollment; values above 1 back-load enrollment.}
 
 \item{dropout_rate}{Hazard for dropout (per unit time).}
 

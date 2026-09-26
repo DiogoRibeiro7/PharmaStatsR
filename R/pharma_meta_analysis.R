@@ -13,7 +13,10 @@
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("metafor", quietly = TRUE)) {
 #' pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
+#' }
+
 pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
   if (!requireNamespace("metafor", quietly = TRUE)) {
     stop(
@@ -58,8 +61,11 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("metafor", quietly = TRUE)) {
 #' res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 #' pharma_forest_plot(res)
+#' }
+
 pharma_forest_plot <- function(model, ...) {
   if (!requireNamespace("metafor", quietly = TRUE)) {
     stop(
@@ -86,8 +92,11 @@ pharma_forest_plot <- function(model, ...) {
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("metafor", quietly = TRUE)) {
 #' res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 #' pharma_funnel_plot(res)
+#' }
+
 pharma_funnel_plot <- function(model, ...) {
   if (!requireNamespace("metafor", quietly = TRUE)) {
     stop(
@@ -117,12 +126,15 @@ pharma_funnel_plot <- function(model, ...) {
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("metafor", quietly = TRUE)) {
 #' mods <- cbind(size = c(100, 120, 80))
 #' pharma_meta_regression(
 #'   yi = c(0.2, 0.1, -0.1),
 #'   vi = c(0.05, 0.04, 0.06),
 #'   mods = mods
 #' )
+#' }
+
 pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
   if (!requireNamespace("metafor", quietly = TRUE)) {
     stop(
@@ -167,6 +179,7 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("netmeta", quietly = TRUE)) {
 #' df <- data.frame(
 #'   treat1 = c("A", "A", "B"),
 #'   treat2 = c("B", "C", "C"),
@@ -174,6 +187,8 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #'   seTE = c(0.1, 0.2, 0.1)
 #' )
 #' pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
+#' }
+
 pharma_network_meta_analysis <- function(TE, seTE, treat1, treat2, data = NULL,
                                          sm = "MD", random = TRUE, ...) {
   if (!requireNamespace("netmeta", quietly = TRUE)) {

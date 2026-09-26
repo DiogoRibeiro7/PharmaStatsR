@@ -8,7 +8,7 @@
 #' @param arms character vector of treatment arms.
 #' @param accrual_period numeric study accrual period during which subjects enroll.
 #' @param enroll_shape numeric shape parameter controlling enrollment over time.
-#'   Values < 1 front-load enrollment, > 1 back-load enrollment.
+#'   Values below 1 front-load enrollment; values above 1 back-load enrollment.
 #' @param dropout_rate numeric hazard for dropout (per unit time).
 #' @param hazard_control numeric event hazard in the control arm.
 #' @param hazard_treatment numeric event hazard in the treatment arm.

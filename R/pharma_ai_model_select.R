@@ -25,7 +25,7 @@
 #' @examples
 #' if (requireNamespace("caret", quietly = TRUE)) {
 #'   pharma_ai_model_select(
-#'     response ~ treatment,
+#'     outcome ~ treatment,
 #'     data = pharma_sample,
 #'     metric = "Accuracy",
 #'     explain = TRUE

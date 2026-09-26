@@ -3,10 +3,20 @@
 \name{pharma_dose_response}
 \alias{pharma_dose_response}
 \title{Simulated dose-response dataset}
-\format{A data frame with 30 rows and 3 variables:}
+\format{
+A data frame with 30 rows and 3 variables:
 \describe{
-  \item{subject}{Subject identifier}
+  \item{subject}{Subject identifier, with repeated doses per subject}
   \item{dose}{Dose level}
   \item{response}{Observed response}
 }
+}
 \source{Simulated data.}
+\description{
+A repeated-measures dataset generated from an Emax model for demonstrating
+nonlinear and mixed-effects dose-response fits.
+}
+\examples{
+data(pharma_dose_response)
+plot(pharma_dose_response$dose, pharma_dose_response$response)
+}

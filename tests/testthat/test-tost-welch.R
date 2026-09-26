@@ -15,7 +15,7 @@ test_that("TOST matches independent Welch tests and their confidence interval", 
   ))
   expect_equal(result$p.value, max(lower_test$p.value, upper_test$p.value))
   expect_equal(result$df, unname(lower_test$parameter))
-  expect_equal(unname(result$conf.int), unname(interval_test$conf.int))
+  expect_equal(as.numeric(result$conf.int), as.numeric(interval_test$conf.int))
 })
 
 test_that("formula TOST preserves missing values for validation", {

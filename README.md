@@ -54,4 +54,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURI
 
 The helpers do not establish compliance with ICH or FDA guidance. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the simulated datasets for clinical decisions or include patient data in issues.
 
-Use `citation("PharmaStatsR")` after installation for citation details. The project is licensed under MIT; see [LICENSE](LICENSE).
+Use `citation("PharmaStatsR")` after installation for citation details. The project is licensed under MIT; see [LICENSE.md](LICENSE.md).

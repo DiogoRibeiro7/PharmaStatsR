@@ -16,6 +16,8 @@ pharma_parallel_bootstrap(data, statistic, R = 1000, plan = "multisession", ...)
 \value{A list of bootstrap statistics.}
 \description{Distribute bootstrap iterations across multiple cores using the \code{future} framework.}
 \examples{
+if (requireNamespace("future.apply", quietly = TRUE)) {
 stat <- function(d) mean(d$response)
 pharma_parallel_bootstrap(pharma_sample, stat, R = 10, plan = "sequential")
+}
 }

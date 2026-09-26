@@ -15,8 +15,11 @@
 #' @export
 #'
 #' @examples
+#' if (requireNamespace("geepack", quietly = TRUE)) {
 #' pharma_gee(response ~ condition, id = subject, data = pharma_repeated)
-pharma_gee <- function(formula, id, data, family = gaussian, corstr = "independence", ...) {
+#' }
+
+pharma_gee <- function(formula, id, data, family = stats::gaussian, corstr = "independence", ...) {
   validate_inputs(data, formula)
   if (!requireNamespace("geepack", quietly = TRUE)) {
     stop(

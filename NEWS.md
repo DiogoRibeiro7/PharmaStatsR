@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Repair R CMD check failures in examples, documentation, and statistical tests; use repeated subject measurements in the mixed-effects Emax example data.
 - Rename the R package from PharmaTestSuite to PharmaStatsR; reinstall from the new repository URL and update package load and citation calls.
 - Correct Welch TOST degrees of freedom, reject undefined variance and missing observations, and register both S3 methods.
 - Run package tests during pull request checks and correct dependency metadata.

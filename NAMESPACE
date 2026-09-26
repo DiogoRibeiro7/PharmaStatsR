@@ -9,6 +9,8 @@ export(pharma_repeated_anova)
 export(pharma_sample)
 export(pharma_survival_fit)
 export(pharma_t_test)
+S3method(pharma_t_test,default)
+S3method(pharma_t_test,formula)
 
 export(pharma_kaplan_meier)
 export(pharma_parametric_survival)

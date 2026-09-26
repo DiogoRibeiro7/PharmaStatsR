@@ -14,7 +14,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/DiogoRibeiro7/PharmaStatsR
 BugReports: https://github.com/DiogoRibeiro7/PharmaStatsR/issues
-Imports: survival, stats, utils, graphics, nlme, broom
+Imports: survival, stats, utils, nlme, broom
 Suggests: testthat, knitr, rmarkdown, rstanarm, bayesplot, mice,
     future, future.apply, caret, cmprsk, openssl, lme4, geepack,
     metafor, netmeta, data.table, JM, mstate, openxlsx, flextable,

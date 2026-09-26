@@ -16,6 +16,6 @@ pharma_bayes_stopping <- function(prior_alpha, prior_beta, successes,
                                   trials, threshold = 0.95) {
   post_alpha <- prior_alpha + successes
   post_beta <- prior_beta + trials - successes
-  prob <- 1 - pbeta(0.5, post_alpha, post_beta)
+  prob <- 1 - stats::pbeta(0.5, post_alpha, post_beta)
   list(prob = prob, stop = prob > threshold)
 }
