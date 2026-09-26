@@ -4,34 +4,72 @@ site_url: https://diogoribeiro7.github.io/PharmaStatsR/
 repo_url: https://github.com/DiogoRibeiro7/PharmaStatsR
 repo_name: DiogoRibeiro7/PharmaStatsR
 edit_uri: edit/main/docs/
+strict: true
 
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
   palette:
-    scheme: slate
-    primary: blue grey
-    accent: teal
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
   features:
+    - navigation.tabs
     - navigation.sections
     - navigation.top
-    - content.code.copy
+    - navigation.footer
     - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
   - pymdownx.superfences
-  - pymdownx.highlight
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
 
 nav:
-  - Overview: index.md
-  - Get started:
+  - Home: index.md
+  - Getting started:
       - Installation: installation.md
       - Quick start: quickstart.md
   - Statistical methods:
       - Method guide: methods.md
       - Equivalence testing: equivalence.md
       - Limitations and validation: limitations.md
-  - Contribute: development.md
+  - Development: development.md

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Align the documentation with the shared dark-first design, including a responsive landing page, light-mode toggle, and mathematical notation.
 - Add a dark documentation site with installation, method, equivalence, and validation guides and check it on pull requests.
 - Document public installation and prepare GitHub Pages deployment from `main`.
 - Keep the Rd manual within page width and use a convergent counting-process fixture for the Cox model test.
