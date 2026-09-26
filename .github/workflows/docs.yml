@@ -34,6 +34,8 @@ jobs:
           cache-dependency-path: requirements-docs.txt
       - run: python -m pip install -r requirements-docs.txt
       - run: python -m mkdocs build --strict
+      - uses: actions/configure-pages@v6
+        if: github.event_name != 'pull_request'
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
