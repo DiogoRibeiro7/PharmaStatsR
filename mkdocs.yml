@@ -1,0 +1,37 @@
+site_name: PharmaStatsR
+site_description: Statistical methods and example workflows for pharmaceutical research
+site_url: https://diogoribeiro7.github.io/PharmaStatsR/
+repo_url: https://github.com/DiogoRibeiro7/PharmaStatsR
+repo_name: DiogoRibeiro7/PharmaStatsR
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue grey
+    accent: teal
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.highlight
+
+nav:
+  - Overview: index.md
+  - Get started:
+      - Installation: installation.md
+      - Quick start: quickstart.md
+  - Statistical methods:
+      - Method guide: methods.md
+      - Equivalence testing: equivalence.md
+      - Limitations and validation: limitations.md
+  - Contribute: development.md

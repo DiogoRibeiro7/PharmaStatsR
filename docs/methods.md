@@ -1,0 +1,25 @@
+# Method guide
+
+Use the installed R help pages for full argument and return documentation, for example `?pharma_tost`. This guide points to representative functions; it is not a claim that every method has been independently validated.
+
+| Analysis | Representative functions | Backend |
+| --- | --- | --- |
+| Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, `pharma_anova()`, `pharma_crossover_anova()` | Core R dependencies |
+| Rates and uncertainty | `pharma_rate_metrics()`, `pharma_wild_bootstrap()` | Core R dependencies; review interval assumptions |
+| Survival | `pharma_survival_fit()`, `pharma_kaplan_meier()`, `pharma_parametric_survival()` | `survival` (required) |
+| Longitudinal and correlated outcomes | `pharma_lmm()`, `pharma_gee()` | `lme4`, `geepack` (optional) |
+| Meta-analysis | `pharma_meta_analysis()`, `pharma_network_meta_analysis()` | `metafor`, `netmeta` (optional) |
+| Missing data and Bayesian workflows | `pharma_mice_impute()`, `pharma_bayesian_glm()` | `mice`, `rstanarm` (optional) |
+| Dose response | `pharma_emax()`, `pharma_sigmoid_emax()` | Core R dependencies |
+
+Other exported functions cover design, simulation, reporting, diagnostics, and optional integrations. Browse `help(package = "PharmaStatsR")` for the installed version. Check the [DESCRIPTION file](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION) for the complete `Imports` and `Suggests` lists. A missing optional backend is reported when its corresponding function is called.
+
+## Before interpreting a result
+
+1. State the estimand and the hypothesis before choosing a function.
+2. Verify the data structure, missingness, independence, and model assumptions for that method.
+3. Check units, group ordering, uncertainty interval construction, and any multiplicity plan.
+4. Reproduce important numerical results with an independent implementation and a relevant reference.
+5. Review [limitations and validation](limitations.md) for project-wide constraints.
+
+A passing package check establishes that software examples and tests ran in that environment. It does not certify the statistical method for a particular study.

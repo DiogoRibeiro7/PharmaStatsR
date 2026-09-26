@@ -9,3 +9,6 @@
 ^scripts$
 ^setup\.sh$
 ^LICENSE\.md$
+^docs$
+^mkdocs\.yml$
+^requirements-docs\.txt$
