@@ -1,5 +1,10 @@
 # PharmaTestSuite News
 
+## Unreleased
+- Run package tests during pull request checks and correct dependency metadata.
+- Restore test files to the package build; improve contributor and security guidance.
+- Replace invalid optional-backend examples with accurate usage notes.
+
 ## 0.0.0.9000
 - Initial package skeleton with a sample function.
 - Added t-test and chi-square wrappers for basic analyses.

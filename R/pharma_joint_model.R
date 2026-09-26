@@ -13,17 +13,7 @@
 #' @export
 #'
 #' @examples
-#' if (requireNamespace("JM", quietly = TRUE) &&
-#'   requireNamespace("nlme", quietly = TRUE)) {
-#'   lme_fit <- nlme::lme(response ~ time,
-#'     random = ~ time | subject,
-#'     data = pharma_sample
-#'   )
-#'   cox_fit <- survival::coxph(survival::Surv(futime, status) ~ treatment,
-#'     data = pharma_survival
-#'   )
-#'   pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
-#' }
+#' # Fit compatible longitudinal and survival models on matched data first.
 pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
   # Ensure the JM package is available before proceeding
   if (!requireNamespace("JM", quietly = TRUE)) {

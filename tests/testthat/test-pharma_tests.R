@@ -79,6 +79,7 @@ test_that("pharma_parametric_survival returns survreg", {
 })
 
 test_that("pharma_lmm returns lmerMod", {
+  skip_if_not_installed("lme4")
   res <- pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
   expect_s4_class(res, "lmerMod")
 })
@@ -173,7 +174,7 @@ test_that("pharma_emax_nlme returns lme", {
     pharma_dose_response$response,
     subject = pharma_dose_response$subject
   )
-  expect_s4_class(res, "lme")
+  expect_s3_class(res, "lme")
 })
 
 test_that("pharma_group_seq returns numeric", {

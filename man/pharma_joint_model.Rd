@@ -24,15 +24,5 @@ Provides a wrapper around `JM::jointModel` for fitting joint models
 that link a linear mixed-effects model with a Cox proportional hazards model.
 }
 \examples{
-if (requireNamespace("JM", quietly = TRUE) &&
-  requireNamespace("nlme", quietly = TRUE)) {
-  lme_fit <- nlme::lme(response ~ time,
-    random = ~ time | subject,
-    data = pharma_sample
-  )
-  cox_fit <- survival::coxph(survival::Surv(futime, status) ~ treatment,
-    data = pharma_survival
-  )
-  pharma_joint_model(lme_fit, cox_fit, timeVar = "time")
-}
+# Fit compatible longitudinal and survival models on matched data first.
 }
