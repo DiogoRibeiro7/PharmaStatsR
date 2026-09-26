@@ -1,6 +1,7 @@
 # PharmaStatsR
 
 [![R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml)
+[![Documentation](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/docs.yml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/docs.yml)
 
 PharmaStatsR is an R package with statistical wrappers and simulated example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
 
@@ -8,14 +9,14 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 
 ## Install
 
-You need R and access to this repository. From an R session with GitHub authentication configured for this private repository:
+You need R. From an R session, install from this public GitHub repository:
 
 ```r
 install.packages("remotes")
 remotes::install_github("DiogoRibeiro7/PharmaStatsR")
 ```
 
-An alternative for local development is `devtools::load_all()` from the repository root. Optional modelling backends can be installed as needed; see `DESCRIPTION` for the list.
+An alternative for local development is `devtools::load_all()` from the repository root. Optional modelling backends can be installed as needed; see `DESCRIPTION` for the list and the [installation guide](https://diogoribeiro7.github.io/PharmaStatsR/installation/).
 
 ## Migration from PharmaTestSuite
 
@@ -40,13 +41,13 @@ fit <- pharma_survival_fit(
 summary(fit)
 ```
 
-For a longer example, read the [workflow vignette](vignettes/pharma_workflow.Rmd). The [roadmap](ROADMAP.md) records future work; items there should not be taken as implemented functionality.
+For worked examples and assumptions, read the [documentation](https://diogoribeiro7.github.io/PharmaStatsR/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd). The [roadmap](ROADMAP.md) records future work; items there should not be taken as implemented functionality.
 
 ## Develop and test
 
 Run `./setup.sh` after installing R. It installs the test dependencies and executes the unit tests. Set `SKIP_R_INSTALL=1` to use an existing R library; missing required packages then cause a clear failure.
 
-Every pull request to `main` runs an Ubuntu R CMD check with the package's required dependencies and the test and vignette toolchain. Checks for optional statistical backends are exercised when those packages are installed. A full CRAN preparation check, including optional packages and additional platforms, remains work in progress.
+Every pull request to `main` runs an Ubuntu R CMD check with the package's required dependencies and the test and vignette toolchain. Documentation changes also run a strict MkDocs build. Checks for optional statistical backends are exercised when those packages are installed. A full CRAN preparation check, including optional packages and additional platforms, remains work in progress.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURITY.md](SECURITY.md) for private vulnerability reports.
 
