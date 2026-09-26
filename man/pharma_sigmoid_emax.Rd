@@ -4,7 +4,9 @@
 \alias{pharma_sigmoid_emax}
 \title{Fit a sigmoid Emax model}
 \usage{
-pharma_sigmoid_emax(dose, response, start = list(e0 = min(response), emax = max(response) - min(response), ed50 = stats::median(dose), h = 1), ...)
+pharma_sigmoid_emax(dose, response,
+  start = list(e0 = min(response), emax = max(response) - min(response),
+    ed50 = stats::median(dose), h = 1), ...)
 }
 \arguments{
   \item{dose}{Numeric vector of doses.}

@@ -2,7 +2,8 @@
 \alias{pharma_network_meta_analysis}
 \title{Network meta-analysis}
 \usage{
-pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = NULL, sm = "MD", random = TRUE, ...)
+pharma_network_meta_analysis(TE, seTE, treat1, treat2,
+  data = NULL, sm = "MD", random = TRUE, ...)
 }
 \arguments{
   \item{TE}{Numeric vector of treatment effect estimates.}
