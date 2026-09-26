@@ -31,7 +31,7 @@
 #' sap <- pharma_generate_sap()
 #' cat(sap, sep = "\n")
 #'
-#' pharma_generate_sap("analysis_plan.md",
+#' pharma_generate_sap(tempfile(fileext = ".md"),
 #'   title = "Clinical Trial",
 #'   author = "Diogo Ribeiro"
 #' )

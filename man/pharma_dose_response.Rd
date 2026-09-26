@@ -17,6 +17,6 @@ A repeated-measures dataset generated from an Emax model for demonstrating
 nonlinear and mixed-effects dose-response fits.
 }
 \examples{
-data(pharma_dose_response)
+head(pharma_dose_response)
 plot(pharma_dose_response$dose, pharma_dose_response$response)
 }

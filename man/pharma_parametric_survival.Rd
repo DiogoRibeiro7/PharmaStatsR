@@ -22,7 +22,7 @@ A `survreg` object.
 Convenience wrapper around `survival::survreg` for parametric time-to-event analyses.
 }
 \examples{
-pharma_parametric_survival(Surv(time, status) ~ treatment,
+pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
   data = pharma_survival,
   dist = "weibull"
 )

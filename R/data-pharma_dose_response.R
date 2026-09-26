@@ -11,7 +11,7 @@
 #' }
 #' @source Simulated data.
 #' @examples
-#' data(pharma_dose_response)
+#' head(pharma_dose_response)
 #' plot(pharma_dose_response$dose, pharma_dose_response$response)
 pharma_dose_response <- local({
   set.seed(123)

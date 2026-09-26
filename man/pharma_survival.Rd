@@ -27,3 +27,6 @@ functions in PharmaStatsR.
 A small time-to-event dataset for demonstrating survival analysis.
 }
 \keyword{datasets}
+\examples{
+summary(pharma_survival)
+}

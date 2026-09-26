@@ -23,5 +23,5 @@ If `log_rank = TRUE`, a list with components `fit` (the survfit
 Fits a Kaplan-Meier survival curve and optionally performs a log-rank test.
 }
 \examples{
-pharma_kaplan_meier(Surv(time, status) ~ treatment, data = pharma_survival)
+pharma_kaplan_meier(survival::Surv(time, status) ~ treatment, data = pharma_survival)
 }

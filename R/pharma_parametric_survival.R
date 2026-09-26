@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' pharma_parametric_survival(Surv(time, status) ~ treatment,
+#' pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
 #'   data = pharma_survival,
 #'   dist = "weibull"
 #' )
