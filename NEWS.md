@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Replace uncalibrated group-sequential threshold formulas with gsDesign's two-sided O'Brien-Fleming and Pocock boundaries; earlier `pharma_group_seq()` results must be recomputed.
 - Replace the misleading `compliant` result in `pharma_validation_report()` with `columns_present`; add `pharma_column_report()` and `pharma_check_columns()` for explicit column-only checks. Update callers that read `$compliant`.
 - Align the documentation with the shared dark-first design, including a responsive landing page, light-mode toggle, and mathematical notation.
 - Add a dark documentation site with installation, method, equivalence, and validation guides and check it on pull requests.

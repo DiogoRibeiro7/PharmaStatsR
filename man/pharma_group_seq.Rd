@@ -2,21 +2,40 @@
 % Please edit documentation in R/pharma_group_seq.R
 \name{pharma_group_seq}
 \alias{pharma_group_seq}
-\title{Group-sequential boundaries}
+\title{Two-sided group-sequential efficacy boundaries}
 \usage{
-pharma_group_seq(k = 4, alpha = 0.05, method = c("obrien-fleming", "pocock"))
+pharma_group_seq(
+  k = 4,
+  alpha = 0.05,
+  method = c("obrien-fleming", "pocock"),
+  timing = NULL
+)
 }
 \arguments{
-  \item{k}{Number of looks/interim analyses.}
-  \item{alpha}{Overall type I error rate.}
-  \item{method}{Boundary method (\code{"obrien-fleming"} or \code{"pocock"}).}
+\item{k}{A positive whole number of analyses, including the final analysis.}
+
+\item{alpha}{Overall two-sided type I error rate, strictly between 0 and 0.5.}
+
+\item{method}{Boundary family, `"obrien-fleming"` or `"pocock"`.}
+
+\item{timing}{Optional increasing information fractions, one per analysis.
+The last must equal 1. Defaults to equally spaced information fractions.}
 }
 \value{
-Numeric vector of critical z-values for each look.
+A numeric vector of positive critical z-values. At each analysis
+the upper boundary is the returned value and the lower boundary is its
+negative. No futility or sample-size calculation is returned.
 }
 \description{
-Calculate simple O'Brien-Fleming or Pocock boundaries for interim analyses.
+Calculate calibrated O'Brien-Fleming or Pocock critical z-values for
+planned analyses using `gsDesign`. These are symmetric two-sided
+efficacy boundaries under its canonical joint normal model.
+}
+\references{
+`gsDesign` design derivation:
+\url{https://keaven.github.io/gsDesign/reference/gsDesign.html}
 }
 \examples{
 pharma_group_seq(k = 3)
+pharma_group_seq(k = 3, method = "pocock", timing = c(0.25, 0.6, 1))
 }
