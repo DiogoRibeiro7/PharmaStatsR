@@ -1,6 +1,15 @@
 # Two one-sided equivalence tests
 
-`pharma_tost()` tests whether the **first group mean minus the second group mean** is strictly between a prespecified lower and upper bound. It uses a Welch standard error and Welch–Satterthwaite degrees of freedom, so it does not require equal group variances.
+`pharma_tost()` tests whether the **first group mean minus the second group mean** is strictly between prespecified bounds. For two independent samples, it estimates the difference and its Welch standard error as
+
+\[
+\widehat{\Delta} = \bar{x} - \bar{y},
+\qquad
+\mathrm{SE}(\widehat{\Delta}) =
+\sqrt{\frac{s_x^2}{n_x} + \frac{s_y^2}{n_y}}.
+\]
+
+The test uses Welch–Satterthwaite degrees of freedom and does not assume equal group variances.
 
 ```r
 library(PharmaStatsR)
@@ -19,7 +28,7 @@ result$p.value    # larger of the two one-sided p-values
 result$df         # Welch degrees of freedom
 ```
 
-Declare equivalence at level `alpha` only when **both** one-sided tests reject (`result$p.value < alpha`). The corresponding `100 × (1 - 2 × alpha)%` confidence interval must fit strictly inside `(low_eqbound, high_eqbound)`. A failure to establish equivalence is not proof of a meaningful difference.
+Declare equivalence at level \(\alpha\) only when **both** one-sided tests reject (`result$p.value < alpha`). The corresponding \(100(1 - 2\alpha)\%\) confidence interval must fit strictly inside the prespecified bounds. A failure to establish equivalence is not proof of a meaningful difference.
 
 For the formula method, the first **observed factor level** determines the first group. Set factor levels explicitly when direction matters:
 

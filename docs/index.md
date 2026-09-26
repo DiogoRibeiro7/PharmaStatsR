@@ -1,14 +1,44 @@
-# PharmaStatsR
+<div class="pharma-hero" markdown="1">
 
-Statistical wrappers, simulated data, and example workflows for pharmaceutical research in R.
+# Statistical workflows with clear assumptions
 
-PharmaStatsR is under development and is **not on CRAN**. Its examples support learning and exploratory research; the package has not been validated for clinical decisions or regulatory submissions.
+Explore pharmaceutical research methods in R with simulated data, runnable examples, and explicit limits on interpretation.
 
-## Explore
+[Get started](installation.md){ .md-button .md-button--primary }
+[Read the method guide](methods.md){ .md-button }
 
-- **Get started:** [Install](installation.md) and follow the [quick start](quickstart.md) on simulated data.
-- **Choose a method:** Read the [method guide](methods.md) and [equivalence testing guide](equivalence.md).
-- **Check the limits:** Review [limitations and validation](limitations.md) before applying results to real data.
-- **Contribute:** Follow the [development guide](development.md) to reproduce and review a change.
+</div>
 
-The R package manual remains the source for function arguments and return values. In R, run `help(package = "PharmaStatsR")` or `?pharma_tost` after installation. See the [source repository](https://github.com/DiogoRibeiro7/PharmaStatsR), [changelog](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/NEWS.md), and [roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md).
+<div class="pharma-cards" markdown="1">
+
+<div markdown="1">
+
+### Compare and estimate
+
+Use wrappers for group comparisons, survival models, and other research analyses. [Browse methods](methods.md).
+
+</div>
+
+<div markdown="1">
+
+### Reproduce an example
+
+Start with the included simulated datasets and inspect the returned estimates and uncertainty. [Try the quick start](quickstart.md).
+
+</div>
+
+<div markdown="1">
+
+### Check the limits
+
+Review assumptions, optional backends, and the actual scope of the validation and audit helpers. [Read limitations](limitations.md).
+
+</div>
+
+</div>
+
+## About the package
+
+PharmaStatsR is an R package with statistical wrappers, simulated data, and example workflows for pharmaceutical research. It is under development and **not on CRAN**. Its examples support learning and exploratory research; the package has not been validated for clinical decisions or regulatory submissions.
+
+The installed R manual documents function arguments and return values. In R, run `help(package = "PharmaStatsR")` or `?pharma_tost`. See the [source repository](https://github.com/DiogoRibeiro7/PharmaStatsR), [changelog](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/NEWS.md), and [roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md).
