@@ -15,5 +15,8 @@ pharma_response_surface(x1, x2, y, ...)
 \value{An \code{lm} object representing the fitted surface.}
 \description{Creates a second-order polynomial model for two predictors.}
 \examples{
-pharma_response_surface(pharma_dose_response$dose, pharma_dose_response$dose, pharma_dose_response$response)
+pharma_response_surface(
+  pharma_dose_response$dose, pharma_dose_response$dose,
+  pharma_dose_response$response
+)
 }

@@ -4,7 +4,9 @@
 \alias{pharma_emax}
 \title{Fit an Emax dose-response model}
 \usage{
-pharma_emax(dose, response, start = list(e0 = min(response), emax = max(response) - min(response), ed50 = stats::median(dose)), ...)
+pharma_emax(dose, response,
+  start = list(e0 = min(response), emax = max(response) - min(response),
+    ed50 = stats::median(dose)), ...)
 }
 \arguments{
   \item{dose}{Numeric vector of doses.}

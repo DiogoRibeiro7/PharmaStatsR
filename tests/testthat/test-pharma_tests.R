@@ -91,14 +91,24 @@ test_that("pharma_gee returns geeglm", {
 })
 
 test_that("pharma_cox_timevarying returns coxph", {
+  # Eight subjects contribute a baseline and a later interval. Treatment
+  # changes for some subjects, and events occur in both treatment groups.
   dat <- data.frame(
-    start = c(0, 5, 0, 7),
-    stop = c(5, 10, 7, 12),
-    status = c(0, 1, 0, 1),
-    treatment = c(0, 0, 1, 1)
+    start = rep(c(0, 5), 8),
+    stop = as.vector(rbind(rep(5, 8), 6:13)),
+    status = rep(c(0, 1), 8),
+    treatment = as.vector(rbind(
+      c(0, 0, 1, 1, 0, 0, 1, 1),
+      c(0, 1, 1, 0, 1, 0, 0, 1)
+    ))
   )
-  res <- pharma_cox_timevarying(survival::Surv(start, stop, status) ~ treatment, data = dat)
+  expect_silent(
+    res <- pharma_cox_timevarying(
+      survival::Surv(start, stop, status) ~ treatment, data = dat
+    )
+  )
   expect_s3_class(res, "coxph")
+  expect_true(all(is.finite(stats::coef(res))))
 })
 
 test_that("pharma_competing_risks returns crr", {

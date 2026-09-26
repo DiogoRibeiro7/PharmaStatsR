@@ -12,7 +12,7 @@ pharma_generate_sap(
   endpoints = "List the primary and secondary endpoints.",
   populations = "Define analysis populations such as ITT and safety sets.",
   methods =
-    "Outline the statistical methods that will be used, including any adjustments for multiplicity or interim analyses.",
+    "Describe the methods, including multiplicity and interim analyses.",
   criteria = "Specify key inclusion and exclusion criteria.",
   software = "Specify the software packages and versions that will be used.",
   extra_sections = NULL,
