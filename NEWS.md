@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Replace the misleading `compliant` result in `pharma_validation_report()` with `columns_present`; add `pharma_column_report()` and `pharma_check_columns()` for explicit column-only checks. Update callers that read `$compliant`.
 - Align the documentation with the shared dark-first design, including a responsive landing page, light-mode toggle, and mathematical notation.
 - Add a dark documentation site with installation, method, equivalence, and validation guides and check it on pull requests.
 - Document public installation and prepare GitHub Pages deployment from `main`.

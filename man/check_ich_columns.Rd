@@ -2,23 +2,23 @@
 % Please edit documentation in R/check_ich_columns.R
 \name{check_ich_columns}
 \alias{check_ich_columns}
-\title{Check dataset for basic ICH compliance}
+\title{Check the presence of required columns}
 \usage{
 check_ich_columns(data, required = c("subject", "treatment", "dose"))
 }
 \arguments{
 \item{data}{A data frame to check.}
 
-\item{required}{Character vector of required column names.
-Defaults to `c("subject", "treatment", "dose")`.}
+\item{required}{A nonempty character vector of unique, nonblank column
+names. Defaults to `c("subject", "treatment", "dose")`.}
 }
 \value{
-`TRUE` if all required columns are present; otherwise an error is
-  thrown listing the missing columns.
+`TRUE` if every required column exists; otherwise an error.
 }
 \description{
-This helper verifies that a dataset contains key columns commonly required for
-regulatory submissions under ICH guidelines.
+This historical function name is kept for existing scripts. It only checks
+column names and does not determine ICH or other regulatory compliance.
+For new code, use `pharma_check_columns()`.
 }
 \examples{
 check_ich_columns(pharma_sample)
