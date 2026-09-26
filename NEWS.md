@@ -1,6 +1,7 @@
 # PharmaTestSuite News
 
 ## Unreleased
+- Correct Welch TOST degrees of freedom, reject undefined variance and missing observations, and register both S3 methods.
 - Run package tests during pull request checks and correct dependency metadata.
 - Restore test files to the package build; improve contributor and security guidance.
 - Replace invalid optional-backend examples with accurate usage notes.
