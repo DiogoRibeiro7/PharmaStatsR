@@ -3,7 +3,7 @@
 #' A small time-to-event dataset for demonstrating survival analysis.
 #'
 #' @description Simulated survival dataset used to illustrate survival
-#' functions in PharmaTestSuite.
+#' functions in PharmaStatsR.
 #'
 #' @format A data frame with 30 rows and 4 variables:
 #' \describe{

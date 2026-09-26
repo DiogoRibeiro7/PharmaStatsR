@@ -1,8 +1,8 @@
-# PharmaTestSuite CRAN Preparation Roadmap
+# PharmaStatsR CRAN Preparation Roadmap
 
 ## General Assessment
 
-PharmaTestSuite provides a comprehensive collection of statistical wrappers for pharmaceutical research, offering a wide range of methods including t-tests, ANOVA, survival analysis, mixed models, Bayesian inference, meta-analysis, and more. The package is well-structured with consistent documentation patterns and a thoughtful design that aligns with pharmaceutical research workflows.
+PharmaStatsR provides a comprehensive collection of statistical wrappers for pharmaceutical research, offering a wide range of methods including t-tests, ANOVA, survival analysis, mixed models, Bayesian inference, meta-analysis, and more. The package is well-structured with consistent documentation patterns and a thoughtful design that aligns with pharmaceutical research workflows.
 
 ## Strengths
 
@@ -226,4 +226,4 @@ pharma_advanced_function <- function(formula, data, ...) {
 - [ ] Regulatory validation reports (ICH E9(R1) estimands)
 - [ ] Real-time interim monitoring dashboards
 
-By implementing these improvements systematically, PharmaTestSuite can be brought up to CRAN standards while maintaining and enhancing its current functionality. The package shows great promise with its comprehensive set of pharmaceutical statistics tools, and these refinements will make it more robust, maintainable, and user-friendly.
+By implementing these improvements systematically, PharmaStatsR can be brought up to CRAN standards while maintaining and enhancing its current functionality. The package shows great promise with its comprehensive set of pharmaceutical statistics tools, and these refinements will make it more robust, maintainable, and user-friendly.

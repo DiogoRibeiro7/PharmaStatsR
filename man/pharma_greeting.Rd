@@ -10,5 +10,5 @@ pharma_greeting()
 A character string with the greeting message.
 }
 \description{
-This function returns a friendly greeting for PharmaTestSuite users.
+This function returns a friendly greeting for PharmaStatsR users.
 }

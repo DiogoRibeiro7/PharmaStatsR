@@ -7,14 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette illustrates a typical workflow in pharmaceutical data analysis using functions from **PharmaTestSuite**.
+This vignette illustrates a typical workflow in pharmaceutical data analysis using functions from **PharmaStatsR**.
 
 > **Note:** The examples in this vignette use simulated data and are intended
 > for educational purposes only. They should not be relied on for
 > clinical decision making.
 
 ```{r setup, include=FALSE}
-library(PharmaTestSuite)
+library(PharmaStatsR)
 ```
 
 ## Data Cleaning

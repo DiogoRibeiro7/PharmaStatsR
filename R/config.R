@@ -1,4 +1,4 @@
-#' Manage PharmaTestSuite configuration
+#' Manage PharmaStatsR configuration
 #'
 #' `pharma_config()` gets or sets package-wide options such as logging
 #' verbosity and defaults used throughout the package.

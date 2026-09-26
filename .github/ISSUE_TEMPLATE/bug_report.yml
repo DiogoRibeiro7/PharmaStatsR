@@ -21,7 +21,7 @@ body:
     id: environment
     attributes:
       label: R and package versions
-      description: Paste `sessionInfo()` output and the installed PharmaTestSuite version.
+      description: Paste `sessionInfo()` output and the installed PharmaStatsR version.
       render: text
     validations:
       required: true
