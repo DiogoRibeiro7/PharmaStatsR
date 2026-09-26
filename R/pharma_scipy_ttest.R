@@ -11,7 +11,8 @@
 #' @export
 #'
 #' @examples
-#' if (reticulate::py_available(initialize = FALSE)) {
+#' if (requireNamespace("reticulate", quietly = TRUE) &&
+#'   reticulate::py_available(initialize = FALSE)) {
 #'   pharma_scipy_ttest(rnorm(20), rnorm(20))
 #' }
 pharma_scipy_ttest <- function(x, y, equal_var = TRUE) {

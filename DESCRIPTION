@@ -14,9 +14,10 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/DiogoRibeiro7/PharmaTestSuite
 BugReports: https://github.com/DiogoRibeiro7/PharmaTestSuite/issues
-Imports: survival, stats, utils, graphics, nlme
+Imports: survival, stats, utils, graphics, nlme, broom
 Suggests: testthat, knitr, rmarkdown, rstanarm, bayesplot, mice,
     future, future.apply, caret, cmprsk, openssl, lme4, geepack,
-    metafor, netmeta
+    metafor, netmeta, data.table, JM, mstate, openxlsx, flextable,
+    officer, reticulate
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1

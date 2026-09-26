@@ -1,15 +1,20 @@
 #!/usr/bin/env Rscript
-#' Install required packages and run unit tests
-#'
-#' This script ensures `devtools` and `testthat` are installed from
-#' CRAN before running `devtools::test()`.
-#'
-#' Usage: Called from setup.sh
 
-required <- c("devtools", "testthat")
+# Run the package's unit tests with a small, explicit dependency set. Optional
+# modelling backends are covered by tests when installed, and guarded otherwise.
+required <- c("devtools", "testthat", "broom", "openssl")
 missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
-if (length(missing)) {
+
+if (length(missing) > 0L && identical(Sys.getenv("SKIP_R_INSTALL"), "1")) {
+  stop("Required packages are missing: ", paste(missing, collapse = ", "))
+}
+if (length(missing) > 0L) {
   install.packages(missing, repos = "https://cloud.r-project.org")
 }
 
-devtools::test()
+still_missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
+if (length(still_missing) > 0L) {
+  stop("Unable to install required packages: ", paste(still_missing, collapse = ", "))
+}
+
+devtools::test(stop_on_failure = TRUE)

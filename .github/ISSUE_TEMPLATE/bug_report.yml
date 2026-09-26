@@ -1,0 +1,27 @@
+name: Bug report
+description: Report a reproducible package defect or incorrect statistical result.
+title: 'Bug: '
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include the observed result and the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproducible
+    attributes:
+      label: Minimal reproducible example
+      description: Use simulated or public data. Do not upload patient data.
+      render: r
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: R and package versions
+      description: Paste `sessionInfo()` output and the installed PharmaTestSuite version.
+      render: text
+    validations:
+      required: true

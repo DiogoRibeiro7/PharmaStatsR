@@ -21,7 +21,8 @@ Uses `reticulate` to call `scipy.stats.ttest_ind` for performing a
 two-sample t-test. This demonstrates integration with Python from R.
 }
 \examples{
-if (reticulate::py_available(initialize = FALSE)) {
+if (requireNamespace("reticulate", quietly = TRUE) &&
+  reticulate::py_available(initialize = FALSE)) {
   pharma_scipy_ttest(rnorm(20), rnorm(20))
 }
 }

@@ -1,5 +1,10 @@
 ^\.github$
 ^\.gitignore$
-^NEWS\.md$
+^AGENTS\.md$
+^CITATION\.cff$
+^CONTRIBUTING\.md$
 ^ROADMAP\.md$
-^tests$
+^SCATHING_CRITIQUE\.md$
+^SECURITY\.md$
+^scripts$
+^setup\.sh$
