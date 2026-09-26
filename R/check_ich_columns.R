@@ -1,22 +1,18 @@
-#' Check dataset for basic ICH compliance
+#' Check the presence of required columns
 #'
-#' This helper verifies that a dataset contains key columns commonly required for
-#' regulatory submissions under ICH guidelines.
+#' This historical function name is kept for existing scripts. It only checks
+#' column names and does not determine ICH or other regulatory compliance.
+#' For new code, use `pharma_check_columns()`.
 #'
 #' @param data A data frame to check.
-#' @param required Character vector of required column names.
-#'   Defaults to `c("subject", "treatment", "dose")`.
+#' @param required A nonempty character vector of unique, nonblank column
+#'   names. Defaults to `c("subject", "treatment", "dose")`.
 #'
-#' @return `TRUE` if all required columns are present; otherwise an error is
-#'   thrown listing the missing columns.
+#' @return `TRUE` if every required column exists; otherwise an error.
 #' @export
 #'
 #' @examples
 #' check_ich_columns(pharma_sample)
 check_ich_columns <- function(data, required = c("subject", "treatment", "dose")) {
-  missing <- setdiff(required, names(data))
-  if (length(missing) > 0) {
-    stop("Missing required columns: ", paste(missing, collapse = ", "))
-  }
-  TRUE
+  pharma_check_columns(data, required)
 }

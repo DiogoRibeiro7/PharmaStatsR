@@ -1,15 +1,19 @@
-#' Generate a regulatory validation report
+#' Report required columns in a dataset
 #'
-#' Creates a simple summary verifying that a dataset contains the
-#' necessary columns for ICH E9(R1) estimand specification. The function
-#' reports basic counts and returns a list describing compliance status.
+#' This historical function name is kept for existing scripts. It returns
+#' the same column-presence report as `pharma_column_report()`, not a
+#' regulatory validation or an ICH E9(R1) compliance decision. The old
+#' `compliant` field has been removed because column presence alone cannot
+#' justify that conclusion.
 #'
-#' @param data A data frame to validate.
-#' @param estimand Character string describing the target estimand.
-#' @param required Character vector of columns required for the report.
-#'   Defaults to `c("subject", "treatment", "dose", "response")`.
+#' @param data A data frame to check.
+#' @param estimand A nonempty character string describing the intended estimand.
+#'   The description is recorded, not assessed.
+#' @param required A nonempty character vector of unique, nonblank column
+#'   names. Defaults to `c("subject", "treatment", "dose", "response")`.
 #'
-#' @return A list with elements `estimand`, `n` and `compliant`.
+#' @return A list with `estimand`, `n`, `required_columns`, and
+#'   `columns_present = TRUE`. Missing columns cause an error.
 #' @export
 #'
 #' @examples
@@ -20,10 +24,5 @@ pharma_validation_report <- function(data,
                                        "subject", "treatment",
                                        "dose", "response"
                                      )) {
-  check_ich_columns(data, required = required)
-  list(
-    estimand = estimand,
-    n = nrow(data),
-    compliant = TRUE
-  )
+  pharma_column_report(data, estimand, required)
 }
