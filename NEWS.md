@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Correct `pharma_perm_f_test()` to test the whole linear model rather than the first sequential ANOVA term, keep analysis rows fixed across permutations, validate inputs, and document response exchangeability. Remove the misleading repeated-measures example and recompute earlier permutation results.
 - Correct the description of `pharma_bayes_stopping()` as a single-arm response-rate threshold, allow a configurable `null_rate`, validate beta shapes/counts/cutoffs, and compute very small posterior tail probabilities without subtraction. Previous `prob` results at the default benchmark are unchanged except for numerical accuracy; `trials = 0` is now rejected.
 - Correct `pharma_sample_reestimate()` to return a balanced two-arm total based on the within-arm variance, validate inputs, and document that it is a normal-approximation planning calculation rather than a calibrated interim adaptation. Recompute prior totals.
 - Replace `pharma_rate_metrics()` Wald difference intervals with Newcombe intervals and use half-count adjusted log ratio intervals, including zero-event groups. Risk ratio is now undefined (`NA`) when both groups have zero events. Validate whole-number counts and confidence levels; recompute previously reported intervals.

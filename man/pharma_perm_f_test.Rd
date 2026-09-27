@@ -2,25 +2,50 @@
 % Please edit documentation in R/pharma_perm_f_test.R
 \name{pharma_perm_f_test}
 \alias{pharma_perm_f_test}
-\title{Permutation-based F-test}
+\title{Global permutation F-test for a linear model}
 \usage{
 pharma_perm_f_test(formula, data, R = 1000, ...)
 }
 \arguments{
-\item{formula}{Model formula specifying the linear model.}
+\item{formula}{A two-sided linear-model formula with a numeric response.}
 
-\item{data}{Data frame containing the variables in the model.}
+\item{data}{A data frame containing the model variables.}
 
-\item{R}{Number of permutations.}
+\item{R}{A positive whole number of random response permutations.}
 
-\item{...}{Additional arguments passed to \code{stats::lm}.}
+\item{...}{Additional arguments passed to `stats::lm()`, such as
+`subset` or `na.action`. Weights and offsets are unsupported.}
 }
 \value{
-A list with the observed F statistic, the permutation distribution and the p-value.
+A list with `statistic`, the observed global F value;
+`perm`, a numeric vector of `R` permuted global F values; and
+`p.value`, the Monte Carlo upper-tail p-value using
+`(1 + sum(perm >= statistic)) / (R + 1)`.
 }
 \description{
-Conduct a permutation-based F-test for linear models, useful for complex designs where standard assumptions may not hold.
+Compare all non-intercept predictors jointly against an intercept-only
+model (or a zero-mean model if the formula omits the intercept). The
+evaluated response is permuted across the observations used by
+`stats::lm()`, keeping the design matrix and analysis rows fixed.
+}
+\details{
+Raw-response permutations test the global null that none of the
+non-intercept predictors are associated with the response. They
+require exchangeable observations under that null. They do not
+isolate a treatment effect after adjusting for nuisance predictors,
+and are not suitable for clustered, repeated, or time-ordered data
+without an appropriate restricted permutation scheme.
+}
+\references{
+R documentation for sequential ANOVA tables:
+\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html}
 }
 \examples{
-pharma_perm_f_test(response ~ treatment * period, data = pharma_crossover, R = 50)
+independent <- data.frame(
+  response = c(1, 2, 2, 4, 2, 3, 5, 7),
+  group = rep(c("A", "B"), each = 4),
+  dose = rep(1:4, times = 2)
+)
+set.seed(7)
+pharma_perm_f_test(response ~ group + dose, data = independent, R = 50)
 }
