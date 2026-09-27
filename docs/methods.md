@@ -22,6 +22,8 @@ Use the installed R help pages for full argument and return documentation, for e
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
 | Dose response | `pharma_emax()`, `pharma_sigmoid_emax()` | Core R dependencies |
 
+The formula interfaces of `pharma_t_test()` and `pharma_anova()` reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
+
 Other exported functions cover design, simulation, reporting, diagnostics, and optional integrations. Browse `help(package = "PharmaStatsR")` for the installed version. Check the [DESCRIPTION file](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION) for the complete `Imports` and `Suggests` lists. A missing optional backend is reported when its corresponding function is called.
 
 ## Before interpreting a result
