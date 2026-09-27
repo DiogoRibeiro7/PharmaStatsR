@@ -2,26 +2,57 @@
 % Please edit documentation in R/pharma_kaplan_meier.R
 \name{pharma_kaplan_meier}
 \alias{pharma_kaplan_meier}
-\title{Kaplan-Meier curve with log-rank test}
+\title{Kaplan–Meier curves with an optional log-rank comparison}
 \usage{
-pharma_kaplan_meier(formula, data, log_rank = TRUE, ...)
+pharma_kaplan_meier(
+  formula,
+  data,
+  log_rank = TRUE,
+  ...,
+  subset = NULL,
+  na.action = stats::na.omit,
+  timefix = TRUE
+)
 }
 \arguments{
-\item{formula}{A survival formula of the form `Surv(time, status) ~ group`.}
+\item{formula}{A right-censored \code{Surv(time, status) ~ group} formula.
+Use \code{~ 1} for a single curve with \code{log_rank = FALSE}.}
 
-\item{data}{A data frame containing the variables used in the model.}
+\item{data}{A data frame with the response and group variables.}
 
-\item{log_rank}{Logical; perform a log-rank test? Default is TRUE.}
+\item{log_rank}{One nonmissing logical value. If \code{TRUE}, return a
+standard log-rank comparison along with the curves.}
 
-\item{...}{Additional arguments passed to `survival::survfit`.}
+\item{...}{Named curve-only options passed to \code{survival::survfit()},
+such as \code{conf.type} or \code{conf.int}. With \code{log_rank = TRUE}, options
+changing the observations or estimator, such as \code{weights}, are rejected.}
+
+\item{subset}{Optional logical expression evaluated within \code{data}, or
+logical vector with one nonmissing element per input row. It is applied
+before both the curve and the test.}
+
+\item{na.action}{Missing-value handling function shared by the curve
+and test; defaults to \code{stats::na.omit()}.}
+
+\item{timefix}{One nonmissing logical value passed to both survival
+functions to control correction of near-tied event times.}
 }
 \value{
-If `log_rank = TRUE`, a list with components `fit` (the survfit
-  object) and `test` (the survdiff object). Otherwise the survfit object.
+If \code{log_rank = TRUE}, a list with \code{fit} (a \code{survfit} object)
+and \code{test} (a \code{survdiff} object); otherwise the \code{survfit} object.
 }
 \description{
-Fits a Kaplan-Meier survival curve and optionally performs a log-rank test.
+Fit a right-censored, single-event Kaplan–Meier curve and optionally
+compare groups with an unweighted, ordinary log-rank test.
+}
+\details{
+A multi-state or counting-process response is outside this helper's
+scope. The log-rank test uses \code{rho = 0}, has no weights, and does not
+adjust for confounding, clustering, or repeated observations.
 }
 \examples{
-pharma_kaplan_meier(survival::Surv(time, status) ~ treatment, data = pharma_survival)
+pharma_kaplan_meier(
+  survival::Surv(time, status) ~ treatment, data = pharma_survival,
+  conf.type = "log-log"
+)
 }

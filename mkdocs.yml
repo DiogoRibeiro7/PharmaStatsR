@@ -81,6 +81,7 @@ nav:
       - Group-sequential designs: sequential.md
       - Trial simulation: trial-simulation.md
       - Competing risks: competing-risks.md
+      - Kaplan–Meier and log-rank: kaplan-meier.md
       - Audit log integrity: audit-log.md
       - Model diagnostics: model-diagnostics.md
       - Limitations and validation: limitations.md
