@@ -2,7 +2,7 @@
 % Please edit documentation in R/pharma_trial_simulate.R
 \name{pharma_trial_simulate}
 \alias{pharma_trial_simulate}
-\title{Simulate a clinical trial dataset}
+\title{Simulate two-arm time-to-event trial data}
 \usage{
 pharma_trial_simulate(n, arms = c("control", "treatment"),
   accrual_period = 12, enroll_shape = 1, dropout_rate = 0.02,
@@ -11,29 +11,34 @@ pharma_trial_simulate(n, arms = c("control", "treatment"),
   follow_up = 24)
 }
 \arguments{
-\item{n}{Number of subjects to simulate.}
+\item{n}{Positive whole number of subjects.}
 
-\item{arms}{Character vector of treatment arms.}
+\item{arms}{Two distinct, nonempty character labels, in control and treatment order. Assignment is independent with probability 1/2 for each arm; exact balance is not guaranteed.}
 
-\item{accrual_period}{Study accrual period during which subjects enroll.}
+\item{accrual_period}{Nonnegative duration of accrual in the same time units as the other times. Zero enrolls everyone at time zero.}
 
-\item{enroll_shape}{Shape parameter controlling enrollment over time. Values below 1 front-load enrollment; values above 1 back-load enrollment.}
+\item{enroll_shape}{Positive shape of the Beta(enroll_shape, 1) enrollment fraction. Values below 1 front-load accrual; values above 1 back-load it.}
 
-\item{dropout_rate}{Hazard for dropout (per unit time).}
+\item{dropout_rate}{Nonnegative constant dropout hazard per unit time. Zero disables dropout.}
 
-\item{hazard_control}{Event hazard in the control arm.}
+\item{hazard_control}{Nonnegative event parameter for the control arm. For exponential events this is a constant hazard; for Weibull events it is the coefficient lambda in cumulative hazard H(t) = lambda * t^event_shape. Zero disables events in this arm.}
 
-\item{hazard_treatment}{Event hazard in the treatment arm.}
+\item{hazard_treatment}{Nonnegative event parameter for the treatment arm. For exponential events this is a constant hazard; for Weibull events it is the coefficient lambda in cumulative hazard H(t) = lambda * t^event_shape. Zero disables events in this arm.}
 
-\item{event_dist}{Distribution for event times. Either \code{"exponential"} or \code{"weibull"}.}
+\item{event_dist}{Event-time distribution: \code{"exponential"} or \code{"weibull"}.}
 
-\item{event_shape}{Shape parameter for Weibull event times.}
+\item{event_shape}{Positive Weibull shape; ignored for exponential draws. A Weibull shape of 1 has an exponential survival distribution.}
 
-\item{follow_up}{Total study duration from start to end of follow-up.}
+\item{follow_up}{Fixed study end time since the start of accrual; must be greater than accrual_period.}
 }
-\value{A \code{data.frame} with columns \code{id}, \code{treatment}, \code{enroll_time}, \code{time}, \code{status}, and \code{dropout}.}
-\description{Simulate a clinical trial dataset with staggered enrollment, flexible event time distributions, and dropout.}
+\value{
+A data frame with \code{id}, \code{treatment}, \code{enroll_time} (since study start), \code{time} (observed duration since enrollment), \code{status} (1 for event, 0 otherwise), and \code{dropout} (1 for dropout, 0 otherwise). A row with both indicators zero is administratively censored. Events take precedence over exact ties.
+}
+\description{
+Randomize subjects equally between two arms, draw enrollment times from a scaled Beta distribution, and independently draw event and dropout times. Follow-up ends at a fixed study time measured from the start of accrual.
+}
 \examples{
+set.seed(42)
 sim <- pharma_trial_simulate(50)
 head(sim)
 
