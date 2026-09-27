@@ -10,7 +10,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Independent-row bootstrap | [`pharma_parallel_bootstrap()`](parallel-bootstrap.md) | `future`, `future.apply` (optional); uses row resampling |
 | Cluster bootstrap | [`pharma_block_bootstrap()`](cluster-bootstrap.md) | Core R dependencies; observed clusters sampled with replacement |
 | Trial simulation | [`pharma_trial_simulate()`](trial-simulation.md) | Core R dependencies; independent two-arm time-to-event draws |
-| Survival | `pharma_survival_fit()`, `pharma_kaplan_meier()`, `pharma_parametric_survival()` | `survival` (required) |
+| Survival | `pharma_survival_fit()`, [`pharma_kaplan_meier()`](kaplan-meier.md), `pharma_parametric_survival()` | `survival` (required) |
 | Competing risks | [`pharma_competing_risks()`](competing-risks.md) | `cmprsk` (optional); proportional subdistribution hazards |
 | Local audit log | [`pharma_audit_log()` and `pharma_audit_verify()`](audit-log.md) | `openssl` (optional); keyed CSV chain |
 | Model diagnostics | [`pharma_model_diagnostics()`](model-diagnostics.md) | Base R `lm` / `glm`; descriptive screening |
