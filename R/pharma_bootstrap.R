@@ -68,73 +68,91 @@ pharma_wild_bootstrap <- function(formula, data, R = 1000) {
   coefficients
 }
 
-#' Block bootstrap for clustered data
+#' Cluster bootstrap for a user-supplied statistic
 #'
-#' Resample clusters with replacement to compute bootstrap replicates of a
-#' user-supplied statistic.
+#' Sample the observed clusters with replacement, taking every row from each
+#' selected cluster. The number of rows can change between replicates when
+#' clusters have different sizes.
 #'
-#' @param data **data.frame** to resample.
-#' @param cluster **character** or **vector** defining clusters.
-#' @param statistic **function** computing the statistic of interest. It must accept
-#'   the data frame as its first argument.
-#' @param R **integer** number of bootstrap replicates.
-#' @param progress **logical**; display a progress indicator when `TRUE` (default
-#'   `interactive()`).
-#' @param ... additional arguments passed to `statistic`.
+#' @param data Data frame to resample. Missing values outside the cluster IDs
+#'   are passed to `statistic` for the caller to handle.
+#' @param cluster Single character column name or an atomic vector of cluster
+#'   IDs with one value per row. Character vectors of length greater than one
+#'   are treated as IDs, not as column names. At least two observed clusters
+#'   are required; cluster IDs cannot be missing.
+#' @param statistic Function receiving a resampled data frame as its first
+#'   argument and any additional arguments from `...`.
+#' @param R Positive whole number of bootstrap replicates.
+#' @param progress Single nonmissing logical flag for interactive progress.
+#' @param ... Additional arguments forwarded to `statistic`.
+#' @param resample_id Optional new column name. When supplied, each selected
+#'   copy of a cluster gets a distinct integer ID in this column, including
+#'   when the same original cluster is selected more than once. Pass by name.
 #'
-#' @return A list of bootstrap statistics with length `R`.
+#' @return A list of `R` statistics; set a seed for reproducible resampling.
 #' @export
 #'
 #' @examples
-#' stat <- function(d) stats::coef(stats::lm(response ~ treatment, data = d))[2]
+#' stat <- function(d) mean(d$response)
+#' set.seed(42)
 #' res <- pharma_block_bootstrap(pharma_sample, "subject", stat, R = 10)
 pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
-                                   progress = interactive(), ...) {
+                                   progress = interactive(), ...,
+                                   resample_id = NULL) {
   pharma_log("INFO", "Running pharma_block_bootstrap")
-  if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
-  }
-  if (nrow(data) == 0) {
-    stop("`data` must have at least one row")
-  }
-  if (anyNA(data)) {
-    stop("`data` contains NA values; remove or impute them before calling `pharma_block_bootstrap`")
+  if (!is.data.frame(data) || nrow(data) == 0L) {
+    stop("`data` must be a nonempty data frame", call. = FALSE)
   }
   if (!is.function(statistic)) {
-    stop("`statistic` must be a function; got ", class(statistic)[1])
+    stop("`statistic` must be a function", call. = FALSE)
   }
-  if (!is.numeric(R) || length(R) != 1 || R <= 0 || !is.finite(R)) {
-    stop("`R` must be a positive integer; got ", R)
+  if (!is.numeric(R) || length(R) != 1L || is.na(R) ||
+      !is.finite(R) || R < 1 || R != floor(R) ||
+      R > .Machine$integer.max) {
+    stop("`R` must be a positive whole number", call. = FALSE)
   }
-  R <- as.integer(R)
-  if (is.character(cluster)) {
+  if (!is.logical(progress) || length(progress) != 1L || is.na(progress)) {
+    stop("`progress` must be a single nonmissing logical value", call. = FALSE)
+  }
+
+  # Keep the callback input a base data frame, regardless of optional packages.
+  data <- as.data.frame(data)
+  if (!is.null(resample_id) &&
+      (!is.character(resample_id) || length(resample_id) != 1L ||
+       is.na(resample_id) || !nzchar(resample_id) ||
+       resample_id %in% names(data))) {
+    stop("`resample_id` must be a new, nonempty column name", call. = FALSE)
+  }
+  if (is.character(cluster) && length(cluster) == 1L) {
     check_dataset(data, cluster)
     clust <- data[[cluster]]
   } else {
     clust <- cluster
   }
-  if (length(clust) != nrow(data)) {
-    stop(
-      "`cluster` must be a column name or vector of length ", nrow(data),
-      "; got length ", length(clust)
-    )
+  if (!is.atomic(clust) || !is.null(dim(clust)) ||
+      length(clust) != nrow(data) || anyNA(clust)) {
+    stop("`cluster` must be a nonmissing atomic vector with one ID per row",
+         call. = FALSE)
   }
-  if (anyNA(clust)) {
-    stop("`cluster` cannot contain NA values")
+
+  # Dropping unused factor levels prevents sampling clusters with no rows.
+  groups <- split(seq_len(nrow(data)), clust, drop = TRUE)
+  n_clusters <- length(groups)
+  if (n_clusters < 2L) {
+    stop("`cluster` must contain at least two observed clusters",
+         call. = FALSE)
   }
-  groups <- split(seq_len(nrow(data)), clust)
-  uniq <- names(groups)
-  results <- vector("list", R)
+
+  results <- vector("list", as.integer(R))
   prog <- if (progress) pharma_progress(R, "Bootstrap") else NULL
   for (i in seq_len(R)) {
-    sampled_clusters <- sample.int(length(uniq), length(uniq), replace = TRUE)
-    sampled_groups <- uniq[sampled_clusters]
-    indices <- unlist(groups[sampled_groups], use.names = FALSE)
-    if (nrow(data) > 10000 && requireNamespace("data.table", quietly = TRUE)) {
-      dt <- data.table::as.data.table(data)
-      boot_dat <- dt[indices]
-    } else {
-      boot_dat <- data[indices, , drop = FALSE]
+    sampled <- sample.int(n_clusters, n_clusters, replace = TRUE)
+    indices <- unlist(groups[sampled], use.names = FALSE)
+    boot_dat <- data[indices, , drop = FALSE]
+    if (!is.null(resample_id)) {
+      # Copies of the same source cluster must remain distinct for grouping.
+      boot_dat[[resample_id]] <- rep(seq_along(sampled),
+                                      times = lengths(groups)[sampled])
     }
     results[[i]] <- statistic(boot_dat, ...)
     if (!is.null(prog)) {

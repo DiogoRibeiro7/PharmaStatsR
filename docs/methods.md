@@ -7,6 +7,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, `pharma_anova()`, `pharma_crossover_anova()` | Core R dependencies |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
 | Rates and uncertainty | [`pharma_rate_metrics()`](rates.md), [`pharma_wild_bootstrap()`](wild-bootstrap.md) | Core R dependencies; review interval assumptions |
+| Cluster bootstrap | [`pharma_block_bootstrap()`](cluster-bootstrap.md) | Core R dependencies; observed clusters sampled with replacement |
 | Trial simulation | [`pharma_trial_simulate()`](trial-simulation.md) | Core R dependencies; independent two-arm time-to-event draws |
 | Survival | `pharma_survival_fit()`, `pharma_kaplan_meier()`, `pharma_parametric_survival()` | `survival` (required) |
 | Longitudinal and correlated outcomes | `pharma_lmm()`, `pharma_gee()` | `lme4`, `geepack` (optional) |
