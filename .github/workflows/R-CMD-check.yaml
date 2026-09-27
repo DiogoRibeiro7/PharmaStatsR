@@ -39,6 +39,8 @@ jobs:
             any::knitr
             any::rmarkdown
             any::openssl
+            any::future
+            any::future.apply
       - uses: r-lib/actions/check-r-package@v2
         with:
           build_args: 'c("--no-manual")'

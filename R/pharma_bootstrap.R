@@ -165,57 +165,65 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
   results
 }
 
-#' Parallel bootstrap using future.apply
+#' Row bootstrap with reproducible future workers
 #'
-#' Perform bootstrap resampling of a statistic using parallel workers via the
-#' `future` framework. This function mirrors `pharma_block_bootstrap` but
-#' distributes iterations across the available workers for speed.
+#' Resample individual rows with replacement and evaluate `statistic` for
+#' each replicate using future.apply. Each replicate has the original row
+#' count. Parallel-safe random streams make seeded results reproducible
+#' across future backends; the caller's previous future plan is restored.
 #'
-#' @param data **data.frame** containing the sample.
-#' @param statistic **function** computing the statistic of interest. It must accept
-#'   the data frame as its first argument.
-#' @param R **integer** number of bootstrap replicates.
-#' @param plan **character**, **function**, or call defining the future plan. Defaults to
-#'   `"multisession"`.
-#' @param ... additional arguments passed to `statistic`.
+#' @param data Nonempty data frame of independent observational units. Missing
+#'   values are passed to `statistic` for the caller to handle.
+#' @param statistic Function receiving a resampled base data frame as its first
+#'   argument.
+#' @param R Positive whole number of bootstrap replicates.
+#' @param plan Future strategy name, function, or call accepted by
+#'   `future::plan()`; defaults to `"multisession"`.
+#' @param ... Additional arguments passed to `statistic`.
 #'
-#' @return A list of bootstrap statistics with length `R`.
+#' @return A list with one statistic per bootstrap replicate. Set a seed
+#'   before calling for reproducibility across future strategies.
 #' @export
 #'
 #' @examples
 #' if (requireNamespace("future.apply", quietly = TRUE)) {
-#' stat <- function(d) mean(d$response)
-#' pharma_parallel_bootstrap(pharma_sample, stat, R = 10)
+#'   set.seed(42)
+#'   stat <- function(d) mean(d$response)
+#'   pharma_parallel_bootstrap(pharma_sample, stat, R = 10,
+#'                             plan = "sequential")
 #' }
-
 pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
                                       plan = "multisession", ...) {
   pharma_log("INFO", "Running pharma_parallel_bootstrap")
-  if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
-  }
-  if (nrow(data) == 0) {
-    stop("`data` must have at least one row")
-  }
-  if (anyNA(data)) {
-    stop("`data` contains NA values; remove or impute them before calling `pharma_parallel_bootstrap`")
+  if (!is.data.frame(data) || nrow(data) == 0L) {
+    stop("`data` must be a nonempty data frame", call. = FALSE)
   }
   if (!is.function(statistic)) {
-    stop("`statistic` must be a function; got ", class(statistic)[1])
+    stop("`statistic` must be a function", call. = FALSE)
   }
-  if (!is.numeric(R) || length(R) != 1 || R <= 0 || !is.finite(R)) {
-    stop("`R` must be a positive integer; got ", R)
+  if (!is.numeric(R) || length(R) != 1L || is.na(R) ||
+      !is.finite(R) || R < 1 || R != floor(R) ||
+      R > .Machine$integer.max) {
+    stop("`R` must be a positive whole number", call. = FALSE)
   }
-  R <- as.integer(R)
-  if (!is.character(plan) && !is.call(plan) && !is.function(plan)) {
-    stop("`plan` must be a string, function, or call understood by future::plan, e.g., 'multisession'; got ", class(plan)[1])
+  if (!(is.function(plan) || is.call(plan) ||
+        (is.character(plan) && length(plan) == 1L &&
+         !is.na(plan) && nzchar(plan)))) {
+    stop("`plan` must be a single strategy name, function, or call",
+         call. = FALSE)
   }
+  if (!requireNamespace("future.apply", quietly = TRUE)) {
+    stop("Install the optional `future.apply` package to use this helper",
+         call. = FALSE)
+  }
+
+  data <- as.data.frame(data)
   old_plan <- future::plan()
   on.exit(future::plan(old_plan), add = TRUE)
   future::plan(plan)
   future.apply::future_lapply(seq_len(R), function(i) {
-    indices <- sample(nrow(data), nrow(data), replace = TRUE)
+    indices <- sample.int(nrow(data), nrow(data), replace = TRUE)
     boot_data <- data[indices, , drop = FALSE]
     statistic(boot_data, ...)
-  })
+  }, future.seed = TRUE)
 }
