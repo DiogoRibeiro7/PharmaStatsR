@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Fix `pharma_wild_bootstrap()` to keep the original model frame, including transformed terms and offsets, reject missing model values and noninteger replicate counts, and require an identifiable model. Coefficient draws from earlier calls with formula offsets or silently omitted rows must be recomputed.
 - Validate two-arm trial simulation inputs, support zero event and dropout rates, and clarify that Weibull event parameters are cumulative hazard coefficients rather than constant hazards. Correct the simulator's roxygen attachment and document randomization and censoring semantics.
 - Correct `pharma_perm_f_test()` to test the whole linear model rather than the first sequential ANOVA term, keep analysis rows fixed across permutations, validate inputs, and document response exchangeability. Remove the misleading repeated-measures example and recompute earlier permutation results.
 - Correct the description of `pharma_bayes_stopping()` as a single-arm response-rate threshold, allow a configurable `null_rate`, validate beta shapes/counts/cutoffs, and compute very small posterior tail probabilities without subtraction. Previous `prob` results at the default benchmark are unchanged except for numerical accuracy; `trials = 0` is now rejected.

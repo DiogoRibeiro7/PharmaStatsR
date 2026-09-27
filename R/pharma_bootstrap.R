@@ -5,57 +5,67 @@
 #' @name pharma_bootstrap
 NULL
 
-#' Wild bootstrap for linear models
+#' Wild bootstrap coefficient draws for a linear model
 #'
-#' Applies the Rademacher wild bootstrap to obtain resampled coefficient
-#' estimates for a linear model.
+#' Keep the fitted design fixed and independently multiply each raw residual by
+#' a Rademacher sign (-1 or 1) before refitting the response. Uses the complete
+#' model frame from the original data, including transformed terms and offsets.
 #'
-#' @param formula **formula** for `stats::lm`.
-#' @param data **data.frame** containing the variables.
-#' @param R **integer** number of bootstrap replicates.
+#' @param formula Two-sided linear-model formula with a numeric vector response.
+#'   All variables must be columns of `data`.
+#' @param data Data frame containing the model variables; missing values in
+#'   variables used by the model are rejected rather than silently dropped.
+#' @param R Positive whole number of bootstrap coefficient draws.
 #'
-#' @return A matrix of bootstrap coefficients with one row per replicate.
+#' @return Numeric matrix with one row per bootstrap draw and one column per
+#'   original model coefficient. Set a seed before calling for reproducibility.
 #' @export
 #'
 #' @examples
-#' res <- pharma_wild_bootstrap(response ~ treatment, data = pharma_sample, R = 10)
-#' head(res)
+#' set.seed(42)
+#' draws <- pharma_wild_bootstrap(response ~ treatment, pharma_sample, R = 20)
+#' head(draws)
 pharma_wild_bootstrap <- function(formula, data, R = 1000) {
   pharma_log("INFO", "Running pharma_wild_bootstrap")
-  if (!inherits(formula, "formula")) {
-    stop("`formula` must be a valid formula, e.g., response ~ predictor")
+  if (!inherits(formula, "formula") || length(formula) != 3L) {
+    stop("`formula` must be a two-sided formula", call. = FALSE)
   }
   if (!is.data.frame(data)) {
-    stop("`data` must be a data frame; got ", class(data)[1])
+    stop("`data` must be a data frame", call. = FALSE)
+  }
+  if (!is.numeric(R) || length(R) != 1L || is.na(R) ||
+      !is.finite(R) || R < 1 || R != floor(R) ||
+      R > .Machine$integer.max) {
+    stop("`R` must be a positive whole number", call. = FALSE)
   }
   check_dataset(data, all.vars(formula))
-  mf <- stats::model.frame(formula, data)
-  if (anyNA(mf)) {
-    stop("Variables in `data` used by `formula` contain NA values; remove or impute them before calling `pharma_wild_bootstrap`")
+
+  # na.fail prevents the fitted model from silently changing the analysis rows.
+  fit <- stats::lm(formula, data = data, na.action = stats::na.fail,
+                   x = TRUE, model = TRUE, singular.ok = FALSE)
+  response <- stats::model.response(fit$model)
+  if (!is.numeric(response) || !is.null(dim(response)) ||
+      !all(is.finite(response))) {
+    stop("`formula` must have one finite numeric response vector", call. = FALSE)
   }
-  response <- mf[[1]]
-  if (!is.numeric(response)) {
-    stop("Response variable must be numeric")
+  X <- fit$x
+  if (ncol(X) == 0L || fit$df.residual < 1L) {
+    stop("Model needs coefficients and positive residual degrees of freedom",
+         call. = FALSE)
   }
-  if (!all(is.finite(response))) {
-    stop("Response variable must contain only finite values")
-  }
-  if (!is.numeric(R) || length(R) != 1 || R <= 0 || !is.finite(R)) {
-    stop("`R` must be a positive integer; got ", R)
-  }
-  R <- as.integer(R)
-  fit <- stats::lm(formula, data = mf)
-  X <- stats::model.matrix(fit)
+
   fitted <- stats::fitted(fit)
-  res <- stats::residuals(fit)
-  coef_mat <- matrix(NA_real_, nrow = R, ncol = length(stats::coef(fit)))
+  residuals <- stats::residuals(fit)
+  coefficients <- matrix(NA_real_, nrow = as.integer(R), ncol = ncol(X),
+                         dimnames = list(NULL, colnames(X)))
   for (i in seq_len(R)) {
-    w <- sample(c(-1, 1), length(res), replace = TRUE)
-    y_star <- fitted + res * w
-    coef_mat[i, ] <- stats::lm.fit(x = X, y = y_star)$coefficients
+    signs <- sample(c(-1, 1), length(residuals), replace = TRUE)
+    y_star <- fitted + residuals * signs
+    # lm.fit applies the original formula offset during every refit.
+    coefficients[i, ] <- stats::lm.fit(X, y_star, offset = fit$offset,
+                                       singular.ok = FALSE)$coefficients
   }
-  colnames(coef_mat) <- names(stats::coef(fit))
-  coef_mat
+  coefficients
 }
 
 #' Block bootstrap for clustered data
