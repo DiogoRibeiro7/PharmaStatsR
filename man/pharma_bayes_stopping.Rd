@@ -2,23 +2,56 @@
 % Please edit documentation in R/pharma_bayes_stopping.R
 \name{pharma_bayes_stopping}
 \alias{pharma_bayes_stopping}
-\title{Bayesian adaptive stopping rule}
+\title{Single-arm beta-binomial posterior threshold check}
 \usage{
-pharma_bayes_stopping(prior_alpha, prior_beta, successes, trials, threshold = 0.95)
+pharma_bayes_stopping(
+  prior_alpha,
+  prior_beta,
+  successes,
+  trials,
+  threshold = 0.95,
+  null_rate = 0.5
+)
 }
 \arguments{
-  \item{prior_alpha}{Alpha parameter of the beta prior.}
-  \item{prior_beta}{Beta parameter of the beta prior.}
-  \item{successes}{Number of successes observed.}
-  \item{trials}{Number of trials.}
-  \item{threshold}{Probability threshold to stop the trial.}
+\item{prior_alpha}{Positive scalar first shape of the beta prior.}
+
+\item{prior_beta}{Positive scalar second shape of the beta prior.}
+
+\item{successes}{Non-negative whole number of observed responses.}
+
+\item{trials}{Positive whole number of observed participants; at least
+`successes`.}
+
+\item{threshold}{Posterior probability cutoff, strictly between 0 and 1.
+The flag is `TRUE` only when the probability exceeds this cutoff.}
+
+\item{null_rate}{Benchmark response probability, strictly between 0 and 1.
+Defaults to 0.5 for compatibility; set a clinically justified value.}
 }
 \value{
-List with the posterior probability and a logical flag indicating whether to stop.
+A list with `prob`, the posterior probability that the single-arm
+response rate is greater than `null_rate`, and `stop`, a logical flag
+for `prob > threshold`. The flag is a threshold check, not a
+recommendation to stop a study or a guarantee of error control.
 }
 \description{
-Compute the posterior probability that the treatment effect is positive and check if it exceeds a threshold.
+Compute the posterior probability that an unknown response rate exceeds a
+fixed benchmark. This is a single-arm calculation; it does not compare
+treatment and control groups or establish a calibrated stopping design.
+}
+\details{
+With a Beta(prior_alpha, prior_beta) prior, the posterior after observing
+`successes` in `trials` is Beta(prior_alpha + successes,
+prior_beta + trials - successes). Repeated looks require a pre-specified
+schedule and calibration of operating characteristics.
+}
+\references{
+R documentation for the beta distribution:
+\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Beta.html}
 }
 \examples{
-pharma_bayes_stopping(1, 1, 6, 10)
+pharma_bayes_stopping(1, 1, successes = 8, trials = 10)
+pharma_bayes_stopping(1, 1, successes = 8, trials = 10,
+                      null_rate = 0.4, threshold = 0.9)
 }
