@@ -76,5 +76,6 @@ nav:
       - Sample size planning: sample-size.md
       - Single-arm posterior threshold: bayesian-threshold.md
       - Group-sequential designs: sequential.md
+      - Trial simulation: trial-simulation.md
       - Limitations and validation: limitations.md
   - Development: development.md
