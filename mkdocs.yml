@@ -82,5 +82,6 @@ nav:
       - Trial simulation: trial-simulation.md
       - Competing risks: competing-risks.md
       - Audit log integrity: audit-log.md
+      - Model diagnostics: model-diagnostics.md
       - Limitations and validation: limitations.md
   - Development: development.md
