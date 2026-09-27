@@ -11,6 +11,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Cluster bootstrap | [`pharma_block_bootstrap()`](cluster-bootstrap.md) | Core R dependencies; observed clusters sampled with replacement |
 | Trial simulation | [`pharma_trial_simulate()`](trial-simulation.md) | Core R dependencies; independent two-arm time-to-event draws |
 | Survival | `pharma_survival_fit()`, `pharma_kaplan_meier()`, `pharma_parametric_survival()` | `survival` (required) |
+| Competing risks | [`pharma_competing_risks()`](competing-risks.md) | `cmprsk` (optional); proportional subdistribution hazards |
 | Longitudinal and correlated outcomes | `pharma_lmm()`, `pharma_gee()` | `lme4`, `geepack` (optional) |
 | Meta-analysis | `pharma_meta_analysis()`, `pharma_network_meta_analysis()` | `metafor`, `netmeta` (optional) |
 | Missing data and Bayesian workflows | `pharma_mice_impute()`, `pharma_bayesian_glm()` | `mice`, `rstanarm` (optional) |
