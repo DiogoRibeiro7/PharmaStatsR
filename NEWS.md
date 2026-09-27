@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Clarify that `pharma_parallel_bootstrap()` resamples independent rows, not clusters. Enable future-safe random streams for reproducible seeded runs across backends, validate replicate counts, preserve caller plans, and test the optional future backend in CI. Recompute previously generated parallel draws when reproducibility matters.
 - Correct `pharma_block_bootstrap()` to accept character ID vectors, ignore unused factor levels, and use consistent base data frames. Add optional `resample_id` to distinguish repeated cluster copies, validate design inputs, and leave missing non-ID values for the statistic to handle. Recompute results based on factor IDs with unused levels or grouped models that merged repeated copies.
 - Fix `pharma_wild_bootstrap()` to keep the original model frame, including transformed terms and offsets, reject missing model values and noninteger replicate counts, and require an identifiable model. Coefficient draws from earlier calls with formula offsets or silently omitted rows must be recomputed.
 - Validate two-arm trial simulation inputs, support zero event and dropout rates, and clarify that Weibull event parameters are cumulative hazard coefficients rather than constant hazards. Correct the simulator's roxygen attachment and document randomization and censoring semantics.
