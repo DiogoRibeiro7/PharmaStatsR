@@ -73,6 +73,7 @@ nav:
       - Equivalence testing: equivalence.md
       - Event-rate comparisons: rates.md
       - Wild bootstrap: wild-bootstrap.md
+      - Cluster bootstrap: cluster-bootstrap.md
       - Global permutation F-test: permutation.md
       - Sample size planning: sample-size.md
       - Single-arm posterior threshold: bayesian-threshold.md
