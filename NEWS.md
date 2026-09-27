@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Make audit-log verification reject malformed or altered CSV records with `FALSE`, restore valid-chain coverage, and refuse to append to a log that fails verification or uses a different key. Clarify that local HMAC chaining cannot detect deletion of final records without an external checkpoint.
 - Fix `pharma_competing_risks()` to pass original competing-event codes to `cmprsk::crr()` and retain every predictor from no-intercept formulas. Reject missing or nonfinite model inputs; recompute earlier competing-risks analyses because censoring and event types may have been misclassified.
 - Clarify that `pharma_parallel_bootstrap()` resamples independent rows, not clusters. Enable future-safe random streams for reproducible seeded runs across backends, validate replicate counts, preserve caller plans, and test the optional future backend in CI. Recompute previously generated parallel draws when reproducibility matters.
 - Correct `pharma_block_bootstrap()` to accept character ID vectors, ignore unused factor levels, and use consistent base data frames. Add optional `resample_id` to distinguish repeated cluster copies, validate design inputs, and leave missing non-ID values for the statistic to handle. Recompute results based on factor IDs with unused levels or grouped models that merged repeated copies.

@@ -1,62 +1,82 @@
-#' Verify a blockchain-like audit trail
+#' Verify a local HMAC audit log
 #'
-#' Checks that each entry in an audit log created with
-#' `pharma_audit_log()` correctly links to the previous entry via its
-#' HMAC-SHA256 hash. The hash is recomputed from the stored message,
-#' timestamp and previous hash so any tampering with the log is
-#' detected. Returns `TRUE` if the chain is valid.
+#' Recomputes the HMAC-SHA256 for every record and checks the link to the
+#' preceding record. Malformed CSV files and mismatched hashes return
+#' `FALSE`; a missing file or invalid argument raises an error.
 #'
-#' @param file Path to the CSV log file. Defaults to "audit.log".
-#' @param key Character string with the secret key used when logging.
-#'   The verification recalculates HMAC signatures with this key and
-#'   ensures each entry links to the previous one.
+#' @param file One nonempty path to an existing CSV audit log.
+#' @param key One nonempty, nonmissing character string used to write the log.
 #'
-#' @return Logical `TRUE` if the log is intact, otherwise `FALSE`.
+#' @return One logical value: `TRUE` if every stored row verifies, otherwise
+#'   `FALSE`.
+#' @details
+#' This checks only the rows present in the file. Deleting the final row or
+#' rows leaves a valid prefix, which cannot be detected without an external
+#' record of the expected final hash or length.
 #' @export
 #'
 #' @examples
-#' f <- tempfile()
-#' pharma_audit_log("start", f, key = "secret")
-#' pharma_audit_log("next", f, key = "secret")
-#' pharma_audit_verify(f, key = "secret")
+#' if (requireNamespace("openssl", quietly = TRUE)) {
+#'   f <- tempfile()
+#'   pharma_audit_log("start", f, key = "example-key")
+#'   pharma_audit_log("next", f, key = "example-key")
+#'   pharma_audit_verify(f, key = "example-key")
+#' }
 pharma_audit_verify <- function(file = "audit.log", key) {
-  if (!file.exists(file)) {
-    stop("Log file does not exist")
+  valid_text <- function(x) {
+    is.character(x) && length(x) == 1L && !is.na(x) && nzchar(x)
   }
-  if (missing(key) || !is.character(key) || length(key) != 1) {
-    stop("key must be a single character string")
+  if (!valid_text(file)) {
+    stop("file must be one nonempty path", call. = FALSE)
+  }
+  if (!file.exists(file)) {
+    stop("Log file does not exist", call. = FALSE)
+  }
+  if (missing(key) || !valid_text(key)) {
+    stop("key must be one nonempty character string", call. = FALSE)
   }
   if (!requireNamespace("openssl", quietly = TRUE)) {
-    stop("Package 'openssl' is required for pharma_audit_verify()")
+    stop("Package 'openssl' is required for pharma_audit_verify()",
+         call. = FALSE)
   }
-  log <- utils::read.csv(file, stringsAsFactors = FALSE)
-  if (nrow(log) == 0) {
+
+  # Read all fields as literal strings so a message equal to "NA" is retained.
+  log <- tryCatch(
+    utils::read.csv(
+      file, colClasses = "character", na.strings = character(),
+      stringsAsFactors = FALSE
+    ),
+    error = function(e) NULL,
+    warning = function(w) NULL
+  )
+  fields <- c("step", "timestamp", "previous_hash", "hash")
+  if (is.null(log) || !identical(names(log), fields) ||
+      nrow(log) == 0L ||
+      anyNA(log[c("step", "timestamp", "hash")]) ||
+      any(!nzchar(log$timestamp)) || any(!nzchar(log$hash))) {
     return(FALSE)
   }
+  if (log$step[[1L]] != "genesis" ||
+      (!is.na(log$previous_hash[[1L]]) &&
+       !(log$previous_hash[[1L]] %in% c("", "NA")))) {
+    return(FALSE)
+  }
+  if (nrow(log) > 1L &&
+      (anyNA(log$previous_hash[-1L]) ||
+       any(!nzchar(log$previous_hash[-1L])))) {
+    return(FALSE)
+  }
+
   for (i in seq_len(nrow(log))) {
-    if (i == 1) {
-      if (log$step[i] != "genesis") {
-        return(FALSE)
-      }
-      expected <- openssl::sha256(
-        paste("genesis", log$timestamp[i], NA_character_),
-        key = key
-      )
-      if (!identical(log$hash[i], expected)) {
-        return(FALSE)
-      }
-    } else {
-      prev <- log$hash[i - 1]
-      if (log$previous_hash[i] != prev) {
-        return(FALSE)
-      }
-      expected <- openssl::sha256(
-        paste(log$step[i], log$timestamp[i], prev),
-        key = key
-      )
-      if (!identical(log$hash[i], expected)) {
-        return(FALSE)
-      }
+    previous_hash <- if (i == 1L) NA_character_ else log$hash[[i - 1L]]
+    if (i > 1L && !identical(log$previous_hash[[i]], previous_hash)) {
+      return(FALSE)
+    }
+    expected <- as.character(openssl::sha256(
+      paste(log$step[[i]], log$timestamp[[i]], previous_hash), key = key
+    ))
+    if (!identical(log$hash[[i]], expected)) {
+      return(FALSE)
     }
   }
   TRUE

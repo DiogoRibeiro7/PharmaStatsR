@@ -2,30 +2,37 @@
 % Please edit documentation in R/pharma_audit_log.R
 \name{pharma_audit_log}
 \alias{pharma_audit_log}
-\title{Record an analysis step in a blockchain-like audit trail}
+\title{Append a step to a local HMAC audit log}
 \usage{
 pharma_audit_log(message, file = "audit.log", key)
 }
 \arguments{
-\item{message}{Character string describing the analysis step.}
-\item{file}{Path to the CSV log file. If the file does not exist, a
-new log is created with a genesis block.}
-\item{key}{Character string used as the secret key for the HMAC
-signature. Each entry is signed with this key so any
-modification can be detected during verification.}
+\item{message}{One nonempty, nonmissing character string describing the step.}
+
+\item{file}{One nonempty path to the CSV log. A missing file is initialized
+with a genesis row before the first entry.}
+
+\item{key}{One nonempty, nonmissing character string used as the HMAC key.
+Keep it separate from the log and protect both.}
 }
 \value{
-Invisibly returns the path to the log file.
+The path to the log file, invisibly.
 }
 \description{
-Appends a hashed entry to a CSV log file. Each entry stores the
-HMAC-SHA256 hash of the message, timestamp and previous hash so that
-tampering with any record invalidates the subsequent chain. This
-provides a lightweight append-only log using the \code{openssl} package.
+Stores each message and UTC timestamp in a CSV file with an HMAC-SHA256
+of that row and the preceding row's hash. Existing logs are verified
+with the supplied key before an entry is appended.
+}
+\details{
+This local CSV helper does not prevent deletion of final rows or provide
+concurrency control, access control, or secure storage for the key.
+Verification is possible only for the records still present in the file.
 }
 \examples{
-tmp <- tempfile()
-pharma_audit_log("Load data", tmp, key = "secret")
-pharma_audit_log("Fit model", tmp, key = "secret")
-read.csv(tmp)
+if (requireNamespace("openssl", quietly = TRUE)) {
+  tmp <- tempfile()
+  pharma_audit_log("Load data", tmp, key = "example-key")
+  pharma_audit_log("Fit model", tmp, key = "example-key")
+  pharma_audit_verify(tmp, key = "example-key")
+}
 }
