@@ -2,23 +2,55 @@
 % Please edit documentation in R/pharma_sample_reestimate.R
 \name{pharma_sample_reestimate}
 \alias{pharma_sample_reestimate}
-\title{Sample-size re-estimation}
+\title{Approximate total sample size for a balanced two-arm comparison}
 \usage{
 pharma_sample_reestimate(current_n, effect, variance, target_power = 0.8, alpha = 0.05)
 }
 \arguments{
-  \item{current_n}{Current total sample size.}
-  \item{effect}{Observed effect size at interim.}
-  \item{variance}{Estimate of variance.}
-  \item{target_power}{Desired power for final analysis.}
-  \item{alpha}{Significance level.}
+\item{current_n}{Current or already planned total sample size; a positive
+whole number. The returned total is at least this large.}
+
+\item{effect}{Nonzero difference in group means in the outcome's units.
+Its sign has no effect on this two-sided calculation.}
+
+\item{variance}{Positive common variance of individual outcomes within
+each arm, in squared outcome units (not a standard deviation or variance
+of the difference in sample means).}
+
+\item{target_power}{Desired normal-approximation power, strictly between
+0.5 and 1.}
+
+\item{alpha}{Two-sided significance level, strictly between 0 and 1.}
 }
 \value{
-Recommended total sample size.
+A numeric even total sample size, with at least two participants
+per arm. No interim decision, conditional power, or error-spending
+adjustment is returned.
 }
 \description{
-Adjust sample size based on interim effect estimates.
+Calculate a planning sample size for a two-sided comparison of independent
+normal means with equal allocation and common per-person variance. The
+result is rounded to complete, balanced groups and is never below
+`current_n`. This is unconditional normal-approximation power, not a
+conditional-power calculation or a calibrated interim adaptation rule.
+}
+\details{
+For two equal groups, the unrounded per-arm target is twice the common
+variance times the square of the sum of the upper two-sided alpha and
+target-power normal quantiles, divided by the squared mean difference.
+If `effect` was estimated from unblinded interim outcomes, using this
+value to change an ongoing trial may alter its type I error rate. The
+sample size and final testing rule require a pre-specified adaptive design
+and independent statistical review.
+}
+\references{
+Graf AC, Bauer P (2011). Maximum inflation of the type 1 error rate
+when sample size and allocation rate are adapted in a pre-planned
+interim look. Statistics in Medicine 30:1637-1647.
+\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC4836563/}
 }
 \examples{
-pharma_sample_reestimate(100, 0.5, 1)
+pharma_sample_reestimate(50, effect = 0.5, variance = 1)
+pharma_sample_reestimate(51, effect = -1, variance = 4,
+                         target_power = 0.9, alpha = 0.025)
 }
