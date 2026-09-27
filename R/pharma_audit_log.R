@@ -80,7 +80,7 @@ pharma_audit_log <- function(message, file = "audit.log", key) {
   )
   utils::write.table(
     entry, file, sep = ",", row.names = FALSE,
-    col.names = FALSE, append = TRUE
+    col.names = FALSE, append = TRUE, qmethod = "double"
   )
   invisible(file)
 }

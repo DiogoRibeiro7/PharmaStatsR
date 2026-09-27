@@ -4,7 +4,7 @@ test_that("valid audit chains verify with the original key", {
   on.exit(unlink(file), add = TRUE)
   expect_identical(pharma_audit_log("start", file, key = "secret"), file)
   pharma_audit_log("NA", file, key = "secret")
-  pharma_audit_log("step, with punctuation", file, key = "secret")
+  pharma_audit_log('step, with "quotes"', file, key = "secret")
   expect_true(pharma_audit_verify(file, key = "secret"))
   expect_false(pharma_audit_verify(file, key = "different"))
   expect_equal(nrow(utils::read.csv(file)), 4L)
