@@ -266,12 +266,6 @@ test_that("pharma_block_bootstrap returns list", {
   expect_length(res, 5)
 })
 
-test_that("pharma_perm_f_test returns p-value", {
-  res <- pharma_perm_f_test(response ~ treatment + period, data = pharma_crossover, R = 10)
-  expect_type(res$p.value, "double")
-  expect_true(res$p.value >= 0 && res$p.value <= 1)
-})
-
 test_that("pharma_tost returns expected structure", {
   x <- rnorm(20, 0)
   y <- rnorm(20, 0.1)

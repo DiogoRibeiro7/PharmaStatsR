@@ -72,6 +72,7 @@ nav:
       - Method guide: methods.md
       - Equivalence testing: equivalence.md
       - Event-rate comparisons: rates.md
+      - Global permutation F-test: permutation.md
       - Sample size planning: sample-size.md
       - Single-arm posterior threshold: bayesian-threshold.md
       - Group-sequential designs: sequential.md
