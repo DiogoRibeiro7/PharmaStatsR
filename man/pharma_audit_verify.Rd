@@ -2,29 +2,34 @@
 % Please edit documentation in R/pharma_audit_verify.R
 \name{pharma_audit_verify}
 \alias{pharma_audit_verify}
-\title{Verify a blockchain-like audit trail}
+\title{Verify a local HMAC audit log}
 \usage{
 pharma_audit_verify(file = "audit.log", key)
 }
 \arguments{
-\item{file}{Path to the CSV log file. Defaults to "audit.log".}
-\item{key}{Character string with the secret key used when logging.
-The verification recalculates HMAC signatures with this key and
-ensures each entry links to the previous one.}
+\item{file}{One nonempty path to an existing CSV audit log.}
+
+\item{key}{One nonempty, nonmissing character string used to write the log.}
 }
 \value{
-Logical \code{TRUE} if the log is intact, otherwise \code{FALSE}.
+One logical value: \code{TRUE} if every stored row verifies, otherwise
+\code{FALSE}.
 }
 \description{
-Checks that each entry in an audit log created with
-\code{pharma_audit_log()} correctly links to the previous entry via its
-HMAC-SHA256 hash. The hash is recomputed from the stored message,
-timestamp and previous hash so any tampering with the log is
-detected. Returns \code{TRUE} if the chain is valid.
+Recomputes the HMAC-SHA256 for every record and checks the link to the
+preceding record. Malformed CSV files and mismatched hashes return
+\code{FALSE}; a missing file or invalid argument raises an error.
+}
+\details{
+This checks only the rows present in the file. Deleting the final row or
+rows leaves a valid prefix, which cannot be detected without an external
+record of the expected final hash or length.
 }
 \examples{
-f <- tempfile()
-pharma_audit_log("start", f, key = "secret")
-pharma_audit_log("next", f, key = "secret")
-pharma_audit_verify(f, key = "secret")
+if (requireNamespace("openssl", quietly = TRUE)) {
+  f <- tempfile()
+  pharma_audit_log("start", f, key = "example-key")
+  pharma_audit_log("next", f, key = "example-key")
+  pharma_audit_verify(f, key = "example-key")
+}
 }
