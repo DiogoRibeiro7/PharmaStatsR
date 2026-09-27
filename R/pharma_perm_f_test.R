@@ -48,7 +48,11 @@ pharma_perm_f_test <- function(formula, data, R = 1000, ...) {
          call. = FALSE)
   }
 
-  model <- stats::lm(formula, data = data, ...)
+  # Preserve lm's non-standard evaluation of subset and other dot arguments.
+  lm_call <- match.call(expand.dots = TRUE)
+  lm_call[[1L]] <- quote(stats::lm)
+  lm_call$R <- NULL
+  model <- eval(lm_call, envir = parent.frame())
   model_frame <- stats::model.frame(model)
   response <- stats::model.response(model_frame)
   if (!is.numeric(response) || !is.null(dim(response)) ||
