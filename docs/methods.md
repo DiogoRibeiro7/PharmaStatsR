@@ -5,7 +5,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, `pharma_anova()`, `pharma_crossover_anova()` | Core R dependencies |
-| Rates and uncertainty | `pharma_rate_metrics()`, `pharma_wild_bootstrap()` | Core R dependencies; review interval assumptions |
+| Rates and uncertainty | [`pharma_rate_metrics()`](rates.md), `pharma_wild_bootstrap()` | Core R dependencies; review interval assumptions |
 | Survival | `pharma_survival_fit()`, `pharma_kaplan_meier()`, `pharma_parametric_survival()` | `survival` (required) |
 | Longitudinal and correlated outcomes | `pharma_lmm()`, `pharma_gee()` | `lme4`, `geepack` (optional) |
 | Meta-analysis | `pharma_meta_analysis()`, `pharma_network_meta_analysis()` | `metafor`, `netmeta` (optional) |
