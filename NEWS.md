@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Use the fitted observation count for model-diagnostic Cook's-distance screening, validate the standardized-residual threshold, and allow an explicit Cook cutoff. Preserve missing flags from `na.exclude` fits and clarify that screening flags require interpretation rather than establishing outliers.
 - Make audit-log verification reject malformed or altered CSV records with `FALSE`, restore valid-chain coverage, and refuse to append to a log that fails verification or uses a different key. Clarify that local HMAC chaining cannot detect deletion of final records without an external checkpoint.
 - Fix `pharma_competing_risks()` to pass original competing-event codes to `cmprsk::crr()` and retain every predictor from no-intercept formulas. Reject missing or nonfinite model inputs; recompute earlier competing-risks analyses because censoring and event types may have been misclassified.
 - Clarify that `pharma_parallel_bootstrap()` resamples independent rows, not clusters. Enable future-safe random streams for reproducible seeded runs across backends, validate replicate counts, preserve caller plans, and test the optional future backend in CI. Recompute previously generated parallel draws when reproducibility matters.
