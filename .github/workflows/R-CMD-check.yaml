@@ -41,6 +41,7 @@ jobs:
             any::openssl
             any::future
             any::future.apply
+            any::cmprsk
       - uses: r-lib/actions/check-r-package@v2
         with:
           build_args: 'c("--no-manual")'

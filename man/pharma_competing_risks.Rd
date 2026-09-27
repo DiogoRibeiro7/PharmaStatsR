@@ -1,22 +1,42 @@
 \name{pharma_competing_risks}
 \alias{pharma_competing_risks}
-\title{Competing-risks regression}
+\title{Fine–Gray competing-risks regression}
 \usage{pharma_competing_risks(formula, data, failcode = 1, cencode = 0, ...)}
 \arguments{
-  \item{formula}{A formula of the form \code{Surv(time, status) ~ predictors} where \code{status} codes the event type.}
-  \item{data}{A data frame containing model variables.}
-  \item{failcode}{Integer code for the event of interest. Defaults to 1.}
-  \item{cencode}{Integer code for censoring. Defaults to 0.}
-  \item{...}{Additional arguments passed to \code{cmprsk::crr}.}
+  \item{formula}{A two-sided formula with an unnamed
+  \code{survival::Surv(time, status)} response and at least one predictor.
+  \code{time} and \code{status} must evaluate to finite numeric vectors.}
+  \item{data}{A data frame containing all response and predictor variables.
+  Missing values in variables used by the model are rejected.}
+  \item{failcode}{Finite whole-number status code for the event of interest.}
+  \item{cencode}{Finite whole-number status code for censoring, distinct from
+  \code{failcode}. Other status codes denote competing events.}
+  \item{...}{Additional arguments passed to \code{cmprsk::crr()}.}
 }
-\value{A \code{crr} object.}
-\description{Convenience wrapper around \code{cmprsk::crr} for Fine-Gray competing-risks models.}
+\value{A \code{crr} object; coefficients are log subdistribution hazard ratios.}
+\description{
+Fit a proportional subdistribution hazards model for one event type via
+\code{cmprsk::crr()}. The response uses the familiar
+\code{Surv(time, status)} formula shape, but the original numeric event codes
+are passed directly to \code{crr()} without constructing a survival response.
+}
+\details{
+The function constructs a model matrix for the predictors and removes an
+intercept only when one is present. It requires complete model variables
+so response times, statuses, and model-matrix rows stay aligned. It does
+not support \code{Surv(start, stop, status)} or factor status codes.
+}
+\references{
+Fine JP, Gray RJ (1999). A proportional hazards model for the
+subdistribution of a competing risk. Journal of the American Statistical
+Association 94:496–509. doi:10.1080/01621459.1999.10474144
+}
 \examples{
 if (requireNamespace("cmprsk", quietly = TRUE)) {
   df <- data.frame(
-    time = c(5, 6, 7),
-    status = c(1, 2, 0),
-    treatment = c(0, 1, 1)
+    time = seq_len(90) / 10,
+    status = rep(0:2, 30),
+    treatment = rep(c(0, 1), 45)
   )
   pharma_competing_risks(survival::Surv(time, status) ~ treatment, df)
 }
