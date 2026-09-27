@@ -98,9 +98,15 @@ pharma_kaplan_meier <- function(formula, data, log_rank = TRUE, ...,
   if (!log_rank) {
     return(fit)
   }
-  test <- survival::survdiff(
-    formula, data = analysis_data, na.action = na.action,
-    timefix = timefix
+  # survdiff evaluates timefix in the formula environment; insert its value
+  # into the call so it is not looked up as a wrapper-local name in data.
+  test_call <- substitute(
+    survival::survdiff(
+      formula, data = analysis_data, na.action = na.action,
+      timefix = .TIMEFIX
+    ),
+    list(.TIMEFIX = timefix)
   )
+  test <- eval(test_call)
   list(fit = fit, test = test)
 }
