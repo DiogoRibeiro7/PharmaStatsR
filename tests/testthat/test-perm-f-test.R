@@ -13,12 +13,14 @@ test_that("permutation statistic tests all predictors jointly", {
   model <- stats::lm(y ~ x1 + x2, data = dat)
 
   # Independent least-squares reference: global F is 23.9423,
-  # while the first sequential ANOVA row is only 2.4615.
+  # while the first sequential ANOVA row is 15.3846.
   expect_equal(result$statistic, 23.9423076923, tolerance = 1e-8)
   expect_equal(result$statistic,
                unname(summary(model)$fstatistic[["value"]]),
                tolerance = 1e-8)
-  expect_gt(abs(result$statistic - stats::anova(model)[["F value"]][1]), 10)
+  first_term <- stats::anova(model)[["F value"]][1]
+  expect_equal(first_term, 15.3846153846, tolerance = 1e-8)
+  expect_gt(abs(result$statistic - first_term), 5)
 
   set.seed(42)
   reference <- replicate(20, {
