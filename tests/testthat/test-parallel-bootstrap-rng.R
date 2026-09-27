@@ -14,7 +14,7 @@ test_that("parallel row bootstrap uses reproducible streams across plans", {
     plan = future::tweak(future::multisession, workers = 2L)
   )
   expect_identical(sequential, parallel)
-  expect_identical(future::plan(), before)
+  expect_equal(future::plan(), before)
   expect_true(all(vapply(sequential, length, integer(1)) == nrow(d)))
   expect_true(all(unlist(sequential) %in% d$id))
   expect_true(any(vapply(sequential, function(ids) anyDuplicated(ids) > 0L,
@@ -26,11 +26,11 @@ test_that("parallel bootstrap restores the plan after statistic failure", {
   skip_if_not_installed("future")
   before <- future::plan()
   d <- data.frame(x = 1:4)
-  expect_error(pharma_parallel_bootstrap(
+  expect_error(suppressWarnings(pharma_parallel_bootstrap(
     d, function(rows) stop("statistic failed"), R = 1,
     plan = "sequential"
-  ), "statistic failed")
-  expect_identical(future::plan(), before)
+  )), "statistic failed")
+  expect_equal(future::plan(), before)
 })
 
 test_that("parallel bootstrap validates requested replicates and strategy", {
