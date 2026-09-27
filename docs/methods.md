@@ -10,6 +10,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Longitudinal and correlated outcomes | `pharma_lmm()`, `pharma_gee()` | `lme4`, `geepack` (optional) |
 | Meta-analysis | `pharma_meta_analysis()`, `pharma_network_meta_analysis()` | `metafor`, `netmeta` (optional) |
 | Missing data and Bayesian workflows | `pharma_mice_impute()`, `pharma_bayesian_glm()` | `mice`, `rstanarm` (optional) |
+| Balanced two-arm planning total | [`pharma_sample_reestimate()`](sample-size.md) | Core R dependencies; normal-approximation planning only |
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
 | Dose response | `pharma_emax()`, `pharma_sigmoid_emax()` | Core R dependencies |
 
