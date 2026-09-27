@@ -40,12 +40,13 @@ test_that("subset and missing value handling are shared by fit and test", {
 test_that("curve-only mode returns a survfit object", {
   formula <- survival::Surv(time, status) ~ 1
   actual <- pharma_kaplan_meier(
-    formula, pharma_survival, log_rank = FALSE, conf.type = "log-log"
+    formula, pharma_survival, log_rank = FALSE, timefix = FALSE,
+    conf.type = "log-log"
   )
   expect_s3_class(actual, "survfit")
   expect_equal(
     actual$surv,
-    survival::survfit(formula, pharma_survival,
+    survival::survfit(formula, pharma_survival, timefix = FALSE,
                       conf.type = "log-log")$surv
   )
 })
@@ -59,6 +60,8 @@ test_that("invalid controls and incompatible paired options fail", {
     expect_error(pharma_kaplan_meier(formula, data, timefix = bad),
                  "timefix must")
   }
+  expect_error(pharma_kaplan_meier(formula, data, timefix = FALSE),
+               "cannot be paired")
   expect_error(pharma_kaplan_meier(formula, data, subset = c(TRUE, NA)),
                "subset must")
   expect_error(pharma_kaplan_meier(formula, data, na.action = "na.omit"),

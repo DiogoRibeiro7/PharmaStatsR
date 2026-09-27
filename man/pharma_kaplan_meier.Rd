@@ -34,8 +34,10 @@ before both the curve and the test.}
 \item{na.action}{Missing-value handling function shared by the curve
 and test; defaults to \code{stats::na.omit()}.}
 
-\item{timefix}{One nonmissing logical value passed to both survival
-functions to control correction of near-tied event times.}
+\item{timefix}{One nonmissing logical value controlling correction of
+near-tied event times for the curve. With \code{log_rank = TRUE}, only
+\code{TRUE} is supported so the curve and log-rank test use the same
+near-tie correction.}
 }
 \value{
 If \code{log_rank = TRUE}, a list with \code{fit} (a \code{survfit} object)

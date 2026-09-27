@@ -16,8 +16,10 @@
 #'   before both the curve and the test.
 #' @param na.action Missing-value handling function shared by the curve
 #'   and test; defaults to [stats::na.omit()].
-#' @param timefix One nonmissing logical value passed to both survival
-#'   functions to control correction of near-tied event times.
+#' @param timefix One nonmissing logical value controlling correction of
+#'   near-tied event times for the curve. With `log_rank = TRUE`, only
+#'   `TRUE` is supported so the curve and log-rank test use the same
+#'   near-tie correction.
 #'
 #' @return If `log_rank = TRUE`, a list with `fit` (a `survfit` object)
 #'   and `test` (a `survdiff` object); otherwise the `survfit` object.
@@ -50,6 +52,11 @@ pharma_kaplan_meier <- function(formula, data, log_rank = TRUE, ...,
   if (!is.logical(timefix) || length(timefix) != 1L ||
       is.na(timefix)) {
     stop("timefix must be one nonmissing logical value", call. = FALSE)
+  }
+
+  if (log_rank && !timefix) {
+    stop("timefix = FALSE cannot be paired with the log-rank test",
+         call. = FALSE)
   }
 
   dots <- match.call(expand.dots = FALSE)$...
@@ -98,15 +105,11 @@ pharma_kaplan_meier <- function(formula, data, log_rank = TRUE, ...,
   if (!log_rank) {
     return(fit)
   }
-  # survdiff evaluates timefix in the formula environment; insert its value
-  # into the call so it is not looked up as a wrapper-local name in data.
-  test_call <- substitute(
-    survival::survdiff(
-      formula, data = analysis_data, na.action = na.action,
-      timefix = .TIMEFIX
-    ),
-    list(.TIMEFIX = timefix)
+  # The backend defaults to timefix = TRUE. Passing it explicitly leaks
+  # into model.frame() in some survival versions; omitting it preserves
+  # the common near-tie correction used by the curve.
+  test <- survival::survdiff(
+    formula, data = analysis_data, na.action = na.action
   )
-  test <- eval(test_call)
   list(fit = fit, test = test)
 }
