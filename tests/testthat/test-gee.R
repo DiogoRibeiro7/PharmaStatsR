@@ -17,7 +17,7 @@ test_that("pharma_gee resolves a column ID like geeglm", {
   )
   expect_equal(stats::coef(actual), stats::coef(reference))
   expect_equal(stats::vcov(actual), stats::vcov(reference))
-  expect_equal(actual$id, dat$subject)
+  expect_equal(unname(actual$id), dat$subject)
   expect_equal(stats::coef(vector_id), stats::coef(reference))
 })
 
