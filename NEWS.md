@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Inventory all exported symbols with links to source, help and representative tests, distinguish numerical references from smoke checks, and prioritize the next statistical reviews.
 - Correct the bundled crossover example to balanced AB/BA treatment sequences, encode subject and period as factors, and require a complete balanced two-period allocation in `pharma_crossover_anova()`. Previous A/A versus B/B example fits confounded treatment with subject; numeric design IDs now require explicit `factor()` conversion. Recheck earlier results.
 - Fit Latin square row and column effects as categorical blocks in the bundled example, and require a complete, balanced allocation before `pharma_latin_square_anova()` fits. Numeric design IDs now require explicit `factor()` conversion; recheck earlier results that used numeric IDs or incomplete squares.
 - Restrict `pharma_anova()` to one categorical group with an intercept, and fit against the original data so `factor(dose)` and other formula transformations work. Numeric group codes now require explicit `factor()` conversion; earlier numeric-predictor results may have tested a linear trend rather than group mean equality.

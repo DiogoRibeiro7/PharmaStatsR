@@ -2,6 +2,8 @@
 
 Use the installed R help pages for full argument and return documentation, for example `?pharma_tost`. This guide points to representative functions; it is not a claim that every method has been independently validated.
 
+The [export and evidence inventory](method-inventory.md) records every public symbol, its source and help page, representative test evidence, site coverage, and review priority.
+
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
