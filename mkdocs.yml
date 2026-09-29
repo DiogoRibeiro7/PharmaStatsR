@@ -71,6 +71,7 @@ nav:
   - Statistical methods:
       - Method guide: methods.md
       - Export and evidence inventory: method-inventory.md
+      - Core inference reference cases: core-reference-cases.md
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
       - Latin square ANOVA: latin-square.md

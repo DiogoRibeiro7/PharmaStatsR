@@ -1,5 +1,5 @@
 test_that("rate intervals match independent numerical references", {
-  # Wilson bounds from SciPy's binomtest(proportion_ci = "wilson"),
+  # Wilson bounds from SciPy 1.17.0's binomtest(...).proportion_ci(method = "wilson"),
   # combined with Newcombe's difference construction. Ratio bounds use
   # a half-count in all four cells of an independent two-by-two table.
   ordinary <- pharma_rate_metrics(10, 100, 15, 110)
