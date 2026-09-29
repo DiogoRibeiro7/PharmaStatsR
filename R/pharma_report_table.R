@@ -1,16 +1,19 @@
-#' Generate APA/ICH-style summary tables
+#' Extract selected model estimates into a table
 #'
-#' Create a formatted table of model estimates with confidence intervals
-#' and p-values. Results can optionally be exported to Word (\code{.docx})
-#' or Excel (\code{.xlsx}) if the corresponding packages are available.
+#' Select term, estimate, confidence interval, and p-value columns from
+#' `broom::tidy()`. Results can optionally be written to Word (`.docx`)
+#' or Excel (`.xlsx`) if the corresponding packages are available. The
+#' helper does not apply an APA or ICH reporting standard, verify model
+#' assumptions, or provide a study-specific interpretation.
 #'
-#' @param model A fitted model object supported by \code{broom::tidy}.
+#' @param model A fitted model object whose `broom::tidy()` output includes
+#'   `term`, `estimate`, `conf.low`, `conf.high`, and `p.value`.
 #' @param file Optional path to save the table. Should end with \code{.docx} or
 #'   \code{.xlsx}. If \code{NULL}, the table is returned as a data frame.
 #' @param conf.level Confidence level for intervals. Default is 0.95.
 #'
-#' @return A data frame of tidy model results. If \code{file} is provided, the
-#'   table is invisibly returned after being written to disk.
+#' @return A data frame with the five selected columns. If `file` is provided,
+#'   the same table is invisibly returned after being written to disk.
 #' @export
 #'
 #' @examples

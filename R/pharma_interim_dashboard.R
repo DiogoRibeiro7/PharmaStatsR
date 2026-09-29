@@ -1,11 +1,12 @@
-#' Launch a real-time interim monitoring dashboard
+#' Open a simulated enrollment dashboard
 #'
-#' Starts a minimal Shiny dashboard showing simulated enrollment over time.
-#' If `launch` is `TRUE`, the dashboard is started using `rmarkdown::run()`;
-#' otherwise the path to the dashboard file is returned. The dashboard
-#' template is stored in `inst/dashboard/pharma_interim_dashboard.Rmd`.
+#' Opens an example Shiny dashboard that draws random enrollment counts when
+#' rendered. It does not read study data, track live enrollment, calculate
+#' interim statistics, or apply a monitoring rule. If `launch` is `TRUE`,
+#' `rmarkdown::run()` opens the bundled R Markdown file; otherwise the path
+#' to that file is returned.
 #'
-#' @param launch Logical. Whether to launch the dashboard.
+#' @param launch Logical. Whether to open the example dashboard.
 #'
 #' @return Invisibly returns the path to the dashboard Rmd file.
 #' @export

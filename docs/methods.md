@@ -4,6 +4,8 @@ Use the installed R help pages for full argument and return documentation, for e
 
 The [export and evidence inventory](method-inventory.md) records every public symbol, its source and help page, representative test evidence, site coverage, and review priority.
 
+The [reporting and monitoring scope audit](claims-audit.md) compares sensitive helper names with their actual return values and checks.
+
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
