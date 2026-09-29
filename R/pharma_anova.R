@@ -1,10 +1,18 @@
 #' Conduct a one-way ANOVA
 #'
-#' Provides a thin wrapper around `stats::aov` for comparing means across groups.
+#' Compare means across the observed levels of one categorical grouping variable
+#' with an ordinary, intercept-including, one-way ANOVA.
 #'
-#' @param formula A model formula specifying the outcome and group.
+#' @param formula A two-sided `response ~ group` formula with an intercept.
+#'   The group must be a factor, character, or logical variable. Convert numeric
+#'   group codes explicitly with `factor()` in the formula or data.
 #' @param data A data frame containing the variables in the formula.
 #' @param ... Additional arguments passed to `stats::aov`.
+#'
+#' @details
+#' This helper tests equality of group means with the ordinary F statistic.
+#' It rejects numeric predictors, multiple terms, interactions, and formulas
+#' without an intercept. Missing model values must be handled before fitting.
 #'
 #' @return An object of class `aov`.
 #' @export
@@ -25,21 +33,30 @@ pharma_anova <- function(formula, data, ...) {
   if (anyNA(mf)) {
     stop("Variables in `data` used by `formula` contain NA values; remove or impute them before calling `pharma_anova`")
   }
-  terms <- stats::terms(mf)
-  if (length(attr(terms, "term.labels")) != 1) {
-    stop("`pharma_anova` supports one-way ANOVA with a single grouping variable")
+  model_terms <- stats::terms(mf)
+  if (length(attr(model_terms, "term.labels")) != 1L ||
+      ncol(mf) != 2L || attr(model_terms, "intercept") != 1L) {
+    stop("pharma_anova requires a response ~ one categorical group formula ",
+         "with an intercept", call. = FALSE)
   }
-  response <- mf[[1]]
-  if (!is.numeric(response)) {
-    stop("Response variable must be numeric")
+  response <- mf[[1L]]
+  if (!is.numeric(response) || !is.null(dim(response))) {
+    stop("Response variable must be a single numeric vector", call. = FALSE)
   }
   if (!all(is.finite(response))) {
-    stop("Response variable must contain only finite values")
+    stop("Response variable must contain only finite values", call. = FALSE)
   }
-  group <- mf[[2]]
-  group <- as.factor(group)
-  if (nlevels(group) < 2) {
-    stop("Grouping variable must have at least two levels; found ", nlevels(group))
+  group <- mf[[2L]]
+  if (!(is.factor(group) || is.character(group) || is.logical(group))) {
+    stop("Grouping variable must be categorical; wrap numeric codes in ",
+         "factor()", call. = FALSE)
   }
-  stats::aov(formula = formula, data = mf, ...)
+  observed_groups <- droplevels(as.factor(group))
+  if (nlevels(observed_groups) < 2L) {
+    stop("Grouping variable must have at least two observed levels",
+         call. = FALSE)
+  }
+  # Use the original data so transformed terms such as factor(dose) can be
+  # evaluated again by aov() and retain their formula semantics.
+  stats::aov(formula = formula, data = data, ...)
 }

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Restrict `pharma_anova()` to one categorical group with an intercept, and fit against the original data so `factor(dose)` and other formula transformations work. Numeric group codes now require explicit `factor()` conversion; earlier numeric-predictor results may have tested a linear trend rather than group mean equality.
 - Resolve `pharma_gee()` cluster identifiers within the input data, reject missing or interleaved cluster records, and test against direct `geepack::geeglm()` with the optional backend installed in CI. The documented `id = subject` call now works; recheck earlier GEE fits if identifiers or rows may have been misaligned.
 - Reject missing response or group values in the formula interfaces of `pharma_t_test()` and `pharma_anova()` instead of silently dropping incomplete rows before validation. Review previous analyses with missing model variables.
 - Route Kaplan–Meier curve options only to `survfit()`, share row selection, missing-value handling and default near-tie correction with the log-rank test, and reject settings that would produce mismatched curve/test analyses. Reject `timefix = FALSE` for paired analyses, because the log-rank backend cannot consistently accept an explicit value. Check boolean controls and right-censored responses; callers who passed `subset` should use an explicit logical subset and review earlier paired outputs.
