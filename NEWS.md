@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Reject missing response or group values in the formula interfaces of `pharma_t_test()` and `pharma_anova()` instead of silently dropping incomplete rows before validation. Review previous analyses with missing model variables.
 - Route Kaplan–Meier curve options only to `survfit()`, share row selection, missing-value handling and default near-tie correction with the log-rank test, and reject settings that would produce mismatched curve/test analyses. Reject `timefix = FALSE` for paired analyses, because the log-rank backend cannot consistently accept an explicit value. Check boolean controls and right-censored responses; callers who passed `subset` should use an explicit logical subset and review earlier paired outputs.
 - Use the fitted observation count for model-diagnostic Cook's-distance screening, validate the standardized-residual threshold, and allow an explicit Cook cutoff. Preserve missing flags from `na.exclude` fits and clarify that screening flags require interpretation rather than establishing outliers.
 - Make audit-log verification reject malformed or altered CSV records with `FALSE`, restore valid-chain coverage, and refuse to append to a log that fails verification or uses a different key. Clarify that local HMAC chaining cannot detect deletion of final records without an external checkpoint.

@@ -68,7 +68,8 @@ pharma_t_test.default <- function(x, y, ...) {
 pharma_t_test.formula <- function(formula, data, ...) {
   pharma_log("INFO", "Running pharma_t_test.formula")
   validate_inputs(data = data, formula = formula)
-  mf <- stats::model.frame(formula, data)
+  # Retain incomplete analysis rows so the check below can reject them.
+  mf <- stats::model.frame(formula, data = data, na.action = stats::na.pass)
   if (ncol(mf) != 2) {
     stop("`formula` must specify one response and one grouping variable")
   }

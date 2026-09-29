@@ -20,7 +20,8 @@
 pharma_anova <- function(formula, data, ...) {
   pharma_log("INFO", "Running pharma_anova")
   validate_inputs(data, formula)
-  mf <- stats::model.frame(formula, data)
+  # Retain incomplete analysis rows so the check below can reject them.
+  mf <- stats::model.frame(formula, data = data, na.action = stats::na.pass)
   if (anyNA(mf)) {
     stop("Variables in `data` used by `formula` contain NA values; remove or impute them before calling `pharma_anova`")
   }
