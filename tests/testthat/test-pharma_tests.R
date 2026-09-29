@@ -205,11 +205,6 @@ test_that("pharma_bayes_stopping returns list", {
   expect_type(out$stop, "logical")
 })
 
-test_that("pharma_factorial_anova returns aov", {
-  res <- pharma_factorial_anova(response ~ treatment * dose, data = pharma_sample)
-  expect_s3_class(res, "aov")
-})
-
 test_that("pharma_crossover_anova returns aov", {
   res <- pharma_crossover_anova(response ~ treatment + period + subject, data = pharma_crossover)
   expect_s3_class(res, "aov")

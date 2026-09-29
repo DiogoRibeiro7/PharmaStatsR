@@ -2,17 +2,43 @@
 % Please edit documentation in R/pharma_factorial_anova.R
 \name{pharma_factorial_anova}
 \alias{pharma_factorial_anova}
-\title{Conduct a factorial ANOVA}
+\title{Analyze a balanced, replicated two-factor design}
 \usage{
 pharma_factorial_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A model formula specifying factors and interactions.}
+\item{formula}{A two-sided \code{response ~ factor1 * factor2} formula with an
+  intercept. Each predictor must be a factor, character, or logical
+  variable. Convert numeric group codes explicitly with \code{factor()}.}
+
 \item{data}{A data frame containing the variables in the model.}
-\item{...}{Additional arguments passed to \code{stats::aov}.}
+
+\item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
+  \code{weights}, \code{na.action}, and \code{offset} are not supported because they
+  can change the checked population or model.}
 }
-\value{An \code{aov} object.}
-\description{Wrapper around \code{stats::aov} for multi-factor experimental designs.}
+\value{
+An \code{aov} object with estimable main effects, interaction, and
+  residual error. The main-effect tests average over the other factor.
+}
+\description{
+Fit an ordinary two-factor ANOVA with both main effects and their
+interaction. The two factors must be crossed, with the same number of
+observations (at least two) in every cell.
+}
+\details{
+Missing model values and non-finite responses are rejected. The balanced
+  design makes the ordinary sequential sums of squares for the two main
+  effects and interaction orthogonal. Inference still assumes independent
+  errors, a common within-cell variance, and a suitable residual
+  distribution. This helper does not fit repeated observations, covariates,
+  blocking, or unbalanced factorial designs.
+}
 \examples{
-pharma_factorial_anova(response ~ treatment * dose, data = pharma_sample)
+example <- data.frame(
+  treatment = factor(rep(c("A", "B"), each = 4)),
+  dose = factor(rep(c("Low", "High"), each = 2, times = 2)),
+  response = c(9, 11, 11, 13, 10, 12, 16, 18)
+)
+summary(pharma_factorial_anova(response ~ treatment * dose, example))
 }

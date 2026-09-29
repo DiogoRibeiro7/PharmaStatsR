@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Restrict `pharma_factorial_anova()` to a complete, balanced, replicated two-factor interaction design with categorical predictors and finite responses. Replace the confounded `pharma_sample` example with a crossed fixture and document the model and numerical reference. Earlier calls with numeric codes, missing cells, unequal replication, or population-changing options now error; recheck results from the old treatment-by-dose example.
 - Add fixed independent numerical reference cases for t tests, TOST, chi-square tests, and one-way ANOVA, with SciPy-versioned provenance and a site guide for all six core inference helpers. No calculation or API changes.
 - Align the report-table, SAP-template, and interim-dashboard descriptions with their actual output. Add a reporting and monitoring scope audit across the README, R help, examples, and site; no helper behavior or API changes.
 - Inventory all exported symbols with links to source, help and representative tests, distinguish numerical references from smoke checks, and prioritize the next statistical reviews.
