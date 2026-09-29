@@ -4,23 +4,43 @@
 \alias{pharma_gee}
 \title{Fit a generalized estimating equations (GEE) model}
 \usage{
-pharma_gee(formula, id, data, family = stats::gaussian, corstr = "independence", ...)
+pharma_gee(
+  formula,
+  id,
+  data,
+  family = stats::gaussian,
+  corstr = "independence",
+  ...
+)
 }
 \arguments{
-  \item{formula}{Model formula specifying the mean structure.}
-  \item{id}{Cluster identifier for repeated observations.}
-  \item{data}{Data frame containing model variables.}
-  \item{family}{Error distribution and link function.}
-  \item{corstr}{Working correlation structure.}
-  \item{...}{Additional arguments passed to \code{geepack::geeglm}.}
+\item{formula}{A model formula.}
+
+\item{id}{A bare column name in \code{data} or an observation-aligned vector
+identifying independent clusters. Each cluster must occupy consecutive rows.}
+
+\item{data}{Data frame containing the variables in the model.}
+
+\item{family}{Error distribution and link function to be used in the model.}
+
+\item{corstr}{Working correlation structure. See \code{geepack::geeglm}.}
+
+\item{...}{Additional arguments passed to \code{geepack::geeglm}.}
 }
 \value{
 A \code{geeglm} object.
 }
 \description{
 Convenience wrapper around \code{geepack::geeglm} for correlated response data.
-The function validates inputs and checks that the \code{geepack} package is
-installed before fitting the model.
+The function resolves cluster IDs against \code{data}, validates complete model
+values and contiguous cluster rows, and then delegates fitting to \code{geepack}.
+}
+\details{
+\code{geepack::geeglm()} requires complete data and contiguous rows for each
+cluster. Sort by the cluster identifier (and by visit order for an ordered
+working correlation) before fitting. The model estimates a marginal mean
+relationship; its interpretation depends on the chosen working correlation
+and the independence of clusters.
 }
 \examples{
 if (requireNamespace("geepack", quietly = TRUE)) {
