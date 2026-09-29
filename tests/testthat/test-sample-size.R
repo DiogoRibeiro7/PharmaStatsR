@@ -1,6 +1,6 @@
 test_that("balanced two-arm sample size matches numerical references", {
   # Reference totals computed independently from normal quantiles and
-  # two-sample standard errors (SciPy): 63, 99, and 100 per arm.
+  # two-sample standard errors (SciPy 1.17.0): 63, 99, and 100 per arm.
   expect_equal(pharma_sample_reestimate(50, 0.5, 1), 126)
   expect_equal(pharma_sample_reestimate(50, 0.4, 1), 198)
   expect_equal(
