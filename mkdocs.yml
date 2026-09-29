@@ -70,6 +70,7 @@ nav:
       - Quick start: quickstart.md
   - Statistical methods:
       - Method guide: methods.md
+      - Export and evidence inventory: method-inventory.md
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
       - Latin square ANOVA: latin-square.md
