@@ -16,8 +16,8 @@
 pharma_latin_square <- local({
   set.seed(123)
   design <- data.frame(
-    row = rep(1:4, each = 4),
-    column = rep(1:4, times = 4),
+    row = factor(rep(1:4, each = 4)),
+    column = factor(rep(1:4, times = 4)),
     treatment = factor(c(
       "A", "B", "C", "D",
       "B", "C", "D", "A",
