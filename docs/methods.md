@@ -4,7 +4,7 @@ Use the installed R help pages for full argument and return documentation, for e
 
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
-| Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, `pharma_anova()`, `pharma_crossover_anova()` | Core R dependencies |
+| Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), `pharma_crossover_anova()` | Core R dependencies |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
 | Rates and uncertainty | [`pharma_rate_metrics()`](rates.md), [`pharma_wild_bootstrap()`](wild-bootstrap.md) | Core R dependencies; review interval assumptions |
 | Independent-row bootstrap | [`pharma_parallel_bootstrap()`](parallel-bootstrap.md) | `future`, `future.apply` (optional); uses row resampling |
@@ -22,7 +22,7 @@ Use the installed R help pages for full argument and return documentation, for e
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
 | Dose response | `pharma_emax()`, `pharma_sigmoid_emax()` | Core R dependencies |
 
-The formula interfaces of `pharma_t_test()` and `pharma_anova()` reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
+The formula interfaces of `pharma_t_test()` and [`pharma_anova()`](anova.md) reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
 
 Other exported functions cover design, simulation, reporting, diagnostics, and optional integrations. Browse `help(package = "PharmaStatsR")` for the installed version. Check the [DESCRIPTION file](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION) for the complete `Imports` and `Suggests` lists. A missing optional backend is reported when its corresponding function is called.
 

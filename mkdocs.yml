@@ -71,6 +71,7 @@ nav:
   - Statistical methods:
       - Method guide: methods.md
       - Equivalence testing: equivalence.md
+      - One-way ANOVA: anova.md
       - Event-rate comparisons: rates.md
       - Wild bootstrap: wild-bootstrap.md
       - Cluster bootstrap: cluster-bootstrap.md
