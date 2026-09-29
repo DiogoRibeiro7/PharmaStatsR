@@ -46,7 +46,8 @@ of writing to disk.}
 \item{extra_sections}{Named list of additional sections and their contents.}
 
 \item{include_sections}{Character vector giving the order of default sections
-to include. Set to `NULL` to omit all defaults.}
+to include. Set to \code{NULL} to omit all defaults. Unknown names are
+currently ignored; inspect the returned sections before using the file.}
 }
 \value{
 A character vector containing the SAP in Markdown format. If
@@ -57,7 +58,9 @@ A character vector containing the SAP in Markdown format. If
 Creates a basic Markdown template for a statistical analysis plan. The
 template includes placeholders for study objectives, endpoints, and
 planned analyses. The resulting text can be returned as a character
-vector or written directly to a file.
+vector or written directly to a file. It does not supply, review, or
+approve a study-specific analysis plan; the caller must complete and
+review every relevant section before use.
 }
 \examples{
 sap <- pharma_generate_sap()

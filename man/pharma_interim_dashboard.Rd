@@ -2,21 +2,22 @@
 % Please edit documentation in R/pharma_interim_dashboard.R
 \name{pharma_interim_dashboard}
 \alias{pharma_interim_dashboard}
-\title{Launch a real-time interim monitoring dashboard}
+\title{Open a simulated enrollment dashboard}
 \usage{
 pharma_interim_dashboard(launch = interactive())
 }
 \arguments{
-\item{launch}{Logical. Whether to launch the dashboard.}
+\item{launch}{Logical. Whether to open the example dashboard.}
 }
 \value{
 Invisibly returns the path to the dashboard Rmd file.
 }
 \description{
-Starts a minimal Shiny dashboard showing simulated enrollment over time.
-If `launch` is `TRUE`, the dashboard is started using `rmarkdown::run()`;
-otherwise the path to the dashboard file is returned. The dashboard
-template is stored in `inst/dashboard/pharma_interim_dashboard.Rmd`.
+Opens an example Shiny dashboard that draws random enrollment counts when
+rendered. It does not read study data, track live enrollment, calculate
+interim statistics, or apply a monitoring rule. If \code{launch} is \code{TRUE},
+\code{rmarkdown::run()} opens the bundled R Markdown file; otherwise the path
+to that file is returned.
 }
 \examples{
 path <- pharma_interim_dashboard(launch = FALSE)

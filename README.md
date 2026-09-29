@@ -53,6 +53,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURI
 
 ## Scope and citation
 
-The helpers do not establish compliance with ICH or FDA guidance. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the simulated datasets for clinical decisions or include patient data in issues.
+The helpers do not establish compliance with ICH or FDA guidance. The [reporting and monitoring scope audit](https://diogoribeiro7.github.io/PharmaStatsR/claims-audit/) explains what the column checks, audit log, SAP template, reporting table, and dashboards actually return. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the simulated datasets for clinical decisions or include patient data in issues.
 
 Use `citation("PharmaStatsR")` after installation for citation details. The project is licensed under MIT; see [LICENSE.md](LICENSE.md).

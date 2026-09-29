@@ -31,7 +31,7 @@ Start with the included simulated datasets and inspect the returned estimates an
 
 ### Check the limits
 
-Review assumptions, optional backends, and the actual scope of the validation and audit helpers. [Read limitations](limitations.md).
+Review assumptions, optional backends, and the actual scope of the reporting and monitoring helpers. [Read the scope audit](claims-audit.md).
 
 </div>
 

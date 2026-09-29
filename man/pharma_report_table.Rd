@@ -2,12 +2,13 @@
 % Please edit documentation in R/pharma_report_table.R
 \name{pharma_report_table}
 \alias{pharma_report_table}
-\title{Generate APA/ICH-style summary tables}
+\title{Extract selected model estimates into a table}
 \usage{
 pharma_report_table(model, file = NULL, conf.level = 0.95)
 }
 \arguments{
-\item{model}{A fitted model object supported by \code{broom::tidy}.}
+\item{model}{A fitted model object whose \code{broom::tidy()} output includes
+\code{term}, \code{estimate}, \code{conf.low}, \code{conf.high}, and \code{p.value}.}
 
 \item{file}{Optional path to save the table. Should end with \code{.docx} or
 \code{.xlsx}. If \code{NULL}, the table is returned as a data frame.}
@@ -15,13 +16,15 @@ pharma_report_table(model, file = NULL, conf.level = 0.95)
 \item{conf.level}{Confidence level for intervals. Default is 0.95.}
 }
 \value{
-A data frame of tidy model results. If \code{file} is provided, the
-  table is invisibly returned after being written to disk.
+A data frame with the five selected columns. If \code{file} is provided,
+  the same table is invisibly returned after being written to disk.
 }
 \description{
-Create a formatted table of model estimates with confidence intervals
-and p-values. Results can optionally be exported to Word (\code{.docx})
-or Excel (\code{.xlsx}) if the corresponding packages are available.
+Select term, estimate, confidence interval, and p-value columns from
+\code{broom::tidy()}. Results can optionally be written to Word (\code{.docx})
+or Excel (\code{.xlsx}) if the corresponding packages are available. The
+helper does not apply an APA or ICH reporting standard, verify model
+assumptions, or provide a study-specific interpretation.
 }
 \examples{
 fit <- lm(response ~ treatment, data = pharma_sample)

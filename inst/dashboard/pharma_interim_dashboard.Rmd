@@ -1,5 +1,5 @@
 ---
-title: "Interim Monitoring Dashboard"
+title: "Simulated Enrollment Demo"
 output: flexdashboard::flex_dashboard
 runtime: shiny
 ---
@@ -8,7 +8,10 @@ runtime: shiny
 library(PharmaStatsR)
 ```
 
-## Enrollment
+## Simulated enrollment
+
+This chart draws random counts when rendered. It does not use study data or
+provide an interim monitoring or stopping decision.
 
 ```{r}
 renderPlot({
