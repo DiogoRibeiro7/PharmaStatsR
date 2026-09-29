@@ -73,6 +73,7 @@ nav:
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
       - Latin square ANOVA: latin-square.md
+      - Crossover ANOVA: crossover.md
       - Event-rate comparisons: rates.md
       - Wild bootstrap: wild-bootstrap.md
       - Cluster bootstrap: cluster-bootstrap.md

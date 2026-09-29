@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Correct the bundled crossover example to balanced AB/BA treatment sequences, encode subject and period as factors, and require a complete balanced two-period allocation in `pharma_crossover_anova()`. Previous A/A versus B/B example fits confounded treatment with subject; numeric design IDs now require explicit `factor()` conversion. Recheck earlier results.
 - Fit Latin square row and column effects as categorical blocks in the bundled example, and require a complete, balanced allocation before `pharma_latin_square_anova()` fits. Numeric design IDs now require explicit `factor()` conversion; recheck earlier results that used numeric IDs or incomplete squares.
 - Restrict `pharma_anova()` to one categorical group with an intercept, and fit against the original data so `factor(dose)` and other formula transformations work. Numeric group codes now require explicit `factor()` conversion; earlier numeric-predictor results may have tested a linear trend rather than group mean equality.
 - Resolve `pharma_gee()` cluster identifiers within the input data, reject missing or interleaved cluster records, and test against direct `geepack::geeglm()` with the optional backend installed in CI. The documented `id = subject` call now works; recheck earlier GEE fits if identifiers or rows may have been misaligned.
