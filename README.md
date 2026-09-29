@@ -41,7 +41,7 @@ fit <- pharma_survival_fit(
 summary(fit)
 ```
 
-For worked examples and assumptions, read the [documentation](https://diogoribeiro7.github.io/PharmaStatsR/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd). The [roadmap](ROADMAP.md) records future work; items there should not be taken as implemented functionality.
+For worked examples and assumptions, read the [documentation](https://diogoribeiro7.github.io/PharmaStatsR/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd). The [prioritized roadmap](ROADMAP.md) links to scoped GitHub issues and completion gates. Planned items are not implemented functionality.
 
 ## Develop and test
 
