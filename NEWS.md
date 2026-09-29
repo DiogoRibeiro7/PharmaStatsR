@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Fit Latin square row and column effects as categorical blocks in the bundled example, and require a complete, balanced allocation before `pharma_latin_square_anova()` fits. Numeric design IDs now require explicit `factor()` conversion; recheck earlier results that used numeric IDs or incomplete squares.
 - Restrict `pharma_anova()` to one categorical group with an intercept, and fit against the original data so `factor(dose)` and other formula transformations work. Numeric group codes now require explicit `factor()` conversion; earlier numeric-predictor results may have tested a linear trend rather than group mean equality.
 - Resolve `pharma_gee()` cluster identifiers within the input data, reject missing or interleaved cluster records, and test against direct `geepack::geeglm()` with the optional backend installed in CI. The documented `id = subject` call now works; recheck earlier GEE fits if identifiers or rows may have been misaligned.
 - Reject missing response or group values in the formula interfaces of `pharma_t_test()` and `pharma_anova()` instead of silently dropping incomplete rows before validation. Review previous analyses with missing model variables.
