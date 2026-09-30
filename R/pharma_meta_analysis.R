@@ -172,7 +172,10 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #' @param sm Summary measure passed to [netmeta::netmeta].
 #' @param random Logical indicating whether to fit a random-effects model
 #'   (default `TRUE`).
-#' @param ... Additional arguments passed to [netmeta::netmeta].
+#' @param ... Additional arguments passed to [netmeta::netmeta]. Pass
+#'   `studlab` here to identify comparisons from the same study, especially
+#'   multi-arm studies. Without it, `netmeta` treats comparisons as independent
+#'   studies.
 #'
 #' @return A `netmeta` object.
 #' @export
@@ -183,14 +186,16 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
 #'   treat1 = c("A", "A", "B"),
 #'   treat2 = c("B", "C", "C"),
 #'   TE = c(0.2, 0.5, -0.1),
-#'   seTE = c(0.1, 0.2, 0.1)
+#'   seTE = c(0.1, 0.2, 0.1),
+#'   study = c("s1", "s2", "s3")
 #' )
-#' pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
+#' pharma_network_meta_analysis(TE, seTE, treat1, treat2,
+#'   data = df, studlab = df$study, random = FALSE)
 #' }
 
 pharma_network_meta_analysis <- function(TE, seTE, treat1, treat2, data = NULL,
                                          sm = "MD", random = TRUE, ...) {
-  if (!requireNamespace("netmeta", quietly = TRUE)) {
+  if (!.pharma_netmeta_available()) {
     stop(
       "Package 'netmeta' is required for pharma_network_meta_analysis().\n",
       "Please install it with install.packages('netmeta')",
@@ -234,4 +239,8 @@ pharma_network_meta_analysis <- function(TE, seTE, treat1, treat2, data = NULL,
     random = random,
     ...
   )
+}
+
+.pharma_netmeta_available <- function() {
+  requireNamespace("netmeta", quietly = TRUE)
 }

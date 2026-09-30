@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Exercise the optional `netmeta` backend in CI and test its missing-package error independently of the installed environment. Show explicit study labels in the network example and explain their role in identifying dependent comparisons from multi-arm studies.
 - Report a missing optional `mice` backend with an installation hint for imputation and pooled analysis; run both real `mice` paths in CI and compare pooled `lm`/`glm` results with direct `mice` analyses. Clarify that pooling alone is not a missing-not-at-random sensitivity analysis.
 - Exercise actual Excel and Word report-table exports in CI and check their contents. Missing optional exporters are reported individually, while returning the in-memory table requires none of them.
 - Check for the Python `scipy.stats` module before `pharma_scipy_ttest()` imports it, with an installation hint rather than a raw Python import error. Exercise missing backends and real SciPy Student/Welch calculations in CI; the example now requires SciPy, not just Python.
