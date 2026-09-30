@@ -1,14 +1,15 @@
 #' Automatically select the best model via caret
 #'
 #' Uses \code{caret::train} to evaluate multiple algorithms with cross-validation
-#' and returns the model achieving the highest performance.
+#' and returns the highest-scoring successful fit. The function requires
+#' \code{caret}; it does not substitute a different model when it is absent.
 #'
 #' @param formula Model formula specifying the response and predictors.
 #' @param data Data frame containing the variables in \code{formula}.
 #' @param models Character vector of caret model names. Default explores
 #'   logistic regression (\code{"glm"}), random forest (\code{"rf"}),
 #'   support vector machines (\code{"svmLinear"}), and gradient boosting
-#'   (\code{"gbm"}).
+#'   (\code{"gbm"}). Some candidates require additional model-engine packages.
 #' @param metric Performance metric to optimize. Defaults to \code{"Accuracy"}.
 #' @param trControl Optional \code{caret::trainControl} object. If \code{NULL},
 #'   5-fold cross-validation is used.
@@ -16,10 +17,14 @@
 #'   fitted model using \code{caret::varImp}.
 #' @param ... Additional arguments passed to \code{caret::train}.
 #'
-#' @return A list with up to three elements: \code{best_model}, the highest
-#'   performing caret model object; \code{all_models}, the list of all fitted
-#'   models; and \code{variable_importance}, a list of variable importance
-#'   objects when \code{explain = TRUE}.
+#' @details If \code{caret} is unavailable, the call errors with an installation
+#'   instruction before fitting any model. Individual candidate failures are
+#'   warned and omitted, so inspect \code{all_models} to see what ran.
+#'
+#' @return A list with \code{best_model}, the highest-scoring caret model;
+#'   \code{all_models}, the successfully fitted candidates; and
+#'   \code{variable_importance}, a list when \code{explain = TRUE} or
+#'   \code{NULL} otherwise. Failed candidate fits produce warnings.
 #' @export
 #'
 #' @examples
@@ -27,24 +32,17 @@
 #'   pharma_ai_model_select(
 #'     outcome ~ treatment,
 #'     data = pharma_sample,
-#'     metric = "Accuracy",
-#'     explain = TRUE
+#'     models = "glm", metric = "Accuracy"
 #'   )
 #' }
 pharma_ai_model_select <- function(formula, data,
                                    models = c("glm", "rf", "svmLinear", "gbm"),
                                    metric = "Accuracy", trControl = NULL,
                                    explain = FALSE, ...) {
-  # Attempt to load caret for model training. If unavailable, fall back to a
-  # simple `glm` fit and return that model only.
-  if (!requireNamespace("caret", quietly = TRUE)) {
-    warning(
-      "Package 'caret' is not installed; falling back to glm() without tuning."
-    )
-    # Fit a basic logistic regression as a simple fallback so the user
-    # still receives a reasonable model object.
-    base_fit <- stats::glm(formula, data = data, family = stats::binomial())
-    return(list(best_model = base_fit, all_models = list(glm = base_fit)))
+  if (!.pharma_caret_available()) {
+    stop("Package 'caret' is required for pharma_ai_model_select(); ",
+         "install it with install.packages('caret'). No model was fitted.",
+         call. = FALSE)
   }
 
   # Ensure the formula references columns present in `data` before training
@@ -134,4 +132,10 @@ pharma_ai_model_select <- function(formula, data,
     all_models = fits,
     variable_importance = variable_importance
   )
+}
+
+# Keep dependency detection local to this package so the missing-backend
+# behavior can be exercised even on CI runners with caret installed.
+.pharma_caret_available <- function() {
+  requireNamespace("caret", quietly = TRUE)
 }
