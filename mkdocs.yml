@@ -76,6 +76,7 @@ nav:
       - One-way ANOVA: anova.md
       - Balanced two-factor ANOVA: factorial-anova.md
       - Paired two-condition ANOVA: repeated-anova.md
+      - Two-predictor response surface: response-surface.md
       - Latin square ANOVA: latin-square.md
       - Crossover ANOVA: crossover.md
       - Event-rate comparisons: rates.md
