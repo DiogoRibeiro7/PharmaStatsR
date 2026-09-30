@@ -22,7 +22,7 @@ pharma_ai_model_select(
 \item{models}{Character vector of caret model names. Default explores
 logistic regression (\code{"glm"}), random forest (\code{"rf"}),
 support vector machines (\code{"svmLinear"}), and gradient boosting
-(\code{"gbm"}).}
+(\code{"gbm"}). Some candidates require additional model-engine packages.}
 
 \item{metric}{Performance metric to optimize. Defaults to \code{"Accuracy"}.}
 
@@ -35,22 +35,27 @@ fitted model using \code{caret::varImp}.}
 \item{...}{Additional arguments passed to \code{caret::train}.}
 }
 \value{
-A list with up to three elements: \code{best_model}, the highest
-  performing caret model object; \code{all_models}, the list of all fitted
-  models; and \code{variable_importance}, a list of variable importance
-  objects when \code{explain = TRUE}.
+A list with \code{best_model}, the highest-scoring caret model;
+  \code{all_models}, the successfully fitted candidates; and
+  \code{variable_importance}, a list when \code{explain = TRUE} or
+  \code{NULL} otherwise. Failed candidate fits produce warnings.
 }
 \description{
 Uses \code{caret::train} to evaluate multiple algorithms with cross-validation
-and returns the model achieving the highest performance.
+and returns the highest-scoring successful fit. The function requires
+\code{caret}; it does not substitute a different model when it is absent.
+}
+\details{
+If \code{caret} is unavailable, the call errors with an installation
+  instruction before fitting any model. Individual candidate failures are
+  warned and omitted, so inspect \code{all_models} to see what ran.
 }
 \examples{
 if (requireNamespace("caret", quietly = TRUE)) {
   pharma_ai_model_select(
     outcome ~ treatment,
     data = pharma_sample,
-    metric = "Accuracy",
-    explain = TRUE
+    models = "glm", metric = "Accuracy"
   )
 }
 }

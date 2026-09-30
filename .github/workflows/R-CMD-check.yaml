@@ -44,6 +44,7 @@ jobs:
             any::cmprsk
             any::geepack
             any::metafor
+            any::caret
       - uses: r-lib/actions/check-r-package@v2
         with:
           build_args: 'c("--no-manual")'

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Make `pharma_ai_model_select()` require `caret` instead of substituting an untuned binomial GLM when it is missing. Use `models = "glm"` explicitly for a caret-trained GLM. Earlier fallback results must be rerun against the intended candidates and resampling plan.
 - Stop silently replacing a failed random-effects `pharma_meta_analysis()` fit with fixed effects. REML errors now reach the caller; use `method = "FE"` only as an explicit model choice. Recheck older results that reported a singular-fit fallback.
 - Require finite, equal-length numeric vectors and a full-rank six-column quadratic design in `pharma_response_surface()`. Replace the singular same-dose example with replicated crossed points and document the model and numerical reference. Earlier aliased fits and calls that changed the checked population through `...` must be recomputed.
 - Restrict `pharma_repeated_anova()` to complete, factor-coded, two-condition pairs with a finite paired-difference variance. Document its subject and within-subject strata and a hand-calculated F reference. Calls with numeric subject IDs, incomplete or duplicate pairs, or population-changing options now error; recode identifiers and recheck earlier fits.
