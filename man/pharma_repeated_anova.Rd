@@ -2,24 +2,41 @@
 % Please edit documentation in R/pharma_repeated_anova.R
 \name{pharma_repeated_anova}
 \alias{pharma_repeated_anova}
-\title{Conduct a repeated measures ANOVA}
+\title{Analyze a complete two-condition repeated-measures design}
 \usage{
 pharma_repeated_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A model formula specifying within-subject error terms, e.g.,
-`response ~ condition + Error(subject)`.}
+\item{formula}{A two-sided `response ~ condition + Error(subject)` formula
+with an intercept. `condition` and `subject` must be factor columns;
+convert numeric identifiers explicitly with `factor()`.}
 
-\item{data}{A data frame containing the variables in the formula.}
+\item{data}{A data frame with a finite numeric response and complete pairs.}
 
-\item{...}{Additional arguments passed to `stats::aov`.}
+\item{...}{Additional arguments passed to `stats::aov`. `subset`,
+`weights`, `na.action`, and `offset` are not supported because they can
+change the checked population or model.}
 }
 \value{
-An `aov` object.
+An `aovlist` with subject and within-subject error strata. The
+condition F test is in `summary(fit)[["Error: Within"]][[1L]]`.
 }
 \description{
-Simplifies calls to `stats::aov` for repeated measures designs.
+Fit a one-factor within-subject ANOVA to paired observations. Each
+subject must contribute exactly one observation in each condition.
+}
+\details{
+The two-level condition effect is tested against the variation in paired
+differences across subjects. There must be at least three observed subjects
+and positive, finite variance in those differences. Missing values,
+duplicate subject-condition pairs, and incomplete pairs are rejected.
+Inference assumes independent subjects and a suitable distribution of
+within-subject differences. This helper does not fit covariates, multiple
+within-subject factors, unequal replication, or incomplete follow-up.
 }
 \examples{
-pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
+paired <- transform(pharma_repeated,
+  subject = factor(subject), condition = factor(condition))
+fit <- pharma_repeated_anova(response ~ condition + Error(subject), paired)
+summary(fit)
 }

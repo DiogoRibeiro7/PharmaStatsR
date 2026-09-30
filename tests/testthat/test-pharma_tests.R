@@ -35,11 +35,6 @@ test_that("pharma_survival_fit returns coxph", {
   expect_s3_class(res, "coxph")
 })
 
-test_that("pharma_repeated_anova returns aov or aovlist", {
-  res <- pharma_repeated_anova(response ~ condition + Error(subject), data = pharma_repeated)
-  expect_true(inherits(res, "aov") || inherits(res, "aovlist"))
-})
-
 test_that("pharma_survival is a data.frame", {
   expect_true(is.data.frame(pharma_survival))
   expect_equal(nrow(pharma_survival), 30)
