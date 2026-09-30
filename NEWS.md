@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Check for the Python `scipy.stats` module before `pharma_scipy_ttest()` imports it, with an installation hint rather than a raw Python import error. Exercise missing backends and real SciPy Student/Welch calculations in CI; the example now requires SciPy, not just Python.
 - Declare the unconditional `parallel` namespace call, remove unused `data.table` from `Suggests`, and audit R source namespace calls against dependency metadata in local setup and CI. Configuration now falls back to one core if detection is unavailable.
 - Declare the optional `flexdashboard` and `shiny` dashboard backends, check all launch packages before opening either demo, and keep path retrieval usable with the minimal install.
 - Make `pharma_ai_model_select()` require `caret` instead of substituting an untuned binomial GLM when it is missing. Use `models = "glm"` explicitly for a caret-trained GLM. Earlier fallback results must be rerun against the intended candidates and resampling plan.
