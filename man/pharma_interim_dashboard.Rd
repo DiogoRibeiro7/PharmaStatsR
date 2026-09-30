@@ -17,7 +17,8 @@ Opens an example Shiny dashboard that draws random enrollment counts when
 rendered. It does not read study data, track live enrollment, calculate
 interim statistics, or apply a monitoring rule. If \code{launch} is \code{TRUE},
 \code{rmarkdown::run()} opens the bundled R Markdown file; otherwise the path
-to that file is returned.
+to that file is returned. Launching requires the optional `rmarkdown`,
+`flexdashboard`, and `shiny` packages; retrieving its path does not.
 }
 \examples{
 path <- pharma_interim_dashboard(launch = FALSE)
