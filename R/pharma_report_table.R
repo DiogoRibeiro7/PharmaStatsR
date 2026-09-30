@@ -2,7 +2,9 @@
 #'
 #' Select term, estimate, confidence interval, and p-value columns from
 #' `broom::tidy()`. Results can optionally be written to Word (`.docx`)
-#' or Excel (`.xlsx`) if the corresponding packages are available. The
+#' or Excel (`.xlsx`) if the corresponding packages are available: Word requires
+#' the optional `flextable` and `officer` packages, and Excel requires
+#' `openxlsx`. Returning a table without a file needs none of these. The
 #' helper does not apply an APA or ICH reporting standard, verify model
 #' assumptions, or provide a study-specific interpretation.
 #'
@@ -27,16 +29,11 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
 
   if (!is.null(file)) {
     if (grepl("\\.xlsx$", file, ignore.case = TRUE)) {
-      if (!requireNamespace("openxlsx", quietly = TRUE)) {
-        stop("Package 'openxlsx' is required to write .xlsx files")
-      }
+      .pharma_require_report_packages("openxlsx", ".xlsx")
       # write results to an Excel workbook
       openxlsx::write.xlsx(res, file)
     } else if (grepl("\\.docx$", file, ignore.case = TRUE)) {
-      if (!requireNamespace("flextable", quietly = TRUE) ||
-        !requireNamespace("officer", quietly = TRUE)) {
-        stop("Packages 'flextable' and 'officer' are required to write .docx files")
-      }
+      .pharma_require_report_packages(c("flextable", "officer"), ".docx")
       # build Word document containing the table
       ft <- flextable::flextable(res)
       doc <- officer::read_docx()
@@ -52,4 +49,19 @@ pharma_report_table <- function(model, file = NULL, conf.level = 0.95) {
 
   # Return the tidy results as a data frame when no output file is requested
   res
+}
+
+.pharma_report_package_available <- function(package) {
+  requireNamespace(package, quietly = TRUE)
+}
+
+.pharma_require_report_packages <- function(packages, extension) {
+  missing <- packages[!vapply(packages, .pharma_report_package_available,
+                              logical(1))]
+  if (length(missing) > 0L) {
+    stop("To write ", extension, " files, install optional package(s): ",
+         paste(missing, collapse = ", "), ". Use install.packages(c(",
+         paste(sprintf('"%s"', missing), collapse = ", "), ")).",
+         call. = FALSE)
+  }
 }

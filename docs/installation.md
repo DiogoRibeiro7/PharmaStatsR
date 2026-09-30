@@ -39,6 +39,9 @@ For the Python t-test integration, install `reticulate` and SciPy in the Python
 environment it selects. See the [SciPy bridge guide](scipy-bridge.md) for an
 interpreter check and example.
 
+Excel and Word table export use separate optional R packages. The
+[report export guide](report-exports.md) lists the packages for each format.
+
 See the [method guide](methods.md) for examples of optional dependencies. The package's complete dependency metadata is in [DESCRIPTION](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION).
 
 ## Migrating from PharmaTestSuite
