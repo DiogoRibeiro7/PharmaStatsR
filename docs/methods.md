@@ -10,7 +10,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
-| Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_factorial_anova()`](factorial-anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
+| Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_factorial_anova()`](factorial-anova.md), [`pharma_repeated_anova()`](repeated-anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
 | Rates and uncertainty | [`pharma_rate_metrics()`](rates.md), [`pharma_wild_bootstrap()`](wild-bootstrap.md) | Core R dependencies; review interval assumptions |
 | Independent-row bootstrap | [`pharma_parallel_bootstrap()`](parallel-bootstrap.md) | `future`, `future.apply` (optional); uses row resampling |
