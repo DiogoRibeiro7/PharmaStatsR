@@ -10,7 +10,7 @@ Install R, then from the repository root run:
 ./setup.sh
 ```
 
-The script installs the development test dependencies if necessary and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. CI performs the package check on pull requests with required dependencies; optional backends need separate checks when installed.
+The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. CI performs the package check on pull requests with required dependencies; optional backends need separate checks when installed.
 
 For numeric methods, include tests against an independently calculated or known result, boundary and invalid-input cases, and reproducible random examples.
 

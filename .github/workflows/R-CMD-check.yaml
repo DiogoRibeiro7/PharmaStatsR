@@ -27,6 +27,8 @@ jobs:
         with:
           r-version: 'release'
           use-public-rspm: true
+      - name: Audit namespace declarations
+        run: Rscript scripts/check_dependency_metadata.R
       # Run the package tests with its hard dependencies and the small
       # testing/vignette toolchain. The optional modelling backends are tested
       # separately when installed, and are not a prerequisite for every PR.

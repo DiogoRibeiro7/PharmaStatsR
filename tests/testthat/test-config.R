@@ -14,3 +14,19 @@ test_that("with_pharma_config temporarily sets options", {
   })
   expect_equal(pharma_config()$log_level, original$log_level)
 })
+
+test_that("core defaults are positive integers when detection fails", {
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(NA_integer_), 1L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(0L), 1L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(1L), 1L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(4L), 3L)
+})
+
+test_that("configuration uses a usable default core count", {
+  original <- getOption("pharma")
+  on.exit(options(pharma = original), add = TRUE)
+  options(pharma = NULL)
+  cores <- pharma_config()$max_cores
+  expect_type(cores, "integer")
+  expect_gte(cores, 1L)
+})

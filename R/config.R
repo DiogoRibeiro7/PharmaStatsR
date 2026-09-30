@@ -12,7 +12,8 @@
 #'     estimates.
 #'   - `parallel_strategy` (**character**): parallel backend for resampling
 #'     helpers.
-#'   - `max_cores` (**integer**): maximum number of cores to utilise.
+#'   - `max_cores` (**integer**): maximum number of cores to utilise. The
+#'     default is at least one, including when core detection is unavailable.
 #'   - `cache_dir` (**character**): directory used for caching intermediate
 #'     results.
 #'
@@ -27,7 +28,7 @@ pharma_config <- function(...) {
     plot_theme = "minimal",
     default_ci = 0.95,
     parallel_strategy = "sequential",
-    max_cores = max(parallel::detectCores() - 1, 1),
+    max_cores = .pharma_default_max_cores(),
     cache_dir = tempdir()
   )
   current <- getOption("pharma", defaults)
@@ -50,6 +51,14 @@ pharma_config <- function(...) {
   current <- utils::modifyList(current, new)
   options(pharma = current)
   invisible(current)
+}
+
+.pharma_default_max_cores <- function(cores = parallel::detectCores()) {
+  if (length(cores) != 1L || !is.numeric(cores) ||
+      !is.finite(cores) || cores < 2L) {
+    return(1L)
+  }
+  as.integer(cores) - 1L
 }
 
 #' Temporarily modify configuration options

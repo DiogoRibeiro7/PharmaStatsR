@@ -13,7 +13,8 @@ pharma_config(...)
 \item \code{plot_theme}: default plot theme.
 \item \code{default_ci}: default confidence level.
 \item \code{parallel_strategy}: parallel backend.
-\item \code{max_cores}: maximum number of cores.
+\item \code{max_cores}: maximum number of cores; defaults to at least one,
+including when core detection is unavailable.
 \item \code{cache_dir}: directory for cached results.
 }}
 }
