@@ -57,6 +57,7 @@ jobs:
             any::metafor
             any::caret
             any::reticulate
+            any::mice
             any::openxlsx
             any::flextable
             any::officer
