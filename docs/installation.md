@@ -2,7 +2,9 @@
 
 ## Requirements
 
-Install a recent version of R. The core package imports `survival`, `stats`, `utils`, `nlme`, and `broom`; R resolves required packages during installation.
+Install a recent version of R. The core package imports `survival`, `stats`,
+`utils`, `nlme`, `broom`, `gsDesign`, and `parallel`; R resolves required packages
+during installation.
 
 PharmaStatsR is not on CRAN. Install it from its **public** GitHub repository:
 

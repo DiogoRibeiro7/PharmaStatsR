@@ -14,10 +14,10 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/DiogoRibeiro7/PharmaStatsR
 BugReports: https://github.com/DiogoRibeiro7/PharmaStatsR/issues
-Imports: survival, stats, utils, nlme, broom, gsDesign
+Imports: survival, stats, utils, nlme, broom, gsDesign, parallel
 Suggests: testthat, knitr, rmarkdown, flexdashboard, shiny, rstanarm,
     bayesplot, mice, future, future.apply, caret, cmprsk, openssl, lme4, geepack,
-    metafor, netmeta, data.table, JM, mstate, openxlsx, flextable,
+    metafor, netmeta, JM, mstate, openxlsx, flextable,
     officer, reticulate
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1

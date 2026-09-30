@@ -8,4 +8,5 @@ fi
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$repo_dir"
+Rscript scripts/check_dependency_metadata.R
 Rscript scripts/run_tests.R
