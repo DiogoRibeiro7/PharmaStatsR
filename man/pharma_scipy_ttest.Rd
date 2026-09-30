@@ -19,10 +19,15 @@ A list with the test statistic and p-value.
 \description{
 Uses `reticulate` to call `scipy.stats.ttest_ind` for performing a
 two-sample t-test. This demonstrates integration with Python from R.
+The optional R package `reticulate` and the Python module `scipy.stats`
+must be available. A missing backend errors rather than running an R test.
+With `equal_var = TRUE` SciPy uses the pooled-variance test; `FALSE`
+requests Welch's test.
 }
 \examples{
 if (requireNamespace("reticulate", quietly = TRUE) &&
-  reticulate::py_available(initialize = FALSE)) {
-  pharma_scipy_ttest(rnorm(20), rnorm(20))
+  reticulate::py_available(initialize = FALSE) &&
+  reticulate::py_module_available("scipy.stats")) {
+  pharma_scipy_ttest(c(1, 2, 4, 7, 8), c(3, 5, 9, 10, 12))
 }
 }

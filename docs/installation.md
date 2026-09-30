@@ -35,6 +35,10 @@ pharma_dashboard()
 `pharma_interim_dashboard(launch = FALSE)` return the bundled R Markdown paths
 without these optional packages.
 
+For the Python t-test integration, install `reticulate` and SciPy in the Python
+environment it selects. See the [SciPy bridge guide](scipy-bridge.md) for an
+interpreter check and example.
+
 See the [method guide](methods.md) for examples of optional dependencies. The package's complete dependency metadata is in [DESCRIPTION](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION).
 
 ## Migrating from PharmaTestSuite
