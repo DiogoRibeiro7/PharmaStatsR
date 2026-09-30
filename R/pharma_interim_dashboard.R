@@ -4,7 +4,8 @@
 #' rendered. It does not read study data, track live enrollment, calculate
 #' interim statistics, or apply a monitoring rule. If `launch` is `TRUE`,
 #' `rmarkdown::run()` opens the bundled R Markdown file; otherwise the path
-#' to that file is returned.
+#' to that file is returned. Launching requires the optional `rmarkdown`,
+#' `flexdashboard`, and `shiny` packages; retrieving its path does not.
 #'
 #' @param launch Logical. Whether to open the example dashboard.
 #'
@@ -24,7 +25,7 @@ pharma_interim_dashboard <- function(launch = interactive()) {
     stop("Dashboard file not found")
   }
   if (launch) {
-    rmarkdown::run(dash_path)
+    .pharma_launch_dashboard(dash_path)
   }
   invisible(dash_path)
 }

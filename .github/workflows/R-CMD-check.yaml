@@ -38,6 +38,8 @@ jobs:
             any::testthat
             any::knitr
             any::rmarkdown
+            any::flexdashboard
+            any::shiny
             any::openssl
             any::future
             any::future.apply

@@ -2,7 +2,8 @@
 #'
 #' Starts a Shiny dashboard built with `flexdashboard` to explore example
 #' datasets included in the package. The dashboard is rendered from an R Markdown
-#' file shipped in the package.
+#' file shipped in the package. Launching it requires the optional `rmarkdown`,
+#' `flexdashboard`, and `shiny` packages; retrieving its path does not.
 #'
 #' @param launch Logical. If `TRUE`, the dashboard is launched using
 #'   `rmarkdown::run()`. If `FALSE`, the function simply returns the path to the
@@ -25,7 +26,7 @@ pharma_dashboard <- function(launch = interactive()) {
     stop("Dashboard file not found")
   }
   if (launch) {
-    rmarkdown::run(dash_path)
+    .pharma_launch_dashboard(dash_path)
   }
   invisible(dash_path)
 }

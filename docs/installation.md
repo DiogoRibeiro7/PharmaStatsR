@@ -21,6 +21,18 @@ Some functions use optional backends. Install only those needed for your analysi
 install.packages(c("geepack", "metafor", "openssl"))
 ```
 
+To launch either bundled example dashboard, install `rmarkdown`, `flexdashboard`,
+and `shiny`:
+
+```r
+install.packages(c("rmarkdown", "flexdashboard", "shiny"))
+pharma_dashboard()
+```
+
+`pharma_dashboard(launch = FALSE)` and
+`pharma_interim_dashboard(launch = FALSE)` return the bundled R Markdown paths
+without these optional packages.
+
 See the [method guide](methods.md) for examples of optional dependencies. The package's complete dependency metadata is in [DESCRIPTION](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION).
 
 ## Migrating from PharmaTestSuite
