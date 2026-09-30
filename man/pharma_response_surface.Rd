@@ -2,21 +2,35 @@
 % Please edit documentation in R/pharma_response_surface.R
 \name{pharma_response_surface}
 \alias{pharma_response_surface}
-\title{Fit a simple response-surface model}
+\title{Fit an estimable two-predictor quadratic response surface}
 \usage{
 pharma_response_surface(x1, x2, y, ...)
 }
 \arguments{
-\item{x1}{First predictor.}
-\item{x2}{Second predictor.}
-\item{y}{Response variable.}
-\item{...}{Additional arguments passed to \code{stats::lm}.}
+\item{x1}{A finite numeric vector for the first predictor.}
+\item{x2}{A finite numeric vector for the second predictor.}
+\item{y}{A finite numeric response vector of the same length.}
+\item{...}{Additional named arguments passed to \code{stats::lm}.
+\code{subset}, \code{weights}, \code{na.action}, \code{offset}, \code{method}, and \code{singular.ok}
+are not supported because they can change the checked design or fit.}
 }
-\value{An \code{lm} object representing the fitted surface.}
-\description{Creates a second-order polynomial model for two predictors.}
+\value{An \code{lm} object with six estimable coefficients and positive
+residual degrees of freedom. Inspect \code{summary()} for uncertainty.}
+\description{Fit an ordinary least-squares surface with linear, squared, and interaction
+terms for two numeric predictors. All six coefficients must be estimable.}
+\details{
+The model is \code{y = beta0 + beta1*x1 + beta2*x2 + beta11*x1^2 +
+beta22*x2^2 + beta12*x1*x2 + error}. At least seven complete observations
+and a full-rank six-column design matrix are required. Replication at
+design points is allowed but not required; without replication, residual
+error combines pure error and possible lack of fit. Inference assumes
+independent errors with suitable variance and distribution. Scale and
+center predictors when needed for numerical stability.
+}
 \examples{
-pharma_response_surface(
-  pharma_dose_response$dose, pharma_dose_response$dose,
-  pharma_dose_response$response
-)
+grid <- expand.grid(x1 = c(-1, 0, 1), x2 = c(-1, 0, 1), replicate = 1:2)
+grid$y <- 10 + 2 * grid$x1 - 3 * grid$x2 + 4 * grid$x1^2 +
+  5 * grid$x2^2 + 6 * grid$x1 * grid$x2 +
+  ifelse(grid$replicate == 1, -1, 1)
+summary(pharma_response_surface(grid$x1, grid$x2, grid$y))
 }
