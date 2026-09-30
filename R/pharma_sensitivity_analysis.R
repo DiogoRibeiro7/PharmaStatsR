@@ -1,7 +1,9 @@
-#' Simple sensitivity analysis for multiply imputed data
+#' Pool models across multiply imputed datasets
 #'
 #' Fits a model to each imputed dataset using `glm` or `lm` and pools the
-#' results.
+#' results. This does not vary the missingness assumptions or perform a
+#' missing-not-at-random sensitivity analysis. Requires the optional **mice**
+#' package.
 #'
 #' @param mids_obj A `mids` object produced by [pharma_mice_impute()] or
 #'   `mice::mice`.
@@ -9,7 +11,7 @@
 #' @param family Optional glm family. If `NULL`, a linear model is fitted.
 #' @param ... Additional arguments passed to the model fitting function.
 #'
-#' @return A pooled model from `mice::pool`.
+#' @return A `mipo` pooled model from `mice::pool`.
 #' @export
 #'
 #' @examples
@@ -20,8 +22,11 @@
 #'   pharma_sensitivity_analysis(imp, response ~ treatment)
 #' }
 pharma_sensitivity_analysis <- function(mids_obj, formula, family = NULL, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' is required for pharma_sensitivity_analysis()")
+  if (!.pharma_mice_available()) {
+    stop(
+      "Optional package 'mice' is required for pharma_sensitivity_analysis(). Install it with install.packages('mice').",
+      call. = FALSE
+    )
   }
   completed <- mice::complete(mids_obj, action = "all")
   fits <- lapply(completed, function(dataset) {

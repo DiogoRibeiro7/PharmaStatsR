@@ -12,10 +12,11 @@ pharma_mice_impute(data, m = 5, ...)
   \item{...}{Additional arguments passed to \code{mice::mice}.}
 }
 \value{
-A \code{mids} object.
+A \code{mids} object from the \strong{mice} package.
 }
 \description{
-Convenience wrapper around \code{mice::mice} for creating multiply imputed datasets.
+Convenience wrapper around \code{mice::mice} for creating multiply imputed
+datasets. Requires the optional \strong{mice} package.
 }
 \examples{
 if (requireNamespace("mice", quietly = TRUE)) {

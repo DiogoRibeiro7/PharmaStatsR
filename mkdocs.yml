@@ -81,6 +81,7 @@ nav:
       - Candidate model selection: model-selection.md
       - Python SciPy t-test bridge: scipy-bridge.md
       - Model estimate table exports: report-exports.md
+      - Multiple imputation and pooling: missing-data.md
       - Latin square ANOVA: latin-square.md
       - Crossover ANOVA: crossover.md
       - Event-rate comparisons: rates.md

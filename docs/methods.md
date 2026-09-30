@@ -26,7 +26,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Candidate model selection | [`pharma_ai_model_select()`](model-selection.md) | `caret` (optional); selected model engines may need other packages |
 | Python t-test bridge | [`pharma_scipy_ttest()`](scipy-bridge.md) | `reticulate` and Python `scipy.stats` (optional) |
 | Model estimate table exports | [`pharma_report_table()`](report-exports.md) | `broom` (required); `openxlsx`, `flextable`, and `officer` for files (optional) |
-| Missing data and Bayesian workflows | `pharma_mice_impute()`, `pharma_bayesian_glm()` | `mice`, `rstanarm` (optional) |
+| Missing data and Bayesian workflows | [`pharma_mice_impute()` and `pharma_sensitivity_analysis()`](missing-data.md), `pharma_bayesian_glm()` | `mice`, `rstanarm` (optional) |
 | Single-arm Bayesian response threshold | [`pharma_bayes_stopping()`](bayesian-threshold.md) | Core R dependencies; threshold check only |
 | Balanced two-arm planning total | [`pharma_sample_reestimate()`](sample-size.md) | Core R dependencies; normal-approximation planning only |
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |

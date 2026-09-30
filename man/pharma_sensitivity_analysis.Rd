@@ -2,21 +2,25 @@
 % Please edit documentation in R/pharma_sensitivity_analysis.R
 \name{pharma_sensitivity_analysis}
 \alias{pharma_sensitivity_analysis}
-\title{Simple sensitivity analysis for multiply imputed data}
+\title{Pool models across multiply imputed datasets}
 \usage{
 pharma_sensitivity_analysis(mids_obj, formula, family = NULL, ...)
 }
 \arguments{
-  \item{mids_obj}{A \code{mids} object from \code{mice}.}
+  \item{mids_obj}{A \code{mids} object produced by \code{pharma_mice_impute()} or
+  \code{mice::mice}.}
   \item{formula}{Model formula to fit.}
   \item{family}{Optional glm family. If \code{NULL}, a linear model is used.}
   \item{...}{Additional arguments passed to \code{glm} or \code{lm}.}
 }
 \value{
-A pooled model object.
+A \code{mipo} pooled model from \code{mice::pool}.
 }
 \description{
-Fits a model to each imputed dataset and pools the results.
+Fits a model to each imputed dataset using \code{glm} or \code{lm} and pools the
+results. This does not vary the missingness assumptions or perform a
+missing-not-at-random sensitivity analysis. Requires the optional \strong{mice}
+package.
 }
 \examples{
 if (requireNamespace("mice", quietly = TRUE)) {
