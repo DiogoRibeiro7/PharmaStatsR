@@ -43,6 +43,7 @@ jobs:
             any::future.apply
             any::cmprsk
             any::geepack
+            any::metafor
       - uses: r-lib/actions/check-r-package@v2
         with:
           build_args: 'c("--no-manual")'

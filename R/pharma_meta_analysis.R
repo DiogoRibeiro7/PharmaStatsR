@@ -1,15 +1,17 @@
 #' Conduct a meta-analysis
 #'
-#' Wrapper around `metafor::rma` to fit fixed- or random-effects models.
-#' Requires the 'metafor' package to be installed.
+#' Delegate a specified fixed- or random-effects model to `metafor::rma`.
+#' Requires the 'metafor' package to be installed. An estimation failure is
+#' returned as an error; it never changes the chosen model to fixed effects.
 #'
 #' @param yi Numeric vector of effect size estimates.
 #' @param vi Numeric vector of effect size variances.
-#' @param method Estimation method. Use "FE" for fixed effects or
-#'   e.g. "REML" for random effects (default).
+#' @param method Estimation method passed to `metafor::rma`. Use "FE" for a
+#'   fixed-effects model or "REML" (default) for random effects.
 #' @param ... Additional arguments passed to [metafor::rma].
 #'
-#' @return A `rma` object.
+#' @return An `rma` object fitted with the requested `method`. Errors from
+#'   `metafor::rma` are propagated without substituting another model.
 #' @export
 #'
 #' @examples
@@ -30,23 +32,20 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
   if (length(yi) != length(vi)) {
     stop("`yi` and `vi` must be the same length; got ", length(yi), " and ", length(vi))
   }
-  if (!is.character(method) || length(method) != 1) {
-    stop("`method` must be a single character string")
+  if (!is.character(method) || length(method) != 1L || is.na(method) ||
+      !nzchar(method)) {
+    stop("`method` must be a nonempty character scalar", call. = FALSE)
   }
   if (length(yi) < 3) {
     warning("Meta-analysis with fewer than 3 studies may be unreliable")
   }
-  tryCatch(
-    metafor::rma(yi = yi, vi = vi, method = method, ...),
-    error = function(e) {
-      if (grepl("singular", e$message)) {
-        message("Attempting fallback with FE model due to estimation issues")
-        metafor::rma(yi = yi, vi = vi, method = "FE", ...)
-      } else {
-        stop("Meta-analysis failed: ", e$message)
-      }
-    }
-  )
+  .pharma_meta_rma(yi = yi, vi = vi, method = method, ...)
+}
+
+# Keep the backend call separate so tests can exercise estimation failures
+# without depending on a particular optimizer's error text or version.
+.pharma_meta_rma <- function(...) {
+  metafor::rma(...)
 }
 
 #' Forest plot for a meta-analysis
