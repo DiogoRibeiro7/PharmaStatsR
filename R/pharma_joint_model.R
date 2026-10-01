@@ -15,7 +15,9 @@
 #' The longitudinal and survival fits must use the same subjects in the same
 #' order, and the time scales must agree. The wrapper does not verify this
 #' alignment; check it before fitting. See `JM::jointModel` for further model
-#' structure and estimation requirements.
+#' structure and estimation requirements. Attach `JM` with `library(JM)` before
+#' calling this helper: the backend uses functions from its attached
+#' dependencies that are not imported into its namespace.
 #'
 #' @return An object of class `jointModel`.
 #' @export
@@ -49,10 +51,21 @@ pharma_joint_model <- function(lmeFit, coxFit, timeVar, ...) {
     stop("timeVar not found in the longitudinal model's data", call. = FALSE)
   }
 
+  if (!.pharma_jm_attached()) {
+    stop(
+      "Attach JM and its dependencies with library(JM) before calling pharma_joint_model().",
+      call. = FALSE
+    )
+  }
+
   # All checks passed; delegate to JM::jointModel for the heavy lifting
   JM::jointModel(lmeFit, coxFit, timeVar = timeVar, ...)
 }
 
 .pharma_jm_available <- function() {
   requireNamespace("JM", quietly = TRUE)
+}
+
+.pharma_jm_attached <- function() {
+  "package:JM" %in% search() && "package:nlme" %in% search()
 }

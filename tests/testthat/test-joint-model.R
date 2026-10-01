@@ -28,10 +28,24 @@ test_that("joint model rejects unsupported fits and invalid time variables", {
   }
   expect_error(pharma_joint_model(longitudinal, survival, "visit"),
                "timeVar not found")
+
+  testthat::local_mocked_bindings(.pharma_jm_attached = function() FALSE)
+  expect_error(pharma_joint_model(longitudinal, survival, "obstime"),
+               "library\\(JM\\)")
 })
 
 test_that("joint model fits compatible nlme and Cox models", {
   skip_if_not_installed("JM")
+  attached_before <- search()
+  on.exit({
+    added <- search()[!search() %in% attached_before]
+    for (package in added[startsWith(added, "package:")]) {
+      if (package %in% search()) {
+        detach(package, character.only = TRUE)
+      }
+    }
+  }, add = TRUE)
+  suppressPackageStartupMessages(library(JM))
   data("aids", package = "JM", envir = environment())
   data("aids.id", package = "JM", envir = environment())
 

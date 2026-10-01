@@ -29,7 +29,9 @@ Requires the optional \strong{JM} package.
 The longitudinal and survival fits must use the same subjects in the same
 order, and the time scales must agree. The wrapper does not verify this
 alignment; check it before fitting. See \code{JM::jointModel} for further model
-structure and estimation requirements.
+structure and estimation requirements. Attach \code{JM} with \code{library(JM)} before
+calling this helper: the backend uses functions from its attached
+dependencies that are not imported into its namespace.
 }
 \examples{
 # Fit compatible longitudinal and survival models on matched data first.

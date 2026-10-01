@@ -8,6 +8,7 @@ required package dependencies.
 
 ```r
 install.packages("JM")
+library(JM)
 data("aids", package = "JM")
 data("aids.id", package = "JM")
 
@@ -29,7 +30,10 @@ The Cox fit must retain its design matrix with `x = TRUE`. The longitudinal
 fit must inherit from `nlme::lme`; `lme4::lmer` returns a different class and
 is not accepted by `JM::jointModel()`. The helper checks those requirements
 and that `timeVar` is a nonempty name in stored longitudinal data. It reports
-an installation hint if `JM` is missing.
+an installation hint if `JM` is missing. Attach `JM` with `library(JM)` before
+calling the helper. The backend uses functions from attached dependencies
+without importing them into its namespace; a namespace-only `JM::jointModel()`
+call fails to find `nlme::pdMatrix`.
 
 The two source models must have **the same subjects in the same order**, and
 the time scales must agree. Check the subject identifiers and records before
