@@ -43,9 +43,9 @@ test_that("hand-entered fixtures preserve their published designs", {
                c("subject", "treatment", "dose", "response", "outcome"))
   expect_identical(dim(pharma_sample), c(20L, 5L))
   expect_identical(pharma_sample$subject, 1:20)
-  expect_equal(unname(as.matrix(table(pharma_sample$treatment,
-                                      pharma_sample$dose))),
-               matrix(c(10L, 0L, 0L, 10L), nrow = 2L))
+  expect_identical(as.integer(table(pharma_sample$treatment,
+                                    pharma_sample$dose)),
+                   c(10L, 0L, 0L, 10L))
   expect_true(all(pharma_sample$outcome %in% 0:1))
 
   expect_named(pharma_repeated, c("subject", "condition", "response"))
