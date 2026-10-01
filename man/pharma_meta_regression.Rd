@@ -7,22 +7,34 @@
 pharma_meta_regression(yi, vi, mods, method = "REML", ...)
 }
 \arguments{
-  \item{yi}{Effect size estimates.}
-  \item{vi}{Effect size variances.}
-  \item{mods}{Moderator matrix or formula.}
-  \item{method}{Estimation method for random effects.}
-  \item{...}{Additional arguments passed to \code{metafor::rma}.}
+\item{yi}{Finite numeric vector of effect size estimates, one per study.}
+
+\item{vi}{Finite numeric vector of corresponding sampling variances, not
+standard errors.}
+
+\item{mods}{Numeric moderator matrix with one row per study and at least
+one column, or a one-sided moderator formula such as \code{~ dose}. Formula
+variables may be supplied with \code{data} through \code{...}.}
+
+\item{method}{Estimation method passed to \code{metafor::rma()}. The default
+"REML" fits a mixed-effects model; use "FE" explicitly for fixed effects.}
+
+\item{...}{Additional arguments passed to \code{metafor::rma}.}
 }
 \value{
-A \code{rma} object.
+An \code{rma} object for the requested model.
 }
 \description{
-Wrapper around \code{metafor::rma} to fit a meta-regression with moderators.
-Requires the 'metafor' package to be installed.
+Fit a fixed- or mixed-effects meta-regression using \code{metafor::rma()}.
+Requires the optional 'metafor' package. Estimation errors are propagated.
 }
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {
-mods <- cbind(size = c(100,120,80))
-pharma_meta_regression(yi=c(0.2,0.1,-0.1), vi=c(0.05,0.04,0.06), mods=mods)
+mods <- cbind(dose = 1:6)
+pharma_meta_regression(
+  yi = c(-0.3, 0.2, 0.4, 0.1, 0.7, 0.9),
+  vi = c(0.06, 0.04, 0.05, 0.03, 0.08, 0.04),
+  mods = mods, method = "FE"
+)
 }
 }
