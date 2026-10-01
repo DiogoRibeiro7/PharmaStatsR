@@ -2,24 +2,30 @@
 % Please edit documentation in R/pharma_multistate_model.R
 \name{pharma_multistate_model}
 \alias{pharma_multistate_model}
-\title{Fit a multistate illness-death model}
+\title{Estimate cumulative transition hazards from a multistate Cox model}
 \usage{
 pharma_multistate_model(coxFit, trans, ...)
 }
 \arguments{
-\item{coxFit}{A Cox model fitted on data prepared with `mstate::msprep`.}
+\item{coxFit}{A \code{survival::coxph()} model fitted on data prepared with
+\code{mstate::msprep()}, usually with \code{strata(trans)} and \code{method = "breslow"}.}
 
-\item{trans}{A transition matrix created by `mstate::transMat`.}
+\item{trans}{A transition matrix created by \code{mstate::transMat()} or a
+corresponding helper such as \code{mstate::trans.illdeath()}.}
 
-\item{...}{Additional arguments passed to `mstate::msfit`.}
+\item{...}{Arguments passed to \code{mstate::msfit()}. Supply \code{newdata} with one
+row per transition and a numeric \code{strata} column when the Cox model has
+covariates. \code{newdata} may be omitted only for a model with right-hand side
+\code{~ strata(trans)}.}
 }
 \value{
-An object of class `msfit`.
+An \code{msfit} object containing cumulative transition hazards.
 }
 \description{
-Wrapper around `mstate::msfit` for estimating transition-specific
-hazards in multistate analyses.
+Pass a prepared Cox fit and transition matrix to \code{mstate::msfit()}.
+The result contains cumulative transition hazards, not state probabilities.
 }
 \examples{
-# Fit a Cox model on data prepared with mstate::msprep first.
+# Prepare transition data with mstate::msprep(), fit a stratified Cox model,
+# then pass its transition matrix and any required newdata to this helper.
 }

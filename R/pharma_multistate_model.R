@@ -1,34 +1,43 @@
-#' Fit a multistate illness-death model
+#' Estimate cumulative transition hazards from a multistate Cox model
 #'
-#' Wrapper around `mstate::msfit` for estimating transition-specific
-#' hazards in multistate analyses.
+#' Pass a prepared Cox fit and transition matrix to `mstate::msfit()`.
+#' The result contains cumulative transition hazards, not state probabilities.
 #'
-#' @param coxFit A Cox model fitted on data prepared with `mstate::msprep`.
-#' @param trans A transition matrix created by `mstate::transMat`.
-#' @param ... Additional arguments passed to `mstate::msfit`.
+#' @param coxFit A `survival::coxph()` model fitted on data prepared with
+#'   `mstate::msprep()`, usually with `strata(trans)` and `method = "breslow"`.
+#' @param trans A transition matrix created by `mstate::transMat()` or a
+#'   corresponding helper such as `mstate::trans.illdeath()`.
+#' @param ... Arguments passed to `mstate::msfit()`. Supply `newdata` with one
+#'   row per transition and a numeric `strata` column when the Cox model has
+#'   covariates. `newdata` may be omitted only for a model with right-hand side
+#'   `~ strata(trans)`.
 #'
-#' @return An object of class `msfit`.
+#' @return An `msfit` object containing cumulative transition hazards.
 #' @export
 #'
 #' @examples
-#' # Fit a Cox model on data prepared with mstate::msprep first.
+#' # Prepare transition data with mstate::msprep(), fit a stratified Cox model,
+#' # then pass its transition matrix and any required newdata to this helper.
 pharma_multistate_model <- function(coxFit, trans, ...) {
-  # Validate inputs before calling into the mstate package
   if (!inherits(coxFit, "coxph")) {
-    stop("coxFit must be a 'coxph' object")
+    stop("coxFit must be a 'coxph' object", call. = FALSE)
   }
-  if (!requireNamespace("mstate", quietly = TRUE)) {
-    stop("Package 'mstate' is required for pharma_multistate_model()")
+  if (!.pharma_mstate_available()) {
+    stop(
+      "Optional package 'mstate' is required; install it with install.packages('mstate').",
+      call. = FALSE
+    )
   }
-  if (!inherits(trans, "matrix") && !inherits(trans, "transMat")) {
-    stop("trans must be a transition matrix produced by mstate::transMat")
+  if (!is.matrix(trans) || ncol(trans) != nrow(trans)) {
+    stop(
+      "trans must be a square transition matrix created by mstate::transMat()",
+      call. = FALSE
+    )
   }
 
-  # Basic validation of transition matrix dimensions
-  if (is.matrix(trans) && ncol(trans) != nrow(trans)) {
-    stop("trans must be a square transition matrix")
-  }
-
-  # All checks passed; delegate to mstate::msfit for model fitting
   mstate::msfit(coxFit, trans = trans, ...)
+}
+
+.pharma_mstate_available <- function() {
+  requireNamespace("mstate", quietly = TRUE)
 }
