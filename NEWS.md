@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add a scheduled and manual cross-platform R package check matrix, with required-dependency portability jobs and an Ubuntu all-Suggests backend job. Exercise workflow changes on pull requests, document dependency sets and skip policy, and keep the routine Ubuntu PR gate separate.
 - Validate meta-regression moderator shape and method inputs, exercise the optional `metafor` missing-backend path, and check fixed-effects coefficients against an independent weighted regression. Document study-level interpretation and a formula-based REML example.
 - Exercise the optional `mstate` backend with a prepared illness-death Cox model in CI and check its missing-package message independently. Document the required `newdata` profile for covariate models and clarify that `msfit` estimates cumulative transition hazards, not state probabilities.
 - Restrict `pharma_joint_model()` to the `nlme::lme` input accepted by `JM`, require `x = TRUE` on its Cox fit, and reject empty or missing time-variable names before fitting. The previously accepted `lmerMod` class was unsupported by the backend; refit the longitudinal model with `nlme::lme` before using this helper. Attach `JM` with `library(JM)` before calling the helper because its backend relies on attached `nlme` functions. Exercise a real `JM` fit in CI and document subject and time alignment.
