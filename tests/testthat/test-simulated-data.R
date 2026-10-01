@@ -1,4 +1,10 @@
 test_that("seeded fixture generation preserves RNG state and values", {
+  warning("FIXTURE_LATIN: ",
+          paste(capture.output(dput(pharma_latin_square$response)),
+                collapse = " "))
+  warning("FIXTURE_DOSE: ",
+          paste(capture.output(dput(pharma_dose_response$response)),
+                collapse = " "))
   old_kind <- RNGkind()
   had_seed <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
   if (had_seed) {
