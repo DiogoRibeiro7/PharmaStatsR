@@ -97,6 +97,7 @@ nav:
       - Competing risks: competing-risks.md
       - Kaplan–Meier and log-rank: kaplan-meier.md
       - Correlated outcomes with GEE: gee.md
+      - Joint longitudinal and survival models: joint-model.md
       - Audit log integrity: audit-log.md
       - Reporting and monitoring scope: claims-audit.md
       - Model diagnostics: model-diagnostics.md
