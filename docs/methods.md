@@ -22,7 +22,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Local audit log | [`pharma_audit_log()` and `pharma_audit_verify()`](audit-log.md) | `openssl` (optional); keyed CSV chain |
 | Model diagnostics | [`pharma_model_diagnostics()`](model-diagnostics.md) | Base R `lm` / `glm`; descriptive screening |
 | Longitudinal and correlated outcomes | `pharma_lmm()`, [`pharma_gee()`](gee.md) | `lme4`, `geepack` (optional) |
-| Meta-analysis | [`pharma_meta_analysis()`](meta-analysis.md), `pharma_network_meta_analysis()` | `metafor`, `netmeta` (optional) |
+| Meta-analysis | [`pharma_meta_analysis()`](meta-analysis.md), [`pharma_network_meta_analysis()`](network-meta-analysis.md) | `metafor`, `netmeta` (optional) |
 | Candidate model selection | [`pharma_ai_model_select()`](model-selection.md) | `caret` (optional); selected model engines may need other packages |
 | Python t-test bridge | [`pharma_scipy_ttest()`](scipy-bridge.md) | `reticulate` and Python `scipy.stats` (optional) |
 | Model estimate table exports | [`pharma_report_table()`](report-exports.md) | `broom` (required); `openxlsx`, `flextable`, and `officer` for files (optional) |

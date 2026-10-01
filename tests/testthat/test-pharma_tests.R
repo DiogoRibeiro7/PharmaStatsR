@@ -156,9 +156,12 @@ test_that("pharma_network_meta_analysis returns netmeta", {
     treat1 = c("A", "A", "B"),
     treat2 = c("B", "C", "C"),
     TE = c(0.2, 0.5, -0.1),
-    seTE = c(0.1, 0.2, 0.1)
+    seTE = c(0.1, 0.2, 0.1),
+    study = c("s1", "s2", "s3")
   )
-  res <- pharma_network_meta_analysis(TE, seTE, treat1, treat2, data = df)
+  res <- pharma_network_meta_analysis(TE, seTE, treat1, treat2,
+                                      data = df, studlab = df$study,
+                                      random = FALSE)
   expect_s3_class(res, "netmeta")
 })
 

@@ -78,6 +78,7 @@ nav:
       - Paired two-condition ANOVA: repeated-anova.md
       - Two-predictor response surface: response-surface.md
       - Meta-analysis model choice: meta-analysis.md
+      - Network meta-analysis inputs: network-meta-analysis.md
       - Candidate model selection: model-selection.md
       - Python SciPy t-test bridge: scipy-bridge.md
       - Model estimate table exports: report-exports.md

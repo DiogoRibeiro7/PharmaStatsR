@@ -55,6 +55,7 @@ jobs:
             any::cmprsk
             any::geepack
             any::metafor
+            any::netmeta
             any::caret
             any::reticulate
             any::mice
