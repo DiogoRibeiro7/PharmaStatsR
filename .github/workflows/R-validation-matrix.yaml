@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: r-validation-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   portability:
     name: ${{ matrix.config.os }} / R ${{ matrix.config.r }} / required
@@ -45,6 +49,7 @@ jobs:
             any::rmarkdown
       - uses: r-lib/actions/check-r-package@v2
         with:
+          args: 'c("--no-manual", "--as-cran")'
           build_args: 'c("--no-manual")'
       - name: Upload failed check results
         if: failure()
@@ -81,6 +86,7 @@ jobs:
           extra-packages: any::rcmdcheck
       - uses: r-lib/actions/check-r-package@v2
         with:
+          args: 'c("--no-manual", "--as-cran")'
           build_args: 'c("--no-manual")'
       - name: Upload failed check results
         if: failure()
