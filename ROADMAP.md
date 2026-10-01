@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (29 September 2026):** active development, version 0.1.62; not on CRAN. The current pull-request gates are an Ubuntu R-release package check and a strict MkDocs build for documentation changes. These gates establish that checked examples and tests run in those environments. They do not validate every statistical method or constitute a CRAN release check.
+**Status (1 October 2026):** active development, version 0.1.62; not on CRAN. The routine pull-request gates are an Ubuntu R-release package check and a strict MkDocs build for documentation changes. A separate weekly/manual matrix checks other platforms and R versions, plus an all-Suggests backend path; workflow changes also exercise that matrix on their PR. These checks establish that examples and tests run in those environments. They do not validate every statistical method or constitute a CRAN release check.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. It replaces the previous 12-week submission forecast. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below.
 

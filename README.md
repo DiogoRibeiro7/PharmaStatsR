@@ -47,7 +47,7 @@ For worked examples and assumptions, read the [documentation](https://diogoribei
 
 Run `./setup.sh` after installing R. It installs the test dependencies and executes the unit tests. Set `SKIP_R_INSTALL=1` to use an existing R library; missing required packages then cause a clear failure.
 
-Every pull request to `main` runs an Ubuntu R CMD check with the package's required dependencies and the test and vignette toolchain. Documentation changes also run a strict MkDocs build. Checks for optional statistical backends are exercised when those packages are installed. A full CRAN preparation check, including optional packages and additional platforms, remains work in progress.
+Every pull request to `main` runs an Ubuntu R-release package check with required dependencies and a selected set of optional backends. Documentation changes also run a strict MkDocs build. A separate [R validation matrix](.github/workflows/R-validation-matrix.yaml) runs weekly or on demand: macOS and Windows on R release, Ubuntu on R old release and devel with required dependencies, and Ubuntu on R release with every declared Suggested package and Python SciPy. Changes to the matrix workflow exercise it on the PR. Read [the check policy](https://diogoribeiro7.github.io/PharmaStatsR/development/#package-checks) for dependencies, skips, and failure handling. This matrix is not yet an `R CMD check --as-cran` release gate.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURITY.md](SECURITY.md) for private vulnerability reports.
 

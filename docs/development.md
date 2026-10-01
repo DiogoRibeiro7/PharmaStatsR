@@ -10,7 +10,17 @@ Install R, then from the repository root run:
 ./setup.sh
 ```
 
-The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. CI performs the package check on pull requests with required dependencies; optional backends need separate checks when installed.
+The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible.
+
+| Workflow | Trigger | Environment and dependencies |
+| --- | --- | --- |
+| [R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml) | Each PR and push to `main` | Ubuntu R release; hard dependencies, test/vignette tools, and the listed optional backends. SciPy is installed in Python 3.12. Other Suggested packages may be absent (`_R_CHECK_FORCE_SUGGESTS_=false`). |
+| [R validation matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-validation-matrix.yaml), portability | Mondays at 05:17 UTC, manual dispatch, and PRs that change the matrix workflow | macOS/Windows R release and Ubuntu R oldrel-1/devel; hard dependencies and test/vignette tools. Optional integrations may skip when their backends are absent. |
+| R validation matrix, optional backends | Same matrix triggers | Ubuntu R release with all `Imports` and `Suggests` installed (`_R_CHECK_FORCE_SUGGESTS_=true`), plus SciPy on Python 3.12. This installs the larger Stan toolchain, so the workflow has a 90-minute job limit. |
+
+`setup-r-dependencies@v2` caches installed packages between compatible runs; its job log records package versions. The Actions run page ties each result to a commit SHA and keeps step logs. Failed checks upload the `check/` directory when it exists. Use **Run workflow** on the matrix workflow and select the candidate branch before reviewing a release; record the resulting SHA and job results in issue #54 or the release candidate issue #58. Scheduled runs use the default branch.
+
+Use a platform-specific skip only for a feature that is genuinely unavailable on that platform, with a focused reason and issue link. A missing optional backend may use `skip_if_not_installed()`, but it must have a deterministic missing-package test. When a check appears flaky, rerun it once on the same SHA, preserve the logs, and investigate the cause before removing or weakening the assertion. A green matrix shows that the checked paths work in those environments; it is not a statistical validation or an `--as-cran` check.
 
 For numeric methods, include tests against an independently calculated or known result, boundary and invalid-input cases, and reproducible random examples.
 
