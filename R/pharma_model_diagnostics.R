@@ -23,7 +23,7 @@
 #' @export
 #'
 #' @examples
-#' fit <- lm(response ~ treatment + dose, data = pharma_sample)
+#' fit <- lm(response ~ treatment, data = pharma_sample)
 #' diagnostics <- pharma_model_diagnostics(fit)
 #' head(diagnostics)
 pharma_model_diagnostics <- function(model, threshold = 3,

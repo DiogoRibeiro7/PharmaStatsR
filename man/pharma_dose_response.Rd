@@ -6,16 +6,23 @@
 \format{
 A data frame with 30 rows and 3 variables:
 \describe{
-  \item{subject}{Subject identifier, with repeated doses per subject}
-  \item{dose}{Dose level}
-  \item{response}{Observed response}
+  \item{subject}{Integer subject identifier, 1 to 6}
+  \item{dose}{Numeric dose level, 0, 10, 20, 50, or 100 (unitless)}
+  \item{response}{Numeric simulated response (unitless)}
 }
 }
-\source{Simulated data.}
+\source{Generated in the package source with a fixed local RNG seed; no
+patient or experimental observations.}
 \description{
-A repeated-measures dataset generated from an Emax model for demonstrating
-nonlinear and mixed-effects dose-response fits.
+Six subjects observed once at each of five dose levels, generated with seed
+123 from an Emax mean, a subject-specific normal intercept (SD 0.15), and
+independent normal observation noise (SD 0.1). The mean is
+\eqn{1 + 4d/(20+d)} for dose \eqn{d}. No clinical units are assigned.
 }
+\details{Useful for nonlinear Emax and repeated-subject examples. Subject
+IDs are numeric; convert them to factors when a model requires categorical
+subject effects. The five levels of \code{dose} are not two independent inputs
+for a response-surface model.}
 \examples{
 head(pharma_dose_response)
 plot(pharma_dose_response$dose, pharma_dose_response$response)

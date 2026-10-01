@@ -1,5 +1,5 @@
 test_that("diagnostics match the fitted lm screening measures", {
-  fit <- stats::lm(response ~ treatment + dose, data = pharma_sample)
+  fit <- stats::lm(response ~ treatment, data = pharma_sample)
   result <- pharma_model_diagnostics(fit)
   expect_named(result, c("residual", "std_resid", "cook_d",
                          "leverage", "flag"))

@@ -1,17 +1,21 @@
-#' Example pharmaceutical dataset
+#' Simulated two-group example dataset
 #'
-#' A small simulated dataset included for demonstrating the statistical
-#' tests in PharmaStatsR.
+#' Hand-entered illustrative values for two groups of ten subjects each.
+#' Treatment A always has dose 1 and B always has dose 2, so treatment and dose
+#' are perfectly confounded. These are not clinical records.
 #'
 #' @format A data frame with 20 rows and 5 variables:
 #' \describe{
-#'   \item{subject}{Subject identifier}
-#'   \item{treatment}{Treatment group ("A" or "B")}
-#'   \item{dose}{Dose level (1 or 2)}
-#'   \item{response}{Numeric response}
-#'   \item{outcome}{Binary outcome}
+#'   \item{subject}{Integer subject identifier, 1 to 20}
+#'   \item{treatment}{Character group label, A or B}
+#'   \item{dose}{Numeric illustrative level, 1 or 2 (unitless)}
+#'   \item{response}{Numeric illustrative response (unitless)}
+#'   \item{outcome}{Arbitrary binary example label, 0 or 1; not a defined clinical event}
 #' }
-#' @source Simulated data.
+#' @source Hand-entered illustrative values in the package source.
+#' @details Use for simple group comparisons or row-level examples. The
+#'   treatment and dose effects cannot be estimated separately. The binary
+#'   outcome is an example label, without clinical event semantics.
 #' @examples
 #' data(pharma_sample)
 #' head(pharma_sample)
