@@ -57,6 +57,7 @@ jobs:
             any::metafor
             any::netmeta
             any::JM
+            any::mstate
             any::caret
             any::reticulate
             any::mice

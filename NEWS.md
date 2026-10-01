@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Exercise the optional `mstate` backend with a prepared illness-death Cox model in CI and check its missing-package message independently. Document the required `newdata` profile for covariate models and clarify that `msfit` estimates cumulative transition hazards, not state probabilities.
 - Restrict `pharma_joint_model()` to the `nlme::lme` input accepted by `JM`, require `x = TRUE` on its Cox fit, and reject empty or missing time-variable names before fitting. The previously accepted `lmerMod` class was unsupported by the backend; refit the longitudinal model with `nlme::lme` before using this helper. Attach `JM` with `library(JM)` before calling the helper because its backend relies on attached `nlme` functions. Exercise a real `JM` fit in CI and document subject and time alignment.
 - Exercise the optional `netmeta` backend in CI and test its missing-package error independently of the installed environment. Show explicit study labels in the network example and explain their role in identifying dependent comparisons from multi-arm studies.
 - Report a missing optional `mice` backend with an installation hint for imputation and pooled analysis; run both real `mice` paths in CI and compare pooled `lm`/`glm` results with direct `mice` analyses. Clarify that pooling alone is not a missing-not-at-random sensitivity analysis.
