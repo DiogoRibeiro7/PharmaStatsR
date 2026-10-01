@@ -9,8 +9,9 @@
   \item{treatment}{Treatment factor, levels A to D}
   \item{response}{Numeric simulated response (unitless)}
 }}
-\source{Fixed design and seeded normal draws in the package source; no
-patient or experimental observations.}
+\source{Responses generated with seed 123 by
+\code{data-raw/generate-fixture-responses.R} and stored as fixed values in
+the package source; no patient or experimental observations.}
 \description{A complete 4 by 4 Latin square: each treatment occurs once in
 every row and column. Responses are independent normal draws with mean 5 and
 SD 0.3, using seed 123. No treatment effect is built into these responses.}

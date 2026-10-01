@@ -1,47 +1,9 @@
-test_that("seeded fixture generation preserves RNG state and values", {
-  warning("FIXTURE_LATIN: ",
-          paste(capture.output(dput(pharma_latin_square$response)),
-                collapse = " "))
-  warning("FIXTURE_DOSE: ",
-          paste(capture.output(dput(pharma_dose_response$response)),
-                collapse = " "))
-  old_kind <- RNGkind()
-  had_seed <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
-  if (had_seed) {
-    old_seed <- get(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
-  }
-  on.exit({
-    do.call(RNGkind, as.list(old_kind))
-    if (had_seed) {
-      assign(".Random.seed", old_seed, envir = .GlobalEnv)
-    } else if (exists(".Random.seed", envir = .GlobalEnv,
-                      inherits = FALSE)) {
-      rm(".Random.seed", envir = .GlobalEnv)
-    }
-  })
-
-  RNGkind("L'Ecuyer-CMRG", normal.kind = "Box-Muller")
-  set.seed(987)
-  before <- get(".Random.seed", envir = .GlobalEnv)
-  kind <- RNGkind()
-  expect_equal(PharmaStatsR:::.pharma_fixture_seed(123, function() rnorm(1)),
-               -0.5604756, tolerance = 1e-6)
-  expect_identical(RNGkind(), kind)
-  expect_identical(get(".Random.seed", envir = .GlobalEnv), before)
-  expect_error(PharmaStatsR:::.pharma_fixture_seed(123,
-                 function() stop("fixture failed")), "fixture failed")
-  expect_identical(RNGkind(), kind)
-  expect_identical(get(".Random.seed", envir = .GlobalEnv), before)
-
-  rm(".Random.seed", envir = .GlobalEnv)
-  PharmaStatsR:::.pharma_fixture_seed(123, function() rnorm(1))
-  expect_false(exists(".Random.seed", envir = .GlobalEnv,
-                      inherits = FALSE))
-  expect_identical(RNGkind(), kind)
-
+test_that("stored response values match the seeded reference", {
   expect_equal(round(pharma_latin_square$response[1:3], 6),
                c(4.831857, 4.930947, 5.467612))
   expect_equal(round(pharma_dose_response$response[1], 6), 0.962020)
+  expect_equal(round(tail(pharma_latin_square$response, 1), 6), 5.536074)
+  expect_equal(round(tail(pharma_dose_response$response, 1), 6), 4.659457)
 })
 
 test_that("hand-entered fixtures preserve their published designs", {
