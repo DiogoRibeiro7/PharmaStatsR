@@ -23,3 +23,34 @@ Here `vi` contains **sampling variances**, not standard errors. For the FE fit, 
 - The wrapper does not verify that effect sizes share a measure, that studies are independent, or that heterogeneity assumptions suit the evidence. Examine the input effect-size definitions and model diagnostics for a real synthesis. In `metafor`, "FE" and "EE" can yield identical numerical estimates but have different interpretations; specify the intended model in the analysis plan.
 
 Earlier calls that printed an FE fallback message after a singular REML error returned a different model from the one requested. Recheck those results and rerun an explicitly chosen method. See [limitations](limitations.md) and the [method inventory](method-inventory.md) for the package's review scope.
+
+## Moderator models
+
+`pharma_meta_regression()` fits a meta-regression with `metafor::rma()`.
+Pass a numeric moderator matrix with one row per effect size, or a one-sided
+formula with its study-level variables in `data`. The wrapper checks matrix
+shape and finite values, but it cannot establish whether study outcomes and
+moderators are correctly aligned.
+
+```r
+studies <- data.frame(dose = 1:6)
+yi <- c(-0.3, 0.2, 0.4, 0.1, 0.7, 0.9)
+vi <- c(0.06, 0.04, 0.05, 0.03, 0.08, 0.04)
+
+mixed_fit <- pharma_meta_regression(yi, vi, mods = ~ dose, data = studies)
+fixed_fit <- pharma_meta_regression(yi, vi, mods = ~ dose,
+                                    data = studies, method = "FE")
+summary(mixed_fit)
+```
+
+The default `method = "REML"` estimates residual between-study heterogeneity;
+`method = "FE"` fits a fixed-effects moderator model. With the default
+intercept and inverse-variance weights, the FE coefficients solve
+\(\hat\beta=(X^\top W X)^{-1}X^\top W y\), where \(W\) has diagonal entries
+\(1/v_i\). The [tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-meta-regression.R)
+check this result independently and compare the formula path to `metafor`.
+Coefficients describe study-level associations under the chosen model. They
+do not identify an individual-level dose effect or a causal relationship;
+check confounding, outcome definitions, residual heterogeneity, and the
+limited number of studies before interpretation. The backend error is returned
+if the requested model cannot be fitted.

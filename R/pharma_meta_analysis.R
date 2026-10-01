@@ -112,30 +112,34 @@ pharma_funnel_plot <- function(model, ...) {
 
 #' Meta-regression
 #'
-#' Wrapper around `metafor::rma` to fit a meta-regression with moderators.
-#' Requires the 'metafor' package.
+#' Fit a fixed- or mixed-effects meta-regression using `metafor::rma()`.
+#' Requires the optional 'metafor' package. Estimation errors are propagated.
 #'
-#' @param yi Effect size estimates.
-#' @param vi Effect size variances.
-#' @param mods Moderator matrix or formula.
-#' @param method Estimation method for random effects (default "REML").
+#' @param yi Finite numeric vector of effect size estimates, one per study.
+#' @param vi Finite numeric vector of corresponding sampling variances, not
+#'   standard errors.
+#' @param mods Numeric moderator matrix with one row per study and at least
+#'   one column, or a one-sided moderator formula such as `~ dose`. Formula
+#'   variables may be supplied with `data` through `...`.
+#' @param method Estimation method passed to `metafor::rma()`. The default
+#'   "REML" fits a mixed-effects model; use "FE" explicitly for fixed effects.
 #' @param ... Additional arguments passed to [metafor::rma].
 #'
-#' @return A `rma` object.
+#' @return An `rma` object for the requested model.
 #' @export
 #'
 #' @examples
 #' if (requireNamespace("metafor", quietly = TRUE)) {
-#' mods <- cbind(size = c(100, 120, 80))
+#' mods <- cbind(dose = 1:6)
 #' pharma_meta_regression(
-#'   yi = c(0.2, 0.1, -0.1),
-#'   vi = c(0.05, 0.04, 0.06),
-#'   mods = mods
+#'   yi = c(-0.3, 0.2, 0.4, 0.1, 0.7, 0.9),
+#'   vi = c(0.06, 0.04, 0.05, 0.03, 0.08, 0.04),
+#'   mods = mods, method = "FE"
 #' )
 #' }
 
 pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
-  if (!requireNamespace("metafor", quietly = TRUE)) {
+  if (!.pharma_metafor_available()) {
     stop(
       "Package 'metafor' is required for pharma_meta_regression().\n",
       "Please install it with install.packages('metafor')",
@@ -145,15 +149,32 @@ pharma_meta_regression <- function(yi, vi, mods, method = "REML", ...) {
   check_numeric_vector(yi, "yi")
   check_numeric_vector(vi, "vi")
   if (length(yi) != length(vi)) {
-    stop("`yi` and `vi` must be the same length; got ", length(yi), " and ", length(vi))
+    stop(
+      "`yi` and `vi` must be the same length; got ", length(yi),
+      " and ", length(vi), call. = FALSE
+    )
   }
-  if (!(is.matrix(mods) || inherits(mods, "formula"))) {
-    stop("`mods` must be a matrix or formula")
+  if (is.matrix(mods)) {
+    # Matrix rows must align with the original effect-size vectors.
+    if (!is.numeric(mods) || nrow(mods) != length(yi) ||
+        ncol(mods) < 1L || anyNA(mods) || !all(is.finite(mods))) {
+      stop(
+        "`mods` must be a finite numeric matrix with one row per effect size and at least one column",
+        call. = FALSE
+      )
+    }
+  } else if (!inherits(mods, "formula") || length(mods) != 2L) {
+    stop("`mods` must be a numeric matrix or a one-sided formula", call. = FALSE)
   }
-  if (!is.character(method) || length(method) != 1) {
-    stop("`method` must be a single character string")
+  if (!is.character(method) || length(method) != 1L || is.na(method) ||
+      !nzchar(method)) {
+    stop("`method` must be a nonempty character scalar", call. = FALSE)
   }
   metafor::rma(yi = yi, vi = vi, mods = mods, method = method, ...)
+}
+
+.pharma_metafor_available <- function() {
+  requireNamespace("metafor", quietly = TRUE)
 }
 
 #' Network meta-analysis
