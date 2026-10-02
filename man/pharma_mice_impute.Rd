@@ -7,9 +7,11 @@
 pharma_mice_impute(data, m = 5, ...)
 }
 \arguments{
-  \item{data}{A data frame with missing values.}
-  \item{m}{Number of imputations to perform.}
-  \item{...}{Additional arguments passed to \code{mice::mice}.}
+\item{data}{A data frame with missing values.}
+
+\item{m}{Number of imputations to perform. Defaults to 5.}
+
+\item{...}{Additional arguments passed to \code{mice::mice}.}
 }
 \value{
 A \code{mids} object from the \strong{mice} package.

@@ -23,6 +23,7 @@
 #' @examples
 #' # Comprehensive example showing a complete analysis
 #' # 1. Data preparation
+#' set.seed(42)
 #' grp_a <- rnorm(20, mean = 5, sd = 1)
 #' grp_b <- rnorm(20, mean = 5.5, sd = 1)
 #'

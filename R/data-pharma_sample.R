@@ -16,8 +16,10 @@
 #' @details Use for simple group comparisons or row-level examples. The
 #'   treatment and dose effects cannot be estimated separately. The binary
 #'   outcome is an example label, without clinical event semantics.
+#' @docType data
+#' @keywords datasets
+#' @export
 #' @examples
-#' data(pharma_sample)
 #' head(pharma_sample)
 pharma_sample <- data.frame(
   subject = 1:20,

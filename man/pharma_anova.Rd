@@ -28,7 +28,10 @@ It rejects numeric predictors, multiple terms, interactions, and formulas
 without an intercept. Missing model values must be handled before fitting.
 }
 \examples{
+# Basic usage
 pharma_anova(response ~ treatment, data = pharma_sample)
+
+# Complete workflow with post-hoc tests
 model <- pharma_anova(response ~ treatment, data = pharma_sample)
 summary(model)
 TukeyHSD(model)

@@ -10,15 +10,15 @@ check_ich_columns(data, required = c("subject", "treatment", "dose"))
 \item{data}{A data frame to check.}
 
 \item{required}{A nonempty character vector of unique, nonblank column
-names. Defaults to `c("subject", "treatment", "dose")`.}
+names. Defaults to \code{c("subject", "treatment", "dose")}.}
 }
 \value{
-`TRUE` if every required column exists; otherwise an error.
+\code{TRUE} if every required column exists; otherwise an error.
 }
 \description{
 This historical function name is kept for existing scripts. It only checks
 column names and does not determine ICH or other regulatory compliance.
-For new code, use `pharma_check_columns()`.
+For new code, use \code{pharma_check_columns()}.
 }
 \examples{
 check_ich_columns(pharma_sample)

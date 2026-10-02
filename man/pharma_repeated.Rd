@@ -7,9 +7,9 @@
 \format{
 A data frame with 20 rows and 3 variables:
 \describe{
-  \item{subject}{Integer subject identifier, 1 to 10}
-  \item{condition}{Character condition label, A or B}
-  \item{response}{Numeric illustrative response (unitless)}
+\item{subject}{Integer subject identifier, 1 to 10}
+\item{condition}{Character condition label, A or B}
+\item{response}{Numeric illustrative response (unitless)}
 }
 }
 \source{
@@ -24,7 +24,12 @@ Simulated repeated measures dataset
 \details{
 Ten subjects with one hand-entered response for each of conditions A and B.
 Rows are ordered as a pair of conditions within each subject. These are not
-clinical records. Use for paired or repeated-condition examples. Convert both
+clinical records.
+
+Use for paired or repeated-condition examples. Convert both
 subject and condition to factors for \code{pharma_repeated_anova()}.
+}
+\examples{
+head(pharma_repeated)
 }
 \keyword{datasets}

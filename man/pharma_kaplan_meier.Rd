@@ -23,7 +23,7 @@ Use \code{~ 1} for a single curve with \code{log_rank = FALSE}.}
 \item{log_rank}{One nonmissing logical value. If \code{TRUE}, return a
 standard log-rank comparison along with the curves.}
 
-\item{...}{Named curve-only options passed to \code{survival::survfit()},
+\item{...}{Named curve-only options passed to \code{\link[survival:survfit]{survival::survfit()}},
 such as \code{conf.type} or \code{conf.int}. With \code{log_rank = TRUE}, options
 changing the observations or estimator, such as \code{weights}, are rejected.}
 
@@ -32,7 +32,7 @@ logical vector with one nonmissing element per input row. It is applied
 before both the curve and the test.}
 
 \item{na.action}{Missing-value handling function shared by the curve
-and test; defaults to \code{stats::na.omit()}.}
+and test; defaults to \code{\link[stats:na.omit]{stats::na.omit()}}.}
 
 \item{timefix}{One nonmissing logical value controlling correction of
 near-tied event times for the curve. With \code{log_rank = TRUE}, only

@@ -11,8 +11,7 @@ pharma_generate_sap(
   objectives = "Describe the primary and secondary objectives of the study.",
   endpoints = "List the primary and secondary endpoints.",
   populations = "Define analysis populations such as ITT and safety sets.",
-  methods =
-    "Describe the methods, including multiplicity and interim analyses.",
+  methods = "Describe the methods, including multiplicity and interim analyses.",
   criteria = "Specify key inclusion and exclusion criteria.",
   software = "Specify the software packages and versions that will be used.",
   extra_sections = NULL,
@@ -22,7 +21,7 @@ pharma_generate_sap(
 }
 \arguments{
 \item{path}{Character string. Optional output file path to save the
-generated Markdown. If `NULL`, the function returns the text instead
+generated Markdown. If \code{NULL}, the function returns the text instead
 of writing to disk.}
 
 \item{title}{Character string with the study title. Defaults to
@@ -51,8 +50,8 @@ currently ignored; inspect the returned sections before using the file.}
 }
 \value{
 A character vector containing the SAP in Markdown format. If
-  `path` is provided, the text is invisibly returned after being written
-  to that location.
+\code{path} is provided, the text is invisibly returned after being written
+to that location.
 }
 \description{
 Creates a basic Markdown template for a statistical analysis plan. The

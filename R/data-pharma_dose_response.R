@@ -18,6 +18,9 @@
 #'   IDs are numeric; convert them to factors when a model requires categorical
 #'   subject effects. Dose is a single continuous input with five ordered
 #'   levels; these data do not support a multivariate response surface.
+#' @docType data
+#' @keywords datasets
+#' @export
 #' @examples
 #' head(pharma_dose_response)
 #' plot(pharma_dose_response$dose, pharma_dose_response$response)

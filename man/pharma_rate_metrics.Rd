@@ -31,12 +31,12 @@ Newcombe interval combining Wilson score intervals without continuity
 correction. The risk ratio uses a log-scale interval after adding 0.5 to
 each cell of the two-by-two table.
 }
+\examples{
+pharma_rate_metrics(10, 100, 15, 110)
+pharma_rate_metrics(0, 12, 0, 15)
+}
 \references{
 Newcombe RG (1998). Interval estimation for the difference between
 independent proportions: comparison of eleven methods. Statistics in
 Medicine 17:873-890. \url{https://pubmed.ncbi.nlm.nih.gov/9595617/}
-}
-\examples{
-pharma_rate_metrics(10, 100, 15, 110)
-pharma_rate_metrics(0, 12, 0, 15)
 }

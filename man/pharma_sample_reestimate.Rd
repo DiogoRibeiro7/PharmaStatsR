@@ -4,7 +4,13 @@
 \alias{pharma_sample_reestimate}
 \title{Approximate total sample size for a balanced two-arm comparison}
 \usage{
-pharma_sample_reestimate(current_n, effect, variance, target_power = 0.8, alpha = 0.05)
+pharma_sample_reestimate(
+  current_n,
+  effect,
+  variance,
+  target_power = 0.8,
+  alpha = 0.05
+)
 }
 \arguments{
 \item{current_n}{Current or already planned total sample size; a positive
@@ -31,26 +37,26 @@ adjustment is returned.
 Calculate a planning sample size for a two-sided comparison of independent
 normal means with equal allocation and common per-person variance. The
 result is rounded to complete, balanced groups and is never below
-`current_n`. This is unconditional normal-approximation power, not a
+\code{current_n}. This is unconditional normal-approximation power, not a
 conditional-power calculation or a calibrated interim adaptation rule.
 }
 \details{
 For two equal groups, the unrounded per-arm target is twice the common
 variance times the square of the sum of the upper two-sided alpha and
 target-power normal quantiles, divided by the squared mean difference.
-If `effect` was estimated from unblinded interim outcomes, using this
+If \code{effect} was estimated from unblinded interim outcomes, using this
 value to change an ongoing trial may alter its type I error rate. The
 sample size and final testing rule require a pre-specified adaptive design
 and independent statistical review.
+}
+\examples{
+pharma_sample_reestimate(50, effect = 0.5, variance = 1)
+pharma_sample_reestimate(51, effect = -1, variance = 4,
+                         target_power = 0.9, alpha = 0.025)
 }
 \references{
 Graf AC, Bauer P (2011). Maximum inflation of the type 1 error rate
 when sample size and allocation rate are adapted in a pre-planned
 interim look. Statistics in Medicine 30:1637-1647.
 \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC4836563/}
-}
-\examples{
-pharma_sample_reestimate(50, effect = 0.5, variance = 1)
-pharma_sample_reestimate(51, effect = -1, variance = 4,
-                         target_power = 0.9, alpha = 0.025)
 }

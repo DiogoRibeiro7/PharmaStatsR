@@ -17,11 +17,11 @@ pharma_scipy_ttest(x, y, equal_var = TRUE)
 A list with the test statistic and p-value.
 }
 \description{
-Uses `reticulate` to call `scipy.stats.ttest_ind` for performing a
+Uses \code{reticulate} to call \code{scipy.stats.ttest_ind} for performing a
 two-sample t-test. This demonstrates integration with Python from R.
-The optional R package `reticulate` and the Python module `scipy.stats`
+The optional R package \code{reticulate} and the Python module \code{scipy.stats}
 must be available. A missing backend errors rather than running an R test.
-With `equal_var = TRUE` SciPy uses the pooled-variance test; `FALSE`
+With \code{equal_var = TRUE} SciPy uses the pooled-variance test; \code{FALSE}
 requests Welch's test.
 }
 \examples{

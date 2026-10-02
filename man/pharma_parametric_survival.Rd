@@ -7,19 +7,19 @@
 pharma_parametric_survival(formula, data, dist = "weibull", ...)
 }
 \arguments{
-\item{formula}{A model formula of the form `Surv(time, status) ~ predictors`.}
+\item{formula}{A model formula of the form \code{Surv(time, status) ~ predictors}.}
 
 \item{data}{A data frame containing the variables used in the model.}
 
 \item{dist}{Distribution to use. Defaults to "weibull".}
 
-\item{...}{Additional arguments passed to `survival::survreg`.}
+\item{...}{Additional arguments passed to \code{survival::survreg}.}
 }
 \value{
-A `survreg` object.
+A \code{survreg} object.
 }
 \description{
-Convenience wrapper around `survival::survreg` for parametric time-to-event analyses.
+Convenience wrapper around \code{survival::survreg} for parametric time-to-event analyses.
 }
 \examples{
 pharma_parametric_survival(survival::Surv(time, status) ~ treatment,

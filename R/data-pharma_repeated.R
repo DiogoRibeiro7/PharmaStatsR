@@ -15,8 +15,10 @@
 #' @source Hand-entered illustrative values in the package source.
 #' @details Use for paired or repeated-condition examples. Convert both
 #'   subject and condition to factors for \code{pharma_repeated_anova()}.
+#' @docType data
+#' @keywords datasets
+#' @export
 #' @examples
-#' data(pharma_repeated)
 #' head(pharma_repeated)
 pharma_repeated <- data.frame(
   subject = rep(1:10, each = 2),

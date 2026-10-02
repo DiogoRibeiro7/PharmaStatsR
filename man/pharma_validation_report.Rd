@@ -17,17 +17,17 @@ pharma_validation_report(
 The description is recorded, not assessed.}
 
 \item{required}{A nonempty character vector of unique, nonblank column
-names. Defaults to `c("subject", "treatment", "dose", "response")`.}
+names. Defaults to \code{c("subject", "treatment", "dose", "response")}.}
 }
 \value{
-A list with `estimand`, `n`, `required_columns`, and
-`columns_present = TRUE`. Missing columns cause an error.
+A list with \code{estimand}, \code{n}, \code{required_columns}, and
+\code{columns_present = TRUE}. Missing columns cause an error.
 }
 \description{
 This historical function name is kept for existing scripts. It returns
-the same column-presence report as `pharma_column_report()`, not a
+the same column-presence report as \code{pharma_column_report()}, not a
 regulatory validation or an ICH E9(R1) compliance decision. The old
-`compliant` field has been removed because column presence alone cannot
+\code{compliant} field has been removed because column presence alone cannot
 justify that conclusion.
 }
 \examples{

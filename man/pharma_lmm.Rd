@@ -7,22 +7,23 @@
 pharma_lmm(formula, data, ...)
 }
 \arguments{
-\item{formula}{Model formula including random effects, e.g., `response ~ treatment + (1|subject)`}
+\item{formula}{Model formula including random effects, e.g.,
+\code{response ~ treatment + (1|subject)}.}
 
 \item{data}{A data frame containing variables referenced in the formula.}
 
-\item{...}{Additional arguments passed to `lme4::lmer`.}
+\item{...}{Additional arguments passed to \code{lme4::lmer}.}
 }
 \value{
-An `lmerMod` object.
+An \code{lmerMod} object.
 }
 \description{
-Provides a wrapper around `lme4::lmer` for mixed-effects modeling. The
-function validates inputs and checks that `lme4` is installed before
-fitting the model.
+Provides a wrapper around \code{lme4::lmer} for mixed-effects modeling. The
+function validates its inputs and ensures that \code{lme4} is installed
+before fitting the model.
 }
 \examples{
 if (requireNamespace("lme4", quietly = TRUE)) {
-pharma_lmm(response ~ condition + (1|subject), data = pharma_repeated)
+pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
 }
 }

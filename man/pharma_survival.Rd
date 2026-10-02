@@ -7,10 +7,10 @@
 \format{
 A data frame with 30 rows and 4 variables:
 \describe{
-  \item{subject}{Integer subject identifier, 1 to 30}
-  \item{time}{Positive numeric follow-up time (unitless)}
-  \item{status}{Numeric status, 1 = unspecified example event, 0 = censored}
-  \item{treatment}{Character group label, A or B}
+\item{subject}{Integer subject identifier, 1 to 30}
+\item{time}{Positive numeric follow-up time (unitless)}
+\item{status}{Numeric status, 1 = unspecified example event, 0 = censored}
+\item{treatment}{Character group label, A or B}
 }
 }
 \source{
@@ -24,12 +24,13 @@ Simulated survival dataset used to illustrate survival
 functions in PharmaStatsR.
 }
 \details{
-Hand-entered illustrative follow-up and status values for 30 unique subjects,
-with 15 in each treatment group. These are not clinical records. Use for
-time-to-event examples with right censoring. No time unit, event definition,
-or treatment effect is specified by this fixture.
+Hand-entered illustrative follow-up and status values for 30 unique
+subjects, with 15 in each treatment group. These are not clinical records.
+
+Use for time-to-event examples with right censoring. No time unit,
+event definition, or treatment effect is specified by this fixture.
 }
-\keyword{datasets}
 \examples{
 summary(pharma_survival)
 }
+\keyword{datasets}

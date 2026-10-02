@@ -4,15 +4,22 @@
 \alias{pharma_sigmoid_emax}
 \title{Fit a sigmoid Emax model}
 \usage{
-pharma_sigmoid_emax(dose, response,
-  start = list(e0 = min(response), emax = max(response) - min(response),
-    ed50 = stats::median(dose), h = 1), ...)
+pharma_sigmoid_emax(
+  dose,
+  response,
+  start = list(e0 = min(response), emax = max(response) - min(response), ed50 =
+    stats::median(dose), h = 1),
+  ...
+)
 }
 \arguments{
-  \item{dose}{Numeric vector of doses.}
-  \item{response}{Numeric vector of responses.}
-  \item{start}{Named list of starting values for parameters.}
-  \item{...}{Additional arguments passed to \code{nls}.}
+\item{dose}{Numeric vector of doses.}
+
+\item{response}{Numeric vector of responses.}
+
+\item{start}{Named list of starting values for \code{e0}, \code{emax},\code{ed50}, and \code{h}.}
+
+\item{...}{Additional arguments passed to \code{nls}.}
 }
 \value{
 An \code{nls} object.
@@ -21,5 +28,8 @@ An \code{nls} object.
 Wrapper around \code{nls} for a four-parameter sigmoid Emax (Hill) model.
 }
 \examples{
-pharma_sigmoid_emax(pharma_dose_response$dose, pharma_dose_response$response)
+pharma_sigmoid_emax(
+  pharma_dose_response$dose,
+  pharma_dose_response$response
+)
 }

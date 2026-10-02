@@ -8,14 +8,15 @@ with_pharma_config(options, expr)
 }
 \arguments{
 \item{options}{Named list of options to set.}
+
 \item{expr}{Expression to evaluate while the options are active.}
 }
 \value{
 The result of \code{expr}.
 }
 \description{
-\code{with_pharma_config()} sets package options for the duration of
-\code{expr} and restores the previous values on exit.
+\code{with_pharma_config()} sets package options for the duration of \code{expr} and
+restores the previous values on exit.
 }
 \examples{
 with_pharma_config(list(log_level = "DEBUG"), {

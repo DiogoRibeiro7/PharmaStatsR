@@ -8,19 +8,25 @@ pharma_response_surface(x1, x2, y, ...)
 }
 \arguments{
 \item{x1}{A finite numeric vector for the first predictor.}
+
 \item{x2}{A finite numeric vector for the second predictor.}
+
 \item{y}{A finite numeric response vector of the same length.}
+
 \item{...}{Additional named arguments passed to \code{stats::lm}.
 \code{subset}, \code{weights}, \code{na.action}, \code{offset}, \code{method}, and \code{singular.ok}
 are not supported because they can change the checked design or fit.}
 }
-\value{An \code{lm} object with six estimable coefficients and positive
-residual degrees of freedom. Inspect \code{summary()} for uncertainty.}
-\description{Fit an ordinary least-squares surface with linear, squared, and interaction
-terms for two numeric predictors. All six coefficients must be estimable.}
+\value{
+An \code{lm} object with six estimable coefficients and positive
+residual degrees of freedom. Inspect \code{summary()} for uncertainty.
+}
+\description{
+Fit an ordinary least-squares surface with linear, squared, and interaction
+terms for two numeric predictors. All six coefficients must be estimable.
+}
 \details{
-The model is \code{y = beta0 + beta1*x1 + beta2*x2 + beta11*x1^2 +
-beta22*x2^2 + beta12*x1*x2 + error}. At least seven complete observations
+The model is \code{y = beta0 + beta1*x1 + beta2*x2 + beta11*x1^2 + beta22*x2^2 + beta12*x1*x2 + error}. At least seven complete observations
 and a full-rank six-column design matrix are required. Replication at
 design points is allowed but not required; without replication, residual
 error combines pure error and possible lack of fit. Inference assumes

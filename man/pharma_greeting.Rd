@@ -12,3 +12,6 @@ A character string with the greeting message.
 \description{
 This function returns a friendly greeting for PharmaStatsR users.
 }
+\examples{
+pharma_greeting()
+}

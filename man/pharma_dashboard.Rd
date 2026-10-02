@@ -7,19 +7,19 @@
 pharma_dashboard(launch = interactive())
 }
 \arguments{
-\item{launch}{Logical. If `TRUE`, the dashboard is launched using
-`rmarkdown::run()`. If `FALSE`, the function simply returns the path to the
-dashboard file. Defaults to `interactive()` so that tests can retrieve the
+\item{launch}{Logical. If \code{TRUE}, the dashboard is launched using
+\code{rmarkdown::run()}. If \code{FALSE}, the function simply returns the path to the
+dashboard file. Defaults to \code{interactive()} so that tests can retrieve the
 path without launching the app.}
 }
 \value{
 Invisibly returns the path to the dashboard Rmd file.
 }
 \description{
-Starts a Shiny dashboard built with `flexdashboard` to explore example
+Starts a Shiny dashboard built with \code{flexdashboard} to explore example
 datasets included in the package. The dashboard is rendered from an R Markdown
-file shipped in the package. Launching it requires the optional `rmarkdown`,
-`flexdashboard`, and `shiny` packages; retrieving its path does not.
+file shipped in the package. Launching it requires the optional \code{rmarkdown},
+\code{flexdashboard}, and \code{shiny} packages; retrieving its path does not.
 }
 \examples{
 path <- pharma_dashboard(launch = FALSE)

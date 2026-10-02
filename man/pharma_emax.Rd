@@ -4,15 +4,23 @@
 \alias{pharma_emax}
 \title{Fit an Emax dose-response model}
 \usage{
-pharma_emax(dose, response,
-  start = list(e0 = min(response), emax = max(response) - min(response),
-    ed50 = stats::median(dose)), ...)
+pharma_emax(
+  dose,
+  response,
+  start = list(e0 = min(response), emax = max(response) - min(response), ed50 =
+    stats::median(dose)),
+  ...
+)
 }
 \arguments{
-  \item{dose}{Numeric vector of doses.}
-  \item{response}{Numeric vector of responses.}
-  \item{start}{Named list of starting values for parameters.}
-  \item{...}{Additional arguments passed to \code{nls}.}
+\item{dose}{Numeric vector of doses.}
+
+\item{response}{Numeric vector of responses.}
+
+\item{start}{Named list of starting values for \code{e0}, \code{emax}, and \code{ed50}.
+Defaults to basic guesses.}
+
+\item{...}{Additional arguments passed to \code{nls}.}
 }
 \value{
 An \code{nls} object.
@@ -21,5 +29,8 @@ An \code{nls} object.
 Convenience wrapper around \code{nls} for fitting a standard Emax model.
 }
 \examples{
-pharma_emax(pharma_dose_response$dose, pharma_dose_response$response)
+pharma_emax(
+  pharma_dose_response$dose,
+  pharma_dose_response$response
+)
 }

@@ -7,11 +7,14 @@
 pharma_sensitivity_analysis(mids_obj, formula, family = NULL, ...)
 }
 \arguments{
-  \item{mids_obj}{A \code{mids} object produced by \code{pharma_mice_impute()} or
-  \code{mice::mice}.}
-  \item{formula}{Model formula to fit.}
-  \item{family}{Optional glm family. If \code{NULL}, a linear model is used.}
-  \item{...}{Additional arguments passed to \code{glm} or \code{lm}.}
+\item{mids_obj}{A \code{mids} object produced by \code{\link[=pharma_mice_impute]{pharma_mice_impute()}} or
+\code{mice::mice}.}
+
+\item{formula}{Model formula to fit.}
+
+\item{family}{Optional glm family. If \code{NULL}, a linear model is fitted.}
+
+\item{...}{Additional arguments passed to the model fitting function.}
 }
 \value{
 A \code{mipo} pooled model from \code{mice::pool}.

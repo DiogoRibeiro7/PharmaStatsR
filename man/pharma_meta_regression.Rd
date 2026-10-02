@@ -19,7 +19,7 @@ variables may be supplied with \code{data} through \code{...}.}
 \item{method}{Estimation method passed to \code{metafor::rma()}. The default
 "REML" fits a mixed-effects model; use "FE" explicitly for fixed effects.}
 
-\item{...}{Additional arguments passed to \code{metafor::rma}.}
+\item{...}{Additional arguments passed to \link[metafor:rma]{metafor::rma}.}
 }
 \value{
 An \code{rma} object for the requested model.

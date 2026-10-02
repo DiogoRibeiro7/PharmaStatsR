@@ -10,7 +10,7 @@ Install R, then from the repository root run:
 ./setup.sh
 ```
 
-The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible.
+The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. The routine PR workflow reruns roxygen2 and fails if `NAMESPACE` or `man/` differs from the committed files; a failed run uploads the diff as `documentation-drift`.
 
 | Workflow | Trigger | Environment and dependencies |
 | --- | --- | --- |

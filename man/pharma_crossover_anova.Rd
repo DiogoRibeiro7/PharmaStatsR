@@ -11,12 +11,16 @@ pharma_crossover_anova(formula, data, ...)
 formula with an intercept and three main effects in that order. The
 design variables must be factors, characters, or logicals; wrap numeric
 identifiers in \code{factor()} in the formula or data.}
+
 \item{data}{A data frame containing the variables in the formula.}
+
 \item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
 \code{weights}, and \code{na.action} are not supported because they can change
 the checked design or analysis population.}
 }
-\value{An object of class \code{aov}.}
+\value{
+An object of class \code{aov}.
+}
 \description{
 Fit an additive ANOVA with categorical treatment and period effects and
 a fixed effect for each subject in a complete AB/BA crossover.

@@ -11,12 +11,16 @@ pharma_latin_square_anova(formula, data, ...)
 with an intercept and three main effects in that order. Each design term
 must be a factor, character, or logical variable. Wrap numeric identifiers
 in \code{factor()} in the formula or data.}
+
 \item{data}{A data frame containing the variables in the formula.}
+
 \item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
 \code{weights}, and \code{na.action} are not supported because they can alter
 the checked design or its analysis population.}
 }
-\value{An object of class \code{aov}.}
+\value{
+An object of class \code{aov}.
+}
 \description{
 Fit an additive ANOVA for a complete Latin square with categorical treatment,
 row, and column effects.

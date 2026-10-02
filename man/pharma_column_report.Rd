@@ -17,11 +17,11 @@ pharma_column_report(
 The description is recorded, not assessed.}
 
 \item{required}{A nonempty character vector of unique, nonblank column
-names. Defaults to `c("subject", "treatment", "dose", "response")`.}
+names. Defaults to \code{c("subject", "treatment", "dose", "response")}.}
 }
 \value{
-A list with `estimand`, `n`, `required_columns`, and
-`columns_present = TRUE`. Missing columns cause an error.
+A list with \code{estimand}, \code{n}, \code{required_columns}, and
+\code{columns_present = TRUE}. Missing columns cause an error.
 }
 \description{
 Returns a row count and records which column names were checked. A

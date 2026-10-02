@@ -17,14 +17,14 @@ pharma_report_table(model, file = NULL, conf.level = 0.95)
 }
 \value{
 A data frame with the five selected columns. If \code{file} is provided,
-  the same table is invisibly returned after being written to disk.
+the same table is invisibly returned after being written to disk.
 }
 \description{
 Select term, estimate, confidence interval, and p-value columns from
 \code{broom::tidy()}. Results can optionally be written to Word (\code{.docx})
 or Excel (\code{.xlsx}) if the corresponding packages are available: Word requires
-the optional `flextable` and `officer` packages, and Excel requires
-`openxlsx`. Returning a table without a file needs none of these. The
+the optional \code{flextable} and \code{officer} packages, and Excel requires
+\code{openxlsx}. Returning a table without a file needs none of these. The
 helper does not apply an APA or ICH reporting standard, verify model
 assumptions, or provide a study-specific interpretation.
 }

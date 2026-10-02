@@ -8,18 +8,18 @@ pharma_factorial_anova(formula, data, ...)
 }
 \arguments{
 \item{formula}{A two-sided \code{response ~ factor1 * factor2} formula with an
-  intercept. Each predictor must be a factor, character, or logical
-  variable. Convert numeric group codes explicitly with \code{factor()}.}
+intercept. Each predictor must be a factor, character, or logical
+variable. Convert numeric group codes explicitly with \code{factor()}.}
 
 \item{data}{A data frame containing the variables in the model.}
 
 \item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
-  \code{weights}, \code{na.action}, and \code{offset} are not supported because they
-  can change the checked population or model.}
+\code{weights}, \code{na.action}, and \code{offset} are not supported because they
+can change the checked population or model.}
 }
 \value{
 An \code{aov} object with estimable main effects, interaction, and
-  residual error. The main-effect tests average over the other factor.
+residual error. The main-effect tests average over the other factor.
 }
 \description{
 Fit an ordinary two-factor ANOVA with both main effects and their
@@ -28,11 +28,11 @@ observations (at least two) in every cell.
 }
 \details{
 Missing model values and non-finite responses are rejected. The balanced
-  design makes the ordinary sequential sums of squares for the two main
-  effects and interaction orthogonal. Inference still assumes independent
-  errors, a common within-cell variance, and a suitable residual
-  distribution. This helper does not fit repeated observations, covariates,
-  blocking, or unbalanced factorial designs.
+design makes the ordinary sequential sums of squares for the two main
+effects and interaction orthogonal. Inference still assumes independent
+errors, a common within-cell variance, and a suitable residual
+distribution. This helper does not fit repeated observations, covariates,
+blocking, or unbalanced factorial designs.
 }
 \examples{
 example <- data.frame(

@@ -14,10 +14,14 @@ pharma_t_test(x, ...)
 }
 \arguments{
 \item{x}{Numeric vector of observations from the first group.}
-\item{y}{Numeric vector of observations from the second group.}
-\item{formula}{A model formula specifying the response and grouping variable.}
-\item{data}{A data frame containing the variables in the formula.}
+
 \item{...}{Additional arguments passed to \code{stats::t.test}.}
+
+\item{y}{Numeric vector of observations from the second group.}
+
+\item{formula}{A model formula specifying the response and grouping variable.}
+
+\item{data}{A data frame containing the variables in the formula.}
 }
 \value{
 A \code{htest} object produced by \code{stats::t.test}.
@@ -28,16 +32,34 @@ both vector and formula interfaces. The function returns the full result from
 \code{stats::t.test} with p-values and confidence intervals.
 }
 \section{Methods}{
+
 This function is S3 generic with two methods:
 \describe{
-  \item{default}{Vector interface for direct comparison of two numeric vectors.}
-  \item{formula}{Formula interface for comparing groups within a data frame.}
+\item{default}{Vector interface for direct comparison of two numeric vectors.}
+\item{formula}{Formula interface for comparing groups within a data frame.}
 }
 }
+
 \examples{
+# Comprehensive example showing a complete analysis
+# 1. Data preparation
+set.seed(42)
 grp_a <- rnorm(20, mean = 5, sd = 1)
 grp_b <- rnorm(20, mean = 5.5, sd = 1)
+
+# 2. Statistical test
 result <- pharma_t_test(grp_a, grp_b)
-result$p.value
+
+# 3. Interpretation
+if (result$p.value < 0.05) {
+  cat("Significant difference detected\n")
+} else {
+  cat("No significant difference\n")
+}
+
+# 4. Visualization
+boxplot(list(A = grp_a, B = grp_b), main = "Group Comparison")
+
+# Formula interface
 pharma_t_test(response ~ treatment, data = pharma_sample)
 }

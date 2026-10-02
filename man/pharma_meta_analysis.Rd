@@ -7,11 +7,14 @@
 pharma_meta_analysis(yi, vi, method = "REML", ...)
 }
 \arguments{
-  \item{yi}{Numeric vector of effect size estimates.}
-  \item{vi}{Numeric vector of effect size variances.}
-  \item{method}{Estimation method passed to \code{metafor::rma}. Use "FE" for a
+\item{yi}{Numeric vector of effect size estimates.}
+
+\item{vi}{Numeric vector of effect size variances.}
+
+\item{method}{Estimation method passed to \code{metafor::rma}. Use "FE" for a
 fixed-effects model or "REML" (default) for random effects.}
-  \item{...}{Additional arguments passed to \code{metafor::rma}.}
+
+\item{...}{Additional arguments passed to \link[metafor:rma]{metafor::rma}.}
 }
 \value{
 An \code{rma} object fitted with the requested \code{method}. Errors from

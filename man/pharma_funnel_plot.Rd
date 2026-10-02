@@ -7,19 +7,20 @@
 pharma_funnel_plot(model, ...)
 }
 \arguments{
-  \item{model}{An object from \code{metafor::rma}.}
-  \item{...}{Additional arguments passed to \code{metafor::funnel}.}
+\item{model}{An object from \link[metafor:rma]{metafor::rma}.}
+
+\item{...}{Additional arguments passed to \link[metafor:funnel]{metafor::funnel}.}
 }
 \value{
 A plot.
 }
 \description{
 Create a funnel plot from an \code{rma} object.
-Requires the 'metafor' package to be installed.
+Requires the 'metafor' package.
 }
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {
-res <- pharma_meta_analysis(yi = c(0.2,0.1,-0.1), vi=c(0.05,0.04,0.06))
+res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 pharma_funnel_plot(res)
 }
 }

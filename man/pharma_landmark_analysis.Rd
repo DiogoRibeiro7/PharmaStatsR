@@ -8,8 +8,11 @@ pharma_landmark_analysis(formula, data, landmark, ...)
 }
 \arguments{
 \item{formula}{A right-censored survival formula.}
+
 \item{data}{A data frame containing the variables in \code{formula}.}
+
 \item{landmark}{A finite, nonnegative landmark time.}
+
 \item{...}{Additional arguments passed to \code{survival::coxph}.}
 }
 \value{
