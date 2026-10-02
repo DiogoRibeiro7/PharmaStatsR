@@ -64,9 +64,29 @@ jobs:
             any::openxlsx
             any::flextable
             any::officer
+            any::roxygen2
       - uses: r-lib/actions/check-r-package@v2
         with:
           build_args: 'c("--no-manual")'
+      - name: Check generated R help
+        run: |
+          Rscript -e 'roxygen2::roxygenise()'
+          git add -N -- NAMESPACE man/
+          git diff --check -- NAMESPACE man/
+          git diff -- NAMESPACE man/ > documentation-drift.patch
+          if test -s documentation-drift.patch; then
+            git diff --stat -- NAMESPACE man/
+            echo 'Generated R help differs from the committed files.' >&2
+            echo 'Run scripts/style_and_doc.sh and commit the changes.' >&2
+            exit 1
+          fi
+      - name: Upload generated-help diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: documentation-drift
+          path: documentation-drift.patch
+          if-no-files-found: ignore
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v7
