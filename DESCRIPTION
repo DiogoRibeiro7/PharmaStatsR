@@ -20,4 +20,5 @@ Suggests: testthat, knitr, rmarkdown, flexdashboard, shiny, rstanarm,
     metafor, netmeta, JM, mstate, openxlsx, flextable,
     officer, reticulate
 VignetteBuilder: knitr
+Config/roxygen2/markdown: TRUE
 RoxygenNote: 7.3.1

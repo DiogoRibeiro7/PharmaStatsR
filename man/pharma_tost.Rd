@@ -8,21 +8,17 @@
 \usage{
 pharma_tost(x, ...)
 
-\method{pharma_tost}{default}(x, y, low_eqbound, high_eqbound,
-  alpha = 0.05, ...)
+\method{pharma_tost}{default}(x, y, low_eqbound, high_eqbound, alpha = 0.05, ...)
 
-\method{pharma_tost}{formula}(formula, data, low_eqbound, high_eqbound,
-  alpha = 0.05, ...)
+\method{pharma_tost}{formula}(formula, data, low_eqbound, high_eqbound, alpha = 0.05, ...)
 }
 \arguments{
 \item{x}{Numeric vector of observations in the first group, or a two-sided
 formula for the formula method.}
 
+\item{...}{Additional arguments; currently ignored.}
+
 \item{y}{Numeric vector of observations in the second group.}
-
-\item{formula}{Two-sided formula specifying a numeric response and a group.}
-
-\item{data}{Data frame containing the variables in formula.}
 
 \item{low_eqbound}{Finite lower bound for the mean difference.}
 
@@ -30,12 +26,14 @@ formula for the formula method.}
 
 \item{alpha}{Numeric significance level strictly between 0 and 0.5.}
 
-\item{...}{Additional arguments; currently ignored.}
+\item{formula}{Two-sided formula specifying a numeric response and a group.}
+
+\item{data}{Data frame containing the variables in formula.}
 }
 \value{
 A list containing the two t statistics, the larger one-sided
-p-value, the observed mean difference, a confidence interval of level
-1 - 2 * alpha, and Welch's degrees of freedom.
+  p-value, the observed mean difference, a confidence interval of level
+  1 - 2 * alpha, and Welch's degrees of freedom.
 }
 \description{
 Tests whether the difference between two population means lies strictly

@@ -23,19 +23,19 @@ The last must equal 1. Defaults to equally spaced information fractions.}
 }
 \value{
 A numeric vector of positive critical z-values. At each analysis
-the upper boundary is the returned value and the lower boundary is its
-negative. No futility or sample-size calculation is returned.
+  the upper boundary is the returned value and the lower boundary is its
+  negative. No futility or sample-size calculation is returned.
 }
 \description{
 Calculate calibrated O'Brien-Fleming or Pocock critical z-values for
 planned analyses using `gsDesign`. These are symmetric two-sided
 efficacy boundaries under its canonical joint normal model.
 }
-\references{
-`gsDesign` design derivation:
-\url{https://keaven.github.io/gsDesign/reference/gsDesign.html}
-}
 \examples{
 pharma_group_seq(k = 3)
 pharma_group_seq(k = 3, method = "pocock", timing = c(0.25, 0.6, 1))
+}
+\references{
+`gsDesign` design derivation:
+\url{https://keaven.github.io/gsDesign/reference/gsDesign.html}
 }

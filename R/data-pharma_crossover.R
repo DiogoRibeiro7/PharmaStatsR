@@ -15,6 +15,9 @@
 #' @details One observation per subject and period. Use for a complete AB/BA
 #'   additive crossover ANOVA; these data do not establish bioequivalence or
 #'   identify carryover effects.
+#' @docType data
+#' @keywords datasets
+#' @export
 #' @examples
 #' data(pharma_crossover)
 #' head(pharma_crossover)

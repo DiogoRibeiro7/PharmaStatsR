@@ -7,18 +7,18 @@
 pharma_factorial_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A two-sided \code{response ~ factor1 * factor2} formula with an
-  intercept. Each predictor must be a factor, character, or logical
-  variable. Convert numeric group codes explicitly with \code{factor()}.}
+\item{formula}{A two-sided `response ~ factor1 * factor2` formula with an
+intercept. Each predictor must be a factor, character, or logical
+variable. Convert numeric group codes explicitly with `factor()`.}
 
 \item{data}{A data frame containing the variables in the model.}
 
-\item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
-  \code{weights}, \code{na.action}, and \code{offset} are not supported because they
-  can change the checked population or model.}
+\item{...}{Additional arguments passed to `stats::aov`. `subset`,
+`weights`, `na.action`, and `offset` are not supported because they
+can change the checked population or model.}
 }
 \value{
-An \code{aov} object with estimable main effects, interaction, and
+An `aov` object with estimable main effects, interaction, and
   residual error. The main-effect tests average over the other factor.
 }
 \description{

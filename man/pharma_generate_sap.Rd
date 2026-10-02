@@ -11,8 +11,7 @@ pharma_generate_sap(
   objectives = "Describe the primary and secondary objectives of the study.",
   endpoints = "List the primary and secondary endpoints.",
   populations = "Define analysis populations such as ITT and safety sets.",
-  methods =
-    "Describe the methods, including multiplicity and interim analyses.",
+  methods = "Describe the methods, including multiplicity and interim analyses.",
   criteria = "Specify key inclusion and exclusion criteria.",
   software = "Specify the software packages and versions that will be used.",
   extra_sections = NULL,
@@ -46,7 +45,7 @@ of writing to disk.}
 \item{extra_sections}{Named list of additional sections and their contents.}
 
 \item{include_sections}{Character vector giving the order of default sections
-to include. Set to \code{NULL} to omit all defaults. Unknown names are
+to include. Set to `NULL` to omit all defaults. Unknown names are
 currently ignored; inspect the returned sections before using the file.}
 }
 \value{

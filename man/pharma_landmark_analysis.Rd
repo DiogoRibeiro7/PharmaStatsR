@@ -8,17 +8,20 @@ pharma_landmark_analysis(formula, data, landmark, ...)
 }
 \arguments{
 \item{formula}{A right-censored survival formula.}
-\item{data}{A data frame containing the variables in \code{formula}.}
+
+\item{data}{A data frame containing the variables in `formula`.}
+
 \item{landmark}{A finite, nonnegative landmark time.}
-\item{...}{Additional arguments passed to \code{survival::coxph}.}
+
+\item{...}{Additional arguments passed to `survival::coxph`.}
 }
 \value{
-A \code{coxph} object fitted on landmarked data.
+A `coxph` object fitted on landmarked data.
 }
 \description{
 Fits a Cox model among individuals still observed after the landmark,
 measuring survival time from the landmark. Supports right-censored
-\code{Surv(time, status)} responses.
+`Surv(time, status)` responses.
 }
 \examples{
 pharma_landmark_analysis(

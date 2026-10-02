@@ -7,27 +7,31 @@
 pharma_crossover_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A two-sided \code{response ~ treatment + period + subject}
+\item{formula}{A two-sided `response ~ treatment + period + subject`
 formula with an intercept and three main effects in that order. The
 design variables must be factors, characters, or logicals; wrap numeric
-identifiers in \code{factor()} in the formula or data.}
+identifiers in `factor()` in the formula or data.}
+
 \item{data}{A data frame containing the variables in the formula.}
-\item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
-\code{weights}, and \code{na.action} are not supported because they can change
+
+\item{...}{Additional arguments passed to `stats::aov`. `subset`,
+`weights`, and `na.action` are not supported because they can change
 the checked design or analysis population.}
 }
-\value{An object of class \code{aov}.}
+\value{
+An object of class `aov`.
+}
 \description{
 Fit an additive ANOVA with categorical treatment and period effects and
 a fixed effect for each subject in a complete AB/BA crossover.
 }
 \details{
 Each subject must have exactly one observation in each of two periods and
-must receive each of two treatments once. At least four subjects are
-required, with equal numbers assigned to the AB and BA sequences.
-Missing model values and non-finite responses are rejected. This simple
-additive model does not estimate carryover or sequence effects separately
-from treatment and subject effects.
+  must receive each of two treatments once. At least four subjects are
+  required, with equal numbers assigned to the AB and BA sequences.
+  Missing model values and non-finite responses are rejected. This simple
+  additive model does not estimate carryover or sequence effects separately
+  from treatment and subject effects.
 }
 \examples{
 pharma_crossover_anova(response ~ treatment + period + subject, data = pharma_crossover)

@@ -16,6 +16,9 @@
 #'   the package source; no patient or experimental observations.
 #' @details Use to demonstrate the additive Latin square ANOVA. One response
 #'   per row-column cell does not allow separate estimation of interactions.
+#' @docType data
+#' @keywords datasets
+#' @export
 #' @examples
 #' data(pharma_latin_square)
 #' summary(pharma_latin_square)

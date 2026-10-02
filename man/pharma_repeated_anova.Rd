@@ -19,7 +19,7 @@ change the checked population or model.}
 }
 \value{
 An `aovlist` with subject and within-subject error strata. The
-condition F test is in `summary(fit)[["Error: Within"]][[1L]]`.
+  condition F test is in `summary(fit)[["Error: Within"]][[1L]]`.
 }
 \description{
 Fit a one-factor within-subject ANOVA to paired observations. Each

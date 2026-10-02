@@ -15,8 +15,8 @@ Invisibly returns the path to the dashboard Rmd file.
 \description{
 Opens an example Shiny dashboard that draws random enrollment counts when
 rendered. It does not read study data, track live enrollment, calculate
-interim statistics, or apply a monitoring rule. If \code{launch} is \code{TRUE},
-\code{rmarkdown::run()} opens the bundled R Markdown file; otherwise the path
+interim statistics, or apply a monitoring rule. If `launch` is `TRUE`,
+`rmarkdown::run()` opens the bundled R Markdown file; otherwise the path
 to that file is returned. Launching requires the optional `rmarkdown`,
 `flexdashboard`, and `shiny` packages; retrieving its path does not.
 }

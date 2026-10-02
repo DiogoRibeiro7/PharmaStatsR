@@ -31,9 +31,9 @@ Defaults to 0.5 for compatibility; set a clinically justified value.}
 }
 \value{
 A list with `prob`, the posterior probability that the single-arm
-response rate is greater than `null_rate`, and `stop`, a logical flag
-for `prob > threshold`. The flag is a threshold check, not a
-recommendation to stop a study or a guarantee of error control.
+  response rate is greater than `null_rate`, and `stop`, a logical flag
+  for `prob > threshold`. The flag is a threshold check, not a
+  recommendation to stop a study or a guarantee of error control.
 }
 \description{
 Compute the posterior probability that an unknown response rate exceeds a
@@ -46,12 +46,12 @@ With a Beta(prior_alpha, prior_beta) prior, the posterior after observing
 prior_beta + trials - successes). Repeated looks require a pre-specified
 schedule and calibration of operating characteristics.
 }
-\references{
-R documentation for the beta distribution:
-\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Beta.html}
-}
 \examples{
 pharma_bayes_stopping(1, 1, successes = 8, trials = 10)
 pharma_bayes_stopping(1, 1, successes = 8, trials = 10,
                       null_rate = 0.4, threshold = 0.9)
+}
+\references{
+R documentation for the beta distribution:
+\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Beta.html}
 }

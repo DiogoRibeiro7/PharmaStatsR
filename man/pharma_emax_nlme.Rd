@@ -5,16 +5,25 @@
 \title{Fit a mixed-effects Emax model using nlme}
 \usage{
 pharma_emax_nlme(
-  dose, response, subject, start = NULL,
-  random = e0 ~ 1 | subject, ...
+  dose,
+  response,
+  subject,
+  start = NULL,
+  random = e0 ~ 1 | subject,
+  ...
 )
 }
 \arguments{
 \item{dose}{Numeric vector of doses.}
+
 \item{response}{Numeric vector of responses.}
+
 \item{subject}{Subject identifier for random effects.}
+
 \item{start}{Named vector of starting values for \code{e0}, \code{emax}, and \code{ed50}.}
+
 \item{random}{Random-effects formula. Defaults to a subject-specific baseline.}
+
 \item{...}{Additional arguments passed to \code{nlme::nlme}.}
 }
 \value{

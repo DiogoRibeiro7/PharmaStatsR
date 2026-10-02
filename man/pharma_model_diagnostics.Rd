@@ -7,29 +7,29 @@
 pharma_model_diagnostics(model, threshold = 3, cook_cutoff = NULL)
 }
 \arguments{
-\item{model}{A fitted univariate \code{lm} or \code{glm} object.}
+\item{model}{A fitted univariate `lm` or `glm` object.}
 
 \item{threshold}{One finite positive cutoff for the absolute standardized
 residual. Defaults to 3.}
 
 \item{cook_cutoff}{Optional finite positive Cook's-distance cutoff.
-If \code{NULL}, use \code{4 / stats::nobs(model)}; \code{nobs()} counts observations
-used in the fit, rather than rows padded by \code{na.exclude}.}
+If `NULL`, use `4 / stats::nobs(model)`; `nobs()` counts observations
+used in the fit, rather than rows padded by `na.exclude`.}
 }
 \value{
-A data frame with \code{residual}, \code{std_resid}, \code{cook_d},
-\code{leverage}, and \code{flag}. A flag is \code{TRUE} when either cutoff is
-exceeded. Omitted observations restored by \code{na.exclude} have
-unavailable measures and an \code{NA} flag.
+A data frame with `residual`, `std_resid`, `cook_d`,
+  `leverage`, and `flag`. A flag is `TRUE` when either cutoff is
+  exceeded. Omitted observations restored by `na.exclude` have
+  unavailable measures and an `NA` flag.
 }
 \description{
 Report residuals, standardized residuals, Cook's distances, leverage,
 and a logical flag for observations exceeding either screening cutoff.
 }
 \details{
-For \code{glm}, default raw residuals are deviance residuals and default
+For `glm`, default raw residuals are deviance residuals and default
 standardized residuals are Pearson residuals, as defined by the
-corresponding \code{stats} methods. Cook's distances and leverage come from
+corresponding `stats` methods. Cook's distances and leverage come from
 those same fitted-model methods. Thresholds are descriptive screening
 heuristics, not tests or automatic rules for excluding observations.
 }

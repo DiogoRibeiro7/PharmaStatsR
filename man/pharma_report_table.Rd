@@ -7,8 +7,8 @@
 pharma_report_table(model, file = NULL, conf.level = 0.95)
 }
 \arguments{
-\item{model}{A fitted model object whose \code{broom::tidy()} output includes
-\code{term}, \code{estimate}, \code{conf.low}, \code{conf.high}, and \code{p.value}.}
+\item{model}{A fitted model object whose `broom::tidy()` output includes
+`term`, `estimate`, `conf.low`, `conf.high`, and `p.value`.}
 
 \item{file}{Optional path to save the table. Should end with \code{.docx} or
 \code{.xlsx}. If \code{NULL}, the table is returned as a data frame.}
@@ -16,13 +16,13 @@ pharma_report_table(model, file = NULL, conf.level = 0.95)
 \item{conf.level}{Confidence level for intervals. Default is 0.95.}
 }
 \value{
-A data frame with the five selected columns. If \code{file} is provided,
+A data frame with the five selected columns. If `file` is provided,
   the same table is invisibly returned after being written to disk.
 }
 \description{
 Select term, estimate, confidence interval, and p-value columns from
-\code{broom::tidy()}. Results can optionally be written to Word (\code{.docx})
-or Excel (\code{.xlsx}) if the corresponding packages are available: Word requires
+`broom::tidy()`. Results can optionally be written to Word (`.docx`)
+or Excel (`.xlsx`) if the corresponding packages are available: Word requires
 the optional `flextable` and `officer` packages, and Excel requires
 `openxlsx`. Returning a table without a file needs none of these. The
 helper does not apply an APA or ICH reporting standard, verify model

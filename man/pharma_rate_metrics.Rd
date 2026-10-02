@@ -19,11 +19,11 @@ pharma_rate_metrics(event1, n1, event2, n2, conf.level = 0.95)
 }
 \value{
 A list with the unadjusted \code{risk_difference} (group 1 minus group 2),
-its two-sided \code{rd_ci}, the unadjusted \code{risk_ratio} (group 1 divided by
-group 2), and its two-sided \code{rr_ci}. The risk ratio is \code{NA_real_} if
-neither group has events, \code{Inf} if only group 1 has events, and zero if
-only group 2 has events. The adjusted ratio interval is finite for these
-zero-event cases and is not centered on the unadjusted point estimate.
+  its two-sided \code{rd_ci}, the unadjusted \code{risk_ratio} (group 1 divided by
+  group 2), and its two-sided \code{rr_ci}. The risk ratio is \code{NA_real_} if
+  neither group has events, \code{Inf} if only group 1 has events, and zero if
+  only group 2 has events. The adjusted ratio interval is finite for these
+  zero-event cases and is not centered on the unadjusted point estimate.
 }
 \description{
 Compare two independent binomial event counts. The risk difference uses a
@@ -31,12 +31,12 @@ Newcombe interval combining Wilson score intervals without continuity
 correction. The risk ratio uses a log-scale interval after adding 0.5 to
 each cell of the two-by-two table.
 }
+\examples{
+pharma_rate_metrics(10, 100, 15, 110)
+pharma_rate_metrics(0, 12, 0, 15)
+}
 \references{
 Newcombe RG (1998). Interval estimation for the difference between
 independent proportions: comparison of eleven methods. Statistics in
 Medicine 17:873-890. \url{https://pubmed.ncbi.nlm.nih.gov/9595617/}
-}
-\examples{
-pharma_rate_metrics(10, 100, 15, 110)
-pharma_rate_metrics(0, 12, 0, 15)
 }

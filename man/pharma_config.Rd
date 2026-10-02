@@ -8,21 +8,24 @@ pharma_config(...)
 }
 \arguments{
 \item{...}{Named options to set. Supported options are:
-\itemize{
-\item \code{log_level}: logging verbosity.
-\item \code{plot_theme}: default plot theme.
-\item \code{default_ci}: default confidence level.
-\item \code{parallel_strategy}: parallel backend.
-\item \code{max_cores}: maximum number of cores; defaults to at least one,
-including when core detection is unavailable.
-\item \code{cache_dir}: directory for cached results.
-}}
+- `log_level` (**character**): logging verbosity ("DEBUG", "INFO",
+  "WARN", "ERROR").
+- `plot_theme` (**character**): default ggplot2 theme to apply to
+  visualisations.
+- `default_ci` (**numeric**): default confidence level for interval
+  estimates.
+- `parallel_strategy` (**character**): parallel backend for resampling
+  helpers.
+- `max_cores` (**integer**): maximum number of cores to utilise. The
+  default is at least one, including when core detection is unavailable.
+- `cache_dir` (**character**): directory used for caching intermediate
+  results.}
 }
 \value{
 A named list of current configuration values.
 }
 \description{
-\code{pharma_config()} gets or sets package-wide options such as logging
+`pharma_config()` gets or sets package-wide options such as logging
 verbosity and defaults used throughout the package.
 }
 \examples{

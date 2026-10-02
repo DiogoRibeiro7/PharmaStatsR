@@ -16,6 +16,8 @@
 #' @source Hand-entered illustrative values in the package source.
 #' @details Use for time-to-event examples with right censoring. No time unit,
 #'   event definition, or treatment effect is specified by this fixture.
+#' @docType data
+#' @keywords datasets
 #' @examples
 #' summary(pharma_survival)
 #' @export

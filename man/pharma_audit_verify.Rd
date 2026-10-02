@@ -12,13 +12,13 @@ pharma_audit_verify(file = "audit.log", key)
 \item{key}{One nonempty, nonmissing character string used to write the log.}
 }
 \value{
-One logical value: \code{TRUE} if every stored row verifies, otherwise
-\code{FALSE}.
+One logical value: `TRUE` if every stored row verifies, otherwise
+  `FALSE`.
 }
 \description{
 Recomputes the HMAC-SHA256 for every record and checks the link to the
 preceding record. Malformed CSV files and mismatched hashes return
-\code{FALSE}; a missing file or invalid argument raises an error.
+`FALSE`; a missing file or invalid argument raises an error.
 }
 \details{
 This checks only the rows present in the file. Deleting the final row or

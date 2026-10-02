@@ -7,22 +7,22 @@
 pharma_multistate_model(coxFit, trans, ...)
 }
 \arguments{
-\item{coxFit}{A \code{survival::coxph()} model fitted on data prepared with
-\code{mstate::msprep()}, usually with \code{strata(trans)} and \code{method = "breslow"}.}
+\item{coxFit}{A `survival::coxph()` model fitted on data prepared with
+`mstate::msprep()`, usually with `strata(trans)` and `method = "breslow"`.}
 
-\item{trans}{A transition matrix created by \code{mstate::transMat()} or a
-corresponding helper such as \code{mstate::trans.illdeath()}.}
+\item{trans}{A transition matrix created by `mstate::transMat()` or a
+corresponding helper such as `mstate::trans.illdeath()`.}
 
-\item{...}{Arguments passed to \code{mstate::msfit()}. Supply \code{newdata} with one
-row per transition and a numeric \code{strata} column when the Cox model has
-covariates. \code{newdata} may be omitted only for a model with right-hand side
-\code{~ strata(trans)}.}
+\item{...}{Arguments passed to `mstate::msfit()`. Supply `newdata` with one
+row per transition and a numeric `strata` column when the Cox model has
+covariates. `newdata` may be omitted only for a model with right-hand side
+`~ strata(trans)`.}
 }
 \value{
-An \code{msfit} object containing cumulative transition hazards.
+An `msfit` object containing cumulative transition hazards.
 }
 \description{
-Pass a prepared Cox fit and transition matrix to \code{mstate::msfit()}.
+Pass a prepared Cox fit and transition matrix to `mstate::msfit()`.
 The result contains cumulative transition hazards, not state probabilities.
 }
 \examples{

@@ -18,9 +18,9 @@ pharma_perm_f_test(formula, data, R = 1000, ...)
 }
 \value{
 A list with `statistic`, the observed global F value;
-`perm`, a numeric vector of `R` permuted global F values; and
-`p.value`, the Monte Carlo upper-tail p-value using
-`(1 + sum(perm >= statistic)) / (R + 1)`.
+  `perm`, a numeric vector of `R` permuted global F values; and
+  `p.value`, the Monte Carlo upper-tail p-value using
+  `(1 + sum(perm >= statistic)) / (R + 1)`.
 }
 \description{
 Compare all non-intercept predictors jointly against an intercept-only
@@ -36,10 +36,6 @@ isolate a treatment effect after adjusting for nuisance predictors,
 and are not suitable for clustered, repeated, or time-ordered data
 without an appropriate restricted permutation scheme.
 }
-\references{
-R documentation for sequential ANOVA tables:
-\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html}
-}
 \examples{
 independent <- data.frame(
   response = c(1, 2, 2, 4, 2, 3, 5, 7),
@@ -48,4 +44,8 @@ independent <- data.frame(
 )
 set.seed(7)
 pharma_perm_f_test(response ~ group + dose, data = independent, R = 50)
+}
+\references{
+R documentation for sequential ANOVA tables:
+\url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html}
 }

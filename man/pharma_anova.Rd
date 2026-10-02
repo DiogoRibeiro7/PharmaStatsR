@@ -7,16 +7,16 @@
 pharma_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A two-sided \code{response ~ group} formula with an intercept.
+\item{formula}{A two-sided `response ~ group` formula with an intercept.
 The group must be a factor, character, or logical variable. Convert numeric
-group codes explicitly with \code{factor()} in the formula or data.}
+group codes explicitly with `factor()` in the formula or data.}
 
 \item{data}{A data frame containing the variables in the formula.}
 
-\item{...}{Additional arguments passed to \code{stats::aov}.}
+\item{...}{Additional arguments passed to `stats::aov`.}
 }
 \value{
-An object of class \code{aov}.
+An object of class `aov`.
 }
 \description{
 Compare means across the observed levels of one categorical grouping variable
@@ -28,7 +28,10 @@ It rejects numeric predictors, multiple terms, interactions, and formulas
 without an intercept. Missing model values must be handled before fitting.
 }
 \examples{
+# Basic usage
 pharma_anova(response ~ treatment, data = pharma_sample)
+
+# Complete workflow with post-hoc tests
 model <- pharma_anova(response ~ treatment, data = pharma_sample)
 summary(model)
 TukeyHSD(model)

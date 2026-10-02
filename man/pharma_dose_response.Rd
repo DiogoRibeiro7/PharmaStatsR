@@ -11,19 +11,26 @@ A data frame with 30 rows and 3 variables:
   \item{response}{Numeric simulated response (unitless)}
 }
 }
-\source{Responses generated with seed 123 by
-\code{data-raw/generate-fixture-responses.R} and stored as fixed values in
-the package source; no patient or experimental observations.}
+\source{
+Responses generated with seed 123 by
+  \code{data-raw/generate-fixture-responses.R} and stored as fixed values in
+  the package source; no patient or experimental observations.
+}
+\usage{
+pharma_dose_response
+}
 \description{
 Six subjects observed once at each of five dose levels, generated with seed
 123 from an Emax mean, a subject-specific normal intercept (SD 0.15), and
 independent normal observation noise (SD 0.1). The mean is
 \eqn{1 + 4d/(20+d)} for dose \eqn{d}. No clinical units are assigned.
 }
-\details{Useful for nonlinear Emax and repeated-subject examples. Subject
-IDs are numeric; convert them to factors when a model requires categorical
-subject effects. Dose is a single continuous input with five ordered
-levels; these data do not support a multivariate response surface.}
+\details{
+Useful for nonlinear Emax and repeated-subject examples. Subject
+  IDs are numeric; convert them to factors when a model requires categorical
+  subject effects. Dose is a single continuous input with five ordered
+  levels; these data do not support a multivariate response surface.
+}
 \examples{
 head(pharma_dose_response)
 plot(pharma_dose_response$dose, pharma_dose_response$response)

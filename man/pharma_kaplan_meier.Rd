@@ -15,33 +15,33 @@ pharma_kaplan_meier(
 )
 }
 \arguments{
-\item{formula}{A right-censored \code{Surv(time, status) ~ group} formula.
-Use \code{~ 1} for a single curve with \code{log_rank = FALSE}.}
+\item{formula}{A right-censored `Surv(time, status) ~ group` formula.
+Use `~ 1` for a single curve with `log_rank = FALSE`.}
 
 \item{data}{A data frame with the response and group variables.}
 
-\item{log_rank}{One nonmissing logical value. If \code{TRUE}, return a
+\item{log_rank}{One nonmissing logical value. If `TRUE`, return a
 standard log-rank comparison along with the curves.}
 
-\item{...}{Named curve-only options passed to \code{survival::survfit()},
-such as \code{conf.type} or \code{conf.int}. With \code{log_rank = TRUE}, options
-changing the observations or estimator, such as \code{weights}, are rejected.}
+\item{...}{Named curve-only options passed to [survival::survfit()],
+such as `conf.type` or `conf.int`. With `log_rank = TRUE`, options
+changing the observations or estimator, such as `weights`, are rejected.}
 
-\item{subset}{Optional logical expression evaluated within \code{data}, or
+\item{subset}{Optional logical expression evaluated within `data`, or
 logical vector with one nonmissing element per input row. It is applied
 before both the curve and the test.}
 
 \item{na.action}{Missing-value handling function shared by the curve
-and test; defaults to \code{stats::na.omit()}.}
+and test; defaults to [stats::na.omit()].}
 
 \item{timefix}{One nonmissing logical value controlling correction of
-near-tied event times for the curve. With \code{log_rank = TRUE}, only
-\code{TRUE} is supported so the curve and log-rank test use the same
+near-tied event times for the curve. With `log_rank = TRUE`, only
+`TRUE` is supported so the curve and log-rank test use the same
 near-tie correction.}
 }
 \value{
-If \code{log_rank = TRUE}, a list with \code{fit} (a \code{survfit} object)
-and \code{test} (a \code{survdiff} object); otherwise the \code{survfit} object.
+If `log_rank = TRUE`, a list with `fit` (a `survfit` object)
+  and `test` (a `survdiff` object); otherwise the `survfit` object.
 }
 \description{
 Fit a right-censored, single-event Kaplan–Meier curve and optionally
@@ -49,7 +49,7 @@ compare groups with an unweighted, ordinary log-rank test.
 }
 \details{
 A multi-state or counting-process response is outside this helper's
-scope. The log-rank test uses \code{rho = 0}, has no weights, and does not
+scope. The log-rank test uses `rho = 0`, has no weights, and does not
 adjust for confounding, clustering, or repeated observations.
 }
 \examples{

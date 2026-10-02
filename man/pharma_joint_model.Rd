@@ -7,29 +7,29 @@
 pharma_joint_model(lmeFit, coxFit, timeVar, ...)
 }
 \arguments{
-\item{lmeFit}{An \code{nlme::lme} mixed-effects model. \code{lme4::lmer} fits are not
-supported by \code{JM::jointModel}.}
+\item{lmeFit}{An `nlme::lme` mixed-effects model. `lme4::lmer` fits are not
+supported by `JM::jointModel`.}
 
-\item{coxFit}{A \code{survival::coxph} fit created with \code{x = TRUE}.}
+\item{coxFit}{A `survival::coxph` fit created with `x = TRUE`.}
 
 \item{timeVar}{Character string indicating the name of the time variable in
 the longitudinal model.}
 
-\item{...}{Additional arguments passed to \code{JM::jointModel}.}
+\item{...}{Additional arguments passed to `JM::jointModel`.}
 }
 \value{
-An object of class \code{jointModel}.
+An object of class `jointModel`.
 }
 \description{
-Provides a wrapper around \code{JM::jointModel} for fitting joint models
+Provides a wrapper around `JM::jointModel` for fitting joint models
 that link a linear mixed-effects model with a Cox proportional hazards model.
-Requires the optional \strong{JM} package.
+Requires the optional **JM** package.
 }
 \details{
 The longitudinal and survival fits must use the same subjects in the same
 order, and the time scales must agree. The wrapper does not verify this
-alignment; check it before fitting. See \code{JM::jointModel} for further model
-structure and estimation requirements. Attach \code{JM} with \code{library(JM)} before
+alignment; check it before fitting. See `JM::jointModel` for further model
+structure and estimation requirements. Attach `JM` with `library(JM)` before
 calling this helper: the backend uses functions from its attached
 dependencies that are not imported into its namespace.
 }

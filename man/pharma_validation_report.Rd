@@ -21,7 +21,7 @@ names. Defaults to `c("subject", "treatment", "dose", "response")`.}
 }
 \value{
 A list with `estimand`, `n`, `required_columns`, and
-`columns_present = TRUE`. Missing columns cause an error.
+  `columns_present = TRUE`. Missing columns cause an error.
 }
 \description{
 This historical function name is kept for existing scripts. It returns

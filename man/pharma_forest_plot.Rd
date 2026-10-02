@@ -7,19 +7,20 @@
 pharma_forest_plot(model, ...)
 }
 \arguments{
-  \item{model}{An object from \code{metafor::rma}.}
-  \item{...}{Additional arguments passed to \code{metafor::forest}.}
+\item{model}{An object from [metafor::rma].}
+
+\item{...}{Additional arguments passed to [metafor::forest].}
 }
 \value{
 A plot.
 }
 \description{
-Create a forest plot from an \code{rma} object.
-Requires the 'metafor' package to be installed.
+Create a forest plot from an `rma` object.
+Requires the 'metafor' package.
 }
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {
-res <- pharma_meta_analysis(yi = c(0.2,0.1,-0.1), vi=c(0.05,0.04,0.06))
+res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 pharma_forest_plot(res)
 }
 }
