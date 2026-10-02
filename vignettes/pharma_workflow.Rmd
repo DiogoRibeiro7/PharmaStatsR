@@ -1,52 +1,92 @@
 ---
-title: "Pharmaceutical Workflow Example"
+title: "A simulated PharmaStatsR analysis workflow"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Pharmaceutical Workflow Example}
+  %\VignetteIndexEntry{A simulated PharmaStatsR analysis workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette illustrates a typical workflow in pharmaceutical data analysis using functions from **PharmaStatsR**.
-
-> **Note:** The examples in this vignette use simulated data and are intended
-> for educational purposes only. They should not be relied on for
-> clinical decision making.
+This vignette follows a two-group comparison from data inspection to a small
+results table. The package data are illustrative, not clinical records. The
+analysis does not establish a treatment effect or support a clinical decision.
 
 ```{r setup, include=FALSE}
 library(PharmaStatsR)
 ```
 
-## Data Cleaning
+## Inspect the analysis data
 
-Use the provided datasets to demonstrate cleaning steps.
+`pharma_sample` has ten observations in each treatment group. Inspect its
+structure, missingness, and design before specifying a test:
 
-## Statistical Analysis
-
-Examples of t-tests, ANOVA, and logistic regression.
-
-```{r lm-example}
-fit <- lm(response ~ treatment, data = pharma_sample)
+```{r inspect-data}
+str(pharma_sample)
+table(pharma_sample$treatment, pharma_sample$dose)
+anyNA(pharma_sample[c("response", "treatment")])
 ```
 
-### Diagnostics
+Treatment A always has dose 1 and treatment B always has dose 2. Dose and
+treatment are perfectly confounded in this fixture, so their separate effects
+cannot be estimated from it. The `response` and `treatment` columns have no
+missing values; with other data, decide how to handle missing model variables
+before fitting a model. The formula interface below rejects incomplete rows.
 
-```{r diag-example}
-pharma_model_diagnostics(fit)
+## Compare the groups
+
+For this illustration, the contrast is the mean response in A minus the mean
+response in B. `pharma_t_test()` returns the full `stats::t.test()` result and
+uses Welch's two-sample test by default.
+
+```{r group-comparison}
+test <- pharma_t_test(response ~ treatment, data = pharma_sample)
+test$estimate
+test$conf.int
+test$p.value
 ```
 
-### Parallel bootstrap
+The confidence interval describes the group mean difference under the test's
+assumptions. Neither the p-value nor the interval separates treatment from
+dose in these data. For the full input and return contract, open
+`help("pharma_t_test", package = "PharmaStatsR")` in R.
 
-```{r boot-example, eval=FALSE}
-stat <- function(d) mean(d$response)
-pharma_parallel_bootstrap(pharma_sample, stat, R = 100)
+## Screen a fitted model
+
+An ordinary linear model provides a separate example for residual screening.
+`pharma_model_diagnostics()` reports standardized residuals, Cook's distances,
+leverage, and threshold flags for this fit:
+
+```{r model-diagnostics}
+fit <- stats::lm(response ~ treatment, data = pharma_sample)
+diagnostics <- pharma_model_diagnostics(fit)
+head(diagnostics)
+sum(diagnostics$flag, na.rm = TRUE)
 ```
 
-```{r bayes-example, eval=FALSE}
-fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500, chains = 2)
-pharma_posterior_summary(fit)
+The flags are descriptive screening heuristics, not rules for deleting rows.
+These diagnostics describe the linear model; they do not validate the Welch
+test above or remove the treatment–dose confounding.
+
+## Assemble a results table
+
+Report the direction of the contrast and its uncertainty alongside the
+p-value. The formula method orders groups by their factor levels; for this
+fixture that is A followed by B.
+
+```{r results-table}
+results <- data.frame(
+  contrast = "A - B",
+  difference = unname(test$estimate[[1L]] - test$estimate[[2L]]),
+  lower_95 = unname(test$conf.int[[1L]]),
+  upper_95 = unname(test$conf.int[[2L]]),
+  p_value = test$p.value
+)
+knitr::kable(results, digits = 3)
 ```
 
-## Reporting
-
-Summarize results and generate basic plots.
+For a real analysis, define the estimand, missing-data rules, assumptions,
+and reporting plan before examining results. The [method inventory](https://diogoribeiro7.github.io/PharmaStatsR/method-inventory/)
+distinguishes numerical reference checks from smoke tests and links the R help
+for each export. The [limitations guide](https://diogoribeiro7.github.io/PharmaStatsR/limitations/)
+records the package's current scope. Optional backends are covered in their
+individual method guides; none is required to run this vignette.
