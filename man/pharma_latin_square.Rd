@@ -1,7 +1,20 @@
 \name{pharma_latin_square}
 \docType{data}
 \alias{pharma_latin_square}
-\title{Latin square design dataset}
-\format{A data frame with 16 rows and 4 variables.}
-\description{Simulated 4x4 Latin square data for design-of-experiments examples.}
-\source{Simulated data.}
+\title{Simulated Latin square dataset}
+\format{A data frame with 16 rows and 4 variables:
+\describe{
+  \item{row}{Row factor, levels 1 to 4}
+  \item{column}{Column factor, levels 1 to 4}
+  \item{treatment}{Treatment factor, levels A to D}
+  \item{response}{Numeric simulated response (unitless)}
+}}
+\source{Responses generated with seed 123 by
+\code{data-raw/generate-fixture-responses.R} and stored as fixed values in
+the package source; no patient or experimental observations.}
+\description{A complete 4 by 4 Latin square: each treatment occurs once in
+every row and column. Responses are independent normal draws with mean 5 and
+SD 0.3, using seed 123. No treatment effect is built into these responses.}
+\details{Use to demonstrate the additive Latin square ANOVA. One response
+per row-column cell does not allow separate estimation of interactions.}
+\examples{summary(pharma_latin_square)}

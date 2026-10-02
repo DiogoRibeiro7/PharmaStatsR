@@ -68,6 +68,7 @@ nav:
   - Getting started:
       - Installation: installation.md
       - Quick start: quickstart.md
+      - Simulated example data: simulated-data.md
   - Statistical methods:
       - Method guide: methods.md
       - Export and evidence inventory: method-inventory.md

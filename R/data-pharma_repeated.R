@@ -1,17 +1,20 @@
 #' Simulated repeated measures dataset
 #'
-#' Example data for a simple two-condition repeated measures design used
-#' to showcase repeated measures analysis utilities in PharmaStatsR.
+#' Ten subjects with one hand-entered response for each of conditions A and B.
+#' Rows are ordered as a pair of conditions within each subject. These are not
+#' clinical records.
 #'
 #' @description Simulated repeated measures dataset
 #'
 #' @format A data frame with 20 rows and 3 variables:
 #' \describe{
-#'   \item{subject}{Subject identifier}
-#'   \item{condition}{Condition ("A" or "B")}
-#'   \item{response}{Numeric response}
+#'   \item{subject}{Integer subject identifier, 1 to 10}
+#'   \item{condition}{Character condition label, A or B}
+#'   \item{response}{Numeric illustrative response (unitless)}
 #' }
-#' @source Simulated data.
+#' @source Hand-entered illustrative values in the package source.
+#' @details Use for paired or repeated-condition examples. Convert both
+#'   subject and condition to factors for \code{pharma_repeated_anova()}.
 #' @examples
 #' data(pharma_repeated)
 #' head(pharma_repeated)

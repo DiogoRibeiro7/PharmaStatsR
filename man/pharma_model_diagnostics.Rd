@@ -34,7 +34,7 @@ those same fitted-model methods. Thresholds are descriptive screening
 heuristics, not tests or automatic rules for excluding observations.
 }
 \examples{
-fit <- lm(response ~ treatment + dose, data = pharma_sample)
+fit <- lm(response ~ treatment, data = pharma_sample)
 diagnostics <- pharma_model_diagnostics(fit)
 head(diagnostics)
 }

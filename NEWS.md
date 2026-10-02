@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Audit all six simulated fixtures, document their schemas, generation, and design limits, and check structural invariants. Store seeded fixture responses as fixed values with a separate regeneration script, so sourcing the package consumes no RNG state. Correct rank-deficient treatment-plus-dose examples on the confounded `pharma_sample`; no dataset values changed.
 - Add a scheduled and manual cross-platform R package check matrix, with required-dependency portability jobs and an Ubuntu all-Suggests backend job. Exercise workflow changes on pull requests, document dependency sets and skip policy, and keep the routine Ubuntu PR gate separate.
 - Validate meta-regression moderator shape and method inputs, exercise the optional `metafor` missing-backend path, and check fixed-effects coefficients against an independent weighted regression. Document study-level interpretation and a formula-based REML example.
 - Exercise the optional `mstate` backend with a prepared illness-death Cox model in CI and check its missing-package message independently. Document the required `newdata` profile for covariate models and clarify that `msfit` estimates cumulative transition hazards, not state probabilities.

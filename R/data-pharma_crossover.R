@@ -1,16 +1,20 @@
-#' De-identified crossover trial dataset
+#' Simulated crossover trial dataset
 #'
-#' A simulated balanced two-period AB/BA crossover study with ten subjects.
+#' A hand-entered, balanced two-period AB/BA illustration with ten subjects:
+#' five receive A then B and five B then A. These are not clinical records.
 #'
 #' @format A data frame with 20 rows and 5 variables:
 #' \describe{
-#'   \item{subject}{Subject factor}
-#'   \item{period}{Period factor (1 or 2)}
-#'   \item{treatment}{Treatment factor ("A" or "B")}
-#'   \item{response}{Numeric response}
-#'   \item{outcome}{Binary outcome}
+#'   \item{subject}{Subject factor, levels 1 to 10}
+#'   \item{period}{Period factor, levels 1 and 2}
+#'   \item{treatment}{Treatment factor, levels A and B}
+#'   \item{response}{Numeric illustrative response (unitless)}
+#'   \item{outcome}{Arbitrary binary example label, 0 or 1; not a defined clinical event}
 #' }
-#' @source Simulated data.
+#' @source Hand-entered illustrative values in the package source.
+#' @details One observation per subject and period. Use for a complete AB/BA
+#'   additive crossover ANOVA; these data do not establish bioequivalence or
+#'   identify carryover effects.
 #' @examples
 #' data(pharma_crossover)
 #' head(pharma_crossover)
