@@ -32,8 +32,8 @@ formula for the formula method.}
 }
 \value{
 A list containing the two t statistics, the larger one-sided
-  p-value, the observed mean difference, a confidence interval of level
-  1 - 2 * alpha, and Welch's degrees of freedom.
+p-value, the observed mean difference, a confidence interval of level
+1 - 2 * alpha, and Welch's degrees of freedom.
 }
 \description{
 Tests whether the difference between two population means lies strictly

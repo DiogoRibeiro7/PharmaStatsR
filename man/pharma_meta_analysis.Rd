@@ -11,17 +11,17 @@ pharma_meta_analysis(yi, vi, method = "REML", ...)
 
 \item{vi}{Numeric vector of effect size variances.}
 
-\item{method}{Estimation method passed to `metafor::rma`. Use "FE" for a
+\item{method}{Estimation method passed to \code{metafor::rma}. Use "FE" for a
 fixed-effects model or "REML" (default) for random effects.}
 
-\item{...}{Additional arguments passed to [metafor::rma].}
+\item{...}{Additional arguments passed to \link[metafor:rma]{metafor::rma}.}
 }
 \value{
-An `rma` object fitted with the requested `method`. Errors from
-  `metafor::rma` are propagated without substituting another model.
+An \code{rma} object fitted with the requested \code{method}. Errors from
+\code{metafor::rma} are propagated without substituting another model.
 }
 \description{
-Delegate a specified fixed- or random-effects model to `metafor::rma`.
+Delegate a specified fixed- or random-effects model to \code{metafor::rma}.
 Requires the 'metafor' package to be installed. An estimation failure is
 returned as an error; it never changes the chosen model to fixed effects.
 }

@@ -8,7 +8,7 @@ pharma_wild_bootstrap(formula, data, R = 1000)
 }
 \arguments{
 \item{formula}{Two-sided linear-model formula with a numeric vector response.
-All variables must be columns of `data`.}
+All variables must be columns of \code{data}.}
 
 \item{data}{Data frame containing the model variables; missing values in
 variables used by the model are rejected rather than silently dropped.}
@@ -17,7 +17,7 @@ variables used by the model are rejected rather than silently dropped.}
 }
 \value{
 Numeric matrix with one row per bootstrap draw and one column per
-  original model coefficient. Set a seed before calling for reproducibility.
+original model coefficient. Set a seed before calling for reproducibility.
 }
 \description{
 Keep the fitted design fixed and independently multiply each raw residual by

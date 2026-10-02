@@ -19,11 +19,11 @@ pharma_rate_metrics(event1, n1, event2, n2, conf.level = 0.95)
 }
 \value{
 A list with the unadjusted \code{risk_difference} (group 1 minus group 2),
-  its two-sided \code{rd_ci}, the unadjusted \code{risk_ratio} (group 1 divided by
-  group 2), and its two-sided \code{rr_ci}. The risk ratio is \code{NA_real_} if
-  neither group has events, \code{Inf} if only group 1 has events, and zero if
-  only group 2 has events. The adjusted ratio interval is finite for these
-  zero-event cases and is not centered on the unadjusted point estimate.
+its two-sided \code{rd_ci}, the unadjusted \code{risk_ratio} (group 1 divided by
+group 2), and its two-sided \code{rr_ci}. The risk ratio is \code{NA_real_} if
+neither group has events, \code{Inf} if only group 1 has events, and zero if
+only group 2 has events. The adjusted ratio interval is finite for these
+zero-event cases and is not centered on the unadjusted point estimate.
 }
 \description{
 Compare two independent binomial event counts. The risk difference uses a

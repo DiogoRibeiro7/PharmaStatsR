@@ -7,10 +7,10 @@
 pharma_unregister_stat(name)
 }
 \arguments{
-\item{name}{Character string of the plugin to remove.}
+\item{name}{Name of the statistical method to remove.}
 }
 \value{
-Invisible `TRUE` whether or not the method existed.
+Invisible \code{TRUE} whether or not the method existed.
 }
 \description{
 Unregister a statistical method

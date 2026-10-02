@@ -19,7 +19,6 @@
 #' @keywords datasets
 #' @export
 #' @examples
-#' data(pharma_repeated)
 #' head(pharma_repeated)
 pharma_repeated <- data.frame(
   subject = rep(1:10, each = 2),

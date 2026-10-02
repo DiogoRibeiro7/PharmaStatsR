@@ -21,19 +21,19 @@ pharma_bayes_stopping(
 \item{successes}{Non-negative whole number of observed responses.}
 
 \item{trials}{Positive whole number of observed participants; at least
-`successes`.}
+\code{successes}.}
 
 \item{threshold}{Posterior probability cutoff, strictly between 0 and 1.
-The flag is `TRUE` only when the probability exceeds this cutoff.}
+The flag is \code{TRUE} only when the probability exceeds this cutoff.}
 
 \item{null_rate}{Benchmark response probability, strictly between 0 and 1.
 Defaults to 0.5 for compatibility; set a clinically justified value.}
 }
 \value{
-A list with `prob`, the posterior probability that the single-arm
-  response rate is greater than `null_rate`, and `stop`, a logical flag
-  for `prob > threshold`. The flag is a threshold check, not a
-  recommendation to stop a study or a guarantee of error control.
+A list with \code{prob}, the posterior probability that the single-arm
+response rate is greater than \code{null_rate}, and \code{stop}, a logical flag
+for \code{prob > threshold}. The flag is a threshold check, not a
+recommendation to stop a study or a guarantee of error control.
 }
 \description{
 Compute the posterior probability that an unknown response rate exceeds a
@@ -42,7 +42,7 @@ treatment and control groups or establish a calibrated stopping design.
 }
 \details{
 With a Beta(prior_alpha, prior_beta) prior, the posterior after observing
-`successes` in `trials` is Beta(prior_alpha + successes,
+\code{successes} in \code{trials} is Beta(prior_alpha + successes,
 prior_beta + trials - successes). Repeated looks require a pre-specified
 schedule and calibration of operating characteristics.
 }

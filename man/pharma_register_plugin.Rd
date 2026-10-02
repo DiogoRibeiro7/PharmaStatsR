@@ -12,7 +12,7 @@ pharma_register_plugin(name, fun)
 \item{fun}{Function implementing the plugin.}
 }
 \value{
-Invisible `TRUE` on success.
+Invisible \code{TRUE} on success.
 }
 \description{
 Allows users to add their own statistical tests or helpers to the

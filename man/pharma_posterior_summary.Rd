@@ -7,7 +7,7 @@
 pharma_posterior_summary(model, prob = 0.95)
 }
 \arguments{
-\item{model}{A `stanreg` object from [rstanarm::stan_glm]}
+\item{model}{A \code{stanreg} object from \link[rstanarm:stan_glm]{rstanarm::stan_glm}}
 
 \item{prob}{Width of the credible interval (default 0.95)}
 }

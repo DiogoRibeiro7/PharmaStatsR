@@ -7,12 +7,12 @@
 check_numeric_vector(x, name)
 }
 \arguments{
-\item{x}{**numeric** vector to validate.}
+\item{x}{\strong{numeric} vector to validate.}
 
-\item{name}{**character** string used in error messages.}
+\item{name}{\strong{character} string used in error messages.}
 }
 \value{
-Invisible `TRUE` when validation succeeds.
+Invisible \code{TRUE} when validation succeeds.
 }
 \description{
 Ensures an argument is a numeric vector with no missing or infinite values.

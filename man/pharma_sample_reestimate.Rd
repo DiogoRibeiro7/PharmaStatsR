@@ -30,21 +30,21 @@ of the difference in sample means).}
 }
 \value{
 A numeric even total sample size, with at least two participants
-  per arm. No interim decision, conditional power, or error-spending
-  adjustment is returned.
+per arm. No interim decision, conditional power, or error-spending
+adjustment is returned.
 }
 \description{
 Calculate a planning sample size for a two-sided comparison of independent
 normal means with equal allocation and common per-person variance. The
 result is rounded to complete, balanced groups and is never below
-`current_n`. This is unconditional normal-approximation power, not a
+\code{current_n}. This is unconditional normal-approximation power, not a
 conditional-power calculation or a calibrated interim adaptation rule.
 }
 \details{
 For two equal groups, the unrounded per-arm target is twice the common
 variance times the square of the sum of the upper two-sided alpha and
 target-power normal quantiles, divided by the squared mean difference.
-If `effect` was estimated from unblinded interim outcomes, using this
+If \code{effect} was estimated from unblinded interim outcomes, using this
 value to change an ongoing trial may alter its type I error rate. The
 sample size and final testing rule require a pre-specified adaptive design
 and independent statistical review.

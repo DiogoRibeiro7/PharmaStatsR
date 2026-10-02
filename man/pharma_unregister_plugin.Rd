@@ -10,7 +10,7 @@ pharma_unregister_plugin(name)
 \item{name}{Character string of the plugin to remove.}
 }
 \value{
-Invisible `TRUE` if the plugin was removed.
+Invisible \code{TRUE} if the plugin was removed.
 }
 \description{
 Removes a previously registered plugin from the internal environment.

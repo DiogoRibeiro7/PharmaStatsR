@@ -19,7 +19,6 @@
 #' @keywords datasets
 #' @export
 #' @examples
-#' data(pharma_crossover)
 #' head(pharma_crossover)
 pharma_crossover <- data.frame(
   subject = factor(rep(1:10, each = 2)),

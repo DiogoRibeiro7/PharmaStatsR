@@ -7,16 +7,16 @@
 check_numeric_scalar(x, name, lower = -Inf, upper = Inf)
 }
 \arguments{
-\item{x}{**numeric** scalar to validate.}
+\item{x}{\strong{numeric} scalar to validate.}
 
-\item{name}{**character** string used in error messages.}
+\item{name}{\strong{character} string used in error messages.}
 
-\item{lower}{**numeric** lower bound (exclusive).}
+\item{lower}{\strong{numeric} lower bound (exclusive).}
 
-\item{upper}{**numeric** upper bound (exclusive).}
+\item{upper}{\strong{numeric} upper bound (exclusive).}
 }
 \value{
-Invisible `TRUE` when validation succeeds.
+Invisible \code{TRUE} when validation succeeds.
 }
 \description{
 Ensures an argument is a finite numeric scalar within optional bounds.

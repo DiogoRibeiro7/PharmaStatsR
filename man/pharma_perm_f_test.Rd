@@ -13,20 +13,20 @@ pharma_perm_f_test(formula, data, R = 1000, ...)
 
 \item{R}{A positive whole number of random response permutations.}
 
-\item{...}{Additional arguments passed to `stats::lm()`, such as
-`subset` or `na.action`. Weights and offsets are unsupported.}
+\item{...}{Additional arguments passed to \code{stats::lm()}, such as
+\code{subset} or \code{na.action}. Weights and offsets are unsupported.}
 }
 \value{
-A list with `statistic`, the observed global F value;
-  `perm`, a numeric vector of `R` permuted global F values; and
-  `p.value`, the Monte Carlo upper-tail p-value using
-  `(1 + sum(perm >= statistic)) / (R + 1)`.
+A list with \code{statistic}, the observed global F value;
+\code{perm}, a numeric vector of \code{R} permuted global F values; and
+\code{p.value}, the Monte Carlo upper-tail p-value using
+\code{(1 + sum(perm >= statistic)) / (R + 1)}.
 }
 \description{
 Compare all non-intercept predictors jointly against an intercept-only
 model (or a zero-mean model if the formula omits the intercept). The
 evaluated response is permuted across the observations used by
-`stats::lm()`, keeping the design matrix and analysis rows fixed.
+\code{stats::lm()}, keeping the design matrix and analysis rows fixed.
 }
 \details{
 Raw-response permutations test the global null that none of the

@@ -48,9 +48,9 @@ greater than accrual_period.}
 }
 \value{
 A data frame with id, treatment, enroll_time (since study start),
-  time (observed duration since enrollment), status (1 for event, 0 otherwise),
-  and dropout (1 for dropout, 0 otherwise). A row with both indicators zero
-  is administratively censored. Events take precedence over exact ties.
+time (observed duration since enrollment), status (1 for event, 0 otherwise),
+and dropout (1 for dropout, 0 otherwise). A row with both indicators zero
+is administratively censored. Events take precedence over exact ties.
 }
 \description{
 Randomize subjects equally between two arms, draw enrollment times from a

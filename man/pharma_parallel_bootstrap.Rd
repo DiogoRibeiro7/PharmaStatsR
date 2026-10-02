@@ -14,7 +14,7 @@ pharma_parallel_bootstrap(
 }
 \arguments{
 \item{data}{Nonempty data frame of independent observational units. Missing
-values are passed to `statistic` for the caller to handle.}
+values are passed to \code{statistic} for the caller to handle.}
 
 \item{statistic}{Function receiving a resampled base data frame as its first
 argument.}
@@ -22,16 +22,16 @@ argument.}
 \item{R}{Positive whole number of bootstrap replicates.}
 
 \item{plan}{Future strategy name, function, or call accepted by
-`future::plan()`; defaults to `"multisession"`.}
+\code{future::plan()}; defaults to \code{"multisession"}.}
 
-\item{...}{Additional arguments passed to `statistic`.}
+\item{...}{Additional arguments passed to \code{statistic}.}
 }
 \value{
 A list with one statistic per bootstrap replicate. Set a seed
-  before calling for reproducibility across future strategies.
+before calling for reproducibility across future strategies.
 }
 \description{
-Resample individual rows with replacement and evaluate `statistic` for
+Resample individual rows with replacement and evaluate \code{statistic} for
 each replicate using future.apply. Each replicate has the original row
 count. Parallel-safe random streams make seeded results reproducible
 across future backends; the caller's previous future plan is restored.

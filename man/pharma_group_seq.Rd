@@ -16,19 +16,19 @@ pharma_group_seq(
 
 \item{alpha}{Overall two-sided type I error rate, strictly between 0 and 0.5.}
 
-\item{method}{Boundary family, `"obrien-fleming"` or `"pocock"`.}
+\item{method}{Boundary family, \code{"obrien-fleming"} or \code{"pocock"}.}
 
 \item{timing}{Optional increasing information fractions, one per analysis.
 The last must equal 1. Defaults to equally spaced information fractions.}
 }
 \value{
 A numeric vector of positive critical z-values. At each analysis
-  the upper boundary is the returned value and the lower boundary is its
-  negative. No futility or sample-size calculation is returned.
+the upper boundary is the returned value and the lower boundary is its
+negative. No futility or sample-size calculation is returned.
 }
 \description{
 Calculate calibrated O'Brien-Fleming or Pocock critical z-values for
-planned analyses using `gsDesign`. These are symmetric two-sided
+planned analyses using \code{gsDesign}. These are symmetric two-sided
 efficacy boundaries under its canonical joint normal model.
 }
 \examples{
@@ -36,6 +36,6 @@ pharma_group_seq(k = 3)
 pharma_group_seq(k = 3, method = "pocock", timing = c(0.25, 0.6, 1))
 }
 \references{
-`gsDesign` design derivation:
+\code{gsDesign} design derivation:
 \url{https://keaven.github.io/gsDesign/reference/gsDesign.html}
 }

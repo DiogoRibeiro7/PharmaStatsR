@@ -36,9 +36,9 @@ fitted model using \code{caret::varImp}.}
 }
 \value{
 A list with \code{best_model}, the highest-scoring caret model;
-  \code{all_models}, the successfully fitted candidates; and
-  \code{variable_importance}, a list when \code{explain = TRUE} or
-  \code{NULL} otherwise. Failed candidate fits produce warnings.
+\code{all_models}, the successfully fitted candidates; and
+\code{variable_importance}, a list when \code{explain = TRUE} or
+\code{NULL} otherwise. Failed candidate fits produce warnings.
 }
 \description{
 Uses \code{caret::train} to evaluate multiple algorithms with cross-validation
@@ -47,8 +47,8 @@ and returns the highest-scoring successful fit. The function requires
 }
 \details{
 If \code{caret} is unavailable, the call errors with an installation
-  instruction before fitting any model. Individual candidate failures are
-  warned and omitted, so inspect \code{all_models} to see what ran.
+instruction before fitting any model. Individual candidate failures are
+warned and omitted, so inspect \code{all_models} to see what ran.
 }
 \examples{
 if (requireNamespace("caret", quietly = TRUE)) {

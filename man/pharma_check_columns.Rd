@@ -12,7 +12,7 @@ pharma_check_columns(data, required)
 \item{required}{A nonempty character vector of unique, nonblank column names.}
 }
 \value{
-`TRUE` if every required column exists; otherwise an error.
+\code{TRUE} if every required column exists; otherwise an error.
 }
 \description{
 Checks column names in a data frame. It does not examine values, study

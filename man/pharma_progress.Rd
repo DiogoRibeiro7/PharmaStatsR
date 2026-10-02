@@ -7,12 +7,12 @@
 pharma_progress(max_value, msg = "Progress")
 }
 \arguments{
-\item{max_value}{**integer** total number of steps.}
+\item{max_value}{\strong{integer} total number of steps.}
 
-\item{msg}{**character** base message to display with progress updates.}
+\item{msg}{\strong{character} base message to display with progress updates.}
 }
 \value{
-A list with `update` and `finish` functions.
+A list with \code{update} and \code{finish} functions.
 }
 \description{
 Creates a simple progress reporter that outputs status messages to the

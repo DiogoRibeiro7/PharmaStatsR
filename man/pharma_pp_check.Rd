@@ -7,16 +7,16 @@
 pharma_pp_check(model, ...)
 }
 \arguments{
-\item{model}{A `stanreg` object}
+\item{model}{A \code{stanreg} object}
 
-\item{...}{Additional arguments passed to [bayesplot::pp_check]}
+\item{...}{Additional arguments passed to \link[bayesplot:pp_check]{bayesplot::pp_check}}
 }
 \value{
-A `ggplot` object
+A \code{ggplot} object
 }
 \description{
 Generate a posterior predictive check plot for a fitted Bayesian model
-using [bayesplot::pp_check].
+using \link[bayesplot:pp_check]{bayesplot::pp_check}.
 }
 \examples{
 \dontrun{

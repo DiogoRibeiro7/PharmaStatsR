@@ -13,19 +13,19 @@ pharma_meta_regression(yi, vi, mods, method = "REML", ...)
 standard errors.}
 
 \item{mods}{Numeric moderator matrix with one row per study and at least
-one column, or a one-sided moderator formula such as `~ dose`. Formula
-variables may be supplied with `data` through `...`.}
+one column, or a one-sided moderator formula such as \code{~ dose}. Formula
+variables may be supplied with \code{data} through \code{...}.}
 
-\item{method}{Estimation method passed to `metafor::rma()`. The default
+\item{method}{Estimation method passed to \code{metafor::rma()}. The default
 "REML" fits a mixed-effects model; use "FE" explicitly for fixed effects.}
 
-\item{...}{Additional arguments passed to [metafor::rma].}
+\item{...}{Additional arguments passed to \link[metafor:rma]{metafor::rma}.}
 }
 \value{
-An `rma` object for the requested model.
+An \code{rma} object for the requested model.
 }
 \description{
-Fit a fixed- or mixed-effects meta-regression using `metafor::rma()`.
+Fit a fixed- or mixed-effects meta-regression using \code{metafor::rma()}.
 Requires the optional 'metafor' package. Estimation errors are propagated.
 }
 \examples{

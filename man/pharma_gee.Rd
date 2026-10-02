@@ -16,27 +16,27 @@ pharma_gee(
 \arguments{
 \item{formula}{A model formula.}
 
-\item{id}{A bare column name in `data` or an observation-aligned vector
+\item{id}{A bare column name in \code{data} or an observation-aligned vector
 identifying independent clusters. Each cluster must occupy consecutive rows.}
 
 \item{data}{Data frame containing the variables in the model.}
 
 \item{family}{Error distribution and link function to be used in the model.}
 
-\item{corstr}{Working correlation structure. See `geepack::geeglm`.}
+\item{corstr}{Working correlation structure. See \code{geepack::geeglm}.}
 
-\item{...}{Additional arguments passed to `geepack::geeglm`.}
+\item{...}{Additional arguments passed to \code{geepack::geeglm}.}
 }
 \value{
-A `geeglm` object.
+A \code{geeglm} object.
 }
 \description{
-Convenience wrapper around `geepack::geeglm` for correlated response data.
-The function resolves cluster IDs against `data`, validates complete model
-values and contiguous cluster rows, and then delegates fitting to `geepack`.
+Convenience wrapper around \code{geepack::geeglm} for correlated response data.
+The function resolves cluster IDs against \code{data}, validates complete model
+values and contiguous cluster rows, and then delegates fitting to \code{geepack}.
 }
 \details{
-`geepack::geeglm()` requires complete data and contiguous rows for each
+\code{geepack::geeglm()} requires complete data and contiguous rows for each
 cluster. Sort by the cluster identifier (and by visit order for an ordered
 working correlation) before fitting. The model estimates a marginal mean
 relationship; its interpretation depends on the chosen working correlation

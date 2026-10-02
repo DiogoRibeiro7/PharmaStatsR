@@ -7,12 +7,12 @@
 check_dataset(data, required_columns)
 }
 \arguments{
-\item{data}{**data.frame** to validate.}
+\item{data}{\strong{data.frame} to validate.}
 
-\item{required_columns}{**character** vector of required column names.}
+\item{required_columns}{\strong{character} vector of required column names.}
 }
 \value{
-Invisible `TRUE` when all required columns are present.
+Invisible \code{TRUE} when all required columns are present.
 }
 \description{
 Helper functions used across the package.

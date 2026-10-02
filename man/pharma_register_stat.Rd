@@ -3,19 +3,20 @@
 \name{pharma_register_stat}
 \alias{pharma_register_stat}
 \title{Register a custom statistical method}
-\description{
-Extend PharmaStatsR with bespoke statistical routines that can be
-invoked through \code{pharma_run_stat()}.
-}
 \usage{
 pharma_register_stat(name, fun)
 }
 \arguments{
-\item{name}{Name of the method.}
-\item{fun}{Function implementing the method.}
+\item{name}{Unique name of the statistical method.}
+
+\item{fun}{Function implementing the statistical method.}
 }
 \value{
 Invisible \code{TRUE} on success.
+}
+\description{
+Extend PharmaStatsR with bespoke statistical routines that can be
+invoked through \code{pharma_run_stat()}.
 }
 \examples{
 pharma_register_stat("mean_method", mean)

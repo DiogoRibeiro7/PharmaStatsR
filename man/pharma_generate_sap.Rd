@@ -21,7 +21,7 @@ pharma_generate_sap(
 }
 \arguments{
 \item{path}{Character string. Optional output file path to save the
-generated Markdown. If `NULL`, the function returns the text instead
+generated Markdown. If \code{NULL}, the function returns the text instead
 of writing to disk.}
 
 \item{title}{Character string with the study title. Defaults to
@@ -45,13 +45,13 @@ of writing to disk.}
 \item{extra_sections}{Named list of additional sections and their contents.}
 
 \item{include_sections}{Character vector giving the order of default sections
-to include. Set to `NULL` to omit all defaults. Unknown names are
+to include. Set to \code{NULL} to omit all defaults. Unknown names are
 currently ignored; inspect the returned sections before using the file.}
 }
 \value{
 A character vector containing the SAP in Markdown format. If
-  `path` is provided, the text is invisibly returned after being written
-  to that location.
+\code{path} is provided, the text is invisibly returned after being written
+to that location.
 }
 \description{
 Creates a basic Markdown template for a statistical analysis plan. The

@@ -20,7 +20,6 @@
 #' @keywords datasets
 #' @export
 #' @examples
-#' data(pharma_latin_square)
 #' summary(pharma_latin_square)
 pharma_latin_square <- data.frame(
   row = factor(rep(1:4, each = 4)),

@@ -7,16 +7,16 @@
 pharma_log(level = "INFO", msg)
 }
 \arguments{
-\item{level}{**character** log level for the message.}
+\item{level}{\strong{character} log level for the message.}
 
-\item{msg}{**character** string to output.}
+\item{msg}{\strong{character} string to output.}
 }
 \value{
-Invisible `NULL`.
+Invisible \code{NULL}.
 }
 \description{
 Simple logging utility with verbosity controlled by
-`pharma_config()` via the `log_level` option. Levels in increasing
+\code{pharma_config()} via the \code{log_level} option. Levels in increasing
 order are "DEBUG", "INFO", "WARN", and "ERROR".
 }
 \keyword{internal}

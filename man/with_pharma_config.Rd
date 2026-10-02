@@ -12,10 +12,10 @@ with_pharma_config(options, expr)
 \item{expr}{Expression to evaluate while the options are active.}
 }
 \value{
-The result of `expr`.
+The result of \code{expr}.
 }
 \description{
-`with_pharma_config()` sets package options for the duration of `expr` and
+\code{with_pharma_config()} sets package options for the duration of \code{expr} and
 restores the previous values on exit.
 }
 \examples{

@@ -7,19 +7,19 @@
 pharma_latin_square_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A two-sided `response ~ treatment + row + column` formula
+\item{formula}{A two-sided \code{response ~ treatment + row + column} formula
 with an intercept and three main effects in that order. Each design term
 must be a factor, character, or logical variable. Wrap numeric identifiers
-in `factor()` in the formula or data.}
+in \code{factor()} in the formula or data.}
 
 \item{data}{A data frame containing the variables in the formula.}
 
-\item{...}{Additional arguments passed to `stats::aov`. `subset`,
-`weights`, and `na.action` are not supported because they can alter
+\item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
+\code{weights}, and \code{na.action} are not supported because they can alter
 the checked design or its analysis population.}
 }
 \value{
-An object of class `aov`.
+An object of class \code{aov}.
 }
 \description{
 Fit an additive ANOVA for a complete Latin square with categorical treatment,
@@ -27,10 +27,10 @@ row, and column effects.
 }
 \details{
 There must be the same number of observed row, column, and treatment levels,
-  at least three of each. Every row-column cell must occur once, and each
-  treatment must occur once in every row and column. Missing model values
-  and non-finite responses are rejected. This additive model has no
-  separately estimable interactions in a single unreplicated square.
+at least three of each. Every row-column cell must occur once, and each
+treatment must occur once in every row and column. Missing model values
+and non-finite responses are rejected. This additive model has no
+separately estimable interactions in a single unreplicated square.
 }
 \examples{
 pharma_latin_square_anova(response ~ treatment + row + column, data = pharma_latin_square)

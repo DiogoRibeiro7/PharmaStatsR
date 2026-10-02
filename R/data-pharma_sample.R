@@ -20,7 +20,6 @@
 #' @keywords datasets
 #' @export
 #' @examples
-#' data(pharma_sample)
 #' head(pharma_sample)
 pharma_sample <- data.frame(
   subject = 1:20,

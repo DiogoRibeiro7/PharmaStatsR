@@ -80,7 +80,8 @@ pharma_run_plugin <- function(name, ...) {
 #' Extend PharmaStatsR with bespoke statistical routines that can be
 #' invoked through `pharma_run_stat()`.
 #'
-#' @inheritParams pharma_register_plugin
+#' @param name Unique name of the statistical method.
+#' @param fun Function implementing the statistical method.
 #'
 #' @return Invisible `TRUE` on success.
 #' @examples
@@ -101,7 +102,7 @@ pharma_register_stat <- function(name, fun) {
 
 #' Unregister a statistical method
 #'
-#' @inheritParams pharma_unregister_plugin
+#' @param name Name of the statistical method to remove.
 #'
 #' @return Invisible `TRUE` whether or not the method existed.
 #' @export

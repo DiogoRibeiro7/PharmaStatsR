@@ -16,7 +16,7 @@ pharma_block_bootstrap(
 }
 \arguments{
 \item{data}{Data frame to resample. Missing values outside the cluster IDs
-are passed to `statistic` for the caller to handle.}
+are passed to \code{statistic} for the caller to handle.}
 
 \item{cluster}{Single character column name or an atomic vector of cluster
 IDs with one value per row. Character vectors of length greater than one
@@ -24,20 +24,20 @@ are treated as IDs, not as column names. At least two observed clusters
 are required; cluster IDs cannot be missing.}
 
 \item{statistic}{Function receiving a resampled data frame as its first
-argument and any additional arguments from `...`.}
+argument and any additional arguments from \code{...}.}
 
 \item{R}{Positive whole number of bootstrap replicates.}
 
 \item{progress}{Single nonmissing logical flag for interactive progress.}
 
-\item{...}{Additional arguments forwarded to `statistic`.}
+\item{...}{Additional arguments forwarded to \code{statistic}.}
 
 \item{resample_id}{Optional new column name. When supplied, each selected
 copy of a cluster gets a distinct integer ID in this column, including
 when the same original cluster is selected more than once. Pass by name.}
 }
 \value{
-A list of `R` statistics; set a seed for reproducible resampling.
+A list of \code{R} statistics; set a seed for reproducible resampling.
 }
 \description{
 Sample the observed clusters with replacement, taking every row from each

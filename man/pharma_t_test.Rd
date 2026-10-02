@@ -15,7 +15,7 @@ pharma_t_test(x, ...)
 \arguments{
 \item{x}{Numeric vector of observations from the first group.}
 
-\item{...}{Additional arguments passed to `stats::t.test`.}
+\item{...}{Additional arguments passed to \code{stats::t.test}.}
 
 \item{y}{Numeric vector of observations from the second group.}
 
@@ -24,25 +24,26 @@ pharma_t_test(x, ...)
 \item{data}{A data frame containing the variables in the formula.}
 }
 \value{
-A `htest` object produced by `stats::t.test`.
+A \code{htest} object produced by \code{stats::t.test}.
 }
 \description{
 Provides a flexible interface for comparing two numeric samples, supporting
 both vector and formula interfaces. The function returns the full result from
-`stats::t.test` with p-values and confidence intervals.
+\code{stats::t.test} with p-values and confidence intervals.
 }
 \section{Methods}{
 
 This function is S3 generic with two methods:
 \describe{
-  \item{default}{Vector interface for direct comparison of two numeric vectors.}
-  \item{formula}{Formula interface for comparing groups within a data frame.}
+\item{default}{Vector interface for direct comparison of two numeric vectors.}
+\item{formula}{Formula interface for comparing groups within a data frame.}
 }
 }
 
 \examples{
 # Comprehensive example showing a complete analysis
 # 1. Data preparation
+set.seed(42)
 grp_a <- rnorm(20, mean = 5, sd = 1)
 grp_b <- rnorm(20, mean = 5.5, sd = 1)
 

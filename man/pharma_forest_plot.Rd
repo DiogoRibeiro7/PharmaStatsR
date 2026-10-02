@@ -7,15 +7,15 @@
 pharma_forest_plot(model, ...)
 }
 \arguments{
-\item{model}{An object from [metafor::rma].}
+\item{model}{An object from \link[metafor:rma]{metafor::rma}.}
 
-\item{...}{Additional arguments passed to [metafor::forest].}
+\item{...}{Additional arguments passed to \link[metafor:forest]{metafor::forest}.}
 }
 \value{
 A plot.
 }
 \description{
-Create a forest plot from an `rma` object.
+Create a forest plot from an \code{rma} object.
 Requires the 'metafor' package.
 }
 \examples{

@@ -11,13 +11,13 @@ pharma_bayesian_glm(formula, data, ...)
 
 \item{data}{Data frame}
 
-\item{...}{Additional arguments passed to [rstanarm::stan_glm]}
+\item{...}{Additional arguments passed to \link[rstanarm:stan_glm]{rstanarm::stan_glm}}
 }
 \value{
-A `stanreg` object
+A \code{stanreg} object
 }
 \description{
-Fit a generalized linear model using MCMC via `rstanarm::stan_glm`.
+Fit a generalized linear model using MCMC via \code{rstanarm::stan_glm}.
 }
 \examples{
 \dontrun{

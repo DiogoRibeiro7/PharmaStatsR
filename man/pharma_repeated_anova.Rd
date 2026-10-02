@@ -7,19 +7,19 @@
 pharma_repeated_anova(formula, data, ...)
 }
 \arguments{
-\item{formula}{A two-sided `response ~ condition + Error(subject)` formula
-with an intercept. `condition` and `subject` must be factor columns;
-convert numeric identifiers explicitly with `factor()`.}
+\item{formula}{A two-sided \code{response ~ condition + Error(subject)} formula
+with an intercept. \code{condition} and \code{subject} must be factor columns;
+convert numeric identifiers explicitly with \code{factor()}.}
 
 \item{data}{A data frame with a finite numeric response and complete pairs.}
 
-\item{...}{Additional arguments passed to `stats::aov`. `subset`,
-`weights`, `na.action`, and `offset` are not supported because they can
+\item{...}{Additional arguments passed to \code{stats::aov}. \code{subset},
+\code{weights}, \code{na.action}, and \code{offset} are not supported because they can
 change the checked population or model.}
 }
 \value{
-An `aovlist` with subject and within-subject error strata. The
-  condition F test is in `summary(fit)[["Error: Within"]][[1L]]`.
+An \code{aovlist} with subject and within-subject error strata. The
+condition F test is in \code{summary(fit)[["Error: Within"]][[1L]]}.
 }
 \description{
 Fit a one-factor within-subject ANOVA to paired observations. Each
