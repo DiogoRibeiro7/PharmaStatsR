@@ -65,9 +65,6 @@ jobs:
             any::flextable
             any::officer
             any::roxygen2
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          build_args: 'c("--no-manual")'
       - name: Check generated R help
         run: |
           Rscript -e 'roxygen2::roxygenise()'
@@ -87,6 +84,9 @@ jobs:
           name: documentation-drift
           path: documentation-drift.patch
           if-no-files-found: ignore
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          build_args: 'c("--no-manual")'
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v7
