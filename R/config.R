@@ -17,7 +17,8 @@
 #'   - `cache_dir` (**character**): directory used for caching intermediate
 #'     results.
 #'
-#' @return A named list of current configuration values.
+#' @return A named list of current configuration values. The no-argument getter
+#'   returns it visibly; a setter returns the updated list invisibly.
 #' @examples
 #' pharma_config(log_level = "DEBUG", default_ci = 0.9)
 #' pharma_config()

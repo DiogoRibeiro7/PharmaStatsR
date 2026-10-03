@@ -24,7 +24,8 @@ results.
 }}
 }
 \value{
-A named list of current configuration values.
+A named list of current configuration values. The no-argument getter
+returns it visibly; a setter returns the updated list invisibly.
 }
 \description{
 \code{pharma_config()} gets or sets package-wide options such as logging
