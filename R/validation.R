@@ -8,6 +8,8 @@
 #' @param required_cols Optional **character** vector of required column names.
 #'
 #' @return Invisible `TRUE` if all checks pass.
+#' @details Checks the data frame and the presence of named variables only.
+#'   It does not check missing values, column types, or the study design.
 #' @keywords internal
 validate_inputs <- function(data, formula = NULL, required_cols = NULL) {
   if (!is.data.frame(data)) {

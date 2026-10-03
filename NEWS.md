@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Generate the last six hand-maintained R help topics from roxygen source and require all committed Rd pages to be generated. Replace the unusable counting-process Cox example with a runnable interval fixture and clarify logistic and internal input-checking limits.
 - Replace the placeholder workflow vignette with a reproducible two-group analysis, diagnostic screening, and a results table on simulated data; correct the three registry help links in the evidence inventory.
 - Check generated R help and namespace files in the pull-request workflow before the package check, and keep the reconciliation diff as a CI artifact when source comments and installed help disagree.
 - Audit all six simulated fixtures, document their schemas, generation, and design limits, and check structural invariants. Store seeded fixture responses as fixed values with a separate regeneration script, so sourcing the package consumes no RNG state. Correct rank-deficient treatment-plus-dose examples on the confounded `pharma_sample`; no dataset values changed.
