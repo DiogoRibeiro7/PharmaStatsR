@@ -107,6 +107,10 @@ jobs:
         with:
           r-version: 'release'
           use-public-rspm: true
+      - name: Install HTML Tidy for manual validation
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tidy
       - uses: r-lib/actions/setup-tinytex@v2
       - uses: actions/setup-python@v7
         with:

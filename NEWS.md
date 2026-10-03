@@ -1,7 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
-- Build the package PDF manual in the all-Suggests candidate check and retain it with the source and check evidence. The routine and portability jobs still skip manual generation.
+- Validate the package PDF and HTML manuals in the all-Suggests candidate check with TinyTeX and HTML Tidy, and retain the PDF with the source and check evidence. The routine and portability jobs still skip manual generation.
 - Limit the default multisession row bootstrap to two workers. The caller can still supply a custom future strategy. Run the five-job candidate matrix for package source changes on PRs and merged `main` commits.
 - Run the five-job validation matrix automatically on `main` when its workflow changes, so the merged release-gate commit has its own source and platform evidence.
 - Let the installed citation derive package metadata from `DESCRIPTION` in both installed and source-check contexts, and cite the Newcombe rate-interval reference by DOI. The first candidate tarball check identified both issues in its incoming feasibility NOTE; calculations are unchanged.
