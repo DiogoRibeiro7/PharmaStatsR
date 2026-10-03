@@ -97,6 +97,7 @@ nav:
       - Trial simulation: trial-simulation.md
       - Competing risks: competing-risks.md
       - Kaplan–Meier and log-rank: kaplan-meier.md
+      - Landmark Cox analysis: landmark-analysis.md
       - Correlated outcomes with GEE: gee.md
       - Joint longitudinal and survival models: joint-model.md
       - Multistate transition hazards: multistate.md

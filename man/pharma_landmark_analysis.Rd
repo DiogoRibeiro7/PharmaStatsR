@@ -4,7 +4,7 @@
 \alias{pharma_landmark_analysis}
 \title{Landmark analysis}
 \usage{
-pharma_landmark_analysis(formula, data, landmark, ...)
+pharma_landmark_analysis(formula, data, landmark, ..., subset = NULL)
 }
 \arguments{
 \item{formula}{A right-censored survival formula.}
@@ -14,14 +14,27 @@ pharma_landmark_analysis(formula, data, landmark, ...)
 \item{landmark}{A finite, nonnegative landmark time.}
 
 \item{...}{Additional arguments passed to \code{survival::coxph}.}
+
+\item{subset}{Optional logical expression evaluated in \code{data}, or a
+nonmissing logical vector with one value per row. Selection precedes
+the landmark restriction and covariate evaluation.}
 }
 \value{
-A \code{coxph} object fitted on landmarked data.
+A \code{coxph} object fitted on the selected landmark risk set.
 }
 \description{
 Fits a Cox model among individuals still observed after the landmark,
 measuring survival time from the landmark. Supports right-censored
-\code{Surv(time, status)} responses.
+\code{Surv(time, status)} responses. The risk set is selected from complete
+response times and statuses before predictor values are checked.
+}
+\details{
+Only subjects whose recorded follow-up extends strictly beyond
+the landmark are included. Their times are shifted to start at zero;
+event indicators are unchanged. Covariates must be complete in this
+risk set. This is an ordinary Cox model conditional on surviving and
+remaining observed to the landmark; it does not account for earlier
+outcomes or establish that censoring is independent.
 }
 \examples{
 pharma_landmark_analysis(
