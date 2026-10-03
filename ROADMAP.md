@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. P1 design contracts, cross-platform check matrix, and simulated-data audit are closed; the survival, resampling, optional-backend, and documentation-family issues remain open. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
+**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. P1 design contracts, survival-family checks, cross-platform matrix, and simulated-data audit are closed; resampling, optional-backend, and documentation-family issues remain open. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -8,11 +8,10 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51) Survival family | Complete direct-backend references and input/population checks for the remaining survival paths. The [landmark risk-set PR #84](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/84) covers one path, not the whole family. |
-| 2 | [#52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52) Resampling and simulation | Finish deterministic checks of sampling units, RNG behavior, and the interpretation of returned draws. |
-| 3 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backends | Reconcile all runtime dependencies and exercise installed and missing-backend behavior. |
-| 4 | [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation | Close remaining help, example, vignette, and site gaps against the implementation and inventory. This status refresh contributes to the issue but does not close it. |
-| 5 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57), then [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) | Decide API support policy, then assemble and check one reproducible release candidate. |
+| 1 | [#52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52) Resampling and simulation | Finish deterministic checks of sampling units, RNG behavior, and the interpretation of returned draws. |
+| 2 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backends | Reconcile all runtime dependencies and exercise installed and missing-backend behavior. |
+| 3 | [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation | Close remaining help, example, vignette, and site gaps against the implementation and inventory. |
+| 4 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57), then [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) | Decide API support policy, then assemble and check one reproducible release candidate. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -29,7 +28,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Issue | Status | Outcome |
 | --- | --- | --- |
 | [#50](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/50) Design and model contracts | Closed | Factorial, repeated-measures, and response-surface helpers have defined inputs and tested interpretations. |
-| [#51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51) Survival and competing risks | Open | Finish event, censoring, tie, and analysis-row references for the family; the landmark path was improved in #84. |
+| [#51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51) Survival and competing risks | Closed | Direct backend cases cover all six listed helpers, with event, censoring, tie, and row-selection assumptions linked from the evidence inventory. |
 | [#52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52) Resampling, permutation, and simulation | Open | Finish the family review of sampling units, RNG behavior, and output interpretation. |
 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backend and dependency audit | Open | Verify every `Imports`/`Suggests` boundary and runtime message, including installed and missing paths. |
 | [#54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54) Cross-platform check matrix | Closed | Weekly/manual checks cover R versions, platforms, and an all-Suggests backend job; candidate runs still need to be recorded under #58. |

@@ -7,19 +7,30 @@
 pharma_parametric_survival(formula, data, dist = "weibull", ...)
 }
 \arguments{
-\item{formula}{A model formula of the form \code{Surv(time, status) ~ predictors}.}
+\item{formula}{A survival model formula, typically
+\code{Surv(time, status) ~ predictors} for right-censored observations.}
 
 \item{data}{A data frame containing the variables used in the model.}
 
-\item{dist}{Distribution to use. Defaults to "weibull".}
+\item{dist}{Distribution accepted by \code{survival::survreg()}; defaults to
+\code{"weibull"}.}
 
-\item{...}{Additional arguments passed to \code{survival::survreg}.}
+\item{...}{Additional arguments, including \code{subset} and \code{na.action},
+passed to \code{survival::survreg()}.}
 }
 \value{
-A \code{survreg} object.
+A \code{survreg} object. With the default Weibull model, covariate
+coefficients describe log survival-time ratios, not Cox log hazard ratios.
 }
 \description{
-Convenience wrapper around \code{survival::survreg} for parametric time-to-event analyses.
+Delegates parametric time-to-event regression to \code{survival::survreg()}.
+}
+\details{
+For a right-censored \code{Surv(time, status)} response, code censoring
+as 0 and the event as 1. \code{survreg()} handles row selection and missingness;
+inspect the number of \code{linear.predictors} and \code{na.action}. For Weibull
+fits, the fitted
+\code{scale} is the reciprocal of the usual Weibull shape parameter.
 }
 \examples{
 pharma_parametric_survival(survival::Surv(time, status) ~ treatment,
