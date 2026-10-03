@@ -5,25 +5,30 @@
 #' planned analyses. The resulting text can be returned as a character
 #' vector or written directly to a file. It does not supply, review, or
 #' approve a study-specific analysis plan; the caller must complete and
-#' review every relevant section before use.
+#' review every relevant section before use. Section text may be an empty
+#' string when it will be completed later.
 #'
 #' @param path Character string. Optional output file path to save the
 #'   generated Markdown. If `NULL`, the function returns the text instead
 #'   of writing to disk.
-#' @param title Character string with the study title. Defaults to
-#'   "Untitled Study".
-#' @param author Character string with the author name. Defaults to
-#'   "Diogo Ribeiro".
-#' @param objectives Text describing study objectives.
-#' @param endpoints Text describing the study endpoints.
-#' @param populations Text describing analysis populations.
-#' @param methods Text describing planned analyses.
-#' @param criteria Text describing inclusion/exclusion criteria.
-#' @param software Text describing the software to be used.
-#' @param extra_sections Named list of additional sections and their contents.
+#' @param title Single, non-missing character string with the study title.
+#'   Defaults to "Untitled Study".
+#' @param author Single, non-missing character string with the author name.
+#'   Defaults to "Diogo Ribeiro".
+#' @param objectives Single, non-missing character string describing objectives.
+#' @param endpoints Single, non-missing character string describing endpoints.
+#' @param populations Single, non-missing character string describing populations.
+#' @param methods Single, non-missing character string describing analyses.
+#' @param criteria Single, non-missing character string describing criteria.
+#' @param software Single, non-missing character string describing software.
+#' @param extra_sections Named list of additional sections, each containing a
+#'   single, non-missing character string. Names must be nonblank, unique, and
+#'   distinct from the default section names. `NULL` or `list()` adds none.
 #' @param include_sections Character vector giving the order of default sections
-#'   to include. Set to `NULL` to omit all defaults. Unknown names are
-#'   currently ignored; inspect the returned sections before using the file.
+#'   to include: "Objectives", "Endpoints", "Analysis Populations",
+#'   "Inclusion/Exclusion Criteria", "Planned Analyses", and "Software".
+#'   Names must be nonblank, unique, and supported. Set to `NULL` to omit
+#'   all defaults; an empty character vector is invalid.
 #'
 #' @return A character vector containing the SAP in Markdown format. If
 #'   `path` is provided, the text is invisibly returned after being written
@@ -58,15 +63,6 @@ pharma_generate_sap <- function(path = NULL,
                                   "Objectives", "Endpoints", "Analysis Populations",
                                   "Inclusion/Exclusion Criteria", "Planned Analyses", "Software"
                                 )) {
-  # Begin assembling the SAP text with the title and author information
-  sap_text <- c(
-    paste0("# Statistical Analysis Plan - ", title),
-    "",
-    paste0("Author: ", author)
-  )
-
-  # Named list of the default sections and their contents. Users can
-  # select a subset of these sections or reorder them via include_sections.
   defaults <- list(
     "Objectives" = objectives,
     "Endpoints" = endpoints,
@@ -76,18 +72,74 @@ pharma_generate_sap <- function(path = NULL,
     "Software" = software
   )
 
-  # Add each requested section in the specified order. Unknown section
-  # names are ignored so callers can easily customise the output.
-  if (!is.null(include_sections)) {
-    for (sec in include_sections) {
-      if (!sec %in% names(defaults)) next
-      sap_text <- c(sap_text, "", paste0("## ", sec), defaults[[sec]])
+  check_text <- function(value, argument) {
+    if (!is.character(value) || length(value) != 1L || is.na(value)) {
+      stop(argument, " must be a single, non-missing character string.", call. = FALSE)
     }
   }
 
-  # Append any user-defined sections supplied in the named list
-  # `extra_sections`. These are inserted after the default sections.
-  if (!is.null(extra_sections) && length(extra_sections) > 0) {
+  check_text(title, "title")
+  check_text(author, "author")
+  section_arguments <- c(
+    "objectives", "endpoints", "populations", "criteria", "methods", "software"
+  )
+  for (i in seq_along(defaults)) {
+    check_text(defaults[[i]], section_arguments[[i]])
+  }
+
+  if (!is.null(include_sections)) {
+    if (!is.character(include_sections) || length(include_sections) == 0L) {
+      stop("include_sections must be a nonempty character vector or NULL.", call. = FALSE)
+    }
+    if (anyNA(include_sections) || any(!nzchar(trimws(include_sections)))) {
+      stop("include_sections must not contain missing or blank names.", call. = FALSE)
+    }
+    if (anyDuplicated(include_sections)) {
+      stop("include_sections must not contain duplicate names.", call. = FALSE)
+    }
+    unknown <- setdiff(include_sections, names(defaults))
+    if (length(unknown) > 0L) {
+      stop(
+        "Unknown include_sections: ", paste(sQuote(unknown), collapse = ", "),
+        ". Supported sections: ", paste(names(defaults), collapse = ", "), ".",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (!is.null(extra_sections)) {
+    if (!is.list(extra_sections)) {
+      stop("extra_sections must be a named list or NULL.", call. = FALSE)
+    }
+    if (length(extra_sections) > 0L) {
+      section_names <- names(extra_sections)
+      if (is.null(section_names) || anyNA(section_names) ||
+          any(!nzchar(trimws(section_names)))) {
+        stop("extra_sections must have nonblank names for every section.", call. = FALSE)
+      }
+      if (anyDuplicated(section_names) || any(section_names %in% names(defaults))) {
+        stop("extra_sections names must be unique and distinct from default sections.", call. = FALSE)
+      }
+      for (i in seq_along(extra_sections)) {
+        argument <- paste0("extra_sections[[", sQuote(section_names[[i]]), "]]")
+        check_text(extra_sections[[i]], argument)
+      }
+    }
+  }
+
+  sap_text <- c(
+    paste0("# Statistical Analysis Plan - ", title),
+    "",
+    paste0("Author: ", author)
+  )
+
+  # Respect the requested order, then append custom sections.
+  if (!is.null(include_sections)) {
+    for (sec in include_sections) {
+      sap_text <- c(sap_text, "", paste0("## ", sec), defaults[[sec]])
+    }
+  }
+  if (!is.null(extra_sections)) {
     for (nm in names(extra_sections)) {
       sap_text <- c(sap_text, "", paste0("## ", nm), extra_sections[[nm]])
     }
@@ -99,6 +151,5 @@ pharma_generate_sap <- function(path = NULL,
     return(invisible(sap_text))
   }
 
-  # return the assembled template
   sap_text
 }

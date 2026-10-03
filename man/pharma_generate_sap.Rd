@@ -24,29 +24,33 @@ pharma_generate_sap(
 generated Markdown. If \code{NULL}, the function returns the text instead
 of writing to disk.}
 
-\item{title}{Character string with the study title. Defaults to
-"Untitled Study".}
+\item{title}{Single, non-missing character string with the study title.
+Defaults to "Untitled Study".}
 
-\item{author}{Character string with the author name. Defaults to
-"Diogo Ribeiro".}
+\item{author}{Single, non-missing character string with the author name.
+Defaults to "Diogo Ribeiro".}
 
-\item{objectives}{Text describing study objectives.}
+\item{objectives}{Single, non-missing character string describing objectives.}
 
-\item{endpoints}{Text describing the study endpoints.}
+\item{endpoints}{Single, non-missing character string describing endpoints.}
 
-\item{populations}{Text describing analysis populations.}
+\item{populations}{Single, non-missing character string describing populations.}
 
-\item{methods}{Text describing planned analyses.}
+\item{methods}{Single, non-missing character string describing analyses.}
 
-\item{criteria}{Text describing inclusion/exclusion criteria.}
+\item{criteria}{Single, non-missing character string describing criteria.}
 
-\item{software}{Text describing the software to be used.}
+\item{software}{Single, non-missing character string describing software.}
 
-\item{extra_sections}{Named list of additional sections and their contents.}
+\item{extra_sections}{Named list of additional sections, each containing a
+single, non-missing character string. Names must be nonblank, unique, and
+distinct from the default section names. \code{NULL} or \code{list()} adds none.}
 
 \item{include_sections}{Character vector giving the order of default sections
-to include. Set to \code{NULL} to omit all defaults. Unknown names are
-currently ignored; inspect the returned sections before using the file.}
+to include: "Objectives", "Endpoints", "Analysis Populations",
+"Inclusion/Exclusion Criteria", "Planned Analyses", and "Software".
+Names must be nonblank, unique, and supported. Set to \code{NULL} to omit
+all defaults; an empty character vector is invalid.}
 }
 \value{
 A character vector containing the SAP in Markdown format. If
@@ -59,7 +63,8 @@ template includes placeholders for study objectives, endpoints, and
 planned analyses. The resulting text can be returned as a character
 vector or written directly to a file. It does not supply, review, or
 approve a study-specific analysis plan; the caller must complete and
-review every relevant section before use.
+review every relevant section before use. Section text may be an empty
+string when it will be completed later.
 }
 \examples{
 sap <- pharma_generate_sap()
