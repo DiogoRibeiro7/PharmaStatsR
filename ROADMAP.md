@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
+**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. The [API support policy](docs/api-support-policy.md) classifies all public exports; the exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for the tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -8,8 +8,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) API support policy | Distinguish supported, experimental, and example-only exports and give any migration path. |
-| 2 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Assemble and check one reproducible candidate commit after the support decision. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Assemble and check one reproducible candidate commit under the [support policy](docs/api-support-policy.md). |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -39,7 +38,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Issue | Status | Outcome |
 | --- | --- | --- |
-| [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Open | Stable, experimental, and example-only exports are distinguished; any deprecation has a migration path. |
+| [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Closed within scope | All 72 exports have a [support level](docs/api-support-policy.md); the two historical names have migration guidance and remain callable. No export is deprecated or removed. |
 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | Open | Metadata, built source package, `R CMD check --as-cran`, vignettes, optional backends, and cross-platform results are checked on one candidate commit. |
 
 **Release gate:** a release candidate is reviewable only after the P0/P1 evidence is complete and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) records the exact check results. A tag, GitHub release, and CRAN submission are separate decisions. The [portfolio tracking issue](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) should reflect the current state rather than an earlier audit snapshot.
