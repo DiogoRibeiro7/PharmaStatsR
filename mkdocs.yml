@@ -80,6 +80,7 @@ nav:
       - Balanced two-factor ANOVA: factorial-anova.md
       - Paired two-condition ANOVA: repeated-anova.md
       - Two-predictor response surface: response-surface.md
+      - Emax dose-response curves: dose-response.md
       - Meta-analysis model choice: meta-analysis.md
       - Network meta-analysis inputs: network-meta-analysis.md
       - Candidate model selection: model-selection.md

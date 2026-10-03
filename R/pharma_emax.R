@@ -60,12 +60,15 @@ pharma_sigmoid_emax <- function(dose, response,
 
 #' Fit a mixed-effects Emax model using nlme
 #'
-#' Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax curves.
+#' Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax
+#' curves. The wrapper sets `nlmeControl(returnObject = TRUE)`, so reaching
+#' the iteration limit may return an object with a nonconvergence warning.
 #'
 #' @param dose Numeric vector of doses.
 #' @param response Numeric vector of responses.
 #' @param subject Subject identifier for random effects.
-#' @param start Named vector of starting values for \code{e0}, \code{emax}, and \code{ed50}.
+#' @param start Named vector of starting values for \code{e0}, \code{emax}, and
+#'   \code{ed50}. If `NULL`, coefficients from a pooled `nls` fit are used.
 #' @param random Random-effects formula. Defaults to a subject-specific baseline.
 #' @param ... Additional arguments passed to \code{nlme::nlme}.
 #'

@@ -31,7 +31,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Single-arm Bayesian response threshold | [`pharma_bayes_stopping()`](bayesian-threshold.md) | Core R dependencies; threshold check only |
 | Balanced two-arm planning total | [`pharma_sample_reestimate()`](sample-size.md) | Core R dependencies; normal-approximation planning only |
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
-| Dose response | `pharma_emax()`, `pharma_sigmoid_emax()` | Core R dependencies |
+| Dose response | [`pharma_emax()`, `pharma_sigmoid_emax()`, and `pharma_emax_nlme()`](dose-response.md) | `nlme` is required for the repeated-subject fit; the other two use `stats` |
 
 The formula interfaces of `pharma_t_test()` and [`pharma_anova()`](anova.md) reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
 

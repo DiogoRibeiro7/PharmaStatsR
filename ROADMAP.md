@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. P1 design contracts, survival and resampling family checks, cross-platform matrix, and simulated-data audit are closed; optional-backend and documentation-family issues remain open. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
+**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. P1 design contracts, survival and resampling family checks, cross-platform matrix, simulated-data audit, and optional-backend audit are closed; documentation reconciliation remains open. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -8,9 +8,8 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backends | Reconcile all runtime dependencies and exercise installed and missing-backend behavior. |
-| 2 | [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation | Close remaining help, example, vignette, and site gaps against the implementation and inventory. |
-| 3 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57), then [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) | Decide API support policy, then assemble and check one reproducible release candidate. |
+| 1 | [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation | Close remaining help, example, vignette, and site gaps against the implementation and inventory. |
+| 2 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57), then [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) | Decide API support policy, then assemble and check one reproducible release candidate. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -29,10 +28,10 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | [#50](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/50) Design and model contracts | Closed | Factorial, repeated-measures, and response-surface helpers have defined inputs and tested interpretations. |
 | [#51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51) Survival and competing risks | Closed | Direct backend cases cover all six listed helpers, with event, censoring, tie, and row-selection assumptions linked from the evidence inventory. |
 | [#52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52) Resampling, permutation, and simulation | Closed | Deterministic cases cover sampling units, fixed analysis rows, RNG, output shapes, and event/dropout probabilities; the [family review](docs/resampling-review.md) records interpretation limits. |
-| [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backend and dependency audit | In progress | The [entry-point ledger](docs/dependency-audit.md) maps optional guards and installed tests; a required-dependencies PR check covers the minimal install. Record a passing all-Suggests run for a candidate commit before closing the audit. |
+| [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backend and dependency audit | Closed | The [entry-point ledger](docs/dependency-audit.md) maps guards and tests; required-dependency checks cover the minimal install, and [the five-job candidate matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37120561275) passed on commit `d06f614`. The separate #58 release gate remains open. |
 | [#54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54) Cross-platform check matrix | Closed | Weekly/manual checks cover R versions, platforms, and an all-Suggests backend job; candidate runs still need to be recorded under #58. |
 | [#55](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/55) Simulated dataset audit | Closed | Schemas, provenance, and design invariants are documented and tested. |
-| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Open | Generated help has a CI drift gate and the vignette is runnable; finish the remaining cross-surface review. |
+| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Open | Generated help has a CI drift gate and the vignette is runnable. Bayesian, meta-analysis, and Emax guides reconcile representative return and model limits; finish the remaining cross-surface review. |
 
 **Gate:** each supported method has its assumptions, input behavior, numerical evidence, and limitations recorded in [#47](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/47). Changes that alter earlier results have NEWS and migration notes. CI can reproduce its results on a named commit; documentation builds and package checks pass.
 
