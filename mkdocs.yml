@@ -119,3 +119,4 @@ nav:
       - Package checks and contribution: development.md
       - API support and lifecycle: api-support-policy.md
       - Documentation reconciliation: documentation-reconciliation.md
+      - Release candidate evidence: release-candidate.md

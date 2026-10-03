@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
-title: "PharmaStatsR: Statistical Methods for Pharmaceutical Research"
+title: "PharmaStatsR: Statistical Methods and Workflows for Pharmaceutical Research"
 authors:
   - family-names: Ribeiro
     given-names: Diogo
