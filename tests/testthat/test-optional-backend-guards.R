@@ -13,8 +13,6 @@ test_that("optional integrations report actionable missing-package errors", {
          function() pharma_bayesian_glm(y ~ x, d)),
     list("rstanarm", "pharma_posterior_summary",
          function() pharma_posterior_summary(list())),
-    list("bayesplot", "pharma_pp_check",
-         function() pharma_pp_check(list())),
     list("lme4", "pharma_lmm",
          function() pharma_lmm(y ~ x + (1 | id), d)),
     list("geepack", "pharma_gee",

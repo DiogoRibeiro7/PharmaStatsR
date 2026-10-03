@@ -54,6 +54,8 @@ pharma_posterior_summary <- function(model, prob = 0.95) {
 #'   pharma_pp_check(fit)
 #' }
 pharma_pp_check <- function(model, ...) {
+  # rstanarm registers the stanreg method; bayesplot provides the generic.
+  .pharma_require_optional("rstanarm", "pharma_pp_check")
   .pharma_require_optional("bayesplot", "pharma_pp_check")
   bayesplot::pp_check(model, ...)
 }

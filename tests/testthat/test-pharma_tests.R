@@ -126,10 +126,13 @@ test_that("pharma_landmark_analysis returns coxph", {
 
 test_that("pharma_bayesian_glm returns stanreg", {
   skip_if_not_installed("rstanarm")
+  skip_if_not_installed("bayesplot")
   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 10, chains = 1, refresh = 0)
   expect_s3_class(fit, "stanreg")
   summ <- pharma_posterior_summary(fit)
   expect_s3_class(summ, "summary.stanreg")
+  plot <- pharma_pp_check(fit, plotfun = "hist", nreps = 2, seed = 42)
+  expect_s3_class(plot, "ggplot")
 })
 
 test_that("pharma_meta_analysis returns rma", {
