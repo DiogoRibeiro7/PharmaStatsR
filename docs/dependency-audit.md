@@ -15,7 +15,7 @@ The development script `./setup.sh` installs its own test tools through `scripts
 
 | Packages | Entry points or runtime use | Current missing-path evidence |
 | --- | --- | --- |
-| `rstanarm`, `bayesplot` | Bayesian GLM, posterior summary, and predictive check | Deterministic guard tests for all three; installed `rstanarm` and `bayesplot` paths remain part of the all-Suggests matrix. |
+| `rstanarm`, `bayesplot` | Bayesian GLM, posterior summary, and predictive check | Deterministic guards cover both dependencies of predictive checking: `rstanarm` registers the `stanreg` method and `bayesplot` provides the generic. An installed fit, summary, and predictive plot run in the all-Suggests matrix. |
 | `lme4`, `geepack`, `cmprsk` | Mixed models, GEE, and competing risks | Deterministic guard tests; installed fits have separate tests where the backend is present. |
 | `future`, `future.apply` | Row bootstrap and future plan | Both missing paths are forced in tests; installed sequential and multisession cases compare seeded draws. |
 | `openssl` | Local audit log and verification | Both missing paths are forced in tests; the installed HMAC chain has separate tests. |
