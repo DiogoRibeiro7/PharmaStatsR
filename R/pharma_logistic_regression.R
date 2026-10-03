@@ -7,6 +7,9 @@
 #' @param ... Additional arguments passed to `stats::glm`.
 #'
 #' @return A `glm` object.
+#' @details The model uses a binomial family. The bundled `outcome` column is
+#'   an arbitrary example label, not a defined clinical event. Check outcome
+#'   coding, model fit, and possible separation for a real analysis.
 #' @export
 #'
 #' @examples
