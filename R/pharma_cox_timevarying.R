@@ -1,17 +1,25 @@
 #' Fit a Cox model with time-varying covariates
 #'
-#' Wrapper around `survival::coxph` supporting counting-process style
-#' `Surv(start, stop, status)` input to model time-varying covariates.
+#' Fit counting-process `Surv(start, stop, status)` intervals with
+#' `survival::coxph()` for time-varying covariates. The helper checks the
+#' selected intervals and model variables before fitting.
 #'
-#' @param formula A model formula using a `Surv(start, stop, status)` response.
-#' @param data A data frame containing the variables used in the model.
+#' @param formula A two-sided model formula with a counting-process
+#'   `Surv(start, stop, status)` response.
+#' @param data A nonempty data frame containing the model variables.
 #' @param ... Additional arguments passed to `survival::coxph`.
+#' @param subset Optional logical expression evaluated in `data`, or a
+#'   nonmissing logical vector with one value per input row. Applied before
+#'   the model variables are checked.
 #'
 #' @return A `coxph` object.
 #' @details
-#' Supply correctly aligned `(start, stop]` intervals and covariate values
-#' for each subject. This wrapper delegates to `coxph()`; it does not check
-#' whether intervals overlap or whether subject records are complete.
+#' Intervals must have finite start and stop times with start strictly less
+#' than stop, and all selected model variables must be complete. Options in
+#' `...` must not remove further rows. Supply aligned `(start, stop]` intervals
+#' and covariate values for each subject; the helper does not check for
+#' overlapping intervals, gaps, or complete subject histories. For an
+#' ordinary right-censored response, use `pharma_survival_fit()` instead.
 #' @export
 #'
 #' @examples
@@ -31,6 +39,54 @@
 #'   data = interval_data
 #' )
 #' summary(fit)
-pharma_cox_timevarying <- function(formula, data, ...) {
-  survival::coxph(formula = formula, data = data, ...)
+pharma_cox_timevarying <- function(formula, data, ..., subset = NULL) {
+  if (!inherits(formula, "formula") || length(formula) != 3L) {
+    stop("formula must be a two-sided counting-process survival formula",
+         call. = FALSE)
+  }
+  if (!is.data.frame(data) || nrow(data) == 0L) {
+    stop("data must be a nonempty data frame", call. = FALSE)
+  }
+
+  analysis_data <- data
+  if (!missing(subset) && !is.null(substitute(subset))) {
+    selected <- eval(substitute(subset), envir = data,
+                     enclos = parent.frame())
+    if (!is.logical(selected) || length(selected) != nrow(data) ||
+        anyNA(selected)) {
+      stop("subset must select rows with a complete logical vector",
+           call. = FALSE)
+    }
+    analysis_data <- data[selected, , drop = FALSE]
+  }
+  if (nrow(analysis_data) == 0L) {
+    stop("no observations remain after the subset", call. = FALSE)
+  }
+
+  # Check the selected model frame before coxph can drop incomplete rows.
+  model_data <- stats::model.frame(
+    formula, data = analysis_data, na.action = stats::na.pass
+  )
+  response <- stats::model.response(model_data)
+  if (!inherits(response, "Surv") || ncol(response) != 3L ||
+      !identical(attr(response, "type"), "counting")) {
+    stop("formula must have a counting-process Surv(start, stop, status) response",
+         call. = FALSE)
+  }
+  if (anyNA(response) || any(!is.finite(response[, 1:2])) ||
+      any(response[, 1L] >= response[, 2L])) {
+    stop("counting-process intervals need finite start < stop and complete status",
+         call. = FALSE)
+  }
+  if (anyNA(model_data)) {
+    stop("model variables must be complete in the selected rows",
+         call. = FALSE)
+  }
+
+  fit <- survival::coxph(formula = formula, data = analysis_data, ...)
+  if (fit$n != nrow(analysis_data)) {
+    stop("coxph changed the selected analysis rows; check arguments in ...",
+         call. = FALSE)
+  }
+  fit
 }

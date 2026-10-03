@@ -4,26 +4,35 @@
 \alias{pharma_cox_timevarying}
 \title{Fit a Cox model with time-varying covariates}
 \usage{
-pharma_cox_timevarying(formula, data, ...)
+pharma_cox_timevarying(formula, data, ..., subset = NULL)
 }
 \arguments{
-\item{formula}{A model formula using a \code{Surv(start, stop, status)} response.}
+\item{formula}{A two-sided model formula with a counting-process
+\code{Surv(start, stop, status)} response.}
 
-\item{data}{A data frame containing the variables used in the model.}
+\item{data}{A nonempty data frame containing the model variables.}
 
 \item{...}{Additional arguments passed to \code{survival::coxph}.}
+
+\item{subset}{Optional logical expression evaluated in \code{data}, or a
+nonmissing logical vector with one value per input row. Applied before
+the model variables are checked.}
 }
 \value{
 A \code{coxph} object.
 }
 \description{
-Wrapper around \code{survival::coxph} supporting counting-process style
-\code{Surv(start, stop, status)} input to model time-varying covariates.
+Fit counting-process \code{Surv(start, stop, status)} intervals with
+\code{survival::coxph()} for time-varying covariates. The helper checks the
+selected intervals and model variables before fitting.
 }
 \details{
-Supply correctly aligned \verb{(start, stop]} intervals and covariate values
-for each subject. This wrapper delegates to \code{coxph()}; it does not check
-whether intervals overlap or whether subject records are complete.
+Intervals must have finite start and stop times with start strictly less
+than stop, and all selected model variables must be complete. Options in
+\code{...} must not remove further rows. Supply aligned \verb{(start, stop]} intervals
+and covariate values for each subject; the helper does not check for
+overlapping intervals, gaps, or complete subject histories. For an
+ordinary right-censored response, use \code{pharma_survival_fit()} instead.
 }
 \examples{
 # Eight subjects contribute baseline and later intervals. The covariate

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Require counting-process `Surv(start, stop, status)` input and complete finite selected intervals in `pharma_cox_timevarying()`. A new `subset` argument selects original rows before validation, and the wrapper errors if backend options drop more rows. Ordinary right-censored calls should use `pharma_survival_fit()`; review prior fits that silently omitted incomplete or invalid intervals.
 - Select the landmark Cox risk set from complete follow-up data before checking covariates, and apply `subset` on original rows before the landmark restriction. Avoid collisions with a user's `.pharma_landmark_response` column. Earlier landmark calls with missing predictors outside the risk set can now fit; review their selected subjects and shifted time origin. Compare landmark fits with direct `survival::coxph()` on the same risk set.
 - Reject unknown, blank, or repeated SAP template section names and non-scalar section text before writing a file. Custom sections now require a named list of unique, nonblank names and single non-missing strings; `include_sections = NULL` still omits defaults, while `character()` now errors. Review earlier templates for silently omitted or duplicated sections and supply study-specific content before use.
 - Generate the last six hand-maintained R help topics from roxygen source and require all committed Rd pages to be generated. Replace the unusable counting-process Cox example with a runnable interval fixture and clarify logistic and internal input-checking limits.
