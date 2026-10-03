@@ -3,6 +3,8 @@
 [![R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml)
 [![Documentation](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/docs.yml/badge.svg)](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/docs.yml)
 
+[Documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) · [Roadmap](ROADMAP.md) · [Evidence inventory](docs/method-inventory.md) · [Contributing](CONTRIBUTING.md)
+
 PharmaStatsR is an R package with statistical wrappers and simulated example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
 
 The package is under development and is **not on CRAN**. Its methods and sample data are intended for demonstration and research. They have not been validated for clinical decisions or regulatory compliance.
@@ -41,7 +43,13 @@ fit <- pharma_survival_fit(
 summary(fit)
 ```
 
-For worked examples and assumptions, read the [documentation](https://diogoribeiro7.github.io/PharmaStatsR/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd). The [prioritized roadmap](ROADMAP.md) links to scoped GitHub issues and completion gates. Planned items are not implemented functionality.
+For worked examples and assumptions, read the [method guide](https://diogoribeiro7.github.io/PharmaStatsR/methods/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd).
+
+## Project status and documentation
+
+The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. As of 3 October 2026, the export inventory, claims audit, core reference cases, design contracts, cross-platform check matrix, and simulated-data audit are closed. Survival, resampling, optional-backend, and documentation reconciliation remain open; [the site status page](https://diogoribeiro7.github.io/PharmaStatsR/project-status/) explains the evidence and next gates. Closed issues cover their stated scope, not a package-wide clinical validation.
+
+The documentation source is in [`docs/`](docs/) with [`mkdocs.yml`](mkdocs.yml). GitHub Actions checks the MkDocs build on documentation pull requests and deploys the site to [GitHub Pages](https://diogoribeiro7.github.io/PharmaStatsR/) after relevant changes reach `main`. See the [documentation workflow](.github/workflows/docs.yml) and [local build instructions](https://diogoribeiro7.github.io/PharmaStatsR/development/#documentation-site).
 
 ## Develop and test
 
