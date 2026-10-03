@@ -13,3 +13,4 @@
 ^data-raw$
 ^mkdocs\.yml$
 ^requirements-docs\.txt$
+^cran-comments\.md$

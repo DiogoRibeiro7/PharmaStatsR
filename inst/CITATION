@@ -4,7 +4,7 @@ meta <- utils::packageDescription("PharmaStatsR")
 
 bibentry(
   "Manual",
-  title = "PharmaStatsR: Statistical Methods for Pharmaceutical Research",
+  title = "PharmaStatsR: Statistical Methods and Workflows for Pharmaceutical Research",
   author = person(
     given = "Diogo",
     family = "Ribeiro",

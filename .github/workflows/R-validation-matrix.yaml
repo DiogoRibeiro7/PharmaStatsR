@@ -34,6 +34,8 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: 'false'
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: r-lib/actions/setup-pandoc@v2
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -70,6 +72,8 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: 'true'
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: r-lib/actions/setup-pandoc@v2
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -90,14 +94,42 @@ jobs:
           extra-packages: any::rcmdcheck
       - name: Verify all Suggested R packages are installed
         run: Rscript scripts/check_suggests_installed.R
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          args: 'c("--no-manual", "--as-cran")'
-          build_args: 'c("--no-manual")'
-      - name: Upload failed check results
-        if: failure()
+      - name: Build and inspect the candidate source package
+        shell: bash
+        run: |
+          R CMD build --no-manual .
+          tarball=$(find . -maxdepth 1 -type f -name 'PharmaStatsR_*.tar.gz' -print -quit)
+          test -n "$tarball"
+          tar -tzf "$tarball" > candidate-contents.txt
+          sha256sum "$tarball" > candidate-sha256.txt
+          git rev-parse HEAD > candidate-commit.txt
+          for path in DESCRIPTION NAMESPACE LICENSE R man tests vignettes inst/CITATION; do
+            if ! grep -Eq "^PharmaStatsR/${path}(/|$)" candidate-contents.txt; then
+              echo "Missing package path: $path" >&2
+              exit 1
+            fi
+          done
+          if grep -Eq '^PharmaStatsR/(\.github|docs|data-raw|scripts)/' candidate-contents.txt; then
+            echo 'Development-only files found in the source package.' >&2
+            exit 1
+          fi
+          cat candidate-sha256.txt candidate-commit.txt
+      - name: Check the built source package as CRAN
+        shell: bash
+        run: |
+          tarball=$(find . -maxdepth 1 -type f -name 'PharmaStatsR_*.tar.gz' -print -quit)
+          test -n "$tarball"
+          R CMD check --no-manual --as-cran "$tarball"
+      - name: Upload candidate source and check evidence
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: r-check-ubuntu-all-suggests
-          path: check
+          name: candidate-source-ubuntu-all-suggests
+          path: |
+            PharmaStatsR_*.tar.gz
+            candidate-contents.txt
+            candidate-sha256.txt
+            candidate-commit.txt
+            PharmaStatsR.Rcheck/00check.log
+            PharmaStatsR.Rcheck/00install.out
           if-no-files-found: ignore

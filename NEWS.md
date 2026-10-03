@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Prepare an exact-commit release candidate gate: align the citation title and site URL, build and inspect a source tarball in the all-Suggests matrix, check the tarball with CRAN-style flags, and retain its manifest, hash, and check logs. The existing maintainer contact and affiliation still need verification before a candidate tag.
 - Classify all 72 exports by API support level and document the compatibility and migration policy. The two historical column-check names remain callable; this change introduces no deprecation warning or behavior change. CI checks the inventory against `NAMESPACE`.
 - Record the documentation reconciliation evidence and close #56's scope after help, examples, vignette, and site checks. Keep the generated-help diff in the runner's temporary directory so it no longer creates a package-check NOTE. Numerical method validation and release-candidate checks remain separate.
 - Restore the exact prior `pharma` option after `with_pharma_config()`, including an unset option and error exits. Clarify that only `log_level` is currently consumed by package code, and correct the unregister-plugin return help. Earlier temporary configuration calls could leave defaults behind; callers relying on the old side effect should set options explicitly.
