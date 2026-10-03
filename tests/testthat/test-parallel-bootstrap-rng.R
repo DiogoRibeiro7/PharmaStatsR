@@ -43,6 +43,17 @@ test_that("callback randomness follows the same future streams across plans", {
   expect_true(all(is.finite(vapply(sequential, `[[`, numeric(1), "noise"))))
 })
 
+test_that("default multisession bootstrap uses at most two workers", {
+  skip_if_not_installed("future.apply")
+  skip_if_not_installed("future")
+  before <- future::plan()
+  d <- data.frame(id = 1:4)
+  pids <- pharma_parallel_bootstrap(d, function(rows) Sys.getpid(), R = 6)
+
+  expect_lte(length(unique(unlist(pids))), 2L)
+  expect_equal(future::plan(), before)
+})
+
 test_that("parallel bootstrap restores the plan after statistic failure", {
   skip_if_not_installed("future.apply")
   skip_if_not_installed("future")

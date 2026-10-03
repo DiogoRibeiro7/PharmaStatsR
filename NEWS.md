@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Limit the default multisession row bootstrap to two workers. The caller can still supply a custom future strategy. Run the five-job candidate matrix for package source changes on PRs and merged `main` commits.
 - Run the five-job validation matrix automatically on `main` when its workflow changes, so the merged release-gate commit has its own source and platform evidence.
 - Let the installed citation derive package metadata from `DESCRIPTION` in both installed and source-check contexts, and cite the Newcombe rate-interval reference by DOI. The first candidate tarball check identified both issues in its incoming feasibility NOTE; calculations are unchanged.
 - Prepare an exact-commit release candidate gate: align the citation title and site URL, build and inspect a source tarball in the all-Suggests matrix, check the tarball with CRAN-style flags, and retain its manifest, hash, and check logs. The existing maintainer contact and affiliation still need verification before a candidate tag.
