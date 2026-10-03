@@ -40,3 +40,7 @@ For a one-unit increase in one covariate, `exp(coef(fit))` (or `exp(fit$coef)`) 
 Formula terms are encoded with `model.matrix()`, including factor predictors and formulas without an intercept. The formula requires a two-argument, unnamed `Surv(time, status)` shape. Status codes must be numeric whole numbers; `failcode` must occur and differ from `cencode`. Time, status, and predictor variables used by the model must be complete and finite. Counting-process responses, factor status codes, and models without predictors are unsupported.
 
 Arguments in `...` pass to `cmprsk::crr()`. For example, use its `cengroup` argument when censoring distributions differ across groups, and check that any vectors passed in `...` align with the original data rows. Results from previous versions should be recomputed because they may have misclassified event causes. See [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_competing_risks()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_competing_risks.Rd). In an installed package, run `help("pharma_competing_risks", package = "PharmaStatsR")`.

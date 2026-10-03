@@ -32,3 +32,7 @@ Both cutoffs must be finite positive scalars. If the model used `na.exclude`, R 
 ## Interpreting a flag
 
 A `TRUE` flag means that at least one screening cutoff was exceeded. It does not prove a data error, justify removing that row, or validate the fitted model. Inspect the original observation, fit assumptions, and sensitivity of the result before deciding whether any change is warranted. Standardized and Cook diagnostics for `glm` are approximations, especially when points are highly influential. A multivariate `lm` does not have one scalar diagnostic per row and is rejected.
+
+## R help
+
+Full arguments and return values: [`pharma_model_diagnostics()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_model_diagnostics.Rd). In an installed package, run `help("pharma_model_diagnostics", package = "PharmaStatsR")`.

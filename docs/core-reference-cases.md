@@ -12,3 +12,12 @@ These small fixed fixtures give numerical checks for the six helpers in [roadmap
 | [`pharma_sample_reestimate()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-sample-size.R) | Balanced independent normal groups, mean difference 0.5, common per-person variance 1, two-sided α = 0.05, target normal-approximation power 0.8. With `n/arm = 2σ²(z₁₋α/₂ + z_power)²/δ²`, the unrounded target is 62.791037874793 per arm, so the returned balanced total is 126. Tests also check sign symmetry, rounding, input limits, and two other fixed targets. This is a planning calculation, not conditional power. |
 
 The fixed tail values use `scipy.stats.t`, `chi2`, and `f`; the Wilson bounds use `scipy.stats.binomtest(...).proportion_ci(method="wilson")`; and planning quantiles use `scipy.stats.norm.ppf`. Group order, variance choice, and confidence level are explicit because changing any of them changes the numerical target. See [limitations and validation](limitations.md) and the [export inventory](method-inventory.md) for the remaining review work.
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_t_test()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_t_test.Rd)
+- [`pharma_chisq_test()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_chisq_test.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

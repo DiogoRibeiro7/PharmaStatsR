@@ -38,3 +38,7 @@ The paired output excludes curve options such as weights, subject IDs, clusters,
 ## Scope
 
 Interpret survival curves under an appropriate independent-censoring assumption. The log-rank test is an unadjusted comparison; it does not adjust for baseline differences, handle clustered records, or establish proportional hazards. Use [limitations and validation](limitations.md) when planning an analysis.
+
+## R help
+
+Full arguments and return values: [`pharma_kaplan_meier()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_kaplan_meier.Rd). In an installed package, run `help("pharma_kaplan_meier", package = "PharmaStatsR")`.

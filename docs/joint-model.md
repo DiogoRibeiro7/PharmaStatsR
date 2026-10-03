@@ -41,3 +41,7 @@ fitting: this wrapper cannot establish their alignment. The backend has
 further model-structure and convergence requirements. The CI test fits this
 package-provided example once to exercise the installed backend; it does not
 validate a joint model or its assumptions for a study.
+
+## R help
+
+Full arguments and return values: [`pharma_joint_model()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_joint_model.Rd). In an installed package, run `help("pharma_joint_model", package = "PharmaStatsR")`.

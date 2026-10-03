@@ -18,3 +18,7 @@ summary(fit)
 A bare `id` name is looked up in `data`; an aligned vector such as `trial$subject` also works. Each cluster must occupy **consecutive rows**. The wrapper rejects an ID that is missing, has the wrong length, or reappears after another cluster. Check the visit order within each cluster when using an order-sensitive correlation structure such as `"ar1"`.
 
 All model variables and cluster IDs must be complete. Decide how to address missing observations before calling the function; complete-case filtering may change the estimand or induce bias. The helper does not select a working correlation, handle informative missingness, or establish that records from different clusters are independent. Compare important results with a direct `geepack::geeglm()` fit and review the [general limitations](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_gee()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_gee.Rd). In an installed package, run `help("pharma_gee", package = "PharmaStatsR")`.

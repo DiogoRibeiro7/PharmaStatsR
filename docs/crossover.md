@@ -38,3 +38,7 @@ fit <- pharma_crossover_anova(
 The helper checks exactly two observed treatments and periods, at least four subjects, one record per subject and period, both treatments for every subject, and equal AB and BA sequence counts. It rejects missing and non-finite model values and additional terms. Prepare a complete analysis dataset first; `subset`, `weights`, and `na.action` cannot be passed through the helper.
 
 This model does not estimate a separate sequence effect because sequence is constant within subject. Differential carryover can bias the treatment comparison in a two-period AB/BA study; assess washout and whether this design is appropriate before interpreting its F test. It does not establish bioequivalence or handle missing second-period outcomes. See [Penn State's crossover design lesson](https://online.stat.psu.edu/stat509/Lesson12), [R's `aov()` documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/aov.html), and [project limitations](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_crossover_anova()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_crossover_anova.Rd). In an installed package, run `help("pharma_crossover_anova", package = "PharmaStatsR")`.

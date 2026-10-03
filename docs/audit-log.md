@@ -25,3 +25,12 @@ When appending to an existing file, the writer first verifies it with the suppli
 ## Scope
 
 The chain is only evidence about **records still in the file**. Anyone able to remove the final rows can leave a valid prefix. To detect that, preserve the expected final hash or record count outside the file. The helper does not prevent deletion, replacement of the file, concurrent edits, loss of the key, or unauthorized access. It is not a regulated audit system. See [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_audit_log()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_audit_log.Rd)
+- [`pharma_audit_verify()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_audit_verify.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

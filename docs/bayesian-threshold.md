@@ -37,3 +37,7 @@ The result uses the beta upper tail, computed by symmetry to retain small positi
 The calculation **does not compare two treatment arms**. In particular, `prob` is not the posterior probability that an experimental treatment outperforms a control. A response benchmark based on historical information is still a fixed input, not contemporaneous control data.
 
 Repeated interim looks require a pre-specified monitoring schedule and calibration of operating characteristics such as false-positive decisions and power. A cutoff of 0.95 alone does not establish those properties. [Published single-arm designs](https://pmc.ncbi.nlm.nih.gov/articles/PMC8391240/) calibrate their stopping boundaries for a specified schedule and scenarios. The earlier help page inaccurately called this quantity a probability of positive treatment effect; review past interpretations in that light. See [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_bayes_stopping()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_bayes_stopping.Rd). In an installed package, run `help("pharma_bayes_stopping", package = "PharmaStatsR")`.

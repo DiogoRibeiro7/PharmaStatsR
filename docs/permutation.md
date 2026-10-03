@@ -38,3 +38,7 @@ Raw-response permutation requires the observations to be **exchangeable under th
 The earlier implementation took the **first row of R's sequential ANOVA table**. With several terms, that row represents only the first term and can differ markedly from the whole-model F statistic. R [documents single-model ANOVA tables as sequential](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html); [permutation inference for more complex models](https://pmc.ncbi.nlm.nih.gov/articles/PMC4010955/) requires schemes suited to the null and dependence structure. **Recompute earlier results** and review whether response exchangeability held. The former crossover-data example was unsuitable for unrestricted response permutations.
 
 See [limitations and validation](limitations.md) for project-wide constraints.
+
+## R help
+
+Full arguments and return values: [`pharma_perm_f_test()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_perm_f_test.Rd). In an installed package, run `help("pharma_perm_f_test", package = "PharmaStatsR")`.

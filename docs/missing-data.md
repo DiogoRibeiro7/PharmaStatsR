@@ -42,3 +42,12 @@ Despite its name, `pharma_sensitivity_analysis()` fits one analysis model to
 the given imputations. It does not vary missingness assumptions or perform a
 missing-not-at-random (MNAR) scenario analysis. Define and compare such
 scenarios separately in the analysis plan.
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_mice_impute()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_mice_impute.Rd)
+- [`pharma_sensitivity_analysis()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_sensitivity_analysis.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

@@ -30,3 +30,12 @@ The default Weibull `survreg()` model uses an accelerated failure-time parameter
 The [test fixture](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-survival-regression-reference.R) includes a factor predictor, ties, selected rows, and missing covariates. It compares both wrappers with direct backend calls on the same analysis population. For an intercept-only exponential model with no censoring, it also checks that the fitted mean event time equals the sample mean.
 
 These are software reference cases. A fitted model does not verify independent censoring, proportional hazards for Cox, or a suitable Weibull distribution. Competing events require explicit cause coding and a different estimand; see [competing risks](competing-risks.md). The [limitations guide](limitations.md) records the wider package scope.
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_survival_fit()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_survival_fit.Rd)
+- [`pharma_parametric_survival()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_parametric_survival.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

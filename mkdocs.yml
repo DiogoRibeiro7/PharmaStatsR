@@ -78,6 +78,7 @@ nav:
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
       - Logistic regression: logistic-regression.md
+      - Linear mixed model: linear-mixed-model.md
       - Balanced two-factor ANOVA: factorial-anova.md
       - Paired two-condition ANOVA: repeated-anova.md
       - Two-predictor response surface: response-surface.md

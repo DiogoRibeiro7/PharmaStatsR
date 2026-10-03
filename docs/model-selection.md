@@ -23,3 +23,7 @@ The bundled `outcome` is numeric with two values. For `metric = "Accuracy"`, the
 - Cross-validation scores estimate performance under the specified folds and metric. They are not a performance estimate from an independent test set after model selection. Examine warnings and `names(fit$all_models)` to see which candidates actually ran; choose resampling, tuning, and an external evaluation appropriate to the analysis.
 
 Earlier calls without `caret` returned a binomial GLM even when other algorithms or a different outcome were requested. Install `caret` and rerun the stated search, then compare any earlier results with the intended model. See [limitations](limitations.md) and the [method inventory](method-inventory.md) for review status.
+
+## R help
+
+Full arguments and return values: [`pharma_ai_model_select()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_ai_model_select.Rd). In an installed package, run `help("pharma_ai_model_select", package = "PharmaStatsR")`.

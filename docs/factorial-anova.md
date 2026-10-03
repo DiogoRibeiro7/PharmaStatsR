@@ -23,3 +23,7 @@ The four cell means are 10, 12, 11, and 17 in row order (A/Low, A/High, B/Low, B
 - Main effects average over the other factor. Inspect the interaction and cell means before describing a main effect in isolation. The ordinary F reference assumes independent errors with a common within-cell variance and a suitable residual distribution. This helper does not model repeated measures, blocks, covariates, or an unbalanced design.
 
 The bundled `pharma_sample` is **not** a factorial example: all A observations have dose 1 and all B observations have dose 2. Treatment and dose are confounded, so `response ~ treatment * factor(dose)` now errors on the absent crossed cells. Recheck earlier results fitted to that example; no independent treatment, dose, or interaction effect can be inferred from it. See [one-way ANOVA](anova.md) for a single group, the [method inventory](method-inventory.md) for review status, and [limitations](limitations.md) for project-wide constraints.
+
+## R help
+
+Full arguments and return values: [`pharma_factorial_anova()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_factorial_anova.Rd). In an installed package, run `help("pharma_factorial_anova", package = "PharmaStatsR")`.

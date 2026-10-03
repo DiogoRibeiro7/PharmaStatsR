@@ -48,3 +48,7 @@ The result is even, gives equal group sizes, includes at least two participants 
 A raw interim effect estimate is not a substitute for a planned adaptive analysis. Choosing the final sample size from unblinded interim data and applying the original fixed-sample test can change the type I error rate; the output does **not** establish conditional power or a calibrated decision rule. Pre-specify any interim timing, adaptation rule, maximum size, final test, and error control. See the [research on interim sample-size changes](https://pmc.ncbi.nlm.nih.gov/articles/PMC4836563/) and the [group-sequential design guide](sequential.md).
 
 The previous implementation omitted the two-arm variance factor. **Recompute previously reported totals** using the stated interpretation of `effect` and `variance`. The example above previously returned 50; it now returns 126. See [limitations and validation](limitations.md) for project-wide constraints.
+
+## R help
+
+Full arguments and return values: [`pharma_sample_reestimate()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_sample_reestimate.Rd). In an installed package, run `help("pharma_sample_reestimate", package = "PharmaStatsR")`.

@@ -40,3 +40,7 @@ choices, with two-sided p = 0.1515678011 for pooled variance and p =
 `stats::t.test()`; they do not establish the appropriateness of either model
 for a study. Check independence, missing observations, variance assumptions,
 and the analysis population before interpreting the result.
+
+## R help
+
+Full arguments and return values: [`pharma_scipy_ttest()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_scipy_ttest.Rd). In an installed package, run `help("pharma_scipy_ttest", package = "PharmaStatsR")`.
