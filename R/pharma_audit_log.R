@@ -37,10 +37,7 @@ pharma_audit_log <- function(message, file = "audit.log", key) {
   if (missing(key) || !valid_text(key)) {
     stop("key must be one nonempty character string", call. = FALSE)
   }
-  if (!requireNamespace("openssl", quietly = TRUE)) {
-    stop("Package 'openssl' is required for pharma_audit_log()",
-         call. = FALSE)
-  }
+  .pharma_require_optional("openssl", "pharma_audit_log")
 
   if (file.exists(file)) {
     # Never append after a failed key or chain check.

@@ -30,12 +30,7 @@
 pharma_gee <- function(formula, id, data, family = stats::gaussian,
                        corstr = "independence", ...) {
   validate_inputs(data, formula)
-  if (!requireNamespace("geepack", quietly = TRUE)) {
-    stop(
-      "Package 'geepack' is required for `pharma_gee()`.\n",
-      "Please install it with: install.packages('geepack')"
-    )
-  }
+  .pharma_require_optional("geepack", "pharma_gee")
   if (missing(id)) {
     stop("id is required to identify clusters", call. = FALSE)
   }

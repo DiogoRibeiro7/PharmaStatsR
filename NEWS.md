@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Check missing optional backends deterministically even on runners where they are installed. Give Bayesian, mixed-model, GEE, competing-risk, audit-log, and row-bootstrap callers an installation hint; check both future packages explicitly. Local test setup no longer requires the optional `openssl` package. No statistical fallback or fitting calculation changed.
 - Review the five resampling, permutation, and trial-simulation helpers with deterministic sampling and RNG cases and a family output-contract guide. Preserve `NULL` statistics in `pharma_block_bootstrap()` so its returned list always has one entry per replicate; callbacks that return `NULL` previously shortened the list.
 - Compare ordinary Cox and Weibull parametric wrappers with direct `survival` fits on a tied, factor-coded, selected right-censored fixture; add an independent uncensored exponential mean reference. Document the analysis rows and distinguish Cox hazard ratios from Weibull accelerated failure-time ratios. No fitting API or calculation changed.
 - Require counting-process `Surv(start, stop, status)` input and complete finite selected intervals in `pharma_cox_timevarying()`. A new `subset` argument selects original rows before validation, and the wrapper errors if backend options drop more rows. Ordinary right-censored calls should use `pharma_survival_fit()`; review prior fits that silently omitted incomplete or invalid intervals.

@@ -35,10 +35,7 @@ pharma_audit_verify <- function(file = "audit.log", key) {
   if (missing(key) || !valid_text(key)) {
     stop("key must be one nonempty character string", call. = FALSE)
   }
-  if (!requireNamespace("openssl", quietly = TRUE)) {
-    stop("Package 'openssl' is required for pharma_audit_verify()",
-         call. = FALSE)
-  }
+  .pharma_require_optional("openssl", "pharma_audit_verify")
 
   # Read all fields as literal strings so a message equal to "NA" is retained.
   log <- tryCatch(

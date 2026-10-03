@@ -214,10 +214,8 @@ pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
     stop("`plan` must be a single strategy name, function, or call",
          call. = FALSE)
   }
-  if (!requireNamespace("future.apply", quietly = TRUE)) {
-    stop("Install the optional `future.apply` package to use this helper",
-         call. = FALSE)
-  }
+  .pharma_require_optional("future", "pharma_parallel_bootstrap")
+  .pharma_require_optional("future.apply", "pharma_parallel_bootstrap")
 
   data <- as.data.frame(data)
   old_plan <- future::plan()
