@@ -54,6 +54,34 @@ test_that("Weibull event survival follows its cumulative hazard", {
   }
 })
 
+test_that("exponential event and dropout outcomes follow competing-time rates", {
+  lambda <- 0.4
+  mu <- 0.3
+  end <- 2
+  set.seed(94)
+  sim <- pharma_trial_simulate(
+    8000, accrual_period = 0, follow_up = end,
+    hazard_control = lambda, hazard_treatment = lambda,
+    dropout_rate = mu
+  )
+  set.seed(94)
+  expect_identical(sim, pharma_trial_simulate(
+    8000, accrual_period = 0, follow_up = end,
+    hazard_control = lambda, hazard_treatment = lambda,
+    dropout_rate = mu
+  ))
+
+  # The first of two independent exponential times occurs before study end.
+  failure_probability <- 1 - exp(-(lambda + mu) * end)
+  expect_equal(mean(sim$status), lambda / (lambda + mu) * failure_probability,
+               tolerance = 0.02)
+  expect_equal(mean(sim$dropout), mu / (lambda + mu) * failure_probability,
+               tolerance = 0.02)
+  expect_equal(mean(sim$status + sim$dropout == 0L),
+               exp(-(lambda + mu) * end), tolerance = 0.02)
+  expect_true(all(sim$time[sim$status + sim$dropout == 0L] == end))
+})
+
 test_that("trial simulation rejects invalid design parameters", {
   for (n in list(0, -1, 1.5, NA_real_, Inf, "3", c(1, 2))) {
     expect_error(pharma_trial_simulate(n), "`n`")

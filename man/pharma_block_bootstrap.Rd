@@ -37,7 +37,8 @@ copy of a cluster gets a distinct integer ID in this column, including
 when the same original cluster is selected more than once. Pass by name.}
 }
 \value{
-A list of \code{R} statistics; set a seed for reproducible resampling.
+A list of \code{R} statistics, including any \code{NULL} callback values;
+set a seed for reproducible resampling.
 }
 \description{
 Sample the observed clusters with replacement, taking every row from each
