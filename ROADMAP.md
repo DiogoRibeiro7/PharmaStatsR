@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. P1 design contracts, survival and resampling family checks, cross-platform matrix, simulated-data audit, and optional-backend audit are closed; documentation reconciliation remains open. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
+**Status (3 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. A passing check is evidence for the tested paths, not validation of every statistical method or completion of the release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -8,8 +8,8 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation | Close remaining help, example, vignette, and site gaps against the implementation and inventory. |
-| 2 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57), then [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) | Decide API support policy, then assemble and check one reproducible release candidate. |
+| 1 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) API support policy | Distinguish supported, experimental, and example-only exports and give any migration path. |
+| 2 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Assemble and check one reproducible candidate commit after the support decision. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -31,7 +31,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backend and dependency audit | Closed | The [entry-point ledger](docs/dependency-audit.md) maps guards and tests; required-dependency checks cover the minimal install, and [the five-job candidate matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37120561275) passed on commit `d06f614`. The separate #58 release gate remains open. |
 | [#54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54) Cross-platform check matrix | Closed | Weekly/manual checks cover R versions, platforms, and an all-Suggests backend job; candidate runs still need to be recorded under #58. |
 | [#55](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/55) Simulated dataset audit | Closed | Schemas, provenance, and design invariants are documented and tested. |
-| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Open | Generated help has a CI drift gate and the vignette is runnable. Every export has a site link, and focused method pages link the corresponding Rd topics. Finish the package-wide help contract review and verify examples/vignette on the candidate commit before closing. |
+| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Closed | The [reconciliation record](docs/documentation-reconciliation.md) counts all 72 exports, records source/help and site coverage, and links checks of examples and the vignette in defined dependency sets. Help drift is gated in CI; the temporary diff no longer adds a package NOTE. Method validation and the exact-commit candidate matrix remain separate. |
 
 **Gate:** each supported method has its assumptions, input behavior, numerical evidence, and limitations recorded in [#47](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/47). Changes that alter earlier results have NEWS and migration notes. CI can reproduce its results on a named commit; documentation builds and package checks pass.
 

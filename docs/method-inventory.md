@@ -1,6 +1,6 @@
 # Export and evidence inventory
 
-Inventory started from `NAMESPACE` on 29 September 2026 and updated as review evidence merges. The 72 `export()` entries are listed exactly once below: 43 statistical methods, six example datasets, 17 utilities, and six optional integrations or templates. All 72 have a source definition and an Rd alias. S3 method registrations for `pharma_t_test` and `pharma_tost` are implementations of those exports, not additional public entries.
+Inventory started from `NAMESPACE` on 29 September 2026 and updated as review evidence merges. The 72 `export()` entries are listed exactly once below: 43 statistical methods, six example datasets, 17 utilities, and six optional integrations or templates. All 72 have a source definition and an Rd alias. S3 method registrations for `pharma_t_test` and `pharma_tost` are implementations of those exports, not additional public entries. The [documentation reconciliation](documentation-reconciliation.md) records the help, example, vignette, and site checks across this inventory.
 
 This is a **triage ledger**, not a clinical validation certificate or a declaration that an API is stable. “Candidate” means publicly exported but still awaiting an independent method review. “Example” means illustrative data, either hand entered or generated, not clinical observations. “Scope limited” means a utility only does the operation stated; it does not establish regulatory compliance. Issue [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) will decide longer-term support and deprecation policy.
 

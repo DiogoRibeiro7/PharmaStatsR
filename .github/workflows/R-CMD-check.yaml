@@ -106,8 +106,8 @@ jobs:
           Rscript -e 'roxygen2::roxygenise()'
           git add -N -- NAMESPACE man/
           git diff --check -- NAMESPACE man/
-          git diff -- NAMESPACE man/ > documentation-drift.patch
-          if test -s documentation-drift.patch; then
+          git diff -- NAMESPACE man/ > "$RUNNER_TEMP/documentation-drift.patch"
+          if test -s "$RUNNER_TEMP/documentation-drift.patch"; then
             git diff --stat -- NAMESPACE man/
             echo 'Generated R help differs from the committed files.' >&2
             echo 'Run scripts/style_and_doc.sh and commit the changes.' >&2
@@ -132,7 +132,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: documentation-drift
-          path: documentation-drift.patch
+          path: ${{ runner.temp }}/documentation-drift.patch
           if-no-files-found: ignore
       - uses: r-lib/actions/check-r-package@v2
         with:
