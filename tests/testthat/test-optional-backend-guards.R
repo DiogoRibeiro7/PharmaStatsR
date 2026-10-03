@@ -5,6 +5,9 @@ test_that("optional integrations report actionable missing-package errors", {
   )
   d <- data.frame(y = c(1, 2, 4, 5), x = 1:4,
                   id = rep(1:2, each = 2), status = c(0, 1, 0, 2))
+  log_file <- tempfile()
+  expect_true(file.create(log_file))
+  on.exit(unlink(log_file), add = TRUE)
   cases <- list(
     list("rstanarm", "pharma_bayesian_glm",
          function() pharma_bayesian_glm(y ~ x, d)),
@@ -22,7 +25,7 @@ test_that("optional integrations report actionable missing-package errors", {
     list("openssl", "pharma_audit_log",
          function() pharma_audit_log("entry", tempfile(), key = "secret")),
     list("openssl", "pharma_audit_verify",
-         function() pharma_audit_verify(tempfile(), key = "secret")),
+         function() pharma_audit_verify(log_file, key = "secret")),
     list("future", "pharma_parallel_bootstrap",
          function() pharma_parallel_bootstrap(
            d, function(rows) mean(rows$y), R = 1, plan = "sequential"))
