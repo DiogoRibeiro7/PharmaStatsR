@@ -19,5 +19,8 @@
 #' @examples
 #' pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)
 pharma_survival_fit <- function(formula, data, ...) {
-  survival::coxph(formula = formula, data = data, ...)
+  # Preserve unevaluated subset/weights expressions for coxph's model frame.
+  call <- match.call()
+  call[[1L]] <- quote(survival::coxph)
+  eval(call, parent.frame())
 }

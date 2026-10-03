@@ -24,5 +24,8 @@
 #'   dist = "weibull"
 #' )
 pharma_parametric_survival <- function(formula, data, dist = "weibull", ...) {
-  survival::survreg(formula = formula, data = data, dist = dist, ...)
+  # Preserve unevaluated subset/weights expressions for survreg's model frame.
+  call <- match.call()
+  call[[1L]] <- quote(survival::survreg)
+  eval(call, parent.frame())
 }
