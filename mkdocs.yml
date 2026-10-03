@@ -70,7 +70,7 @@ nav:
       - Quick start: quickstart.md
       - Project status: project-status.md
       - Dependency and backend audit: dependency-audit.md
-      - Simulated example data: simulated-data.md
+      - Illustrative example data: simulated-data.md
   - Statistical methods:
       - Method guide: methods.md
       - Export and evidence inventory: method-inventory.md
@@ -86,6 +86,7 @@ nav:
       - Python SciPy t-test bridge: scipy-bridge.md
       - Model estimate table exports: report-exports.md
       - Multiple imputation and pooling: missing-data.md
+      - Bayesian GLM and predictive checks: bayesian-glm.md
       - Latin square ANOVA: latin-square.md
       - Crossover ANOVA: crossover.md
       - Event-rate comparisons: rates.md

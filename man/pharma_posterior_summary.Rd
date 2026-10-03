@@ -12,7 +12,7 @@ pharma_posterior_summary(model, prob = 0.95)
 \item{prob}{Width of the credible interval (default 0.95)}
 }
 \value{
-Summary object
+A \code{summary.stanreg} matrix of parameter summaries and diagnostics.
 }
 \description{
 Provide summary statistics including credible intervals for a fitted
@@ -20,7 +20,9 @@ Bayesian model.
 }
 \examples{
 \dontrun{
-  fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+  fit <- pharma_bayesian_glm(
+    response ~ treatment, data = pharma_sample, iter = 500
+  )
   pharma_posterior_summary(fit)
 }
 }

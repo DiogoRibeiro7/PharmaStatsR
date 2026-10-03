@@ -20,7 +20,9 @@ using \link[bayesplot:pp_check]{bayesplot::pp_check}.
 }
 \examples{
 \dontrun{
-  fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+  fit <- pharma_bayesian_glm(
+    response ~ treatment, data = pharma_sample, iter = 500
+  )
   pharma_pp_check(fit)
 }
 }

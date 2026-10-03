@@ -2,7 +2,7 @@
 
 # Statistical workflows with clear assumptions
 
-Explore pharmaceutical research methods in R with simulated data, runnable examples, and explicit limits on interpretation.
+Explore pharmaceutical research methods in R with illustrative data, runnable examples, and explicit limits on interpretation.
 
 [Get started](installation.md){ .md-button .md-button--primary }
 [Read the method guide](methods.md){ .md-button }
@@ -23,7 +23,7 @@ Use wrappers for group comparisons, survival models, and other research analyses
 
 ### Reproduce an example
 
-Start with the included simulated datasets and inspect the returned estimates and uncertainty. [Try the quick start](quickstart.md).
+Start with the included example datasets and inspect the returned estimates and uncertainty. [Try the quick start](quickstart.md).
 
 </div>
 
@@ -39,7 +39,7 @@ Review assumptions, optional backends, and the actual scope of the reporting and
 
 ## About the package
 
-PharmaStatsR is an R package with statistical wrappers, simulated data, and example workflows for pharmaceutical research. It is under development and **not on CRAN**. Its examples support learning and exploratory research; the package has not been validated for clinical decisions or regulatory submissions.
+PharmaStatsR is an R package with statistical wrappers, illustrative data, and example workflows for pharmaceutical research. It is under development and **not on CRAN**. Its examples support learning and exploratory research; the package has not been validated for clinical decisions or regulatory submissions.
 
 The [project status](project-status.md) shows which roadmap reviews have closed, which remain open, and what evidence is needed before a release candidate. The [export and evidence inventory](method-inventory.md) records review levels for individual methods.
 

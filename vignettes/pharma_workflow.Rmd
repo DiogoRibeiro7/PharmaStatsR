@@ -1,8 +1,8 @@
 ---
-title: "A simulated PharmaStatsR analysis workflow"
+title: "An illustrative PharmaStatsR analysis workflow"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A simulated PharmaStatsR analysis workflow}
+  %\VignetteIndexEntry{An illustrative PharmaStatsR analysis workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
