@@ -10,9 +10,9 @@ Install R, then from the repository root run:
 ./setup.sh
 ```
 
-The script checks namespace-qualified calls against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. All Rd pages in `man/` are generated from roxygen comments in `R/`. The routine PR workflow reruns roxygen2, fails if `NAMESPACE` or `man/` differs from the committed files or a hand-maintained Rd page is added, and uploads the generated diff as `documentation-drift` when available.
+The script checks qualified calls and literal optional-package guards against `DESCRIPTION`, installs the development test dependencies if necessary, and runs the `testthat` suite. Use `SKIP_R_INSTALL=1 ./setup.sh` to use an existing R library; missing packages will cause failure. For R source changes, run `scripts/style_and_doc.sh` and commit the regenerated `man/` pages. Run an R CMD check locally when possible. All Rd pages in `man/` are generated from roxygen comments in `R/`. The routine PR workflow reruns roxygen2, fails if `NAMESPACE` or `man/` differs from the committed files or a hand-maintained Rd page is added, and uploads the generated diff as `documentation-drift` when available.
 
-The [dependency audit](dependency-audit.md) maps `Imports`, `Suggests`, dynamic runtime checks, and the remaining optional-backend review in #53.
+The [dependency audit](dependency-audit.md) maps `Imports`, `Suggests`, runtime guards, and the available and missing-path tests for each optional entry point. Issue #53 remains open until the all-Suggests evidence is recorded on a candidate commit.
 
 | Workflow | Trigger | Environment and dependencies |
 | --- | --- | --- |

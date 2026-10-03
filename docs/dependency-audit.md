@@ -1,6 +1,6 @@
 # Dependency and optional backend audit
 
-Issue [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) tracks the remaining audit. `scripts/check_dependency_metadata.R` parses namespace-qualified calls in `R/` and rejects packages absent from `DESCRIPTION`; the package check runs it on every PR. This ledger also records runtime dependencies that are discovered by name rather than called with `pkg::fun`.
+Issue [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) tracks this audit. `scripts/check_dependency_metadata.R` checks namespace-qualified calls, literal `requireNamespace()` calls, and literal calls to `.pharma_require_optional()` against `DESCRIPTION` on every PR. The table below also records packages passed through variable-name guards, which the static check cannot infer.
 
 ## Required packages
 
@@ -13,15 +13,27 @@ The development script `./setup.sh` installs its own test tools through `scripts
 
 ## Suggested runtime packages
 
-| Packages | Entry points or runtime use | Current missing-path evidence |
-| --- | --- | --- |
-| `rstanarm`, `bayesplot` | Bayesian GLM, posterior summary, and predictive check | Deterministic guards cover both dependencies of predictive checking: `rstanarm` registers the `stanreg` method and `bayesplot` provides the generic. An installed fit, summary, and predictive plot run in the all-Suggests matrix. |
-| `lme4`, `geepack`, `cmprsk` | Mixed models, GEE, and competing risks | Deterministic guard tests; installed fits have separate tests where the backend is present. |
-| `future`, `future.apply` | Row bootstrap and future plan | Both missing paths are forced in tests; installed sequential and multisession cases compare seeded draws. |
-| `openssl` | Local audit log and verification | Both missing paths are forced in tests; the installed HMAC chain has separate tests. |
-| `caret`, `mice`, `metafor`, `netmeta`, `JM`, `mstate` | Model selection, imputation, meta-analysis, joint and multistate models | All `metafor` public entry points now have forced missing-backend tests. Other functions have missing and installed cases; complete function-by-function reconciliation remains under #53. |
-| `reticulate` | Python SciPy t-test bridge | Missing R and Python module tests and an installed SciPy comparison are in the PR check; Python SciPy is installed separately and is not an R `DESCRIPTION` dependency. |
-| `openxlsx`, `flextable`, `officer` | Optional Excel and Word output | Missing exporter guards and installed file-content tests. |
-| `rmarkdown`, `flexdashboard`, `shiny` | Launch bundled example dashboards | Missing launch dependencies are forced in tests; retrieving the bundled path needs none of them. |
+The test names below are in `tests/testthat/`. Every unavailable path is forced by a mocked package check, so its assertion runs even if the backend is installed. Available-path tests use `skip_if_not_installed()` and run when their named packages are installed. The selected-backend PR job installs its [explicit package list](development.md#package-checks); the all-Suggests matrix is scheduled weekly or can be run manually.
 
-The [routine PR checks](development.md#package-checks) include a required-dependencies job alongside the selected-backend job. The former checks installation, examples, and tests with no optional modeling or reporting backend installed explicitly; the latter exercises its named installed backends and deterministic missing paths. The separate all-Suggests matrix runs on a schedule or by request. A passing routine PR check does not cover every Suggested package's available path. `caret` may also request model engines not declared here, according to the caller's chosen methods.
+| Packages | Exported entry points | Unavailable-path test | Available-path test and guaranteed job |
+| --- | --- | --- | --- |
+| `rstanarm` | `pharma_bayesian_glm()`, `pharma_posterior_summary()` | `test-optional-backend-guards.R` | `test-pharma_tests.R`; all-Suggests only. |
+| `rstanarm`, `bayesplot` | `pharma_pp_check()` | `test-pp-check.R` forces each package separately. | `test-pharma_tests.R` checks a `stanreg` plot; all-Suggests only. `rstanarm` registers the method, and `bayesplot` provides the generic. |
+| `lme4` | `pharma_lmm()` | `test-optional-backend-guards.R` | `test-pharma_tests.R`; all-Suggests guarantees installation. |
+| `geepack` | `pharma_gee()` | `test-optional-backend-guards.R` | `test-gee.R`; selected PR job. |
+| `cmprsk` | `pharma_competing_risks()` | `test-optional-backend-guards.R` | `test-competing-risks.R`; selected PR job. |
+| `future`, `future.apply` | `pharma_parallel_bootstrap()` | `test-optional-backend-guards.R` forces each package separately. | `test-parallel-bootstrap-rng.R`; selected PR job. |
+| `openssl` | `pharma_audit_log()`, `pharma_audit_verify()` | `test-optional-backend-guards.R` | `test-audit.R`; selected PR job. |
+| `caret` | `pharma_ai_model_select()` | `test-ai-model.R` | `test-ai-model.R` checks an explicit `glm` candidate; selected PR job. |
+| `mice` | `pharma_mice_impute()`, `pharma_sensitivity_analysis()` | `test-mice-backend.R` | `test-mice-backend.R`; selected PR job. |
+| `metafor` | `pharma_meta_analysis()`, `pharma_forest_plot()`, `pharma_funnel_plot()` | `test-meta.R` | `test-meta-analysis.R` and `test-pharma_tests.R`; selected PR job. |
+| `metafor` | `pharma_meta_regression()` | `test-meta-regression.R` | `test-meta-regression.R`; selected PR job. |
+| `netmeta` | `pharma_network_meta_analysis()` | `test-netmeta-backend.R` | `test-netmeta-backend.R`; selected PR job. |
+| `JM` | `pharma_joint_model()` | `test-joint-model.R` | `test-joint-model.R`; selected PR job. It also checks the backend's attachment requirement. |
+| `mstate` | `pharma_multistate_model()` | `test-multistate-backend.R` | `test-multistate-backend.R`; selected PR job. |
+| `reticulate`; Python SciPy | `pharma_scipy_ttest()` | `test-scipy-bridge.R` forces missing R and Python modules separately. | `test-scipy-bridge.R`; selected PR job installs SciPy through Python 3.12. SciPy is not an R `DESCRIPTION` dependency. |
+| `openxlsx` | `pharma_report_table(file = "*.xlsx")` | `test-report-table.R` | `test-report-table.R` reads the saved workbook; selected PR job. |
+| `flextable`, `officer` | `pharma_report_table(file = "*.docx")` | `test-report-table.R` forces each package separately. | `test-report-table.R` inspects the saved document; selected PR job. |
+| `rmarkdown`, `flexdashboard`, `shiny` | `pharma_dashboard(launch = TRUE)`, `pharma_interim_dashboard(launch = TRUE)` | `test-dashboard.R` forces each package for both entry points. | `test-dashboard.R` checks path forwarding with the runner mocked; selected PR job. Retrieving a path with `launch = FALSE` needs none of these packages. |
+
+The [routine PR checks](development.md#package-checks) include a required-dependencies job and a selected-backend job. A green routine PR run does not establish the `rstanarm` or guaranteed `lme4` installed paths. The dashboard tests do not open an interactive Shiny server. Record an all-Suggests run on the candidate commit under [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) before treating the optional integration evidence as release-ready. `caret` may request additional model engines for methods other than the explicitly tested `glm` candidate.
