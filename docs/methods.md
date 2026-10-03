@@ -17,7 +17,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Independent-row bootstrap | [`pharma_parallel_bootstrap()`](parallel-bootstrap.md) | `future`, `future.apply` (optional); uses row resampling |
 | Cluster bootstrap | [`pharma_block_bootstrap()`](cluster-bootstrap.md) | Core R dependencies; observed clusters sampled with replacement |
 | Trial simulation | [`pharma_trial_simulate()`](trial-simulation.md) | Core R dependencies; independent two-arm time-to-event draws |
-| Survival | `pharma_survival_fit()`, [`pharma_kaplan_meier()`](kaplan-meier.md), [`pharma_landmark_analysis()`](landmark-analysis.md), `pharma_parametric_survival()`, [`pharma_multistate_model()`](multistate.md) | `survival` (required); `mstate` (optional) for transition hazards |
+| Survival | `pharma_survival_fit()`, [`pharma_kaplan_meier()`](kaplan-meier.md), [`pharma_landmark_analysis()`](landmark-analysis.md), [`pharma_cox_timevarying()`](cox-timevarying.md), `pharma_parametric_survival()`, [`pharma_multistate_model()`](multistate.md) | `survival` (required); `mstate` (optional) for transition hazards |
 | Competing risks | [`pharma_competing_risks()`](competing-risks.md) | `cmprsk` (optional); proportional subdistribution hazards |
 | Local audit log | [`pharma_audit_log()` and `pharma_audit_verify()`](audit-log.md) | `openssl` (optional); keyed CSV chain |
 | Model diagnostics | [`pharma_model_diagnostics()`](model-diagnostics.md) | Base R `lm` / `glm`; descriptive screening |
