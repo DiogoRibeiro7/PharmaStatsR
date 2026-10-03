@@ -26,6 +26,32 @@ test_that("block bootstrap accepts character IDs and samples whole clusters", {
   }, logical(1))))
 })
 
+test_that("cluster draws agree with independently sampled cluster indices", {
+  d <- data.frame(cluster = c("A", "A", "B", "B", "B", "C"),
+                  value = 1:6)
+  clusters <- split(d$value, d$cluster)
+  set.seed(93)
+  selected <- replicate(8, sample.int(3L, 3L, replace = TRUE),
+                        simplify = FALSE)
+  expected <- lapply(selected, function(ids) {
+    list(values = unlist(clusters[ids], use.names = FALSE),
+         copies = rep(seq_along(ids), lengths(clusters)[ids]))
+  })
+  set.seed(93)
+  actual <- pharma_block_bootstrap(
+    d, "cluster", function(rows) {
+      list(values = rows$value, copies = rows$copy)
+    }, R = 8, progress = FALSE, resample_id = "copy"
+  )
+
+  expect_identical(actual, expected)
+  set.seed(93)
+  expect_identical(pharma_block_bootstrap(
+    d, "cluster", function(rows) rows$value,
+    R = 8, progress = FALSE
+  ), lapply(expected, `[[`, "values"))
+})
+
 test_that("unused factor levels are not sampled as empty clusters", {
   d <- data.frame(cluster = factor(c("A", "A", "B", "B", "B"),
                                    levels = c("A", "B", "never")),
@@ -43,6 +69,14 @@ test_that("block bootstrap keeps positional statistic arguments", {
   res <- pharma_block_bootstrap(d, "group", stat, R = 2,
                                 progress = FALSE, 3)
   expect_equal(res, list(12, 12))
+})
+
+test_that("block bootstrap retains one result per replicate for NULL statistics", {
+  d <- data.frame(cluster = c("A", "A", "B"), value = 1:3)
+  actual <- pharma_block_bootstrap(
+    d, "cluster", function(rows) NULL, R = 3, progress = FALSE
+  )
+  expect_identical(actual, rep(list(NULL), 3))
 })
 
 test_that("block bootstrap validates its cluster and design arguments", {

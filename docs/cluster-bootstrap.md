@@ -38,6 +38,6 @@ Pass `resample_id` by name. Any extra arguments before it are passed to `statist
 
 ## Interpretation
 
-The function returns a list of values from your statistic. It does not calculate confidence intervals, p-values, or an appropriate number of replicates for you. Cluster-level resampling is relevant when clusters are the sampled independent units; consider the sampling design, small numbers of clusters, and the statistic's behavior when some clusters are absent in a replicate. See [limitations and validation](limitations.md).
+The function returns a list of `R` values from your statistic, preserving a `NULL` callback value as a list entry. It does not calculate confidence intervals, p-values, or an appropriate number of replicates for you. Cluster-level resampling is relevant when clusters are the sampled independent units; consider the sampling design, small numbers of clusters, and the statistic's behavior when some clusters are absent in a replicate. See the [family review](resampling-review.md) and [limitations](limitations.md).
 
 R documents [how `split()` drops unused factor levels](https://stat.ethz.ch/R-manual/R-devel/library/base/html/split.html), and the [R Journal discussion of clustered resampling](https://journal.r-project.org/articles/RJ-2023-015/) describes the cluster-level cases bootstrap.

@@ -6,6 +6,8 @@ This is a **triage ledger**, not a clinical validation certificate or a declarat
 
 **Test key:** [R] is a fixed numerical reference or analytic calculation with boundary checks; [C] is a contract, algorithm behavior, or direct-backend comparison; [S] is a smoke, shape, or class check; [G] covers an optional-backend guard; — means no direct test was located. Each letter links to one representative test file. A test's presence does **not** prove the implementation is correct, and many optional-backend tests skip when the backend is absent from the fast PR job. The site column distinguishes a focused guide from a brief overview or no site mention. The linked R help gives the current full arguments; the short scope text here highlights a constraint to review.
 
+The five resampling, permutation, and trial-simulation exports have a [family review](resampling-review.md) comparing their sampling units, random streams, return values, and evidence. Their individual guides below retain method-specific assumptions.
+
 ## Statistical methods — candidate APIs, independent review pending
 
 | Export and R help | Backend | Input, purpose, or principal limit | Test | Site |

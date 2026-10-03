@@ -62,6 +62,30 @@ test_that("permutations keep the fitted rows and evaluated response", {
                tolerance = 1e-8)
 })
 
+test_that("permutations use only selected complete transformed responses", {
+  dat <- make_perm_f_data()
+  dat$y[c(1, 8)] <- NA_real_
+  fit <- stats::lm(log(y) ~ x1 + x2, data = dat, subset = x2 >= 2)
+  selected <- stats::model.frame(fit)
+  response <- stats::model.response(selected)
+
+  set.seed(95)
+  expected <- replicate(12, {
+    shuffled <- sample(response)
+    unname(summary(stats::lm(shuffled ~ x1 + x2, data = selected))$
+             fstatistic[["value"]])
+  })
+  set.seed(95)
+  actual <- pharma_perm_f_test(log(y) ~ x1 + x2, dat, R = 12,
+                               subset = x2 >= 2)
+
+  expect_equal(actual$statistic,
+               unname(summary(fit)$fstatistic[["value"]]))
+  expect_equal(actual$perm, expected)
+  expect_equal(actual$p.value,
+               (1 + sum(expected >= actual$statistic)) / 13)
+})
+
 test_that("permutation inputs and unsupported models fail explicitly", {
   dat <- make_perm_f_data()
   expect_error(pharma_perm_f_test("y ~ x1", dat), "formula")

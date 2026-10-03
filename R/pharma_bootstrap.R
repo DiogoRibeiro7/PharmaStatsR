@@ -89,7 +89,8 @@ pharma_wild_bootstrap <- function(formula, data, R = 1000) {
 #'   copy of a cluster gets a distinct integer ID in this column, including
 #'   when the same original cluster is selected more than once. Pass by name.
 #'
-#' @return A list of `R` statistics; set a seed for reproducible resampling.
+#' @return A list of `R` statistics, including any `NULL` callback values;
+#'   set a seed for reproducible resampling.
 #' @export
 #'
 #' @examples
@@ -154,7 +155,8 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
       boot_dat[[resample_id]] <- rep(seq_along(sampled),
                                       times = lengths(groups)[sampled])
     }
-    results[[i]] <- statistic(boot_dat, ...)
+    # Single-bracket assignment retains a NULL statistic as one replicate.
+    results[i] <- list(statistic(boot_dat, ...))
     if (!is.null(prog)) {
       prog$update()
     }

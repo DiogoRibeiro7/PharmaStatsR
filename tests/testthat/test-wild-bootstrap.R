@@ -21,6 +21,17 @@ test_that("wild bootstrap handles transformed predictors and formula offsets", {
   expect_equal(unname(draws[1, ]), unname(expected))
 })
 
+test_that("wild bootstrap draws are reproducible and vary across replicates", {
+  d <- data.frame(y = c(2, 3, 8, 7, 11, 13), x = 1:6)
+  set.seed(91)
+  first <- pharma_wild_bootstrap(y ~ x, d, R = 8)
+  set.seed(91)
+  second <- pharma_wild_bootstrap(y ~ x, d, R = 8)
+
+  expect_identical(first, second)
+  expect_gt(nrow(unique(as.data.frame(first))), 1L)
+})
+
 test_that("wild bootstrap keeps all model rows or fails on missing data", {
   d <- data.frame(y = c(1, 2, 4, 8), x = c(2, NA, 5, 6))
   expect_error(pharma_wild_bootstrap(y ~ x, d, R = 2), "missing values")

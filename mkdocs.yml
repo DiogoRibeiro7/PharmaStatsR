@@ -88,6 +88,7 @@ nav:
       - Latin square ANOVA: latin-square.md
       - Crossover ANOVA: crossover.md
       - Event-rate comparisons: rates.md
+      - Resampling and simulation review: resampling-review.md
       - Wild bootstrap: wild-bootstrap.md
       - Cluster bootstrap: cluster-bootstrap.md
       - Row bootstrap with futures: parallel-bootstrap.md

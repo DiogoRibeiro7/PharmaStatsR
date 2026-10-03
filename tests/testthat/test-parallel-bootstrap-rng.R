@@ -21,6 +21,28 @@ test_that("parallel row bootstrap uses reproducible streams across plans", {
                          logical(1))))
 })
 
+test_that("callback randomness follows the same future streams across plans", {
+  skip_if_not_installed("future.apply")
+  skip_if_not_installed("future")
+  d <- data.frame(id = 1:8)
+  stat <- function(rows) list(ids = rows$id, noise = stats::rnorm(1))
+
+  set.seed(271)
+  sequential <- pharma_parallel_bootstrap(d, stat, R = 5,
+                                           plan = "sequential")
+  set.seed(271)
+  parallel <- pharma_parallel_bootstrap(
+    d, stat, R = 5,
+    plan = future::tweak(future::multisession, workers = 2L)
+  )
+
+  expect_identical(sequential, parallel)
+  expect_length(sequential, 5)
+  expect_true(all(vapply(sequential, function(x) length(x$ids) == nrow(d),
+                         logical(1))))
+  expect_true(all(is.finite(vapply(sequential, `[[`, numeric(1), "noise"))))
+})
+
 test_that("parallel bootstrap restores the plan after statistic failure", {
   skip_if_not_installed("future.apply")
   skip_if_not_installed("future")
