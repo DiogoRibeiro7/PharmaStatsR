@@ -1,21 +1,5 @@
 citHeader("To cite the PharmaStatsR package in publications use:")
 
-meta <- utils::packageDescription("PharmaStatsR")
-
-bibentry(
-  "Manual",
-  title = "PharmaStatsR: Statistical Methods and Workflows for Pharmaceutical Research",
-  author = person(
-    given = "Diogo",
-    family = "Ribeiro",
-    email = "dfr@esmad.ipp.pt",
-    role = c("aut", "cre"),
-    comment = c(
-      ORCID = "0009-0001-2022-7072",
-      Affiliation = "ESMAD - Instituto Politécnico do Porto"
-    )
-  ),
-  year = "2026",
-  note = paste("R package version", meta$Version),
-  url = "https://github.com/DiogoRibeiro7/PharmaStatsR"
-)
+# The citation evaluator supplies `meta` from DESCRIPTION, including when the
+# source package has not been installed. Keep title, author, and version there.
+citation(auto = meta)

@@ -38,5 +38,6 @@ pharma_rate_metrics(0, 12, 0, 15)
 \references{
 Newcombe RG (1998). Interval estimation for the difference between
 independent proportions: comparison of eleven methods. Statistics in
-Medicine 17:873-890. \url{https://pubmed.ncbi.nlm.nih.gov/9595617/}
+Medicine 17:873-890.
+\doi{10.1002/(SICI)1097-0258(19980430)17:8<873::AID-SIM779>3.0.CO;2-I}
 }

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Let the installed citation derive package metadata from `DESCRIPTION` in both installed and source-check contexts, and cite the Newcombe rate-interval reference by DOI. The first candidate tarball check identified both issues in its incoming feasibility NOTE; calculations are unchanged.
 - Prepare an exact-commit release candidate gate: align the citation title and site URL, build and inspect a source tarball in the all-Suggests matrix, check the tarball with CRAN-style flags, and retain its manifest, hash, and check logs. The existing maintainer contact and affiliation still need verification before a candidate tag.
 - Classify all 72 exports by API support level and document the compatibility and migration policy. The two historical column-check names remain callable; this change introduces no deprecation warning or behavior change. CI checks the inventory against `NAMESPACE`.
 - Record the documentation reconciliation evidence and close #56's scope after help, examples, vignette, and site checks. Keep the generated-help diff in the runner's temporary directory so it no longer creates a package-check NOTE. Numerical method validation and release-candidate checks remain separate.

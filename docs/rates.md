@@ -47,7 +47,7 @@ This replaces the earlier Wald difference interval and unadjusted log ratio inte
 
 These are **approximate, unadjusted comparisons** of independent binomial groups. They do not adjust for covariates, exposure time, clustering, repeated observations, censoring, multiplicity, or a study-specific estimand. The ratio interval can have poor coverage in small or extreme samples, and a continuity correction can materially affect it. Check that the endpoint and group order match the analysis plan, and independently validate important results before use in a study.
 
-The risk-difference construction follows [Newcombe's comparison of interval methods](https://pubmed.ncbi.nlm.nih.gov/9595617/). See [limitations and validation](limitations.md) for project-wide constraints.
+The risk-difference construction follows [Newcombe's comparison of interval methods](https://doi.org/10.1002/%28SICI%291097-0258%2819980430%2917%3A8%3C873%3A%3AAID-SIM779%3E3.0.CO%3B2-I). See [limitations and validation](limitations.md) for project-wide constraints.
 
 ## R help
 
