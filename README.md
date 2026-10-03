@@ -5,7 +5,7 @@
 
 [Documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) · [Roadmap](ROADMAP.md) · [Evidence inventory](docs/method-inventory.md) · [Contributing](CONTRIBUTING.md)
 
-PharmaStatsR is an R package with statistical wrappers and simulated example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
+PharmaStatsR is an R package with statistical wrappers and illustrative example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
 
 The package is under development and is **not on CRAN**. Its methods and sample data are intended for demonstration and research. They have not been validated for clinical decisions or regulatory compliance.
 
@@ -29,7 +29,7 @@ The repository and R package were previously named `PharmaTestSuite`. Reinstall 
 ```r
 library(PharmaStatsR)
 
-# The included data are small, simulated examples.
+# The included data are small, illustrative examples.
 head(pharma_sample)
 
 result <- pharma_t_test(response ~ treatment, data = pharma_sample)
@@ -55,12 +55,12 @@ The documentation source is in [`docs/`](docs/) with [`mkdocs.yml`](mkdocs.yml).
 
 Run `./setup.sh` after installing R. It installs the test dependencies and executes the unit tests. Set `SKIP_R_INSTALL=1` to use an existing R library; missing required packages then cause a clear failure.
 
-Every pull request to `main` runs an Ubuntu R-release package check with required dependencies and a selected set of optional backends. Documentation changes also run a strict MkDocs build. A separate [R validation matrix](.github/workflows/R-validation-matrix.yaml) runs weekly or on demand: macOS and Windows on R release, Ubuntu on R old release and devel with required dependencies, and Ubuntu on R release with every declared Suggested package and Python SciPy. Changes to the matrix workflow exercise it on the PR. Both R workflows use `--as-cran` check flags, but a passing matrix is not the complete release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Read [the check policy](https://diogoribeiro7.github.io/PharmaStatsR/development/#package-checks) for dependencies, skips, and failure handling.
+Every pull request to `main` runs two Ubuntu R-release package-check jobs: one with required dependencies and check tools, and one with selected optional backends. Documentation changes also run a strict MkDocs build. A separate [R validation matrix](.github/workflows/R-validation-matrix.yaml) runs weekly or on demand: macOS and Windows on R release, Ubuntu on R old release and devel with required dependencies, and Ubuntu on R release with every declared Suggested package and Python SciPy. Changes to the matrix workflow exercise it on the PR. Both R workflows use `--as-cran` check flags, but a passing matrix is not the complete release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Read [the check policy](https://diogoribeiro7.github.io/PharmaStatsR/development/#package-checks) for dependencies, skips, and failure handling.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations and [SECURITY.md](SECURITY.md) for private vulnerability reports.
 
 ## Scope and citation
 
-The helpers do not establish compliance with ICH or FDA guidance. The [reporting and monitoring scope audit](https://diogoribeiro7.github.io/PharmaStatsR/claims-audit/) explains what the column checks, audit log, SAP template, reporting table, and dashboards actually return. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the simulated datasets for clinical decisions or include patient data in issues.
+The helpers do not establish compliance with ICH or FDA guidance. The [reporting and monitoring scope audit](https://diogoribeiro7.github.io/PharmaStatsR/claims-audit/) explains what the column checks, audit log, SAP template, reporting table, and dashboards actually return. Researchers must verify assumptions, calculations, and the suitability of methods for their own analyses. Do not use the example datasets for clinical decisions or include patient data in issues.
 
 Use `citation("PharmaStatsR")` after installation for citation details. The project is licensed under MIT; see [LICENSE.md](LICENSE.md).

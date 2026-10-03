@@ -1,6 +1,6 @@
 # Quick start
 
-The included data are **simulated** and are suitable for demonstrations. These examples use only the package's required dependencies.
+The included data are **illustrative examples**, some hand entered and some generated. They are suitable for demonstrations. See the [data guide](simulated-data.md) for provenance and design limits. These examples use only the package's required dependencies.
 
 ## Compare two groups
 

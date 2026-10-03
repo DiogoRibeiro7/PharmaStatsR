@@ -1,6 +1,6 @@
-# Simulated example data
+# Illustrative example data
 
-PharmaStatsR exports six small data frames for teaching and package examples. They contain **no patient records or measured pharmaceutical outcomes**. All response, dose, and follow-up values are unitless illustrations; the binary labels have no specified clinical event definition. Do not interpret a fitted effect from these fixtures as evidence about a drug or a real population.
+PharmaStatsR exports six small data frames for teaching and package examples. Four contain hand-entered values, while two have seeded generated responses. They contain **no patient records or measured pharmaceutical outcomes**. All response, dose, and follow-up values are unitless illustrations; the binary labels have no specified clinical event definition. Do not interpret a fitted effect from these fixtures as evidence about a drug or a real population.
 
 | Data frame | Columns and stored types | Source and intended use |
 | --- | --- | --- |

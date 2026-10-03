@@ -1,6 +1,8 @@
 #' Bayesian GLM with rstanarm
 #'
-#' Fit a generalized linear model using MCMC via `rstanarm::stan_glm`.
+#' Fit a generalized linear model via `rstanarm::stan_glm`. By default it
+#' uses a Gaussian family and MCMC. Other supported `family` and `algorithm`
+#' choices can be passed through `...`.
 #'
 #' @param formula Model formula
 #' @param data Data frame
@@ -10,7 +12,9 @@
 #' @export
 #' @examples
 #' \dontrun{
-#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#'   fit <- pharma_bayesian_glm(
+#'     response ~ treatment, data = pharma_sample, iter = 500
+#'   )
 #' }
 pharma_bayesian_glm <- function(formula, data, ...) {
   .pharma_require_optional("rstanarm", "pharma_bayesian_glm")
@@ -25,11 +29,13 @@ pharma_bayesian_glm <- function(formula, data, ...) {
 #' @param model A `stanreg` object from [rstanarm::stan_glm]
 #' @param prob Width of the credible interval (default 0.95)
 #'
-#' @return Summary object
+#' @return A `summary.stanreg` matrix of parameter summaries and diagnostics.
 #' @export
 #' @examples
 #' \dontrun{
-#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#'   fit <- pharma_bayesian_glm(
+#'     response ~ treatment, data = pharma_sample, iter = 500
+#'   )
 #'   pharma_posterior_summary(fit)
 #' }
 pharma_posterior_summary <- function(model, prob = 0.95) {
@@ -50,7 +56,9 @@ pharma_posterior_summary <- function(model, prob = 0.95) {
 #' @export
 #' @examples
 #' \dontrun{
-#'   fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+#'   fit <- pharma_bayesian_glm(
+#'     response ~ treatment, data = pharma_sample, iter = 500
+#'   )
 #'   pharma_pp_check(fit)
 #' }
 pharma_pp_check <- function(model, ...) {

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Align the Bayesian R help examples with the numeric example response and the Gaussian default, clarify the posterior summary return, and add a site guide for fitting choices and predictive checks. Correct the evidence inventory, example-data provenance wording, and README's two-job CI description; no Bayesian calculation changed.
 - Reconcile optional entry points with their forced missing-package and installed-backend tests in the dependency audit. The metadata check now also catches undeclared literal `requireNamespace()` and shared-guard package references; candidate all-Suggests evidence is still required before closing the audit.
 - Require both `rstanarm` and `bayesplot` for `pharma_pp_check()`, with actionable errors for either missing backend. Exercise its installed `stanreg` plotting path in the all-Suggests check.
 - Run an R package check with required dependencies and only the test/vignette toolchain on every PR. Force missing `metafor` paths for meta-analysis and both plotting helpers even when the backend is installed; installed behavior remains covered by the selected-backend check.

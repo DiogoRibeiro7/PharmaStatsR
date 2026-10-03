@@ -17,10 +17,14 @@ pharma_bayesian_glm(formula, data, ...)
 A \code{stanreg} object
 }
 \description{
-Fit a generalized linear model using MCMC via \code{rstanarm::stan_glm}.
+Fit a generalized linear model via \code{rstanarm::stan_glm}. By default it
+uses a Gaussian family and MCMC. Other supported \code{family} and \code{algorithm}
+choices can be passed through \code{...}.
 }
 \examples{
 \dontrun{
-  fit <- pharma_bayesian_glm(outcome ~ dose, data = pharma_sample, iter = 500)
+  fit <- pharma_bayesian_glm(
+    response ~ treatment, data = pharma_sample, iter = 500
+  )
 }
 }
