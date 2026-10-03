@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Reject unknown, blank, or repeated SAP template section names and non-scalar section text before writing a file. Custom sections now require a named list of unique, nonblank names and single non-missing strings; `include_sections = NULL` still omits defaults, while `character()` now errors. Review earlier templates for silently omitted or duplicated sections and supply study-specific content before use.
 - Generate the last six hand-maintained R help topics from roxygen source and require all committed Rd pages to be generated. Replace the unusable counting-process Cox example with a runnable interval fixture and clarify logistic and internal input-checking limits.
 - Replace the placeholder workflow vignette with a reproducible two-group analysis, diagnostic screening, and a results table on simulated data; correct the three registry help links in the evidence inventory.
 - Check generated R help and namespace files in the pull-request workflow before the package check, and keep the reconciliation diff as a CI artifact when source comments and installed help disagree.
