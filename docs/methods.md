@@ -11,6 +11,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Analysis | Representative functions | Backend |
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_factorial_anova()`](factorial-anova.md), [`pharma_repeated_anova()`](repeated-anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
+| Binary outcome model | [`pharma_logistic_regression()`](logistic-regression.md) | Core R dependencies; binomial GLM with logit link |
 | Quadratic response surface | [`pharma_response_surface()`](response-surface.md) | Core R dependencies; two numeric predictors and a full-rank design |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
 | Rates and uncertainty | [`pharma_rate_metrics()`](rates.md), [`pharma_wild_bootstrap()`](wild-bootstrap.md) | Core R dependencies; review interval assumptions |
@@ -32,6 +33,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Balanced two-arm planning total | [`pharma_sample_reestimate()`](sample-size.md) | Core R dependencies; normal-approximation planning only |
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
 | Dose response | [`pharma_emax()`, `pharma_sigmoid_emax()`, and `pharma_emax_nlme()`](dose-response.md) | `nlme` is required for the repeated-subject fit; the other two use `stats` |
+| Package utilities | [`pharma_config()` and the function registries](configuration-registries.md) | Base R; process-local configuration and callables |
 
 The formula interfaces of `pharma_t_test()` and [`pharma_anova()`](anova.md) reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
 

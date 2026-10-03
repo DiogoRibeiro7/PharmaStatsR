@@ -77,6 +77,7 @@ nav:
       - Core inference reference cases: core-reference-cases.md
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
+      - Logistic regression: logistic-regression.md
       - Balanced two-factor ANOVA: factorial-anova.md
       - Paired two-condition ANOVA: repeated-anova.md
       - Two-predictor response surface: response-surface.md
@@ -111,5 +112,6 @@ nav:
       - Audit log integrity: audit-log.md
       - Reporting and monitoring scope: claims-audit.md
       - Model diagnostics: model-diagnostics.md
+      - Configuration and registries: configuration-registries.md
       - Limitations and validation: limitations.md
   - Development: development.md

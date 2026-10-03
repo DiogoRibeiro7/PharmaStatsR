@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add logistic regression and configuration/registry guides for the last unlinked inventory entries; clarify the visible getter versus invisible setter in `pharma_config()` help. Refresh the stale #53 review queue. No fitting or utility behavior changed.
 - Close the optional-backend audit after a passing five-job candidate matrix, refresh the roadmap and status pages, and document the three Emax fits, starting values, and convergence limits. No fitting behavior changed.
 - Verify and log all installed Suggested R packages in the all-Suggests matrix, and run the dependency metadata audit on every matrix platform. This makes optional-backend candidate evidence explicit; no package API changed.
 - Describe the meta-analysis forest and funnel helpers as graphics-device calls with invisible backend metadata, rather than returned plot objects; link their help and evidence from the site guide. No plotting behavior changed.
