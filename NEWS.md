@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Verify and log all installed Suggested R packages in the all-Suggests matrix, and run the dependency metadata audit on every matrix platform. This makes optional-backend candidate evidence explicit; no package API changed.
 - Describe the meta-analysis forest and funnel helpers as graphics-device calls with invisible backend metadata, rather than returned plot objects; link their help and evidence from the site guide. No plotting behavior changed.
 - Align the Bayesian R help examples with the numeric example response and the Gaussian default, clarify the posterior summary return, and add a site guide for fitting choices and predictive checks. Correct the evidence inventory, example-data provenance wording, and README's two-job CI description; no Bayesian calculation changed.
 - Reconcile optional entry points with their forced missing-package and installed-backend tests in the dependency audit. The metadata check now also catches undeclared literal `requireNamespace()` and shared-guard package references; candidate all-Suggests evidence is still required before closing the audit.

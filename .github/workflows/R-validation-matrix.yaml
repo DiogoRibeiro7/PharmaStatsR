@@ -39,6 +39,8 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
+      - name: Audit namespace declarations
+        run: Rscript scripts/check_dependency_metadata.R
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"'
@@ -80,10 +82,14 @@ jobs:
         run: |
           python -m pip install scipy==1.17.0
           echo "RETICULATE_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
+      - name: Audit namespace declarations
+        run: Rscript scripts/check_dependency_metadata.R
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"all"'
           extra-packages: any::rcmdcheck
+      - name: Verify all Suggested R packages are installed
+        run: Rscript scripts/check_suggests_installed.R
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: 'c("--no-manual", "--as-cran")'
