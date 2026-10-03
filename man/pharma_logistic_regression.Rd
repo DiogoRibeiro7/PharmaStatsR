@@ -3,12 +3,27 @@
 \name{pharma_logistic_regression}
 \alias{pharma_logistic_regression}
 \title{Fit a logistic regression model}
-\usage{pharma_logistic_regression(formula, data, ...)}
-\arguments{
-  \item{formula}{Model formula.}
-  \item{data}{Data frame with variables.}
-  \item{...}{Additional arguments passed to \code{glm}.}
+\usage{
+pharma_logistic_regression(formula, data, ...)
 }
-\value{A \code{glm} object.}
-\description{Convenience wrapper around \code{stats::glm} with binomial family.}
-\examples{pharma_logistic_regression(outcome ~ dose, data = pharma_sample)}
+\arguments{
+\item{formula}{A model formula.}
+
+\item{data}{A data frame containing the variables.}
+
+\item{...}{Additional arguments passed to \code{stats::glm}.}
+}
+\value{
+A \code{glm} object.
+}
+\description{
+Convenience wrapper around \code{stats::glm} for binomial outcomes.
+}
+\details{
+The model uses a binomial family. The bundled \code{outcome} column is
+an arbitrary example label, not a defined clinical event. Check outcome
+coding, model fit, and possible separation for a real analysis.
+}
+\examples{
+pharma_logistic_regression(outcome ~ dose, data = pharma_sample)
+}

@@ -4,28 +4,47 @@
 \alias{pharma_network_meta_analysis}
 \title{Network meta-analysis}
 \usage{
-pharma_network_meta_analysis(TE, seTE, treat1, treat2,
-  data = NULL, sm = "MD", random = TRUE, ...)
+pharma_network_meta_analysis(
+  TE,
+  seTE,
+  treat1,
+  treat2,
+  data = NULL,
+  sm = "MD",
+  random = TRUE,
+  ...
+)
 }
 \arguments{
-  \item{TE}{Numeric vector of treatment effect estimates.}
-  \item{seTE}{Numeric vector of standard errors for the effect estimates.}
-  \item{treat1}{Character vector specifying the first treatment in each comparison.}
-  \item{treat2}{Character vector specifying the second treatment in each comparison.}
-  \item{data}{Optional data frame containing the variables.}
-  \item{sm}{Summary measure passed to \code{netmeta::netmeta}.}
-  \item{random}{Logical indicating if a random-effects model is fitted.}
-  \item{...}{Additional arguments passed to \code{netmeta::netmeta}. Pass
-  \code{studlab} here to identify comparisons from the same study, especially
-  multi-arm studies. Without it, \code{netmeta} treats comparisons as independent
-  studies.}
+\item{TE}{Numeric vector of treatment effect estimates.}
+
+\item{seTE}{Numeric vector of standard errors for the effect estimates.}
+
+\item{treat1}{Character vector specifying the first treatment in each
+comparison.}
+
+\item{treat2}{Character vector specifying the second treatment in each
+comparison.}
+
+\item{data}{Optional data frame containing the variables.}
+
+\item{sm}{Summary measure passed to \link[netmeta:netmeta]{netmeta::netmeta}.}
+
+\item{random}{Logical indicating whether to fit a random-effects model
+(default \code{TRUE}).}
+
+\item{...}{Additional arguments passed to \link[netmeta:netmeta]{netmeta::netmeta}. Pass
+\code{studlab} here to identify comparisons from the same study, especially
+multi-arm studies. Without it, \code{netmeta} treats comparisons as independent
+studies.}
 }
 \value{
 A \code{netmeta} object.
 }
 \description{
-Fit a network meta-analysis using \code{netmeta::netmeta} to compare multiple treatments across studies.
-Requires the 'netmeta' package to be installed.
+Fit a network meta-analysis using \link[netmeta:netmeta]{netmeta::netmeta} to compare multiple
+treatments across studies.
+Requires the 'netmeta' package.
 }
 \examples{
 if (requireNamespace("netmeta", quietly = TRUE)) {
