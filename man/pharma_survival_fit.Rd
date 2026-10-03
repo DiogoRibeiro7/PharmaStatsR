@@ -7,17 +7,26 @@
 pharma_survival_fit(formula, data, ...)
 }
 \arguments{
-\item{formula}{A model formula of the form \code{Surv(time, status) ~ predictors}.}
+\item{formula}{A survival model formula, typically
+\code{Surv(time, status) ~ predictors} for right-censored observations.}
 
 \item{data}{A data frame containing the variables used in the model.}
 
-\item{...}{Additional arguments passed to \code{survival::coxph}.}
+\item{...}{Additional arguments, including \code{subset}, \code{na.action}, and \code{ties},
+passed to \code{survival::coxph()}.}
 }
 \value{
-A \code{coxph} object.
+A \code{coxph} object. Coefficients for ordinary covariates are log
+hazard ratios under the fitted proportional-hazards model.
 }
 \description{
-Provides a thin wrapper around \code{survival::coxph} for time-to-event analyses.
+Delegates Cox proportional-hazards fitting to \code{survival::coxph()}.
+}
+\details{
+For a right-censored \code{Surv(time, status)} response, code censoring
+as 0 and the event as 1. \code{coxph()} handles row selection and missingness;
+inspect the fitted \code{n} and \code{na.action} before interpreting a result.
+Use \code{pharma_cox_timevarying()} for checked counting-process intervals.
 }
 \examples{
 pharma_survival_fit(survival::Surv(time, status) ~ treatment, data = pharma_survival)

@@ -47,7 +47,7 @@ For worked examples and assumptions, read the [method guide](https://diogoribeir
 
 ## Project status and documentation
 
-The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. As of 3 October 2026, the export inventory, claims audit, core reference cases, design contracts, cross-platform check matrix, and simulated-data audit are closed. Survival, resampling, optional-backend, and documentation reconciliation remain open; [the site status page](https://diogoribeiro7.github.io/PharmaStatsR/project-status/) explains the evidence and next gates. Closed issues cover their stated scope, not a package-wide clinical validation.
+The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. As of 3 October 2026, the export inventory, claims audit, core reference cases, design contracts, survival-family checks, cross-platform check matrix, and simulated-data audit are closed. Resampling, optional-backend, and documentation reconciliation remain open; [the site status page](https://diogoribeiro7.github.io/PharmaStatsR/project-status/) explains the evidence and next gates. Closed issues cover their stated scope, not a package-wide clinical validation.
 
 The documentation source is in [`docs/`](docs/) with [`mkdocs.yml`](mkdocs.yml). GitHub Actions checks the MkDocs build on documentation pull requests and deploys the site to [GitHub Pages](https://diogoribeiro7.github.io/PharmaStatsR/) after relevant changes reach `main`. See the [documentation workflow](.github/workflows/docs.yml) and [local build instructions](https://diogoribeiro7.github.io/PharmaStatsR/development/#documentation-site).
 
