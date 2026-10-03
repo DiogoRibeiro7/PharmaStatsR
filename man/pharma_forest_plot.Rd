@@ -12,7 +12,8 @@ pharma_forest_plot(model, ...)
 \item{...}{Additional arguments passed to \link[metafor:forest]{metafor::forest}.}
 }
 \value{
-A plot.
+Draws a forest plot on the active graphics device and invisibly
+returns the backend's list of plotting parameters (such as axis limits).
 }
 \description{
 Create a forest plot from an \code{rma} object.

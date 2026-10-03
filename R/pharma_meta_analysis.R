@@ -50,7 +50,8 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::forest].
 #'
-#' @return A plot.
+#' @return Draws a forest plot on the active graphics device and invisibly
+#'   returns the backend's list of plotting parameters (such as axis limits).
 #' @export
 #'
 #' @examples
@@ -75,7 +76,8 @@ pharma_forest_plot <- function(model, ...) {
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::funnel].
 #'
-#' @return A plot.
+#' @return Draws a funnel plot on the active graphics device and invisibly
+#'   returns the backend's data frame of plotted coordinates and study labels.
 #' @export
 #'
 #' @examples
