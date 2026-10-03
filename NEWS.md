@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Close the optional-backend audit after a passing five-job candidate matrix, refresh the roadmap and status pages, and document the three Emax fits, starting values, and convergence limits. No fitting behavior changed.
 - Verify and log all installed Suggested R packages in the all-Suggests matrix, and run the dependency metadata audit on every matrix platform. This makes optional-backend candidate evidence explicit; no package API changed.
 - Describe the meta-analysis forest and funnel helpers as graphics-device calls with invisible backend metadata, rather than returned plot objects; link their help and evidence from the site guide. No plotting behavior changed.
 - Align the Bayesian R help examples with the numeric example response and the Gaussian default, clarify the posterior summary return, and add a site guide for fitting choices and predictive checks. Correct the evidence inventory, example-data provenance wording, and README's two-job CI description; no Bayesian calculation changed.

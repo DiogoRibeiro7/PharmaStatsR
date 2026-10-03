@@ -20,7 +20,8 @@ pharma_emax_nlme(
 
 \item{subject}{Subject identifier for random effects.}
 
-\item{start}{Named vector of starting values for \code{e0}, \code{emax}, and \code{ed50}.}
+\item{start}{Named vector of starting values for \code{e0}, \code{emax}, and
+\code{ed50}. If \code{NULL}, coefficients from a pooled \code{nls} fit are used.}
 
 \item{random}{Random-effects formula. Defaults to a subject-specific baseline.}
 
@@ -30,7 +31,9 @@ pharma_emax_nlme(
 An \code{nlme} object inheriting from \code{lme}.
 }
 \description{
-Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax curves.
+Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax
+curves. The wrapper sets \code{nlmeControl(returnObject = TRUE)}, so reaching
+the iteration limit may return an object with a nonconvergence warning.
 }
 \examples{
 pharma_emax_nlme(pharma_dose_response$dose,
