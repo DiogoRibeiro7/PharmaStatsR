@@ -28,7 +28,8 @@ Delegates parametric time-to-event regression to \code{survival::survreg()}.
 \details{
 For a right-censored \code{Surv(time, status)} response, code censoring
 as 0 and the event as 1. \code{survreg()} handles row selection and missingness;
-inspect the fitted \code{n} and \code{na.action}. For Weibull fits, the fitted
+inspect the number of \code{linear.predictors} and \code{na.action}. For Weibull
+fits, the fitted
 \code{scale} is the reciprocal of the usual Weibull shape parameter.
 }
 \examples{

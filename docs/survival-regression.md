@@ -10,7 +10,9 @@ cox <- pharma_survival_fit(formula, pharma_survival)
 weibull <- pharma_parametric_survival(formula, pharma_survival)
 
 cox$n
-weibull$n
+length(weibull$linear.predictors)
+cox$na.action
+weibull$na.action
 summary(cox)
 summary(weibull)
 ```

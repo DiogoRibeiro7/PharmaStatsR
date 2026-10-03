@@ -44,7 +44,8 @@ test_that("Weibull AFT fit matches survreg and an exponential reference", {
   expect_equal(stats::coef(actual), stats::coef(reference))
   expect_equal(actual$scale, reference$scale)
   expect_equal(actual$loglik, reference$loglik)
-  expect_identical(actual$n, nrow(included))
+  expect_length(actual$linear.predictors, nrow(included))
+  expect_equal(actual$na.action, reference$na.action)
 
   # With complete uncensored observations, the exponential MLE mean time
   # is the sample mean. This check does not depend on a second fit.

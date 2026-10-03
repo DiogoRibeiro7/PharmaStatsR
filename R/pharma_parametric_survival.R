@@ -14,7 +14,8 @@
 #'   coefficients describe log survival-time ratios, not Cox log hazard ratios.
 #' @details For a right-censored `Surv(time, status)` response, code censoring
 #'   as 0 and the event as 1. `survreg()` handles row selection and missingness;
-#'   inspect the fitted `n` and `na.action`. For Weibull fits, the fitted
+#'   inspect the number of `linear.predictors` and `na.action`. For Weibull
+#'   fits, the fitted
 #'   `scale` is the reciprocal of the usual Weibull shape parameter.
 #' @export
 #'
