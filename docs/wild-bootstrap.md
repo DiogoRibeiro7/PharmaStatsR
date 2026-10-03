@@ -26,3 +26,7 @@ The response must be a finite numeric vector; the formula must be two-sided and 
 These are draws of the **unstudentized coefficients**, using raw residuals and observation-level Rademacher signs. The helper does not return confidence intervals or p-values, impose a null hypothesis, rescale residuals for leverage, or account for dependence between observations. Its sign draws assume independent observational units; use an appropriate cluster-aware design for clustered or repeated measurements. Interval coverage and test calibration depend on the model and chosen bootstrap procedure. See [limitations and validation](limitations.md).
 
 R documents how [`lm()` builds model frames and applies offsets](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html); [Davidson and Flachaire (2008)](https://russell-davidson.research.mcgill.ca/articles/wild8-euro.pdf) discuss wild bootstrap versions and inference under heteroskedasticity.
+
+## R help
+
+Full arguments and return values: [`pharma_wild_bootstrap()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_wild_bootstrap.Rd). In an installed package, run `help("pharma_wild_bootstrap", package = "PharmaStatsR")`.

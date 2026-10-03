@@ -32,3 +32,7 @@ For exponential event times, each arm's `hazard_*` value \(\lambda\) is a consta
 ## Scope
 
 The helper generates independent event and dropout times with common event shape in both arms and fixed calendar end. It does not enforce balanced randomization, model covariates or competing events, calibrate sample size or power, or perform an analysis. Its output is synthetic; validate any analysis plan separately. See [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_trial_simulate()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_trial_simulate.Rd). In an installed package, run `help("pharma_trial_simulate", package = "PharmaStatsR")`.

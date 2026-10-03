@@ -43,3 +43,7 @@ or transitivity. Review those assumptions, heterogeneity, study
 selection, and the chosen effect measure for a real synthesis. Without the
 optional backend, the helper gives an installation hint; it never substitutes
 another method.
+
+## R help
+
+Full arguments and return values: [`pharma_network_meta_analysis()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_network_meta_analysis.Rd). In an installed package, run `help("pharma_network_meta_analysis", package = "PharmaStatsR")`.

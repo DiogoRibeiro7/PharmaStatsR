@@ -30,3 +30,7 @@ The constructed coefficients are \((10,2,-3,4,5,6)\). Paired errors of \(-1\) an
 - The result is an `lm` fit. Residual variance supports the usual coefficient tests only under appropriate independent-error, variance, and distribution assumptions. Repeated design points can support a separate pure-error and lack-of-fit analysis, but this helper does not compute that decomposition. Without replication, its residual sum of squares can include lack of fit. Centering and scaling predictors may improve numerical stability; interpret coefficients in the scale used for fitting.
 
 Earlier calls that supplied the same vector for both predictors could return aliased coefficients. Rebuild a design with two varied predictors and recompute those fits. See the [method inventory](method-inventory.md) and [limitations](limitations.md) for review scope.
+
+## R help
+
+Full arguments and return values: [`pharma_response_surface()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_response_surface.Rd). In an installed package, run `help("pharma_response_surface", package = "PharmaStatsR")`.

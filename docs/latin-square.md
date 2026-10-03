@@ -36,3 +36,7 @@ fit <- pharma_latin_square_anova(
 The model includes three main effects and an intercept. It rejects interactions, incomplete or repeated cells, repeated treatments within a row or column, missing values, and non-finite responses. A single unreplicated square cannot estimate treatment-by-block interactions separately from error. The usual F test also relies on independent errors with common variance and an appropriate error distribution; inspect the residuals and the study design before interpreting it. `subset`, `weights`, and `na.action` cannot be passed through this helper because they can change the checked design or analysis population. Prepare a complete square in `data` first.
 
 For background, see [Penn State's Latin square design lesson](https://online.stat.psu.edu/stat502/Lesson07) and [R's `aov()` documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/aov.html). See also [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_latin_square_anova()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_latin_square_anova.Rd). In an installed package, run `help("pharma_latin_square_anova", package = "PharmaStatsR")`.

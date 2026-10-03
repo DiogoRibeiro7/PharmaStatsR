@@ -42,3 +42,7 @@ pharma_tost(
 ```
 
 The bounds above are illustrative and have no clinical justification. Select bounds in the response's units before seeing results, ensure independent observations and an appropriate mean comparison, and document missing data and design choices. This helper does not itself establish bioequivalence or regulatory acceptability.
+
+## R help
+
+Full arguments and return values: [`pharma_tost()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_tost.Rd). In an installed package, run `help("pharma_tost", package = "PharmaStatsR")`.

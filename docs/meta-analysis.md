@@ -78,3 +78,12 @@ do not identify an individual-level dose effect or a causal relationship;
 check confounding, outcome definitions, residual heterogeneity, and the
 limited number of studies before interpretation. The backend error is returned
 if the requested model cannot be fitted.
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_meta_analysis()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_meta_analysis.Rd)
+- [`pharma_meta_regression()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_meta_regression.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

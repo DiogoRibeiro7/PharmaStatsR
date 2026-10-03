@@ -33,3 +33,7 @@ all.equal(unname(stats::coef(fit)), unname(stats::coef(reference)))
 ```
 
 The fitted hazard ratio compares subjects **conditional on being event-free and observed beyond time 5**. It does not describe events before that time or remove selection bias from a time-dependent exposure. Choose the landmark before looking at outcomes, check the event coding and censoring assumptions, and consider a [counting-process Cox model](cox-timevarying.md) for covariates that change during follow-up. See [Kaplan–Meier and log-rank](kaplan-meier.md) for unadjusted right-censored summaries and [limitations and validation](limitations.md) for the package's general scope.
+
+## R help
+
+Full arguments and return values: [`pharma_landmark_analysis()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_landmark_analysis.Rd). In an installed package, run `help("pharma_landmark_analysis", package = "PharmaStatsR")`.

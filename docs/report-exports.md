@@ -27,3 +27,7 @@ This is an extraction of model output, not a validated analysis report or an
 APA or ICH table. Check the model, population, confidence intervals, and
 presentation against your analysis plan before using the file. See the
 [reporting scope audit](claims-audit.md) and [limitations](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_report_table()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_report_table.Rd). In an installed package, run `help("pharma_report_table", package = "PharmaStatsR")`.

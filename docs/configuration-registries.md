@@ -29,3 +29,16 @@ pharma_unregister_stat("example_mean")
 ```
 
 Registry contents last only as long as the package namespace in the current R process. Caller-supplied functions are responsible for their own input checks, reproducibility, and analysis assumptions. `pharma_greeting()` simply returns a character greeting; see its [R help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_greeting.Rd).
+
+## R help
+
+Full arguments and return values:
+
+- [`pharma_unregister_plugin()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_unregister_plugin.Rd)
+- [`pharma_list_plugins()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_list_plugins.Rd)
+- [`pharma_run_plugin()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_run_plugin.Rd)
+- [`pharma_unregister_stat()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_unregister_stat.Rd)
+- [`pharma_list_stats()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_list_stats.Rd)
+- [`pharma_run_stat()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_run_stat.Rd)
+
+In an installed package, run `help(package = "PharmaStatsR")` to open the corresponding topics.

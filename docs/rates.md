@@ -48,3 +48,7 @@ This replaces the earlier Wald difference interval and unadjusted log ratio inte
 These are **approximate, unadjusted comparisons** of independent binomial groups. They do not adjust for covariates, exposure time, clustering, repeated observations, censoring, multiplicity, or a study-specific estimand. The ratio interval can have poor coverage in small or extreme samples, and a continuity correction can materially affect it. Check that the endpoint and group order match the analysis plan, and independently validate important results before use in a study.
 
 The risk-difference construction follows [Newcombe's comparison of interval methods](https://pubmed.ncbi.nlm.nih.gov/9595617/). See [limitations and validation](limitations.md) for project-wide constraints.
+
+## R help
+
+Full arguments and return values: [`pharma_rate_metrics()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_rate_metrics.Rd). In an installed package, run `help("pharma_rate_metrics", package = "PharmaStatsR")`.

@@ -24,3 +24,7 @@ For four subjects with responses A = (2, 4, 5, 7) and B = (3, 6, 6, 10), the pai
 - The F test assumes subjects are independent and the within-subject differences have a suitable distribution. This helper does not handle covariates, more conditions, extra within-subject factors, unequal replication, or missing follow-up. For such designs, specify and assess a suitable model separately; a two-level complete-pair result does not validate a broader repeated-measures analysis.
 
 Earlier calls that passed numeric subject IDs to `Error(subject)` may have produced a different error structure. Recode IDs and condition labels as factors and recompute those results. See [limitations](limitations.md) and the [method inventory](method-inventory.md) for review scope.
+
+## R help
+
+Full arguments and return values: [`pharma_repeated_anova()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_repeated_anova.Rd). In an installed package, run `help("pharma_repeated_anova", package = "PharmaStatsR")`.

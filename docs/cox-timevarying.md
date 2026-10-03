@@ -26,3 +26,7 @@ The response must be a counting-process `Surv(start, stop, status)`, with finite
 The wrapper does not verify that each subject's intervals are ordered, disjoint, or exhaustive. Inspect those records and the time origin before fitting; a person must not contribute two overlapping risk intervals at the same time. Subject IDs are not inferred by the wrapper. Supply an `id` or `cluster` argument to `coxph()` through `...` when the model and variance calculation require it, and ensure those values align with selected rows. Follow-up and covariate values must be established before the event at the interval endpoint.
 
 The coefficient exponentiates to a model-based hazard ratio conditional on the current covariate values and proportional-hazards assumption. It does not establish that a time-varying exposure is causally assigned, that censoring is independent, or that changes in exposure were measured without bias. See the [survival package's Cox documentation](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html) and [limitations and validation](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_cox_timevarying()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_cox_timevarying.Rd). In an installed package, run `help("pharma_cox_timevarying", package = "PharmaStatsR")`.

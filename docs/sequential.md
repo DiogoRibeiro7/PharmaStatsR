@@ -20,3 +20,7 @@ pharma_group_seq(k = 3, timing = c(0.25, 0.6, 1))
 The previous implementation used expressions that did not calibrate these boundary families. In particular, its early “O'Brien–Fleming” boundary was too low and its “Pocock” boundary was a Bonferroni threshold. **Recompute any design or decision that used earlier outputs.**
 
 These critical values rely on the planned analysis schedule and joint normal assumptions. The helper does not supply a futility rule, an endpoint-specific test statistic, information estimation, sample size, a monitoring plan, or regulatory validation. For an actual study, specify these components before data inspection and review the full design with a statistician. See [limitations](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_group_seq()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_group_seq.Rd). In an installed package, run `help("pharma_group_seq", package = "PharmaStatsR")`.

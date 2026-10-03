@@ -46,3 +46,7 @@ alignment, proportional hazards, or adequacy of the model. Its CI test
 compares this example with a direct backend call. See the
 [method inventory](method-inventory.md) and [limitations](limitations.md)
 for the scope of review.
+
+## R help
+
+Full arguments and return values: [`pharma_multistate_model()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_multistate_model.Rd). In an installed package, run `help("pharma_multistate_model", package = "PharmaStatsR")`.

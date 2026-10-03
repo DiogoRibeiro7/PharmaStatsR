@@ -26,3 +26,7 @@ The helper accepts a factor, character, or logical group and requires an interce
 ## Interpretation
 
 The ordinary F test assumes independent errors and a common within-group variance, with normally distributed errors for its usual small-sample reference distribution. Inspect residuals and group sizes before interpreting the result. For unequal variances, consider `stats::oneway.test(..., var.equal = FALSE)` as a distinct Welch analysis; repeated observations or adjusted designs need a model that represents those features. See the [method guide](methods.md) and [limitations](limitations.md).
+
+## R help
+
+Full arguments and return values: [`pharma_anova()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_anova.Rd). In an installed package, run `help("pharma_anova", package = "PharmaStatsR")`.

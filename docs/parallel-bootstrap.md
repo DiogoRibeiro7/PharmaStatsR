@@ -33,3 +33,7 @@ The data frame passed to your statistic uses base R's `data.frame` class. Missin
 This is an **independent-row bootstrap**. It does not preserve subjects, clusters, time-series dependence, or treatment-stratified allocation. Use [cluster bootstrap](cluster-bootstrap.md) when the independent sampled units are clusters. Returned statistics are not automatically confidence intervals or hypothesis tests; their validity depends on the statistic, sampling assumptions, and any interval or test procedure you choose. See [limitations and validation](limitations.md).
 
 The [future.apply RNG reference](https://future.apply.futureverse.org/reference/future_lapply.html#reproducible-random-number-generation-rng) describes backend-independent random streams.
+
+## R help
+
+Full arguments and return values: [`pharma_parallel_bootstrap()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_parallel_bootstrap.Rd). In an installed package, run `help("pharma_parallel_bootstrap", package = "PharmaStatsR")`.
