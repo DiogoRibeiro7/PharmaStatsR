@@ -19,11 +19,6 @@
 
 pharma_lmm <- function(formula, data, ...) {
   validate_inputs(data, formula)
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop(
-      "Package 'lme4' is required for `pharma_lmm()`.\n",
-      "Please install it with: install.packages('lme4')"
-    )
-  }
+  .pharma_require_optional("lme4", "pharma_lmm")
   lme4::lmer(formula = formula, data = data, ...)
 }

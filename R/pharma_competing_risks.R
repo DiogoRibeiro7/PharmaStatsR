@@ -38,10 +38,7 @@
 #' }
 pharma_competing_risks <- function(formula, data, failcode = 1, cencode = 0, ...) {
   validate_inputs(data, formula)
-  if (!requireNamespace("cmprsk", quietly = TRUE)) {
-    stop("Package 'cmprsk' is required for pharma_competing_risks()",
-         call. = FALSE)
-  }
+  .pharma_require_optional("cmprsk", "pharma_competing_risks")
 
   response <- formula[[2L]]
   if (length(formula) != 3L || !is.call(response) ||
