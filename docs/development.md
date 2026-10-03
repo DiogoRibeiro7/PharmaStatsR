@@ -36,6 +36,6 @@ python -m mkdocs build --strict
 python -m mkdocs serve
 ```
 
-The site source is in `docs/` and `mkdocs.yml`. CI checks links and configuration by running a strict build on pull requests; the publishing workflow deploys on pushes to `main` after GitHub Pages is set to **GitHub Actions** as its source.
+The site source is in `docs/` and `mkdocs.yml`. The [Documentation workflow](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/docs.yml) runs a strict MkDocs build for documentation-related pull requests. After a relevant change reaches `main`, its build job uploads the site and a separate deploy job publishes it to [GitHub Pages](https://diogoribeiro7.github.io/PharmaStatsR/). Repository **Settings → Pages** must use **GitHub Actions** as the source. The workflow's build success alone does not confirm a successful deployment; check the `deploy` job and the site URL after merging.
 
 Read [CONTRIBUTING.md](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/CONTRIBUTING.md) and [SECURITY.md](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/SECURITY.md) before opening a public issue. Update `NEWS.md` for notable changes and include test results in the pull request.

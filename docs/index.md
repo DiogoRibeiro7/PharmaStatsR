@@ -41,4 +41,6 @@ Review assumptions, optional backends, and the actual scope of the reporting and
 
 PharmaStatsR is an R package with statistical wrappers, simulated data, and example workflows for pharmaceutical research. It is under development and **not on CRAN**. Its examples support learning and exploratory research; the package has not been validated for clinical decisions or regulatory submissions.
 
-The installed R manual documents function arguments and return values. In R, run `help(package = "PharmaStatsR")` or `?pharma_tost`. See the [source repository](https://github.com/DiogoRibeiro7/PharmaStatsR), [changelog](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/NEWS.md), and [roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md).
+The [project status](project-status.md) shows which roadmap reviews have closed, which remain open, and what evidence is needed before a release candidate. The [export and evidence inventory](method-inventory.md) records review levels for individual methods.
+
+The installed R manual documents function arguments and return values. In R, run `help(package = "PharmaStatsR")` or `?pharma_tost`. See the [source repository](https://github.com/DiogoRibeiro7/PharmaStatsR), [changelog](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/NEWS.md), and [detailed roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md).
