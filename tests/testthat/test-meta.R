@@ -1,9 +1,13 @@
-test_that("pharma_meta_analysis requires metafor", {
-  skip_if(requireNamespace("metafor", quietly = TRUE), "metafor installed")
-  expect_error(
-    pharma_meta_analysis(yi = 1:3, vi = 1:3),
-    "Package 'metafor' is required"
+test_that("metafor exports report a missing backend even when installed", {
+  testthat::local_mocked_bindings(
+    .pharma_optional_available = function(package) package != "metafor"
   )
+  expect_error(pharma_meta_analysis(yi = 1:3, vi = 1:3),
+               "pharma_meta_analysis\\(\\).*install.packages\\('metafor'\\)")
+  expect_error(pharma_forest_plot(list()),
+               "pharma_forest_plot\\(\\).*install.packages\\('metafor'\\)")
+  expect_error(pharma_funnel_plot(list()),
+               "pharma_funnel_plot\\(\\).*install.packages\\('metafor'\\)")
 })
 
 test_that("pharma_network_meta_analysis validates data", {

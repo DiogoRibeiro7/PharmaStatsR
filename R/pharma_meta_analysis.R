@@ -20,13 +20,7 @@
 #' }
 
 pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
-  if (!requireNamespace("metafor", quietly = TRUE)) {
-    stop(
-      "Package 'metafor' is required for pharma_meta_analysis().\n",
-      "Please install it with install.packages('metafor')",
-      call. = FALSE
-    )
-  }
+  .pharma_require_optional("metafor", "pharma_meta_analysis")
   check_numeric_vector(yi, "yi")
   check_numeric_vector(vi, "vi")
   if (length(yi) != length(vi)) {
@@ -66,13 +60,7 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' }
 
 pharma_forest_plot <- function(model, ...) {
-  if (!requireNamespace("metafor", quietly = TRUE)) {
-    stop(
-      "Package 'metafor' is required for pharma_forest_plot().\n",
-      "Please install it with install.packages('metafor')",
-      call. = FALSE
-    )
-  }
+  .pharma_require_optional("metafor", "pharma_forest_plot")
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
@@ -97,13 +85,7 @@ pharma_forest_plot <- function(model, ...) {
 #' }
 
 pharma_funnel_plot <- function(model, ...) {
-  if (!requireNamespace("metafor", quietly = TRUE)) {
-    stop(
-      "Package 'metafor' is required for pharma_funnel_plot().\n",
-      "Please install it with install.packages('metafor')",
-      call. = FALSE
-    )
-  }
+  .pharma_require_optional("metafor", "pharma_funnel_plot")
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
