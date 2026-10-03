@@ -16,7 +16,7 @@ The result of \code{expr}.
 }
 \description{
 \code{with_pharma_config()} sets package options for the duration of \code{expr} and
-restores the previous values on exit.
+restores the exact previous \code{pharma} option on exit, even when it was unset.
 }
 \examples{
 with_pharma_config(list(log_level = "DEBUG"), {

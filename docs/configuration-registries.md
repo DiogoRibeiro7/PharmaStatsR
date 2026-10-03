@@ -4,7 +4,9 @@ These public utilities control process-local package settings and named function
 
 ## Package configuration
 
-`pharma_config()` reads the current `pharma` R option as a named list, using defaults when the option is unset. Named arguments update the list and store it through `options(pharma = ...)`. The setter returns the updated list **invisibly**; the no-argument getter returns it visibly. Unknown names error. `log_level` is normalized to uppercase and checked against `DEBUG`, `INFO`, `WARN`, and `ERROR`; the other documented settings are stored without equivalent value validation. The default core count is at least one, even if detection fails. See [configuration help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_config.Rd).
+`pharma_config()` reads the current `pharma` R option as a named list, using defaults when the option is unset. Named arguments update the list and store it through `options(pharma = ...)`. The setter returns the updated list **invisibly**; the no-argument getter returns it visibly. Unknown names error. `log_level` is normalized to uppercase and checked against `DEBUG`, `INFO`, `WARN`, and `ERROR`; the other values are stored without type or range checks. The default core count is at least one, even if detection fails. See [configuration help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_config.Rd).
+
+Only `log_level` is read by current package code, through the internal logger. `plot_theme`, `default_ci`, `parallel_strategy`, `max_cores`, and `cache_dir` are stored settings: they do not set a plot theme, change an analysis interval, select workers, limit a backend, or create a cache. Callers should configure those concerns explicitly rather than rely on these stored values.
 
 ```r
 library(PharmaStatsR)
@@ -15,7 +17,7 @@ with_pharma_config(list(log_level = "DEBUG"), {
 })
 ```
 
-`with_pharma_config()` returns the value of its expression and restores the prior configuration on exit, including an error exit. The changes are process-wide while the expression runs, so use care when other code in the same R process also reads or changes `options("pharma")`. See [temporary configuration help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/with_pharma_config.Rd).
+`with_pharma_config()` returns the value of its expression and restores the exact prior `pharma` option on exit, including an error exit or an option that was previously unset. The changes are process-wide while the expression runs, so use care when other code in the same R process also reads or changes `options("pharma")`. See [temporary configuration help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/with_pharma_config.Rd).
 
 ## Named function registries
 
