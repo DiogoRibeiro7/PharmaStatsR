@@ -1,22 +1,22 @@
 ## Release candidate status
 
-Draft for issue #58. Do not submit this file until the exact candidate commit, source tarball, and matrix evidence below have been reviewed.
+Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Check that issue for the exact final merged commit, source tarball hash, and job links before using these comments for a submission. The maintainer contact, affiliation, and release version still require confirmation.
 
 ## Test environments
 
-- Pending: macOS R release, required dependencies.
-- Pending: Windows R release, required dependencies.
-- Pending: Ubuntu R oldrel-1 and devel, required dependencies.
-- Pending: Ubuntu R release, all declared Suggested R packages and Python SciPy.
+- macOS, R release, required dependencies and check tools.
+- Windows, R release, required dependencies and check tools.
+- Ubuntu, R oldrel-1 and devel, required dependencies and check tools.
+- Ubuntu, R release, all declared Suggested R packages and Python SciPy 1.17.0, with TinyTeX and HTML Tidy for full manual validation.
 
 ## R CMD check results
 
-- Pending: record the candidate commit and source tarball SHA-256.
-- Pending: record results for the built tarball, examples, tests, and vignettes.
-- Pending: explain each NOTE, warning, or exception from the exact candidate run; do not substitute an earlier PR or matrix result.
+The current reviewed merged-commit run in #58 built a source tarball and checked it with `R CMD check --as-cran` on Ubuntu R release with all Suggests. It reported **0 errors, 0 warnings, 1 NOTE**. Examples, tests, vignette rebuild, PDF manual, and HTML manual passed. The four required-dependency portability jobs also passed with `--no-manual`.
+
+The single NOTE is **“New submission”** from CRAN incoming feasibility. This is the proposed first submission of PharmaStatsR; no other NOTE was reported in that run. The merged commit carrying this draft needs a new exact-SHA matrix; revise these comments if the findings change.
 
 ## Additional release review
 
-- Pending: confirm the maintainer email can receive CRAN correspondence.
-- Pending: review license, dependencies, size, timing, manual, and current CRAN policy.
-- This would be an initial submission; no downstream reverse-dependency results are available.
+- Confirm that the public maintainer contact can receive CRAN correspondence and that the recorded affiliation and release version are current.
+- Review the final source artifact, license, dependency availability, size, timing, and current CRAN policy against the exact candidate commit in #58.
+- No downstream reverse-dependency results are available for a first submission.

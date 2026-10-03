@@ -8,7 +8,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Run the [candidate gate](docs/release-candidate.md) on a final main commit, review the source artifact and five environments, then decide on a tag. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The five jobs and full manual check passed on merged `b6155c7`. Finalize candidate comments and metadata, repeat on the final main commit, then decide on a tag. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -39,7 +39,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Issue | Status | Outcome |
 | --- | --- | --- |
 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Closed within scope | All 72 exports have a [support level](docs/api-support-policy.md); the two historical names have migration guidance and remain callable. No export is deprecated or removed. |
-| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release checklist](docs/release-candidate.md) defines the exact-commit source build, contents, hash, CRAN-style check, five-platform evidence, and tag decision. Evidence on a final main commit is still required. |
+| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release checklist](docs/release-candidate.md) and [current merged-commit evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) cover the source build, hash, full CRAN-style check, five-job matrix, and manuals. Final metadata, comments, exact-SHA rerun, and tag decision remain. |
 
 **Release gate:** a release candidate is reviewable only after the P0/P1 evidence is complete and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) records the exact check results. A tag, GitHub release, and CRAN submission are separate decisions. The [portfolio tracking issue](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) should reflect the current state rather than an earlier audit snapshot.
 
