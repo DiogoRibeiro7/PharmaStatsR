@@ -1,6 +1,6 @@
 test_that("pharma_config sets and retrieves options", {
-  original <- pharma_config()
-  on.exit(do.call(pharma_config, original))
+  original <- getOption("pharma")
+  on.exit(base::options(pharma = original), add = TRUE)
   pharma_config(log_level = "DEBUG", default_ci = 0.9)
   cfg <- pharma_config()
   expect_equal(cfg$log_level, "DEBUG")
@@ -8,11 +8,42 @@ test_that("pharma_config sets and retrieves options", {
 })
 
 test_that("with_pharma_config temporarily sets options", {
-  original <- pharma_config()
+  original <- getOption("pharma")
+  on.exit(base::options(pharma = original), add = TRUE)
   with_pharma_config(list(log_level = "ERROR"), {
     expect_equal(pharma_config()$log_level, "ERROR")
   })
-  expect_equal(pharma_config()$log_level, original$log_level)
+  expect_identical(getOption("pharma"), original)
+})
+
+test_that("with_pharma_config restores an unset option on success and error", {
+  original <- getOption("pharma")
+  on.exit(base::options(pharma = original), add = TRUE)
+  base::options(pharma = NULL)
+
+  value <- with_pharma_config(list(log_level = "DEBUG"), {
+    pharma_config()$log_level
+  })
+  expect_identical(value, "DEBUG")
+  expect_null(getOption("pharma"))
+
+  expect_error(
+    with_pharma_config(list(log_level = "ERROR"), stop("example failure")),
+    "example failure"
+  )
+  expect_null(getOption("pharma"))
+})
+
+test_that("with_pharma_config preserves a partial option on a failed update", {
+  original <- getOption("pharma")
+  on.exit(base::options(pharma = original), add = TRUE)
+  base::options(pharma = list(log_level = "WARN"))
+
+  expect_error(
+    with_pharma_config(list(unknown = TRUE), 1),
+    "Unknown option"
+  )
+  expect_identical(getOption("pharma"), list(log_level = "WARN"))
 })
 
 test_that("core defaults are positive integers when detection fails", {

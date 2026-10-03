@@ -7,20 +7,17 @@
 pharma_config(...)
 }
 \arguments{
-\item{...}{Named options to set. Supported options are:
+\item{...}{Named options to store. Supported names and defaults are:
 \itemize{
 \item \code{log_level} (\strong{character}): logging verbosity ("DEBUG", "INFO",
-"WARN", "ERROR").
-\item \code{plot_theme} (\strong{character}): default ggplot2 theme to apply to
-visualisations.
-\item \code{default_ci} (\strong{numeric}): default confidence level for interval
-estimates.
-\item \code{parallel_strategy} (\strong{character}): parallel backend for resampling
-helpers.
-\item \code{max_cores} (\strong{integer}): maximum number of cores to utilise. The
-default is at least one, including when core detection is unavailable.
-\item \code{cache_dir} (\strong{character}): directory used for caching intermediate
-results.
+"WARN", "ERROR"; default "INFO").
+\item \code{plot_theme}: stored label (default "minimal"); not applied to plots.
+\item \code{default_ci}: stored value (default 0.95); not used for intervals.
+\item \code{parallel_strategy}: stored label (default "sequential"); does not
+select a parallel backend.
+\item \code{max_cores}: stored value; the detected default is an integer of at
+least one. It does not limit backend workers.
+\item \code{cache_dir}: stored path (default \code{tempdir()}); no cache is created.
 }}
 }
 \value{
@@ -28,8 +25,13 @@ A named list of current configuration values. The no-argument getter
 returns it visibly; a setter returns the updated list invisibly.
 }
 \description{
-\code{pharma_config()} gets or sets package-wide options such as logging
-verbosity and defaults used throughout the package.
+\code{pharma_config()} gets or sets the process-local \code{pharma} option.
+Only \code{log_level} is currently read by package code; the remaining fields
+are stored for callers and are not applied by the analysis helpers.
+}
+\details{
+Only \code{log_level} is normalized and validated. Other named values
+are stored as supplied without type or range checks.
 }
 \examples{
 pharma_config(log_level = "DEBUG", default_ci = 0.9)

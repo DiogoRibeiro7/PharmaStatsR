@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Restore the exact prior `pharma` option after `with_pharma_config()`, including an unset option and error exits. Clarify that only `log_level` is currently consumed by package code, and correct the unregister-plugin return help. Earlier temporary configuration calls could leave defaults behind; callers relying on the old side effect should set options explicitly.
 - Link method guides directly to their installed R help and add a linear mixed-model guide with fit and diagnostic limits. No model behavior changed.
 - Add logistic regression and configuration/registry guides for the last unlinked inventory entries; clarify the visible getter versus invisible setter in `pharma_config()` help. Refresh the stale #53 review queue. No fitting or utility behavior changed.
 - Close the optional-backend audit after a passing five-job candidate matrix, refresh the roadmap and status pages, and document the three Emax fits, starting values, and convergence limits. No fitting behavior changed.

@@ -31,7 +31,7 @@ pharma_register_plugin <- function(name, fun) {
 #'
 #' @param name Character string of the plugin to remove.
 #'
-#' @return Invisible `TRUE` if the plugin was removed.
+#' @return Invisible `TRUE` whether or not the plugin existed.
 #' @examples
 #' pharma_unregister_plugin("mean_plugin")
 #' @export
