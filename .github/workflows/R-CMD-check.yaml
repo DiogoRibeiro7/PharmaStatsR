@@ -15,6 +15,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  minimal-dependencies:
+    name: R-CMD-check / required dependencies
+    runs-on: ubuntu-latest
+    env:
+      R_KEEP_PKG_SOURCE: 'yes'
+      _R_CHECK_FORCE_SUGGESTS_: 'false'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+      - name: Audit namespace declarations
+        run: Rscript scripts/check_dependency_metadata.R
+      # testthat and the vignette tools are check-only dependencies. No
+      # Suggested modelling or reporting backends are installed explicitly.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          dependencies: '"hard"'
+          extra-packages: |
+            any::rcmdcheck
+            any::testthat
+            any::knitr
+            any::rmarkdown
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          build_args: 'c("--no-manual")'
+      - name: Upload failed check results
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: required-dependencies-check-results
+          path: check
+          if-no-files-found: ignore
+
   R-CMD-check:
     runs-on: ubuntu-latest
     env:

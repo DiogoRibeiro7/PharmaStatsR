@@ -16,7 +16,8 @@ The [dependency audit](dependency-audit.md) maps `Imports`, `Suggests`, dynamic 
 
 | Workflow | Trigger | Environment and dependencies |
 | --- | --- | --- |
-| [R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml) | Each PR and push to `main`, and manual dispatch | Ubuntu R release; hard dependencies, test/vignette tools, and the listed optional backends. SciPy is installed in Python 3.12. Other Suggested packages may be absent (`_R_CHECK_FORCE_SUGGESTS_=false`). |
+| [R-CMD-check](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-CMD-check.yaml), required dependencies | Each PR and push to `main`, and manual dispatch | Ubuntu R release; hard dependencies plus `testthat`, `knitr`, `rmarkdown`, and `rcmdcheck` for checking. No Suggested modeling or reporting backend is installed explicitly. `_R_CHECK_FORCE_SUGGESTS_=false` lets optional installed-path tests skip. |
+| R-CMD-check, selected backends | Same triggers | Ubuntu R release; hard dependencies, test/vignette tools, and the listed optional backends. SciPy is installed in Python 3.12. Other Suggested packages may be absent (`_R_CHECK_FORCE_SUGGESTS_=false`). |
 | [R validation matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/R-validation-matrix.yaml), portability | Mondays at 05:17 UTC, manual dispatch, and PRs that change the matrix workflow | macOS/Windows R release and Ubuntu R oldrel-1/devel; hard dependencies and test/vignette tools. Optional integrations may skip when their backends are absent. |
 | R validation matrix, optional backends | Same matrix triggers | Ubuntu R release with all `Imports` and `Suggests` installed (`_R_CHECK_FORCE_SUGGESTS_=true`), plus SciPy on Python 3.12. This installs the larger Stan toolchain, so the workflow has a 90-minute job limit. |
 
