@@ -107,6 +107,11 @@ jobs:
         with:
           r-version: 'release'
           use-public-rspm: true
+      - name: Install HTML Tidy for manual validation
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tidy
+      - uses: r-lib/actions/setup-tinytex@v2
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -125,7 +130,7 @@ jobs:
       - name: Build and inspect the candidate source package
         shell: bash
         run: |
-          R CMD build --no-manual .
+          R CMD build .
           tarball=$(find . -maxdepth 1 -type f -name 'PharmaStatsR_*.tar.gz' -print -quit)
           test -n "$tarball"
           tar -tzf "$tarball" > candidate-contents.txt
@@ -147,7 +152,7 @@ jobs:
         run: |
           tarball=$(find . -maxdepth 1 -type f -name 'PharmaStatsR_*.tar.gz' -print -quit)
           test -n "$tarball"
-          R CMD check --no-manual --as-cran "$tarball"
+          R CMD check --as-cran "$tarball"
       - name: Upload candidate source and check evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -160,4 +165,5 @@ jobs:
             candidate-commit.txt
             PharmaStatsR.Rcheck/00check.log
             PharmaStatsR.Rcheck/00install.out
+            PharmaStatsR.Rcheck/*.pdf
           if-no-files-found: ignore
