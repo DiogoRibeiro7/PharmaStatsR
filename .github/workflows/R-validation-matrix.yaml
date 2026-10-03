@@ -5,10 +5,34 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/R-validation-matrix.yaml'
+      - '.Rbuildignore'
+      - 'DESCRIPTION'
+      - 'LICENSE'
+      - 'NAMESPACE'
+      - 'NEWS.md'
+      - 'R/**'
+      - 'data/**'
+      - 'inst/**'
+      - 'man/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'vignettes/**'
   pull_request:
     branches: [main]
     paths:
       - '.github/workflows/R-validation-matrix.yaml'
+      - '.Rbuildignore'
+      - 'DESCRIPTION'
+      - 'LICENSE'
+      - 'NAMESPACE'
+      - 'NEWS.md'
+      - 'R/**'
+      - 'data/**'
+      - 'inst/**'
+      - 'man/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'vignettes/**'
   workflow_dispatch:
   schedule:
     - cron: '17 5 * * 1'

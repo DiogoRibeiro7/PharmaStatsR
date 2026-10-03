@@ -180,7 +180,9 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #'   argument.
 #' @param R Positive whole number of bootstrap replicates.
 #' @param plan Future strategy name, function, or call accepted by
-#'   `future::plan()`; defaults to `"multisession"`.
+#'   `future::plan()`; defaults to `"multisession"`, limited to two workers.
+#'   Caller-supplied strategies other than `"multisession"` retain their
+#'   own worker settings.
 #' @param ... Additional arguments passed to `statistic`.
 #'
 #' @return A list with one statistic per bootstrap replicate. Set a seed
@@ -220,7 +222,11 @@ pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
   data <- as.data.frame(data)
   old_plan <- future::plan()
   on.exit(future::plan(old_plan), add = TRUE)
-  future::plan(plan)
+  if (identical(plan, "multisession")) {
+    future::plan(plan, workers = 2L)
+  } else {
+    future::plan(plan)
+  }
   future.apply::future_lapply(seq_len(R), function(i) {
     indices <- sample.int(nrow(data), nrow(data), replace = TRUE)
     boot_data <- data[indices, , drop = FALSE]

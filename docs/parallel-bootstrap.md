@@ -15,7 +15,7 @@ draws <- pharma_parallel_bootstrap(
 unlist(draws)
 ```
 
-For parallel work, pass `plan = "multisession"` (the default). `future` and `future.apply` are optional dependencies and must be installed to call this helper. The previous future plan is restored after the function returns, including on an error.
+For parallel work, pass `plan = "multisession"` (the default). This built-in strategy configures two workers; caller-supplied strategies other than `"multisession"` keep their own worker settings. `future` and `future.apply` are optional dependencies and must be installed to call this helper. The previous future plan is restored after the function returns, including on an error.
 
 ## Sampling and random seeds
 

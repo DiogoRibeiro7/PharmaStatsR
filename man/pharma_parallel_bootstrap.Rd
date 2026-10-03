@@ -22,7 +22,9 @@ argument.}
 \item{R}{Positive whole number of bootstrap replicates.}
 
 \item{plan}{Future strategy name, function, or call accepted by
-\code{future::plan()}; defaults to \code{"multisession"}.}
+\code{future::plan()}; defaults to \code{"multisession"}, limited to two workers.
+Caller-supplied strategies other than \code{"multisession"} retain their
+own worker settings.}
 
 \item{...}{Additional arguments passed to \code{statistic}.}
 }
