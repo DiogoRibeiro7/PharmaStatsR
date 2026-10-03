@@ -24,6 +24,30 @@ Here `vi` contains **sampling variances**, not standard errors. For the FE fit, 
 
 Earlier calls that printed an FE fallback message after a singular REML error returned a different model from the one requested. Recheck those results and rerun an explicitly chosen method. See [limitations](limitations.md) and the [method inventory](method-inventory.md) for the package's review scope.
 
+## Forest and funnel plots
+
+`pharma_forest_plot()` and `pharma_funnel_plot()` require the optional
+`metafor` package and an `rma` model. They delegate to `metafor::forest()`
+and `metafor::funnel()`, drawing base graphics on the active device. They do
+not return a reusable plot object. The forest helper invisibly returns a list
+of plotting parameters, including axis limits; the funnel helper invisibly
+returns a data frame with plotted coordinates and study labels. Assign these
+results only when you need that metadata.
+
+```r
+pharma_forest_plot(random_fit, slab = paste("Study", seq_along(yi)))
+pharma_funnel_plot(random_fit)
+```
+
+The [forest](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_forest_plot.Rd)
+and [funnel](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_funnel_plot.Rd)
+R help pages describe the arguments and return values. The wrappers check
+the `rma` class and a missing backend; the [plot smoke tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-pharma_tests.R)
+exercise drawing with `metafor` installed. A funnel's appearance alone does
+not establish publication bias or rule it out, especially with a small set
+of studies. Review the underlying studies and effect measures before drawing
+an inference from either plot.
+
 ## Moderator models
 
 `pharma_meta_regression()` fits a meta-regression with `metafor::rma()`.

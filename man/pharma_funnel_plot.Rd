@@ -12,7 +12,8 @@ pharma_funnel_plot(model, ...)
 \item{...}{Additional arguments passed to \link[metafor:funnel]{metafor::funnel}.}
 }
 \value{
-A plot.
+Draws a funnel plot on the active graphics device and invisibly
+returns the backend's data frame of plotted coordinates and study labels.
 }
 \description{
 Create a funnel plot from an \code{rma} object.
