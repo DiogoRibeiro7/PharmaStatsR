@@ -14,4 +14,40 @@ The bundled `outcome` is an arbitrary binary label, not a defined clinical event
 
 ## Interpretation and checks
 
-The log odds are linear in the specified predictors. Review the outcome coding, the unit of observation, missing-row handling by `glm()`, and the adequacy of the chosen predictors. Independent observations, adequate events, and absence of complete or near separation matter for coefficient inference. A successful fit and the [class/family smoke test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-pharma_tests.R) do not establish calibration, causal interpretation, or independent numerical validation. See the [method inventory](method-inventory.md) and [limitations](limitations.md).
+The log odds are linear in the specified predictors. For a numeric 0/1 outcome,
+`glm()` models the probability of 1; for a two-level factor, it models the
+probability of the second level. The first level of a predictor factor is
+the reference level under the default treatment contrasts. Specify levels
+explicitly before fitting and confirm which event is being modeled.
+
+## Fixed two-group reference
+
+The [reference test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-logistic-reference.R)
+uses 12 independent Bernoulli observations per group, with numeric 1 as the
+event and `control` as the treatment baseline:
+
+| Treatment | Events (1) | Non-events (0) | Denominator |
+| --- | ---: | ---: | ---: |
+| control | 4 | 8 | 12 |
+| active | 9 | 3 | 12 |
+
+The expected intercept is `log(4/8)`, the active coefficient is
+`log((9/3)/(4/8)) = log(6)`, and the two fitted event probabilities are
+`4/12` and `9/12`. The corresponding standard errors follow from the
+binomial table: `sqrt(1/4 + 1/8)` for the intercept and
+`sqrt(1/4 + 1/8 + 1/9 + 1/3)` for the log odds ratio. These targets are
+computed from counts and information, without using a second wrapper fit.
+The test also reverses outcome coding and the predictor baseline to check
+coefficient signs, and checks factor outcome coding.
+
+For missing model values, the wrapper passes `na.action` to `glm()`.
+The fixture explicitly uses `na.omit` and verifies that one missing outcome
+and one missing treatment drop exactly two rows; a missing unrelated column
+does not. The same rows fail with `na.fail`. Review the chosen analysis
+population, the unit of observation, and the adequacy of the predictors.
+Independent observations, adequate events, and absence of complete or near
+separation matter for coefficient inference. The table reference and earlier
+[class/family smoke test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-pharma_tests.R)
+do not establish calibration, causal interpretation, or validity for other
+designs. See the [method inventory](method-inventory.md) and
+[limitations](limitations.md).
