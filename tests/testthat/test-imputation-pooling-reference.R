@@ -18,7 +18,7 @@ test_that("pharma_sensitivity_analysis matches fixed Rubin components", {
   }))
   imp <- mice::as.mids(long)
   completed <- mice::complete(imp, action = "all")
-  expect_equal(vapply(completed, function(dat) dat$response[6], numeric(1)),
+  expect_equal(unname(vapply(completed, function(dat) dat$response[6], numeric(1))),
                c(5, 7, 9))
 
   pooled <- pharma_sensitivity_analysis(imp, response ~ treatment)
