@@ -40,8 +40,10 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ..., slab = NULL) {
   }
   # Capture the column expression before forwarding other backend options.
   dots <- as.list(substitute(list(...)))[-1L]
-  data_expr <- dots[["data"]]
-  model_data <- if (is.null(data_expr)) NULL else eval(data_expr, parent.frame())
+  data_index <- match("data", names(dots))
+  # Force only the original data promise. It stays cached for metafor's
+  # subsequent use, so a side-effecting data expression runs once.
+  model_data <- if (is.na(data_index)) NULL else ...elt(data_index)
   labels <- .pharma_meta_labels(substitute(slab), model_data, parent.frame())
   .pharma_meta_rma(yi = yi, vi = vi, method = method, ...,
                    .pharma_slab = labels)
