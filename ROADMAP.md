@@ -9,7 +9,6 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm the designated contact receives mail, choose the final version, review the final merged SHA, then decide on a tag. |
-| 2 | [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Resolve the label-forwarding defect found in the plot review, with direct backend comparisons and an exact-head optional-backend check. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -55,11 +54,11 @@ These follow-up issues target exports whose current tests are mainly smoke or ba
 | [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Closed | Repeated-measure numerical reference, selected population, and failure behavior. |
 | [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Closed | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
 | [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Closed | Verified plotted coordinates, device effects, and invisible returns. |
-| [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | In progress | Resolve fit-time and plot-time `slab` forwarding for vectors and model-data columns. |
+| [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Closed | Fit-time and plot-time `slab` vectors and model-data columns work through the wrappers and are compared with direct backend calls. |
 
 ## How we work
 
-1. Use the completed [#47 inventory](docs/method-inventory.md) to pick a remaining gap in the ordered open issues above. Each issue is scoped work, not a promise to implement new methods.
+1. Complete the release decision in #58. For later method reviews, use the completed [#47 inventory](docs/method-inventory.md) to identify a specific gap and open a scoped issue before implementation; closing the current method issues does not settle every inventory entry.
 2. For a method change, state the estimand or model, allowed data and formula, assumptions, return meaning, and failure cases. Verify a numerical result independently, test a meaningful boundary, update R help/site guidance and NEWS, and link the issue.
 3. Keep PRs focused. If a family issue reveals separate defects, split implementation into reviewable PRs linked to that issue. Mark a task complete only when its acceptance criteria and checks are met.
 4. Revisit priority after evidence changes. Do not equate test coverage or a green CI badge with suitability for a clinical study.
