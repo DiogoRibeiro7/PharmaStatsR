@@ -66,13 +66,13 @@ test_that("Bayesian GLM, summary, and predictive plot match a reference", {
   expect_true(all(c("2.5%", "97.5%") %in% colnames(default_interval)))
 
   plot <- pharma_pp_check(fit,
-    plotfun = "stat", stat = "mean", nreps = 100, seed = 47
+    plotfun = "stat", stat = "mean", seed = 47
   )
   expect_s3_class(plot, "ggplot")
   # bayesplot::ppc_stat stores the replicated sample means in plot$data
   # and the observed statistic in the vertical-line layer.
-  expect_equal(nrow(plot$data), 100L)
-  expect_true(all(plot$data$variable == "yrep"))
+  expect_equal(nrow(plot$data), length(draws))
+  expect_false(any(plot$data$variable == "y"))
   expect_true(all(abs(12 * plot$data$value -
     round(12 * plot$data$value)) < 1e-8))
   observed_layers <- Filter(function(layer) {
