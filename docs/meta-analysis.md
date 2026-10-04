@@ -50,13 +50,25 @@ coordinates against fixed effects, variances, and labels on a temporary PDF
 device. They also exercise invalid models and a rejected backend plot option;
 the optional-backend guard is checked [separately](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-meta.R).
 These tests cover plotting behavior and do not validate the fitted meta-analysis
-estimator. Their labelled fixture is fitted directly with `metafor::rma()`.
-An explicit plot-time `slab` vector currently fails backend evaluation when
-passed through the wrapper; [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120)
-tracks that forwarding defect and the separate fit-time label path. A funnel's
-appearance alone does not establish publication bias or rule it out, especially with a small set
-of studies. Review the underlying studies and effect measures before drawing
-an inference from either plot.
+estimator. [Label-forwarding tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-meta-label-forwarding.R)
+compare direct `metafor` calls with fit-time and plot-time `slab` vectors and
+columns in the model data, including invalid label lengths. For example:
+
+```r
+studies <- data.frame(
+  yi = yi, vi = vi,
+  study = paste("Study", seq_along(yi)),
+  display = paste("Plot", seq_along(yi))
+)
+labeled_fit <- pharma_meta_analysis(studies$yi, studies$vi,
+                                    method = "FE", data = studies,
+                                    slab = study)
+pharma_funnel_plot(labeled_fit, slab = display)
+```
+
+A funnel's appearance alone does not establish publication bias or rule it
+out, especially with a small set of studies. Review the underlying studies
+and effect measures before drawing an inference from either plot.
 
 ## Moderator models
 
