@@ -49,17 +49,17 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 The completed #109–#113 and #120 work strengthened evidence for exports whose earlier tests were mainly smoke or backend checks. The next issues target specific numerical gaps in the [inventory](docs/method-inventory.md). Their results do not turn experimental methods into clinically validated methods, and the #58 candidate decision remains separate.
 
-| Issue | Reviewable outcome |
-| --- | --- |
-| [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response fits | Independent Emax and sigmoid-Emax targets, with mixed-fit structure and convergence limits. |
-| [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic regression | Traceable event coding, coefficient and probability references, and boundary behavior. |
-| [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Repeated-measure numerical reference, selected population, and failure behavior. |
-| [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
-| [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Verified plotted coordinates, device effects, and invisible returns. |
-| [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Fit-time and plot-time `slab` vectors and model-data columns work through the wrappers and are compared with direct backend calls. |
-| [#123](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/123) Crossover and Latin-square ANOVA | Independent treatment, nuisance, and residual sums of squares, F statistics, and contrasts. |
-| [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Cluster-level coefficient and sandwich uncertainty reference. |
-| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Fixed pooled estimate and uncertainty from Rubin's components. |
+| Issue | Status | Reviewable outcome |
+| --- | --- | --- |
+| [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response fits | Closed | Independent Emax and sigmoid-Emax targets, with mixed-fit structure and convergence limits. |
+| [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic regression | Closed | Traceable event coding, coefficient and probability references, and boundary behavior. |
+| [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Closed | Repeated-measure numerical reference, selected population, and failure behavior. |
+| [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Closed | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
+| [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Closed | Verified plotted coordinates, device effects, and invisible returns. |
+| [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Closed | Fit-time and plot-time `slab` vectors and model-data columns work through the wrappers and are compared with direct backend calls. |
+| [#123](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/123) Crossover and Latin-square ANOVA | In review (#126) | Independent treatment, nuisance, and residual sums of squares, F statistics, and contrasts. |
+| [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Open | Cluster-level coefficient and sandwich uncertainty reference. |
+| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Open | Fixed pooled estimate and uncertainty from Rubin's components. |
 
 ## How we work
 
