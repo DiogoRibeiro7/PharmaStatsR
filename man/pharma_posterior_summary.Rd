@@ -21,7 +21,8 @@ Bayesian model.
 \details{
 \code{prob} requests central quantiles at \code{(1 - prob) / 2} and
 \code{1 - (1 - prob) / 2} for fits with posterior draws. The backend also
-reports Monte Carlo diagnostics; the wrapper does not validate \code{prob}
+reports Monte Carlo diagnostics for MCMC fits; the wrapper does not
+validate \code{prob}
 or establish convergence.
 }
 \examples{
