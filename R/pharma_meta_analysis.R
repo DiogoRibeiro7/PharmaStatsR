@@ -81,6 +81,9 @@ pharma_forest_plot <- function(model, ...) {
 #'   returns the backend's data frame: `x` holds plotted effects, `y` holds
 #'   the selected y-axis values (standard errors by default), and `slab`
 #'   holds study labels.
+#' @details For labels, use an `rma` object fitted directly with
+#'   [metafor::rma] and stored study labels. Plot-time `slab` overrides
+#'   passed through this wrapper currently fail backend evaluation.
 #' @export
 #'
 #' @examples
