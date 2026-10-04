@@ -9,6 +9,7 @@ test_that("meta plots draw and return checked layout and study coordinates", {
   # Fit directly with the backend so the fixture isolates the plot wrappers.
   fit <- metafor::rma(yi = effects, vi = variances, method = "FE",
                       slab = labels)
+  expect_identical(fit$slab, labels)
 
   plot_file <- tempfile(fileext = ".pdf")
   grDevices::pdf(plot_file, width = 8, height = 6)
@@ -35,7 +36,7 @@ test_that("meta plots draw and return checked layout and study coordinates", {
   expect_length(forest$value$ylim, 2)
 
   funnel <- withVisible(pharma_funnel_plot(
-    fit, yaxis = "sei", slab = labels, xlim = c(-1, 1.5)
+    fit, yaxis = "sei", xlim = c(-1, 1.5)
   ))
   expect_false(funnel$visible)
   expect_s3_class(funnel$value, "data.frame")
@@ -47,7 +48,7 @@ test_that("meta plots draw and return checked layout and study coordinates", {
                tolerance = 1e-12)
 
   # The alternative y-axis is an argument passed through to metafor.
-  variance_axis <- pharma_funnel_plot(fit, yaxis = "vi", slab = labels)
+  variance_axis <- pharma_funnel_plot(fit, yaxis = "vi")
   selected_variance <- match(labels, variance_axis$slab)
   expect_equal(unname(variance_axis$y[selected_variance]), variances,
                tolerance = 1e-12)
