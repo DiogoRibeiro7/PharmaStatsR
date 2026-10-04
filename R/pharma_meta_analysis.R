@@ -51,7 +51,8 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' @param ... Additional arguments passed to [metafor::forest].
 #'
 #' @return Draws a forest plot on the active graphics device and invisibly
-#'   returns the backend's list of plotting parameters (such as axis limits).
+#'   returns the backend's layout list (including `xlim`, `alim`, `at`, `ylim`,
+#'   and `rows`). Study point coordinates and labels are not returned.
 #' @export
 #'
 #' @examples
@@ -77,7 +78,9 @@ pharma_forest_plot <- function(model, ...) {
 #' @param ... Additional arguments passed to [metafor::funnel].
 #'
 #' @return Draws a funnel plot on the active graphics device and invisibly
-#'   returns the backend's data frame of plotted coordinates and study labels.
+#'   returns the backend's data frame: `x` holds plotted effects, `y` holds
+#'   the selected y-axis values (standard errors by default), and `slab`
+#'   holds study labels.
 #' @export
 #'
 #' @examples
