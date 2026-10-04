@@ -23,7 +23,8 @@ pharma_emax_nlme(
 \item{start}{Named vector of starting values for \code{e0}, \code{emax}, and
 \code{ed50}. If \code{NULL}, coefficients from a pooled \code{nls} fit are used.}
 
-\item{random}{Random-effects formula. Defaults to a subject-specific baseline.}
+\item{random}{Random-effects formula. Defaults to a subject-specific
+baseline (\code{e0 ~ 1 | subject}); \code{emax} and \code{ed50} are common fixed effects.}
 
 \item{...}{Additional arguments passed to \code{nlme::nlme}.}
 }
@@ -32,7 +33,8 @@ An \code{nlme} object inheriting from \code{lme}.
 }
 \description{
 Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax
-curves. The wrapper sets \code{nlmeControl(returnObject = TRUE)}, so reaching
+curves with a common fixed curve and a random subject baseline by default.
+The wrapper sets \code{nlmeControl(returnObject = TRUE)}, so reaching
 the iteration limit may return an object with a nonconvergence warning.
 }
 \examples{
