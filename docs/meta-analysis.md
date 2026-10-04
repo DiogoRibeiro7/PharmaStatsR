@@ -55,6 +55,9 @@ compare direct `metafor` calls with fit-time and plot-time `slab` vectors and
 columns in the model data, including invalid label lengths. For example:
 
 ```r
+library(PharmaStatsR)
+yi <- c(-0.5, 0.1, 0.8, 1.4, 1.8)
+vi <- c(0.04, 0.05, 0.03, 0.06, 0.05)
 studies <- data.frame(
   yi = yi, vi = vi,
   study = paste("Study", seq_along(yi)),
