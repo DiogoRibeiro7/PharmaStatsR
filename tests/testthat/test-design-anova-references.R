@@ -30,10 +30,10 @@ test_that("crossover ANOVA has independently calculated terms", {
   expect_equal(as.numeric(tab[["Df"]]), c(1, 1, 3, 2))
   expect_equal(as.numeric(tab[["Sum Sq"]]), c(18, 8, 4, 20),
                tolerance = 1e-12)
-  expect_equal(as.numeric(tab[["Mean Sq"]]), c(18, 8, 4/3, 10),
+  expect_equal(as.numeric(tab[["Mean Sq"]]), c(18, 8, 4 / 3, 10),
                tolerance = 1e-12)
   expect_equal(as.numeric(tab[["F value"]][1:3]),
-               c(1.8, 0.8, 2/15), tolerance = 1e-12)
+               c(1.8, 0.8, 2 / 15), tolerance = 1e-12)
   expect_equal(unname(stats::coef(fit)[["treatmentB"]]), 3,
                tolerance = 1e-12)
   # For F(1,2), upper tail = 1 - sqrt(F/(F+2)).
