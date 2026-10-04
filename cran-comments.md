@@ -13,7 +13,7 @@ Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). 
 
 The current reviewed merged-commit run in #58 built a source tarball and checked it with `R CMD check --as-cran` on Ubuntu R release with all Suggests. It reported **0 errors, 0 warnings, 1 NOTE**. Examples, tests, vignette rebuild, PDF manual, and HTML manual passed. The four required-dependency portability jobs also passed with `--no-manual`.
 
-The single NOTE is **“New submission”** from CRAN incoming feasibility. This is the proposed first submission of PharmaStatsR; no other NOTE was reported in that run. Issue #58 records the latest exact merged SHA, source hash, and matrix results. Any source change, including this affiliation update, requires a new full matrix on its merged SHA and an update to #58 before these comments are used for submission; revise the result if that check differs.
+The single NOTE is **“New submission”** from CRAN incoming feasibility. This is the proposed first submission of PharmaStatsR; no other NOTE was reported in that run. Issue #58 records the latest exact merged SHA, source hash, and matrix results. Any subsequent source change requires a new full matrix on its merged SHA and an update to #58 before these comments are used for submission; revise the result if that check differs.
 
 ## Additional release review
 
