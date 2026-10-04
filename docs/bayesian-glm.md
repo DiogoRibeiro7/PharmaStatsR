@@ -53,8 +53,40 @@ The [installed R help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/m
 documents the fitting wrapper, with separate help for
 [`pharma_posterior_summary()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_posterior_summary.Rd)
 and [`pharma_pp_check()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_pp_check.Rd).
-The [evidence inventory](method-inventory.md) marks these as candidate methods:
-missing-backend errors are tested on every PR, while the installed fit,
-summary, and plot are exercised only when `rstanarm` and `bayesplot` are present
-in the all-Suggests matrix. Those tests are software checks, not an independent
-assessment of Bayesian inference or a clinical validation.
+## Reproducible numerical reference
+
+The [reference test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-bayesian-reference.R)
+fits an intercept-only binomial logit to eight events and four non-events.
+It specifies `prior_intercept = rstanarm::normal(0, 1, autoscale = FALSE)`,
+`algorithm = "sampling"`, two chains of 1,000 iterations each (500 warmup
+per chain), one core, and seed 47. There are no slope priors in this
+intercept-only design. The likelihood is 12 independent Bernoulli outcomes
+with common probability `plogis(alpha)`. The prior is a standard normal
+density for the logit intercept.
+
+An independent one-dimensional quadrature integrates
+`dnorm(alpha) * plogis(alpha)^8 * (1 - plogis(alpha))^4`.
+It gives posterior mean logit about 0.53191, posterior mean event
+probability about 0.62234, and central 80% logit quantiles about
+-0.13101 and 1.20528. The test compares sampled summaries with these
+values using absolute tolerances 0.15 for the mean and 0.3 for the
+quantile endpoints, allowing Monte Carlo error over 1,000 retained draws
+without fixing a random sequence. It checks that the returned quantile
+columns match `prob = 0.8` and the default `prob = 0.95`, and inspects
+effective sample size and R-hat before comparing posterior quantities.
+The all-Suggests CI job records its installed `rstanarm` and `bayesplot`
+versions and those diagnostics in the test log linked from the PR.
+
+For `plotfun = "stat", stat = "mean"`, the predictive plot places the
+observed fraction `8/12` at its reference line and displays means from
+100 replicated 12-trial datasets. Their average is compared to the
+independent posterior predictive mean above with a 0.15 tolerance.
+This simple mean statistic is a check of what the plot represents, not
+a sensitive model-criticism statistic. A visually plausible plot or
+acceptable sampler diagnostics does not validate the chosen likelihood,
+prior, exchangeability assumptions, or a clinical analysis.
+
+The [evidence inventory](method-inventory.md) records this narrow
+reference for the three exports. Missing-backend guards run on every PR;
+the installed sampler and plot run only with `rstanarm` and `bayesplot`
+present in the all-Suggests matrix.
