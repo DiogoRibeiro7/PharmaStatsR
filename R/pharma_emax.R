@@ -1,6 +1,9 @@
 #' Fit an Emax dose-response model
 #'
 #' Convenience wrapper around \code{nls} for fitting a standard Emax model.
+#' In the nonnegative-dose domain with positive \code{ed50}, \code{e0} is the
+#' zero-dose response, \code{emax} the asymptotic change, and \code{ed50} the
+#' half-maximal dose. The wrapper does not enforce those constraints.
 #'
 #' @param dose Numeric vector of doses.
 #' @param response Numeric vector of responses.
@@ -31,6 +34,9 @@ pharma_emax <- function(dose, response,
 #' Fit a sigmoid Emax model
 #'
 #' Wrapper around \code{nls} for a four-parameter sigmoid Emax (Hill) model.
+#' Positive \code{h} controls steepness; with nonnegative doses and positive
+#' \code{ed50}, the other parameters retain the standard Emax interpretation.
+#' The wrapper does not enforce these constraints.
 #'
 #' @param dose Numeric vector of doses.
 #' @param response Numeric vector of responses.
@@ -61,7 +67,8 @@ pharma_sigmoid_emax <- function(dose, response,
 #' Fit a mixed-effects Emax model using nlme
 #'
 #' Convenience wrapper around \code{nlme::nlme} for repeated measures of Emax
-#' curves. The wrapper sets `nlmeControl(returnObject = TRUE)`, so reaching
+#' curves with a common fixed curve and a random subject baseline by default.
+#' The wrapper sets `nlmeControl(returnObject = TRUE)`, so reaching
 #' the iteration limit may return an object with a nonconvergence warning.
 #'
 #' @param dose Numeric vector of doses.
@@ -69,7 +76,8 @@ pharma_sigmoid_emax <- function(dose, response,
 #' @param subject Subject identifier for random effects.
 #' @param start Named vector of starting values for \code{e0}, \code{emax}, and
 #'   \code{ed50}. If `NULL`, coefficients from a pooled `nls` fit are used.
-#' @param random Random-effects formula. Defaults to a subject-specific baseline.
+#' @param random Random-effects formula. Defaults to a subject-specific
+#'   baseline (`e0 ~ 1 | subject`); `emax` and `ed50` are common fixed effects.
 #' @param ... Additional arguments passed to \code{nlme::nlme}.
 #'
 #' @return An \code{nlme} object inheriting from \code{lme}.
