@@ -27,6 +27,9 @@ An \code{nls} object.
 }
 \description{
 Convenience wrapper around \code{nls} for fitting a standard Emax model.
+In the nonnegative-dose domain with positive \code{ed50}, \code{e0} is the
+zero-dose response, \code{emax} the asymptotic change, and \code{ed50} the
+half-maximal dose. The wrapper does not enforce those constraints.
 }
 \examples{
 pharma_emax(
