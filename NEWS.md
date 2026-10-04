@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Check logistic event coding, factor baseline, odds ratio, probabilities, standard errors, and selected analysis rows against a fixed 2-by-2 reference. No fitting behavior changes.
 - Add independent Emax and sigmoid-Emax curve, parameter, and covariance references, plus a repeated-subject mixed Emax fixture and single-dose identifiability failures. Clarify fitted parameter interpretation; no model calculation changes.
 - Update the maintainer's institutional affiliation in package and citation metadata; the designated contact and package code are unchanged.
 - Declare Python with SciPy as an optional system requirement for the SciPy t-test bridge. Other package features do not require Python.
