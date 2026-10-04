@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add independently calculated treatment, block, and residual ANOVA targets for balanced AB/BA crossover and Latin-square examples, with fixed contrasts and F statistics. No fitting behavior changes.
 - Fix study-label forwarding through the meta-analysis, forest, and funnel wrappers for explicit vectors and model-data columns. The backend still checks label lengths and study selection; estimator calculations are unchanged.
 - Check forest layout parameters, funnel effect/uncertainty coordinates and labels, invisible returns, and graphics-device output against fixed plotting fixtures; clarify the plotting metadata contract. No estimator or plotting behavior changes.
 - Add a seeded binomial Bayesian reference against independent quadrature, including posterior summaries, diagnostics, and the observed versus replicated mean in a predictive plot. No sampler or API behavior changes.

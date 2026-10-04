@@ -18,6 +18,19 @@ fit <- pharma_latin_square_anova(
 summary(fit)
 ```
 
+## Fixed numerical reference
+
+The [reference test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-design-anova-references.R) uses a cyclic 3 × 3 square. Treatment means are 7, 10, and 13; row means are 9, 10, and 11; column means are 8, 10, and 12. Each level occurs three times. The residual matrix has rows `(1, -1, 0)`, `(0, 1, -1)`, and `(-1, 0, 1)`. Its sums are zero in every row, column, and treatment, with squared sum 6.
+
+| Source | Degrees of freedom | Sum of squares | Mean square | F |
+| --- | ---: | ---: | ---: | ---: |
+| Treatment | 2 | 54 | 27 | 9 |
+| Row | 2 | 6 | 3 | 1 |
+| Column | 2 | 24 | 12 | 4 |
+| Residual | 2 | 6 | 3 | — |
+
+The treatment C minus A coefficient is 6. The expected treatment sum of squares is `3 × (3² + 3²) = 54`; the row and column targets follow from their stated means, independent of `aov()`. This small square is a software reference. Its two residual degrees of freedom and unreplicated cells do not establish treatment efficacy or interaction behavior.
+
 The bundled `pharma_latin_square` data have factor columns for treatment, row, and column. Numeric IDs must be converted explicitly: otherwise `aov()` would fit a quantitative trend instead of a categorical block effect.
 
 ```r

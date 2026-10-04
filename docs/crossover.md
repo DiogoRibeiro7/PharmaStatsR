@@ -18,6 +18,19 @@ fit <- pharma_crossover_anova(
 summary(fit)
 ```
 
+## Fixed numerical reference
+
+The [reference test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-design-anova-references.R) uses four subjects, two in each sequence. Its treatment means are 8.5 (A) and 11.5 (B), the period means are 9 and 11, and the subject means are 9, 10, 10, and 11. Treatment, period, and subject terms are orthogonal in this balanced fixture. Its residual pairs are `(1, -1)`, `(-1, 1)`, `(2, -2)`, and `(-2, 2)`; they sum to zero within each subject, treatment, and period.
+
+| Source | Degrees of freedom | Sum of squares | Mean square | F |
+| --- | ---: | ---: | ---: | ---: |
+| Treatment | 1 | 18 | 18 | 1.8 |
+| Period | 1 | 8 | 8 | 0.8 |
+| Subject | 3 | 4 | 4/3 | 2/15 |
+| Residual | 2 | 20 | 10 | — |
+
+The treatment B minus A coefficient is 3. The expected sums of squares come from the stated means and residuals, independent of `aov()`; for example, treatment has four observations per level and sum of squares `4 × (1.5² + 1.5²) = 18`. With only two residual degrees of freedom, this is a software reference, not a useful trial analysis or a carryover diagnostic.
+
 The bundled data now use categorical treatment, period, and subject variables, with five subjects in each sequence. An earlier version assigned A/A to five subjects and B/B to five others. In that arrangement treatment was confounded with subject, so results from the old fixture should be rechecked.
 
 Numeric subject or period IDs must be converted to factors. Numeric inputs to `stats::aov()` would otherwise be fitted as quantitative predictors.
