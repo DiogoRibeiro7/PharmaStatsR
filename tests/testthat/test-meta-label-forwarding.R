@@ -60,14 +60,17 @@ test_that("meta plots forward vector and model-data label overrides", {
   expect_false(wrapped$visible)
   expect_equal(wrapped$value, direct$value)
   expect_identical(wrapped$value$slab, override)
-  expect_equal(wrapped$value$x, effects, tolerance = 1e-12)
-  expect_equal(wrapped$value$y, sqrt(variances), tolerance = 1e-12)
+  expect_equal(unname(as.numeric(wrapped$value$x)), effects,
+               tolerance = 1e-12)
+  expect_equal(unname(as.numeric(wrapped$value$y)), sqrt(variances),
+               tolerance = 1e-12)
 
   direct_data <- metafor::funnel(fit, yaxis = "vi", slab = display)
   wrapped_data <- pharma_funnel_plot(fit, yaxis = "vi", slab = display)
   expect_equal(wrapped_data, direct_data)
   expect_identical(wrapped_data$slab, studies$display)
-  expect_equal(wrapped_data$y, variances, tolerance = 1e-12)
+  expect_equal(unname(as.numeric(wrapped_data$y)), variances,
+               tolerance = 1e-12)
 
   direct_forest <- withVisible(metafor::forest(
     fit, slab = override, xlim = c(-2, 2), alim = c(-1, 1), at = c(-1, 0, 1)
