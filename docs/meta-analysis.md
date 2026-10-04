@@ -29,22 +29,32 @@ Earlier calls that printed an FE fallback message after a singular REML error re
 `pharma_forest_plot()` and `pharma_funnel_plot()` require the optional
 `metafor` package and an `rma` model. They delegate to `metafor::forest()`
 and `metafor::funnel()`, drawing base graphics on the active device. They do
-not return a reusable plot object. The forest helper invisibly returns a list
-of plotting parameters, including axis limits; the funnel helper invisibly
-returns a data frame with plotted coordinates and study labels. Assign these
-results only when you need that metadata.
+not return reusable plot objects. The forest helper invisibly returns a layout
+list with `xlim`, `alim`, `at`, `ylim`, and `rows`; it does not return study
+point coordinates or labels. The funnel helper invisibly returns a data frame
+with `x` (effect), `y` (standard error by default), and `slab` (study label).
+An alternative `yaxis`, such as `"vi"`, changes the meaning of `y`. Assign
+these results only when you need that metadata.
 
 ```r
-pharma_forest_plot(random_fit, slab = paste("Study", seq_along(yi)))
+pharma_forest_plot(random_fit)
 pharma_funnel_plot(random_fit)
 ```
 
 The [forest](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_forest_plot.Rd)
 and [funnel](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_funnel_plot.Rd)
 R help pages describe the arguments and return values. The wrappers check
-the `rma` class and a missing backend; the [plot smoke tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-pharma_tests.R)
-exercise drawing with `metafor` installed. A funnel's appearance alone does
-not establish publication bias or rule it out, especially with a small set
+the `rma` class and a missing backend; the [plot contract tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-meta-plot-contract.R)
+check the invisible values, specified forest limits and rows, and funnel
+coordinates against fixed effects, variances, and labels on a temporary PDF
+device. They also exercise invalid models and a rejected backend plot option;
+the optional-backend guard is checked [separately](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-meta.R).
+These tests cover plotting behavior and do not validate the fitted meta-analysis
+estimator. Their labelled fixture is fitted directly with `metafor::rma()`.
+An explicit plot-time `slab` vector currently fails backend evaluation when
+passed through the wrapper; [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120)
+tracks that forwarding defect and the separate fit-time label path. A funnel's
+appearance alone does not establish publication bias or rule it out, especially with a small set
 of studies. Review the underlying studies and effect measures before drawing
 an inference from either plot.
 

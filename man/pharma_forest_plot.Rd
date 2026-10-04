@@ -13,7 +13,8 @@ pharma_forest_plot(model, ...)
 }
 \value{
 Draws a forest plot on the active graphics device and invisibly
-returns the backend's list of plotting parameters (such as axis limits).
+returns the backend's layout list (including \code{xlim}, \code{alim}, \code{at}, \code{ylim},
+and \code{rows}). Study point coordinates and labels are not returned.
 }
 \description{
 Create a forest plot from an \code{rma} object.

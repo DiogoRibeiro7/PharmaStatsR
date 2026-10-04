@@ -13,11 +13,18 @@ pharma_funnel_plot(model, ...)
 }
 \value{
 Draws a funnel plot on the active graphics device and invisibly
-returns the backend's data frame of plotted coordinates and study labels.
+returns the backend's data frame: \code{x} holds plotted effects, \code{y} holds
+the selected y-axis values (standard errors by default), and \code{slab}
+holds study labels.
 }
 \description{
 Create a funnel plot from an \code{rma} object.
 Requires the 'metafor' package.
+}
+\details{
+For labels, use an \code{rma} object with stored study labels.
+Plot-time \code{slab} overrides passed through this wrapper currently fail
+backend evaluation.
 }
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {
