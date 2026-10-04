@@ -27,6 +27,16 @@ test_that("meta fit preserves explicit and data-column study labels", {
   expect_identical(wrapped_data$slab, direct_data$slab)
   expect_identical(wrapped_data$slab, labels)
   expect_equal(wrapped_data$b, direct_data$b, tolerance = 1e-12)
+
+  data_calls <- 0L
+  build_data <- function() {
+    data_calls <<- data_calls + 1L
+    studies
+  }
+  once <- pharma_meta_analysis(effects, variances, method = "FE",
+                               data = build_data(), slab = study)
+  expect_identical(data_calls, 1L)
+  expect_identical(once$slab, labels)
   expect_error(pharma_meta_analysis(effects, variances, method = "FE",
                                     slab = labels[-1L]), "slab")
 })
