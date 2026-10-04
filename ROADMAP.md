@@ -9,8 +9,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE reference | Review a fixed marginal estimate and cluster sandwich uncertainty while maintainer choices in #58 are pending. |
-| 3 | [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Follow with a fixed Rubin pooling reference under its separate issue scope. |
+| 2 | [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Review a fixed Rubin pooling reference while maintainer choices in #58 are pending. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -58,8 +57,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Closed | Verified plotted coordinates, device effects, and invisible returns. |
 | [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Closed | Fit-time and plot-time `slab` vectors and model-data columns work through the wrappers and are compared with direct backend calls. |
 | [#123](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/123) Crossover and Latin-square ANOVA | Closed (#126) | Independent treatment, nuisance, and residual sums of squares, F statistics, and contrasts. |
-| [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | In review | Cluster-level coefficient and sandwich uncertainty reference. |
-| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Open | Fixed pooled estimate and uncertainty from Rubin's components. |
+| [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Closed (#127) | Cluster-level coefficient and sandwich uncertainty reference. |
+| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | In review | Fixed pooled estimate and uncertainty from Rubin's components. |
 
 ## How we work
 
