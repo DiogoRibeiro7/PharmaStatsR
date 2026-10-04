@@ -20,6 +20,6 @@ Suggests: testthat, knitr, rmarkdown, flexdashboard, shiny, rstanarm,
     bayesplot, mice, future, future.apply, caret, cmprsk, openssl, lme4, geepack,
     metafor, netmeta, JM, mstate, openxlsx, flextable,
     officer, reticulate
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
 Config/roxygen2/markdown: TRUE
 RoxygenNote: 7.3.1
