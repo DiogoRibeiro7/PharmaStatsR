@@ -4,7 +4,7 @@
 \alias{pharma_meta_analysis}
 \title{Conduct a meta-analysis}
 \usage{
-pharma_meta_analysis(yi, vi, method = "REML", ...)
+pharma_meta_analysis(yi, vi, method = "REML", ..., slab = NULL)
 }
 \arguments{
 \item{yi}{Numeric vector of effect size estimates.}
@@ -15,6 +15,9 @@ pharma_meta_analysis(yi, vi, method = "REML", ...)
 fixed-effects model or "REML" (default) for random effects.}
 
 \item{...}{Additional arguments passed to \link[metafor:rma]{metafor::rma}.}
+
+\item{slab}{Optional study labels, supplied as a vector or as a column
+name when \code{data} is passed through \code{...}.}
 }
 \value{
 An \code{rma} object fitted with the requested \code{method}. Errors from
