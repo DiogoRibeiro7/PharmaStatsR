@@ -6,8 +6,9 @@ test_that("meta plots draw and return checked layout and study coordinates", {
   effects <- c(-0.4, 0.1, 0.5, 0.8)
   variances <- c(0.04, 0.09, 0.16, 0.25)
   labels <- c("A", "B", "C", "D")
-  fit <- pharma_meta_analysis(effects, variances, method = "FE",
-                              slab = labels)
+  # Fit directly with the backend so the fixture isolates the plot wrappers.
+  fit <- metafor::rma(yi = effects, vi = variances, method = "FE",
+                      slab = labels)
 
   plot_file <- tempfile(fileext = ".pdf")
   grDevices::pdf(plot_file, width = 8, height = 6)
@@ -28,7 +29,8 @@ test_that("meta plots draw and return checked layout and study coordinates", {
   expect_equal(forest$value$xlim, c(-2, 2))
   expect_equal(forest$value$alim, c(-1, 1))
   expect_equal(forest$value$at, c(-1, 0, 1))
-  expect_equal(forest$value$rows, 4:1)
+  # metafor returns the chosen row positions in study order.
+  expect_equal(forest$value$rows, 1:4)
   expect_true(is.numeric(forest$value$ylim))
   expect_length(forest$value$ylim, 2)
 
