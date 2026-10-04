@@ -8,7 +8,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Apply the designated affiliation and contact, choose the final version, review the new merged SHA, then decide on a tag. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm the designated contact receives mail, choose the final version, review the final merged SHA, then decide on a tag. |
 | 2 | [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response evidence | Fixed curve and parameter references for three Emax fits. |
 | 3 | [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic reference | Event coding, odds ratio, uncertainty, and analysis rows on a traceable fixture. |
 | 4 | [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Numerical estimates and fit population on a repeated-measure fixture. |
