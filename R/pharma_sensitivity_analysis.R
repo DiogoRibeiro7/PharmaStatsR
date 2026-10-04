@@ -28,6 +28,9 @@ pharma_sensitivity_analysis <- function(mids_obj, formula, family = NULL, ...) {
       call. = FALSE
     )
   }
+  if (!inherits(mids_obj, "mids")) {
+    stop("mids_obj must be a mice mids object", call. = FALSE)
+  }
   completed <- mice::complete(mids_obj, action = "all")
   fits <- lapply(completed, function(dataset) {
     if (is.null(family)) {
