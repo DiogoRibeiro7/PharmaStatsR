@@ -4,12 +4,15 @@
 \alias{pharma_funnel_plot}
 \title{Funnel plot for a meta-analysis}
 \usage{
-pharma_funnel_plot(model, ...)
+pharma_funnel_plot(model, ..., slab = NULL)
 }
 \arguments{
 \item{model}{An object from \link[metafor:rma]{metafor::rma}.}
 
 \item{...}{Additional arguments passed to \link[metafor:funnel]{metafor::funnel}.}
+
+\item{slab}{Optional study-label override, as a vector or a column name
+in the model's stored data.}
 }
 \value{
 Draws a funnel plot on the active graphics device and invisibly
@@ -22,9 +25,8 @@ Create a funnel plot from an \code{rma} object.
 Requires the 'metafor' package.
 }
 \details{
-For labels, use an \code{rma} object with stored study labels.
-Plot-time \code{slab} overrides passed through this wrapper currently fail
-backend evaluation.
+A supplied \code{slab} overrides labels stored in the \code{rma} object.
+The backend applies the model's study selection to the label vector.
 }
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {

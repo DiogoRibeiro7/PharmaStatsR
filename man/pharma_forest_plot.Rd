@@ -4,12 +4,15 @@
 \alias{pharma_forest_plot}
 \title{Forest plot for a meta-analysis}
 \usage{
-pharma_forest_plot(model, ...)
+pharma_forest_plot(model, ..., slab = NULL)
 }
 \arguments{
 \item{model}{An object from \link[metafor:rma]{metafor::rma}.}
 
 \item{...}{Additional arguments passed to \link[metafor:forest]{metafor::forest}.}
+
+\item{slab}{Optional study-label override, as a vector or a column name
+in the model's stored data.}
 }
 \value{
 Draws a forest plot on the active graphics device and invisibly
