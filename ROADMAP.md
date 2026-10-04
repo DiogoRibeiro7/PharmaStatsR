@@ -9,7 +9,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm the designated contact receives mail, choose the final version, review the final merged SHA, then decide on a tag. |
-| 2 | [P3 method-evidence backlog](#p3--strengthen-remaining-method-evidence) | Work through the ordered issue table below after the candidate decision, or while its maintainer choices are pending. |
+| 2 | [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Resolve the label-forwarding defect found in the plot review, with direct backend comparisons and an exact-head optional-backend check. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -50,11 +50,12 @@ These follow-up issues target exports whose current tests are mainly smoke or ba
 
 | Issue | Status | Reviewable outcome |
 | --- | --- | --- |
-| [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response fits | Open | Independent Emax and sigmoid-Emax targets, with mixed-fit structure and convergence limits. |
-| [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic regression | Open | Traceable event coding, coefficient and probability references, and boundary behavior. |
-| [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Open | Repeated-measure numerical reference, selected population, and failure behavior. |
-| [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Open | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
-| [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Open | Verified plotted coordinates, device effects, and invisible returns. |
+| [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response fits | Closed | Independent Emax and sigmoid-Emax targets, with mixed-fit structure and convergence limits. |
+| [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic regression | Closed | Traceable event coding, coefficient and probability references, and boundary behavior. |
+| [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Closed | Repeated-measure numerical reference, selected population, and failure behavior. |
+| [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Closed | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
+| [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Closed | Verified plotted coordinates, device effects, and invisible returns. |
+| [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | In progress | Resolve fit-time and plot-time `slab` forwarding for vectors and model-data columns. |
 
 ## How we work
 
