@@ -29,16 +29,15 @@ Earlier calls that printed an FE fallback message after a singular REML error re
 `pharma_forest_plot()` and `pharma_funnel_plot()` require the optional
 `metafor` package and an `rma` model. They delegate to `metafor::forest()`
 and `metafor::funnel()`, drawing base graphics on the active device. They do
-not return a reusable plot object. The forest helper invisibly returns a layout list with `xlim`, `alim`,
-`at`, `ylim`, and `rows`; it does not return study point coordinates or
-labels. The funnel helper invisibly returns a data frame with `x` (effect),
-`y` (standard error by default), and `slab` (study label). An alternative
-`yaxis`, such as `"vi"`, changes the meaning of `y`. Assign these
-results only when you need that metadata. Both helpers draw on the active
-graphics device and do not produce reusable plot objects.
+not return reusable plot objects. The forest helper invisibly returns a layout
+list with `xlim`, `alim`, `at`, `ylim`, and `rows`; it does not return study
+point coordinates or labels. The funnel helper invisibly returns a data frame
+with `x` (effect), `y` (standard error by default), and `slab` (study label).
+An alternative `yaxis`, such as `"vi"`, changes the meaning of `y`. Assign
+these results only when you need that metadata.
 
 ```r
-pharma_forest_plot(random_fit, slab = paste("Study", seq_along(yi)))
+pharma_forest_plot(random_fit)
 pharma_funnel_plot(random_fit)
 ```
 
@@ -55,8 +54,7 @@ estimator. Their labelled fixture is fitted directly with `metafor::rma()`.
 An explicit plot-time `slab` vector currently fails backend evaluation when
 passed through the wrapper; [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120)
 tracks that forwarding defect and the separate fit-time label path. A funnel's
-appearance alone does
-not establish publication bias or rule it out, especially with a small set
+appearance alone does not establish publication bias or rule it out, especially with a small set
 of studies. Review the underlying studies and effect measures before drawing
 an inference from either plot.
 
