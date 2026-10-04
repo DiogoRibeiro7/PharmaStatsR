@@ -18,6 +18,12 @@ A \code{ggplot} object
 Generate a posterior predictive check plot for a fitted Bayesian model
 using \link[bayesplot:pp_check]{bayesplot::pp_check}.
 }
+\details{
+The plot compares observed outcomes or a chosen statistic with
+replicated outcomes drawn from the fitted posterior predictive
+distribution. A plausible plot does not establish calibration or model
+validity; the selected \code{plotfun} and \code{stat} determine its meaning.
+}
 \examples{
 \dontrun{
   fit <- pharma_bayesian_glm(
