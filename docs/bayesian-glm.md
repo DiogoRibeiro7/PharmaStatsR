@@ -79,7 +79,9 @@ versions and those diagnostics in the test log linked from the PR.
 
 For `plotfun = "stat", stat = "mean"`, the predictive plot places the
 observed fraction `8/12` at its reference line and displays means from
-100 replicated 12-trial datasets. Their average is compared to the
+1,000 replicated 12-trial datasets (one per retained posterior draw).
+The `stat` plot uses all posterior draws; its backend ignores `nreps`.
+Their average is compared to the
 independent posterior predictive mean above with a 0.15 tolerance.
 This simple mean statistic is a check of what the plot represents, not
 a sensitive model-criticism statistic. A visually plausible plot or
