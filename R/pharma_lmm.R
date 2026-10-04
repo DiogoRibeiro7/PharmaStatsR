@@ -10,6 +10,13 @@
 #' @param ... Additional arguments passed to `lme4::lmer`.
 #'
 #' @return An `lmerMod` object.
+#' @details `lmer` uses REML by default. A random-intercept formula
+#'   `response ~ condition + (1 | subject)` estimates a common condition
+#'   contrast with subject-specific baselines. Use `predict(fit, re.form = NA)`
+#'   for population predictions; conditional predictions include estimated
+#'   subject effects. Missing-row selection and singularity or convergence
+#'   diagnostics are delegated to `lme4`. A returned fit is not proof of
+#'   adequate grouping, normality, or model validity.
 #' @export
 #'
 #' @examples
