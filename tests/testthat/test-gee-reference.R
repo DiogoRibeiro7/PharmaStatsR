@@ -24,6 +24,6 @@ test_that("pharma_gee matches a cluster-score sandwich reference", {
                rep(sqrt(1 / 8), 2), tolerance = 1e-7)
   expect_equal(unname(fit$id), dat$subject)
   expect_equal(length(stats::fitted(fit)), nrow(dat))
-  expect_equal(unname(stats::fitted(fit)), rep(c(2, 5), times = 4),
+  expect_equal(as.numeric(stats::fitted(fit)), rep(c(2, 5), times = 4),
                tolerance = 1e-7)
 })
