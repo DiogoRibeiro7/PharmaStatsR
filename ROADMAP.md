@@ -8,7 +8,8 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The five jobs and full manual check passed on the latest reviewed merged commit linked in #58. Confirm the candidate metadata and version, review the final source SHA, then decide on a tag. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm the designated contact receives mail, choose the final version, review the final merged SHA, then decide on a tag. |
+| 2 | [P3 method-evidence backlog](#p3--strengthen-remaining-method-evidence) | Work through the ordered issue table below after the candidate decision, or while its maintainer choices are pending. |
 
 ## P0 — Establish scope and numerical evidence
 
@@ -42,6 +43,18 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release checklist](docs/release-candidate.md) and [current merged-commit evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) cover the source build, hash, full CRAN-style check, five-job matrix, and manuals. Maintainer metadata, candidate comments, and the tag decision remain; repeat checks after any source change. |
 
 **Release gate:** a release candidate is reviewable only after the P0/P1 evidence is complete and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) records the exact check results. A tag, GitHub release, and CRAN submission are separate decisions. The [portfolio tracking issue](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) should reflect the current state rather than an earlier audit snapshot.
+
+## P3 — Strengthen remaining method evidence
+
+These follow-up issues target exports whose current tests are mainly smoke or backend checks in the [inventory](docs/method-inventory.md). They do not turn experimental methods into clinically validated methods by themselves, and they are separate from the current #58 candidate decision.
+
+| Issue | Status | Reviewable outcome |
+| --- | --- | --- |
+| [#109](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/109) Dose-response fits | Open | Independent Emax and sigmoid-Emax targets, with mixed-fit structure and convergence limits. |
+| [#110](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/110) Logistic regression | Open | Traceable event coding, coefficient and probability references, and boundary behavior. |
+| [#111](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/111) Linear mixed model | Open | Repeated-measure numerical reference, selected population, and failure behavior. |
+| [#112](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/112) Bayesian family | Open | Posterior summaries and predictive checks with a stated reference and Monte Carlo tolerance. |
+| [#113](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/113) Meta plots | Open | Verified plotted coordinates, device effects, and invisible returns. |
 
 ## How we work
 

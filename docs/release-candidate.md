@@ -12,7 +12,7 @@ Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a pr
 
 | Evidence | Current state |
 | --- | --- |
-| Metadata: author/contact, package title, URLs, MIT license, dependencies, citation, NEWS | Title and project URLs reviewed; verify existing maintainer email, affiliation, and final release version before tagging. |
+| Metadata: author/contact, package title, URLs, MIT license, dependencies, citation, NEWS | Title and project URLs reviewed; maintainer designated the public address and current affiliation. Check mail receipt and choose the final version before tagging. |
 | Built tarball contents, SHA-256, examples, tests, vignettes, CRAN-style check | The latest merged-commit full-check artifact is recorded in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58); repeat after any further source change. |
 | macOS/Windows R release, Ubuntu R old release/devel, Ubuntu all-Suggests | All five passed on the latest reviewed merged commit in #58, including PDF and HTML manual validation; repeat after any further source change. |
 | `cran-comments.md` with environments and explained NOTEs | Draft describes the tested environments and “New submission” NOTE; #58 records the current exact-SHA evidence, while maintainer review is pending. |
