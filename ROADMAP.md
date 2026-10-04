@@ -45,7 +45,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 ## P3 — Strengthen remaining method evidence
 
-These follow-up issues target exports whose current tests are mainly smoke or backend checks in the [inventory](docs/method-inventory.md). They do not turn experimental methods into clinically validated methods by themselves, and they are separate from the current #58 candidate decision.
+These scoped follow-up issues strengthened evidence for exports whose earlier tests were mainly smoke or backend checks in the [inventory](docs/method-inventory.md). Their results do not turn experimental methods into clinically validated methods, and the #58 candidate decision remains separate.
 
 | Issue | Status | Reviewable outcome |
 | --- | --- | --- |
