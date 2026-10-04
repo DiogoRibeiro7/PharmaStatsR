@@ -16,9 +16,10 @@ The bundled `outcome` is an arbitrary binary label, not a defined clinical event
 
 The log odds are linear in the specified predictors. For a numeric 0/1 outcome,
 `glm()` models the probability of 1; for a two-level factor, it models the
-probability of the second level. The first level of a predictor factor is
-the reference level under the default treatment contrasts. Specify levels
-explicitly before fitting and confirm which event is being modeled.
+probability of the second level. For an unordered predictor factor under default treatment contrasts, the
+first level is the reference. Ordered factors use different default
+contrasts. Specify levels and contrasts explicitly before fitting and
+confirm which event is being modeled.
 
 ## Fixed two-group reference
 
