@@ -9,6 +9,9 @@
 #' @param ... Additional arguments passed to [rstanarm::stan_glm]
 #'
 #' @return A `stanreg` object
+#' @details Specify the likelihood family, coefficient and intercept priors,
+#'   algorithm, and sampler settings for the analysis. The wrapper does not
+#'   check convergence or decide whether the prior is suitable.
 #' @export
 #' @examples
 #' \dontrun{
@@ -30,6 +33,11 @@ pharma_bayesian_glm <- function(formula, data, ...) {
 #' @param prob Width of the credible interval (default 0.95)
 #'
 #' @return A `summary.stanreg` matrix of parameter summaries and diagnostics.
+#' @details `prob` requests central quantiles at `(1 - prob) / 2` and
+#'   `1 - (1 - prob) / 2` for fits with posterior draws. The backend also
+#'   reports Monte Carlo diagnostics for MCMC fits; the wrapper does not
+#'   validate `prob`
+#'   or establish convergence.
 #' @export
 #' @examples
 #' \dontrun{
@@ -53,6 +61,10 @@ pharma_posterior_summary <- function(model, prob = 0.95) {
 #' @param ... Additional arguments passed to [bayesplot::pp_check]
 #'
 #' @return A `ggplot` object
+#' @details The plot compares observed outcomes or a chosen statistic with
+#'   replicated outcomes drawn from the fitted posterior predictive
+#'   distribution. A plausible plot does not establish calibration or model
+#'   validity; the selected `plotfun` and `stat` determine its meaning.
 #' @export
 #' @examples
 #' \dontrun{

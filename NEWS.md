@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add a seeded binomial Bayesian reference against independent quadrature, including posterior summaries, diagnostics, and the observed versus replicated mean in a predictive plot. No sampler or API behavior changes.
 - Add a balanced repeated-measure reference for the linear mixed model, with fixed contrast, REML variance targets, predictions, selected rows, and an invalid grouping design. No model-fitting behavior changes.
 - Check logistic event coding, factor baseline, odds ratio, probabilities, standard errors, and selected analysis rows against a fixed 2-by-2 reference. No fitting behavior changes.
 - Add independent Emax and sigmoid-Emax curve, parameter, and covariance references, plus a repeated-subject mixed Emax fixture and single-dose identifiability failures. Clarify fitted parameter interpretation; no model calculation changes.

@@ -18,6 +18,13 @@ A \code{summary.stanreg} matrix of parameter summaries and diagnostics.
 Provide summary statistics including credible intervals for a fitted
 Bayesian model.
 }
+\details{
+\code{prob} requests central quantiles at \code{(1 - prob) / 2} and
+\code{1 - (1 - prob) / 2} for fits with posterior draws. The backend also
+reports Monte Carlo diagnostics for MCMC fits; the wrapper does not
+validate \code{prob}
+or establish convergence.
+}
 \examples{
 \dontrun{
   fit <- pharma_bayesian_glm(

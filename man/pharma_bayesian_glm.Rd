@@ -21,6 +21,11 @@ Fit a generalized linear model via \code{rstanarm::stan_glm}. By default it
 uses a Gaussian family and MCMC. Other supported \code{family} and \code{algorithm}
 choices can be passed through \code{...}.
 }
+\details{
+Specify the likelihood family, coefficient and intercept priors,
+algorithm, and sampler settings for the analysis. The wrapper does not
+check convergence or decide whether the prior is suitable.
+}
 \examples{
 \dontrun{
   fit <- pharma_bayesian_glm(
