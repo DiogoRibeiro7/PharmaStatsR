@@ -71,11 +71,11 @@ probability about 0.62234, and central 80% logit quantiles about
 -0.13101 and 1.20528. The test compares sampled summaries with these
 values using absolute tolerances 0.15 for the mean and 0.3 for the
 quantile endpoints, allowing Monte Carlo error over 1,000 retained draws
-without fixing a random sequence. It checks that the returned quantile
+without asserting exact sampled draws. It checks that the returned quantile
 columns match `prob = 0.8` and the default `prob = 0.95`, and inspects
 effective sample size and R-hat before comparing posterior quantities.
-The all-Suggests CI job records its installed `rstanarm` and `bayesplot`
-versions and those diagnostics in the test log linked from the PR.
+The all-Suggests CI job runs the reference with both optional backends;
+the PR records their installed versions and the checked diagnostic thresholds.
 
 For `plotfun = "stat", stat = "mean"`, the predictive plot places the
 observed fraction `8/12` at its reference line and displays means from
@@ -83,6 +83,8 @@ observed fraction `8/12` at its reference line and displays means from
 The `stat` plot uses all posterior draws; its backend ignores `nreps`.
 Their average is compared to the
 independent posterior predictive mean above with a 0.15 tolerance.
+The test also checks backend errors for an invalid binomial outcome,
+an interval width outside (0, 1), and an unknown predictive plot.
 This simple mean statistic is a check of what the plot represents, not
 a sensitive model-criticism statistic. A visually plausible plot or
 acceptable sampler diagnostics does not validate the chosen likelihood,
