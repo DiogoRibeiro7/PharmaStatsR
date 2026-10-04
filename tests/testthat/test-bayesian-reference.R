@@ -84,8 +84,17 @@ test_that("Bayesian GLM, summary, and predictive plot match a reference", {
   expect_equal(unique(observed_layers[[1]]$data$value), 8 / 12)
   expect_lt(abs(mean(plot$data$value) - target_probability), 0.15)
 
-  message(sprintf(
-    "Bayesian reference: rstanarm %s, bayesplot %s; mean %.3f, Rhat %.3f, ESS %.0f",
+  # The backend must reject an invalid Bernoulli outcome, an impossible
+  # interval width, and an unknown predictive plot request.
+  expect_error(pharma_bayesian_glm(event ~ 1,
+    data = data.frame(event = c(0L, 2L)),
+    family = stats::binomial()
+  ))
+  expect_error(pharma_posterior_summary(fit, prob = 1.1))
+  expect_error(pharma_pp_check(fit, plotfun = "unknown_ppc"))
+
+  cat(sprintf(
+    "Bayesian reference: rstanarm %s, bayesplot %s; mean %.3f, Rhat %.3f, ESS %.0f\n",
     as.character(utils::packageVersion("rstanarm")),
     as.character(utils::packageVersion("bayesplot")),
     intercept["mean"], intercept["Rhat"], intercept["n_eff"]
