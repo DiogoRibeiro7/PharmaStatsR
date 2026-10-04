@@ -22,6 +22,15 @@ Provides a wrapper around \code{lme4::lmer} for mixed-effects modeling. The
 function validates its inputs and ensures that \code{lme4} is installed
 before fitting the model.
 }
+\details{
+\code{lmer} uses REML by default. A random-intercept formula
+\code{response ~ condition + (1 | subject)} estimates a common condition
+contrast with subject-specific baselines. Use \code{predict(fit, re.form = NA)}
+for population predictions; conditional predictions include estimated
+subject effects. Missing-row selection and singularity or convergence
+diagnostics are delegated to \code{lme4}. A returned fit is not proof of
+adequate grouping, normality, or model validity.
+}
 \examples{
 if (requireNamespace("lme4", quietly = TRUE)) {
 pharma_lmm(response ~ condition + (1 | subject), data = pharma_repeated)
