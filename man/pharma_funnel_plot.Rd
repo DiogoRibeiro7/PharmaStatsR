@@ -21,6 +21,11 @@ holds study labels.
 Create a funnel plot from an \code{rma} object.
 Requires the 'metafor' package.
 }
+\details{
+For labels, use an \code{rma} object fitted directly with
+\link[metafor:rma]{metafor::rma} and stored study labels. Plot-time \code{slab} overrides
+passed through this wrapper currently fail backend evaluation.
+}
 \examples{
 if (requireNamespace("metafor", quietly = TRUE)) {
 res <- pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
