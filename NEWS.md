@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Declare Python with SciPy as an optional system requirement for the SciPy t-test bridge. Other package features do not require Python.
 - Declare both knitr and rmarkdown as vignette builders for the package's knitr::rmarkdown vignette. No analysis behavior changes.
 - Validate the package PDF and HTML manuals in the all-Suggests candidate check with TinyTeX and HTML Tidy, and retain the PDF with the source and check evidence. The routine and portability jobs still skip manual generation.
 - Limit the default multisession row bootstrap to two workers. The caller can still supply a custom future strategy. Run the five-job candidate matrix for package source changes on PRs and merged `main` commits.
