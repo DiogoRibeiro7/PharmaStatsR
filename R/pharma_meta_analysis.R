@@ -9,6 +9,8 @@
 #' @param method Estimation method passed to `metafor::rma`. Use "FE" for a
 #'   fixed-effects model or "REML" (default) for random effects.
 #' @param ... Additional arguments passed to [metafor::rma].
+#' @param slab Optional study labels, supplied as a vector or as a column
+#'   name when `data` is passed through `...`.
 #'
 #' @return An `rma` object fitted with the requested `method`. Errors from
 #'   `metafor::rma` are propagated without substituting another model.
@@ -19,7 +21,7 @@
 #' pharma_meta_analysis(yi = c(0.2, 0.1, -0.1), vi = c(0.05, 0.04, 0.06))
 #' }
 
-pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
+pharma_meta_analysis <- function(yi, vi, method = "REML", ..., slab = NULL) {
   .pharma_require_optional("metafor", "pharma_meta_analysis")
   check_numeric_vector(yi, "yi")
   check_numeric_vector(vi, "vi")
@@ -33,13 +35,34 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
   if (length(yi) < 3) {
     warning("Meta-analysis with fewer than 3 studies may be unreliable")
   }
-  .pharma_meta_rma(yi = yi, vi = vi, method = method, ...)
+  if (missing(slab)) {
+    return(.pharma_meta_rma(yi = yi, vi = vi, method = method, ...))
+  }
+  # Capture the column expression before forwarding other backend options.
+  dots <- as.list(substitute(list(...)))[-1L]
+  data_expr <- dots[["data"]]
+  model_data <- if (is.null(data_expr)) NULL else eval(data_expr, parent.frame())
+  labels <- .pharma_meta_labels(substitute(slab), model_data, parent.frame())
+  .pharma_meta_rma(yi = yi, vi = vi, method = method, ...,
+                   .pharma_slab = labels)
 }
 
-# Keep the backend call separate so tests can exercise estimation failures
-# without depending on a particular optimizer's error text or version.
-.pharma_meta_rma <- function(...) {
-  metafor::rma(...)
+# Resolve a supplied label expression in model data first, then the caller.
+# The backend retains responsibility for checking its length and content.
+.pharma_meta_labels <- function(expr, data, caller) {
+  context <- if (is.data.frame(data)) data else caller
+  eval(expr, envir = context, enclos = caller)
+}
+
+# Keep the backend call separate so tests can exercise estimation failures.
+# A named local binding avoids passing an unresolved `..n` expression to rma.
+.pharma_meta_rma <- function(yi, vi, method, ..., .pharma_slab = NULL) {
+  if (missing(.pharma_slab)) {
+    metafor::rma(yi = yi, vi = vi, method = method, ...)
+  } else {
+    metafor::rma(yi = yi, vi = vi, method = method, ...,
+                 slab = .pharma_slab)
+  }
 }
 
 #' Forest plot for a meta-analysis
@@ -49,6 +72,8 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #'
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::forest].
+#' @param slab Optional study-label override, as a vector or a column name
+#'   in the model's stored data.
 #'
 #' @return Draws a forest plot on the active graphics device and invisibly
 #'   returns the backend's layout list (including `xlim`, `alim`, `at`, `ylim`,
@@ -61,12 +86,16 @@ pharma_meta_analysis <- function(yi, vi, method = "REML", ...) {
 #' pharma_forest_plot(res)
 #' }
 
-pharma_forest_plot <- function(model, ...) {
+pharma_forest_plot <- function(model, ..., slab = NULL) {
   .pharma_require_optional("metafor", "pharma_forest_plot")
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
-  metafor::forest(model, ...)
+  if (missing(slab)) {
+    return(metafor::forest(model, ...))
+  }
+  labels <- .pharma_meta_labels(substitute(slab), model$data, parent.frame())
+  metafor::forest(model, ..., slab = labels)
 }
 
 #' Funnel plot for a meta-analysis
@@ -76,14 +105,15 @@ pharma_forest_plot <- function(model, ...) {
 #'
 #' @param model An object from [metafor::rma].
 #' @param ... Additional arguments passed to [metafor::funnel].
+#' @param slab Optional study-label override, as a vector or a column name
+#'   in the model's stored data.
 #'
 #' @return Draws a funnel plot on the active graphics device and invisibly
 #'   returns the backend's data frame: `x` holds plotted effects, `y` holds
 #'   the selected y-axis values (standard errors by default), and `slab`
 #'   holds study labels.
-#' @details For labels, use an `rma` object with stored study labels.
-#'   Plot-time `slab` overrides passed through this wrapper currently fail
-#'   backend evaluation.
+#' @details A supplied `slab` overrides labels stored in the `rma` object.
+#'   The backend applies the model's study selection to the label vector.
 #' @export
 #'
 #' @examples
@@ -92,12 +122,16 @@ pharma_forest_plot <- function(model, ...) {
 #' pharma_funnel_plot(res)
 #' }
 
-pharma_funnel_plot <- function(model, ...) {
+pharma_funnel_plot <- function(model, ..., slab = NULL) {
   .pharma_require_optional("metafor", "pharma_funnel_plot")
   if (!inherits(model, "rma")) {
     stop("`model` must be a 'rma' object from metafor")
   }
-  metafor::funnel(model, ...)
+  if (missing(slab)) {
+    return(metafor::funnel(model, ...))
+  }
+  labels <- .pharma_meta_labels(substitute(slab), model$data, parent.frame())
+  metafor::funnel(model, ..., slab = labels)
 }
 
 #' Meta-regression
