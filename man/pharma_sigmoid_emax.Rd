@@ -26,6 +26,9 @@ An \code{nls} object.
 }
 \description{
 Wrapper around \code{nls} for a four-parameter sigmoid Emax (Hill) model.
+Positive \code{h} controls steepness; with nonnegative doses and positive
+\code{ed50}, the other parameters retain the standard Emax interpretation.
+The wrapper does not enforce these constraints.
 }
 \examples{
 pharma_sigmoid_emax(
