@@ -1,6 +1,6 @@
 # PharmaStatsR roadmap
 
-**Status (4 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. The [API support policy](docs/api-support-policy.md) classifies all public exports; the exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for the tested paths, not validation of every statistical method.
+**Status (5 October 2026):** active development, version 0.1.62; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. The [API support policy](docs/api-support-policy.md) classifies all public exports; the exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for the tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -9,7 +9,15 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Review a fixed Rubin pooling reference while maintainer choices in #58 are pending. |
+| 2 | [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Independent survival steps, risk sets, and a two-group comparison, including censoring and ties. |
+| 3 | [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Coefficient and uncertainty from an explicit partial-likelihood calculation. |
+| 4 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Common-effect contrasts and covariance from a weighted contrast system. |
+
+The #123–#125 batch is complete. The next batch targets three methods still
+marked [C] in the inventory, starting with the simplest event-time calculation.
+Each issue defines its own numerical reference and boundaries. Implement them
+in order, one focused PR at a time; update evidence labels only after the
+corresponding tests and documentation pass review.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -58,7 +66,10 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#120](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/120) Meta study labels | Closed | Fit-time and plot-time `slab` vectors and model-data columns work through the wrappers and are compared with direct backend calls. |
 | [#123](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/123) Crossover and Latin-square ANOVA | Closed (#126) | Independent treatment, nuisance, and residual sums of squares, F statistics, and contrasts. |
 | [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Closed (#127) | Cluster-level coefficient and sandwich uncertainty reference. |
-| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | In review | Fixed pooled estimate and uncertainty from Rubin's components. |
+| [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Closed (#128) | Fixed pooled estimate and uncertainty from Rubin's components. |
+| [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Open | Fixed risk-set arithmetic, survival steps, and log-rank statistic. |
+| [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Open | Independent partial-likelihood coefficient and uncertainty. |
+| [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Open | Independent common-effect treatment contrasts and covariance. |
 
 ## How we work
 
