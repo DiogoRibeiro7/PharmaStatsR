@@ -9,15 +9,15 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Independent survival steps, risk sets, and a two-group comparison, including censoring and ties. |
-| 3 | [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Coefficient and uncertainty from an explicit partial-likelihood calculation. |
-| 4 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Common-effect contrasts and covariance from a weighted contrast system. |
+| 2 | [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Review the independent Breslow and Efron partial-likelihood coefficient, uncertainty, and selected-row references. |
+| 3 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Common-effect contrasts and covariance from a weighted contrast system. |
 
-The #123–#125 batch is complete. The next batch targets three methods still
-marked [C] in the inventory, starting with the simplest event-time calculation.
-Each issue defines its own numerical reference and boundaries. Implement them
-in order, one focused PR at a time; update evidence labels only after the
-corresponding tests and documentation pass review.
+The #123–#125 batch is complete. The Kaplan–Meier and log-rank reference
+in #129 is merged through [#133](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/133).
+The current batch continues with ordinary Cox regression and network
+meta-analysis. Each issue defines its own numerical reference and boundaries.
+Implement them in order, one focused PR at a time; update evidence labels only
+after the corresponding tests and documentation pass review.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -67,8 +67,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#123](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/123) Crossover and Latin-square ANOVA | Closed (#126) | Independent treatment, nuisance, and residual sums of squares, F statistics, and contrasts. |
 | [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Closed (#127) | Cluster-level coefficient and sandwich uncertainty reference. |
 | [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Closed (#128) | Fixed pooled estimate and uncertainty from Rubin's components. |
-| [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Open | Fixed risk-set arithmetic, survival steps, and log-rank statistic. |
-| [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Open | Independent partial-likelihood coefficient and uncertainty. |
+| [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Closed (#133) | Fixed risk-set arithmetic, survival steps, and log-rank statistic, with coding, selected rows, and censoring boundaries. |
+| [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | In progress | Independent Breslow and Efron likelihood, score, coefficient, and model-based uncertainty references; package checks and review remain the completion gate. |
 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Open | Independent common-effect treatment contrasts and covariance. |
 
 ## How we work

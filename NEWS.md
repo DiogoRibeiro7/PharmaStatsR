@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add an independent ordinary Cox partial-likelihood reference for Breslow and Efron ties, including model-based covariance, log hazard-ratio intervals, selected rows, and input-order invariance. No fitting behavior, public API, or dependency changes.
 - Add independent Kaplan–Meier risk-set, survival-step, and log-rank references, including exact event/censor ties, event coding, selected rows, an all-censored curve, and a terminal singleton event. No estimation or API behavior changes.
 - Add a fixed completed-dataset reference for Rubin pooling with independently calculated within, between, and total variance; reject non-`mids` inputs to `pharma_sensitivity_analysis()`. The fitting and pooling methods are unchanged.
 - Add an independent cluster-score sandwich reference for a Gaussian independence GEE, including fixed marginal coefficients, robust uncertainty, and selected cluster rows. No fitting behavior changes.
@@ -140,7 +141,7 @@
 
 ## 0.1.8
 - Added dose-response helpers `pharma_emax`, `pharma_sigmoid_emax`, and `pharma_emax_nlme`.
-- Included a new example dataset `pharma_dose_response` for nonlinear models.
+- Included a new dataset `pharma_dose_response` for nonlinear models.
 - Roadmap item for dose-response and PK/PD analyses marked complete.
 
 ## 0.1.9
@@ -261,7 +262,7 @@
 ## 0.1.33
 - Audit log now uses HMAC signatures and requires a secret key for
   logging and verification.
-- Updated README examples and tests to reflect new arguments.
+- Updated README and tests to reflect new arguments.
 - Bumped package version to 0.1.33.
 
 ## 0.1.34
