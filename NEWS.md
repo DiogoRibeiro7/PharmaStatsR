@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add independent Kaplan–Meier risk-set, survival-step, and log-rank references, including exact event/censor ties, event coding, selected rows, an all-censored curve, and a terminal singleton event. No estimation or API behavior changes.
 - Add a fixed completed-dataset reference for Rubin pooling with independently calculated within, between, and total variance; reject non-`mids` inputs to `pharma_sensitivity_analysis()`. The fitting and pooling methods are unchanged.
 - Add an independent cluster-score sandwich reference for a Gaussian independence GEE, including fixed marginal coefficients, robust uncertainty, and selected cluster rows. No fitting behavior changes.
 - Add independently calculated treatment, block, and residual ANOVA targets for balanced AB/BA crossover and Latin-square examples, with fixed contrasts and F statistics. No fitting behavior changes.
@@ -419,7 +420,7 @@
 - Extended input validation tests to check that helpers reject non-data-frame
   inputs.
 - Added tests for configuration utilities, Bayesian posterior checks, Python SciPy bridge, plugin statistics, response-surface modeling, report table exports, joint and multistate model guards, and logging/progress helpers to improve coverage.
-- `pharma_gee()` now validates inputs, requires `geepack` at runtime, and both `geepack` and `lme4` were moved to Suggests for softer dependencies.
+- `pharma_gee()` now validates its inputs, requires `geepack` at runtime, and both `geepack` and `lme4` were moved to Suggests for softer dependencies.
 - Meta-analysis helpers now check for `metafor`/`netmeta` at runtime and
   `pharma_network_meta_analysis()` reuses `validate_inputs()`; both packages
   were moved to Suggests.
