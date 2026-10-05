@@ -83,7 +83,15 @@ pharma_cox_timevarying <- function(formula, data, ..., subset = NULL) {
          call. = FALSE)
   }
 
-  fit <- survival::coxph(formula = formula, data = analysis_data, ...)
+  # Forward the original expressions, not ..1/..2 promises from this frame.
+  # coxph evaluates weights/id in its model frame and the formula environment.
+  fit_call <- match.call(expand.dots = TRUE)
+  fit_call[[1L]] <- quote(survival::coxph)
+  fit_call$subset <- NULL  # Original-row selection has already been applied.
+  # Embed the checked objects so neither data nor formula is evaluated twice.
+  fit_call$data <- analysis_data
+  fit_call$formula <- formula
+  fit <- eval(fit_call, envir = parent.frame())
   if (fit$n != nrow(analysis_data)) {
     stop("coxph changed the selected analysis rows; check arguments in ...",
          call. = FALSE)

@@ -1,7 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
-- Add an independent counting-process Cox reference with explicit interval risk sets, changing covariates, delayed entry, likelihood and model-based uncertainty; check original-row selection, unchanged-interval splitting, and rejection of silently dropped intervals. No fitting behavior or API changes.
+- Add an independent counting-process Cox reference with explicit interval risk sets, changing covariates, delayed entry, likelihood and model-based uncertainty; check original-row selection, unchanged-interval splitting, and rejection of silently dropped intervals. Fix forwarding of weight and ID expressions through `pharma_cox_timevarying()` after the reference exposed a dot-promise evaluation error. Previously affected calls could fail before fitting or before the intended row-selection check; rerun them with the corrected wrapper. The public signature and unweighted numerical targets are unchanged.
 - Add an independent common-effect network meta-analysis reference from a weighted contrast system, checking signed treatment effects, standard errors, full contrast covariance, reference treatments, equivalent input orientations, and a disconnected-network failure. No fitting behavior, public API, or dependency changes.
 - Add an independent ordinary Cox partial-likelihood reference for Breslow and Efron ties, including model-based covariance, log hazard-ratio intervals, selected rows, and input-order invariance. No fitting behavior, public API, or dependency changes.
 - Add independent Kaplan–Meier risk-set, survival-step, and log-rank references, including exact event/censor ties, event coding, selected rows, an all-censored curve, and a terminal singleton event. No estimation or API behavior changes.
