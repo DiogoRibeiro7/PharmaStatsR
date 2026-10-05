@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add independent finite-support wild-bootstrap references for raw-residual coefficient draws, including exact sign support, conditional mean and covariance, seeded replicate ordering, one-draw boundaries, RNG-state restoration, and transformed predictors with offsets retained exactly once. No production behavior, API, dependency, or workflow changes.
 - Add independent unweighted linear-model diagnostic references from fixed normal-equation arithmetic, including residuals, leverage, standardized residuals, Cook's distances, exact screening boundaries, selected/missing rows, and affine-response invariance. Reconcile the completed survival-reference batch and queue wild-bootstrap and permutation references. No production behavior, API, dependency, or workflow changes.
 - Add an independent no-censoring Fine-Gray reference for subdistribution risk sets, coefficients, pseudo-likelihood, score, information, inverse information, and baseline hazard jumps; check event-code relabelling and row permutations. This does not validate the separate coefficient covariance estimator or estimated censoring weights. No fitting behavior, API, dependency, or workflow changes.
 - Add an independent landmark Cox reference with explicit eligible subjects, shifted response times, Breslow likelihood and model-based uncertainty, common-time translation, original-row selection, and missing-data boundaries. No fitting behavior, public API, dependency, or workflow changes.
