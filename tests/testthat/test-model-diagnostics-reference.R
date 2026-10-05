@@ -102,14 +102,20 @@ test_that("selected lm rows preserve targets through omit and exclude", {
   selected_ids <- rownames(data)[data$selected]
   padded <- data.frame(
     residual = rep(NA_real_, 12), std_resid = rep(NA_real_, 12),
-    cook_d = rep(NA_real_, 12), leverage = rep(NA_real_, 12),
+    cook_d = rep(NA_real_, 12), leverage = rep(0, 12),
     flag = rep(NA, 12), row.names = selected_ids
   )
   padded[rownames(expected), ] <- expected
   expect_identical(rownames(actual), selected_ids)
   expect_equal(actual, padded, tolerance = 1e-12)
   expect_identical(actual$flag, padded$flag)
-  expect_true(all(is.na(actual[grepl("^missing-", rownames(actual)), ])))
+  # lm.influence() restores omitted rows with zero leverage, not NA.
+  # Residual-based measures and flags remain unavailable at those positions.
+  missing_rows <- grepl("^missing-", rownames(actual))
+  expect_identical(actual$leverage[missing_rows], rep(0, 6))
+  expect_true(all(is.na(actual[
+    missing_rows, c("residual", "std_resid", "cook_d", "flag")
+  ])))
   expect_false(any(grepl("^excluded-", rownames(actual))))
 
   # D_2 is below 4/6 but above 4/12: restored rows must not change the rule.

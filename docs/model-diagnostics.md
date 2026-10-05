@@ -27,7 +27,7 @@ The default residual threshold is 3 and the default Cook cutoff is \(4/n_{\mathr
 pharma_model_diagnostics(fit, threshold = 2.5, cook_cutoff = 0.5)
 ```
 
-Both cutoffs must be finite positive scalars. If the model used `na.exclude`, R can restore excluded positions as missing diagnostic values; their flags remain `NA`. The fitted observation count excludes these rows. [R's regression diagnostics](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/influence.measures.html) define the measures, and [`nobs()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/nobs.html) counts observations used in the fit.
+Both cutoffs must be finite positive scalars. For an `lm` fitted with `na.exclude`, R restores omitted positions with `NA` residuals, standardized residuals, Cook's distances, and flags, but **zero leverage**. The wrapper preserves that convention: zero here records that the omitted row did not contribute to the fit, not a diagnostic assessment of its missing response. The fitted observation count excludes these rows. [R's regression diagnostics](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/influence.measures.html) define the measures, the [R source for `lm.influence()`](https://svn.r-project.org/R/trunk/src/library/stats/R/lm.influence.R) explicitly assigns zero leverage to restored omitted cases, and [`nobs()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/nobs.html) counts observations used in the fit.
 
 ## Independent ordinary least-squares reference
 
@@ -90,7 +90,7 @@ At the default cutoffs, only `case-01` is flagged: its Cook's distance is approx
 
 A residual cutoff of `1.5` with a Cook cutoff of `100` flags only `case-02`. A residual cutoff of `100` with a Cook cutoff of `0.8` flags only `case-01`; using `1.5` and `0.8` together flags both. Separate comparison-contract tests set each cutoff exactly to the corresponding returned floating-point maximum and confirm that equality is not flagged. Reducing that cutoff by a relative `1e-8` flags the expected case. Reusing a returned number here establishes exact equality for the comparison; it is not used to generate the independent diagnostic targets.
 
-For the row-selection reference, six observations with missing responses and two complete excluded observations are interleaved with the original six cases. The original model's subset removes the two complete exclusions. `na.omit` returns diagnostics for the six fitted cases; `na.exclude` restores the six missing-response positions, with missing measures and `NA` flags. Named rows retain their original selected order.
+For the row-selection reference, six observations with missing responses and two complete excluded observations are interleaved with the original six cases. The original model's subset removes the two complete exclusions. `na.omit` returns diagnostics for the six fitted cases; `na.exclude` restores the six missing-response positions with zero leverage, `NA` residual-based measures, and `NA` flags. The test requires those six leverage values to equal zero exactly and separately requires the other four columns to remain missing. Named rows retain their original selected order.
 
 The Cook cutoff must still be `4/6`, not `4/12`. This matters numerically: `case-02` has \(D_2=780/2209\approx0.3531\), strictly between `4/12` and `4/6`. A cutoff incorrectly based on the padded output would change its flag. Subset-excluded rows must not reappear in either output.
 
