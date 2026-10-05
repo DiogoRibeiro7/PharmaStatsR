@@ -9,21 +9,23 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#136](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136) Counting-process Cox | Independent interval risk sets, changing covariates, delayed entry, likelihood and model-based uncertainty. |
-| 3 | [#137](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137) Landmark Cox | Independent landmark eligibility, shifted times, selected subjects, likelihood and model-based uncertainty. |
-| 4 | [#138](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138) No-censoring Fine–Gray | Independent subdistribution risk sets, coefficient, pseudo-likelihood, information and baseline-hazard jumps. |
+| 2 | [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | Independent unweighted OLS residuals, leverage, standardized residuals, Cook's distances, strict cutoffs and selected/missing rows. |
+| 3 | [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Independent finite-support coefficient draws, conditional moments, offsets and transformed terms. |
+| 4 | [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Independent global F values, enumerated support, upper-tail counts, Monte Carlo correction and numerical ties. |
 
-The #123–#125 and #129–#131 implementation batches are complete. The
-[batch reconciliation](docs/evidence-batches.md) records the merged
-Kaplan–Meier, ordinary Cox and network references, the inspected final-PR CI
-results, and their limits. PR-head checks are not a new merged-source artifact
+The #123–#125, #129–#131, and #136–#138 implementation batches are complete.
+The [batch reconciliation](docs/evidence-batches.md) records the merged survival
+extensions, the inspected final-PR CI results, and their limits. In particular,
+the Fine–Gray reference validates information, not its separate coefficient
+covariance estimator. PR-head checks are not a new merged-source artifact
 receipt for #58.
 
-The next three issues, #136–#138, are defined before implementation. Their
-exports still have contract/backend-comparison evidence [C]. Work in the order
-above, one focused PR at a time; change evidence labels only with the scoped
-independent calculation, passing checks and review. Reconcile the batch before
-scoping another sequence. The release decision in #58 remains separate.
+The diagnostics/resampling issues #143–#145 were defined together before
+implementation. The first reference is supplied alongside this update, subject
+to its own passing checks and review; #144 and #145 remain planned. Work in the
+order above, one focused PR at a time. Change evidence labels only with the
+scoped independent calculation, passing checks and review. Reconcile the batch
+before scoping another sequence. The release decision in #58 remains separate.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -76,9 +78,12 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Closed (#133) | Fixed risk-set arithmetic, survival steps, and log-rank statistic, with coding, selected rows, and censoring boundaries. |
 | [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Closed (#134) | Independent Breslow and Efron likelihood, score, coefficient, and model-based uncertainty references, including selected rows and input-order invariance. |
 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Closed (#135) | Independent common-effect contrasts and covariance, reference treatments, equivalent input orientations and a disconnected-network boundary; the final PR's all-Suggests job passed. |
-| [#136](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136) Counting-process Cox | Open | Planned interval-risk-set reference with changing covariates, delayed entry and model-based uncertainty. |
-| [#137](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137) Landmark Cox | Open | Planned independent landmark selection, shifted-time and conditional-risk-set reference. |
-| [#138](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138) No-censoring Fine–Gray | Open | Planned subdistribution risk sets, coefficient, pseudo-likelihood, information and baseline-hazard reference; coefficient covariance requires separate evidence. |
+| [#136](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136) Counting-process Cox | Closed (#140) | Independent interval-risk-set reference with changing covariates, delayed entry and model-based uncertainty; corrected weight/ID argument forwarding. |
+| [#137](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137) Landmark Cox | Closed (#141) | Independent landmark selection, shifted-time, conditional-risk-set and model-based uncertainty reference. |
+| [#138](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138) No-censoring Fine–Gray | Closed (#142) | Independent subdistribution risk sets, coefficient, pseudo-likelihood, information and baseline-hazard jumps; coefficient covariance remains outside this reference. |
+| [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | In review | Independent normal-equation targets and cutoff, row-selection and transformation boundaries; acceptance requires this PR's checks and review. |
+| [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Open | Planned finite sign-support coefficient and conditional-moment reference. |
+| [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Open | Planned exact small-sample support and sampled upper-tail calculation reference. |
 
 ## How we work
 
