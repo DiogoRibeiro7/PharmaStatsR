@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add an independent common-effect network meta-analysis reference from a weighted contrast system, checking signed treatment effects, standard errors, full contrast covariance, reference treatments, equivalent input orientations, and a disconnected-network failure. No fitting behavior, public API, or dependency changes.
 - Add an independent ordinary Cox partial-likelihood reference for Breslow and Efron ties, including model-based covariance, log hazard-ratio intervals, selected rows, and input-order invariance. No fitting behavior, public API, or dependency changes.
 - Add independent Kaplan–Meier risk-set, survival-step, and log-rank references, including exact event/censor ties, event coding, selected rows, an all-censored curve, and a terminal singleton event. No estimation or API behavior changes.
 - Add a fixed completed-dataset reference for Rubin pooling with independently calculated within, between, and total variance; reject non-`mids` inputs to `pharma_sensitivity_analysis()`. The fitting and pooling methods are unchanged.

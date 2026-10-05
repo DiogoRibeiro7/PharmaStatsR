@@ -9,15 +9,16 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Review the independent Breslow and Efron partial-likelihood coefficient, uncertainty, and selected-row references. |
-| 3 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Common-effect contrasts and covariance from a weighted contrast system. |
+| 2 | [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Review the independent weighted-contrast effects, full covariance, treatment orientation, and disconnected-network boundary. |
 
 The #123–#125 batch is complete. The Kaplan–Meier and log-rank reference
-in #129 is merged through [#133](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/133).
-The current batch continues with ordinary Cox regression and network
-meta-analysis. Each issue defines its own numerical reference and boundaries.
-Implement them in order, one focused PR at a time; update evidence labels only
-after the corresponding tests and documentation pass review.
+in #129 is merged through [#133](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/133),
+and the ordinary Cox reference in #130 is merged through
+[#134](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/134).
+Network meta-analysis is the final scoped item in the #129–#131 batch.
+Its package checks and review remain the completion gate. After that review,
+reconcile the batch and use the inventory to scope later work before adding
+another implementation sequence. The release decision in #58 remains separate.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -68,8 +69,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#124](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/124) GEE | Closed (#127) | Cluster-level coefficient and sandwich uncertainty reference. |
 | [#125](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/125) Imputation pooling | Closed (#128) | Fixed pooled estimate and uncertainty from Rubin's components. |
 | [#129](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/129) Kaplan–Meier and log-rank | Closed (#133) | Fixed risk-set arithmetic, survival steps, and log-rank statistic, with coding, selected rows, and censoring boundaries. |
-| [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | In progress | Independent Breslow and Efron likelihood, score, coefficient, and model-based uncertainty references; package checks and review remain the completion gate. |
-| [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | Open | Independent common-effect treatment contrasts and covariance. |
+| [#130](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/130) Ordinary Cox regression | Closed (#134) | Independent Breslow and Efron likelihood, score, coefficient, and model-based uncertainty references, including selected rows and input-order invariance. |
+| [#131](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/131) Network meta-analysis | In progress | Independent common-effect contrasts and covariance, reference treatments, equivalent input orientations, and a disconnected-network boundary; all-Suggests checks and review remain the completion gate. |
 
 ## How we work
 
