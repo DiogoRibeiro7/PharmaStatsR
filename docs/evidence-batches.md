@@ -80,26 +80,51 @@ risk-table test also runs without that optional package. Workflow/job evidence
 for this PR head does not replace the separate exact-merged-source release gate
 in #58. No tag or CRAN submission decision is made by this reconciliation.
 
-## Current batch: diagnostics and resampling, #143–#145
+## Completed batch: #143–#145
 
-All three issues were created before implementation. The first reference is
-supplied alongside this record; its own PR checks and review must establish
-acceptance. The two resampling items remain planned, not completed evidence.
+Reconciled on 5 October 2026 after [PR #148](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/148)
+merged as [`60f2351`](https://github.com/DiogoRibeiro7/PharmaStatsR/commit/60f235198f5c6c9f10d5af4841b00c2719d726cb).
+All three implementations are in that source tree.
+
+| Issue and merged PR | Independent evidence added | Important untested boundaries |
+| --- | --- | --- |
+| [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143), [#146](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/146) | [Linear-model diagnostics](model-diagnostics.md): normal-equation residuals, leverage, standardized residuals, Cook's distances, strict cutoffs and selected rows. The new test was corrected to expect zero leverage in omitted positions restored by `na.exclude`, with other measures and flags missing. | GLM diagnostics, weighted/rank-deficient fits, formal outlier tests and automatic row deletion. |
+| [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144), [#147](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/147) | [Wild bootstrap](wild-bootstrap.md): all 16 sign patterns, exact coefficient mean/covariance, seeded order, transformed predictors and offsets retained once. | Leverage corrections, dependent observations and interval coverage. |
+| [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145), [#148](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/148) | [Permutation F-test](permutation.md): 120 labelled permutations, global F, exact tail counts, sampled p-values and row policies. Production upper-tail counting now includes numerical ties. | Restricted permutations, nuisance-adjusted partial tests, dependent rows and general operating characteristics. |
+
+### Checked diagnostics/resampling CI evidence
+
+These results belong to final PR head
+[`0c44b0e`](https://github.com/DiogoRibeiro7/PharmaStatsR/commit/0c44b0e65d015227b08a1091be1e766939ab5afb),
+which includes the earlier merged diagnostics and wild-bootstrap references.
+They are not results for the new cluster-bootstrap reference or a later merge.
+
+| Workflow or job | Observed result |
+| --- | --- |
+| [Routine R package checks](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37377237145) | Success |
+| [Strict documentation build](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37377237103) | Success |
+| [Five-job R validation matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37377237135) | All five jobs succeeded |
+| [Ubuntu R release / all Suggests](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/jobs/111989447475) | Suggested-package verification, source build/inspection and CRAN-style source check steps succeeded |
+
+The new references in this batch require no optional backend. The permutation
+correction affects only p-value comparisons, not returned F values or sampled
+permutations. The method guide and NEWS record the migration note. This record
+inspects workflow/job statuses; it does not claim a newly downloaded tarball hash,
+manual inspection, or exact-merged-source release receipt. #58 remains separate.
+
+## Current batch: cases bootstrap, #149–#150
+
+Both issues were defined before implementation. The first reference is supplied
+alongside this record and needs its own passing checks and review. The second
+remains planned, not completed evidence.
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#143: linear-model diagnostics](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) | [Independent unweighted OLS diagnostics](model-diagnostics.md): fixed residuals, hat diagonals, standardized residuals, Cook's distances, strict cutoffs, missing-row policy and affine-response invariance. |
-| 2 | [#144: wild bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) | Independent finite sign-support coefficient draws, conditional mean and covariance, offsets and transformed terms. |
-| 3 | [#145: permutation F-test](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) | Independent global F statistic, a small enumerated permutation support, upper-tail counts, Monte Carlo correction and numerical tie boundaries. |
+| 1 | [#149: unequal-cluster bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) | [Independent cluster-size/total ledger](cluster-bootstrap.md): all 27 ordered samples, pooled-row and equal-copy means, conditional moments, row/copy identities and callback missing-value policies. |
+| 2 | [#150: row bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) | Independent finite row-sample support, numerical statistics under future RNG streams, and caller-plan restoration. |
 
-Implement one focused PR at a time, in this order. Each issue defines its
-acceptance criteria, assumptions, numerical tolerances to record, and exclusions.
-Preserve existing input-contract and optional-backend tests. Promote an evidence
-label only with a reviewable independent calculation and passing checks in the
-appropriate dependency environment. Record newly discovered defects separately
-rather than expanding a reference task into an unrelated framework.
-
-After these three reviews, reconcile the batch and reassess the inventory before
-opening another implementation sequence. No new API, dependency, package version,
-release tag, or submission is authorized by this planning record. The remaining
-maintainer decisions and exact-source release evidence remain in #58.
+Implement one focused PR at a time. Preserve existing contracts, optional-backend
+guards and RNG behavior. The distinction between conditional arithmetic and
+frequentist coverage is part of each issue's scope. Reconcile both results before
+opening another implementation sequence. No new public API, dependency, version,
+release tag or submission is authorized by this planning record.

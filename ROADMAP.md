@@ -9,20 +9,19 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | Independent unweighted OLS residuals, leverage, standardized residuals, Cook's distances, strict cutoffs and selected/missing rows. |
-| 3 | [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Independent finite-support coefficient draws, conditional moments, offsets and transformed terms. |
-| 4 | [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Independent global F values, enumerated support, upper-tail counts, Monte Carlo correction and numerical ties. |
+| 2 | [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | Independent 27-sample support, pooled-row and equal-copy means, conditional moments, row/copy identities and callback policies. |
+| 3 | [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Independent finite row-sample support, numerical statistics, future RNG streams and caller-plan restoration. |
 
-The #123–#125, #129–#131, and #136–#138 implementation batches are complete.
-The [batch reconciliation](docs/evidence-batches.md) records the merged survival
-extensions, the inspected final-PR CI results, and their limits. In particular,
-the Fine–Gray reference validates information, not its separate coefficient
-covariance estimator. PR-head checks are not a new merged-source artifact
-receipt for #58.
+The #123–#125, #129–#131, #136–#138, and #143–#145 implementation batches are
+complete. The [batch reconciliation](docs/evidence-batches.md) records the merged
+diagnostics and resampling work, the final PR's inspected passing checks, and
+its limits. The permutation reference exposed numerical-tie undercounting;
+previously affected p-values should be recomputed. PR-head checks are not a new
+merged-source artifact receipt for #58.
 
-The diagnostics/resampling issues #143–#145 were defined together before
-implementation. The first reference is supplied alongside this update, subject
-to its own passing checks and review; #144 and #145 remain planned. Work in the
+The cases-bootstrap issues #149 and #150 were defined together before
+implementation. The unequal-cluster reference is supplied alongside this update,
+subject to its own passing checks and review; #150 remains planned. Work in the
 order above, one focused PR at a time. Change evidence labels only with the
 scoped independent calculation, passing checks and review. Reconcile the batch
 before scoping another sequence. The release decision in #58 remains separate.
@@ -81,9 +80,11 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#136](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136) Counting-process Cox | Closed (#140) | Independent interval-risk-set reference with changing covariates, delayed entry and model-based uncertainty; corrected weight/ID argument forwarding. |
 | [#137](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137) Landmark Cox | Closed (#141) | Independent landmark selection, shifted-time, conditional-risk-set and model-based uncertainty reference. |
 | [#138](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138) No-censoring Fine–Gray | Closed (#142) | Independent subdistribution risk sets, coefficient, pseudo-likelihood, information and baseline-hazard jumps; coefficient covariance remains outside this reference. |
-| [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | In review | Independent normal-equation targets and cutoff, row-selection and transformation boundaries; acceptance requires this PR's checks and review. |
-| [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Open | Planned finite sign-support coefficient and conditional-moment reference. |
-| [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Open | Planned exact small-sample support and sampled upper-tail calculation reference. |
+| [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | Closed (#146) | Independent normal-equation diagnostics, strict cutoffs, affine responses and selected rows; corrected the test's omitted-row leverage expectation to zero. |
+| [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Closed (#147) | Independent finite sign-support coefficient draws and moments, seeded ordering, transformed predictors and offsets retained once. |
+| [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Closed (#148) | Independent 120-permutation support, global F, exact tail counts and sampled p-values; corrected numerical-tie undercounting. |
+| [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | In review | Independent 27-sample ledger, pooled-row/equal-copy moments, seeded row/copy identities and callback policies; acceptance requires this PR's checks and review. |
+| [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Open | Planned independent finite-support statistic and future-backend RNG/plan reference. |
 
 ## How we work
 
