@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add independent unweighted linear-model diagnostic references from fixed normal-equation arithmetic, including residuals, leverage, standardized residuals, Cook's distances, exact screening boundaries, selected/missing rows, and affine-response invariance. Reconcile the completed survival-reference batch and queue wild-bootstrap and permutation references. No production behavior, API, dependency, or workflow changes.
 - Add an independent no-censoring Fine-Gray reference for subdistribution risk sets, coefficients, pseudo-likelihood, score, information, inverse information, and baseline hazard jumps; check event-code relabelling and row permutations. This does not validate the separate coefficient covariance estimator or estimated censoring weights. No fitting behavior, API, dependency, or workflow changes.
 - Add an independent landmark Cox reference with explicit eligible subjects, shifted response times, Breslow likelihood and model-based uncertainty, common-time translation, original-row selection, and missing-data boundaries. No fitting behavior, public API, dependency, or workflow changes.
 - Add an independent counting-process Cox reference with explicit interval risk sets, changing covariates, delayed entry, likelihood and model-based uncertainty; check original-row selection, unchanged-interval splitting, and rejection of silently dropped intervals. Fix forwarding of weight and ID expressions through `pharma_cox_timevarying()` after the reference exposed a dot-promise evaluation error. Previously affected calls could fail before fitting or before the intended row-selection check; rerun them with the corrected wrapper. The public signature and unweighted numerical targets are unchanged.
@@ -313,7 +314,7 @@
 - Synced version numbers across DESCRIPTION, CITATION.cff, and NEWS using scripts/bump_version.sh.
 
 ## 0.1.44
-- Stub Rscript now exits with error so tests fail when R is missing.
+- Stub Rscript exits with error so tests fail when R is missing.
 - setup.sh and scripts/style_and_doc.sh require a real R installation.
 - README instructs contributors to install R before running these scripts.
 - SCATHING_CRITIQUE notes remaining audit log and setup issues.

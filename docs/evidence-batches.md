@@ -46,17 +46,51 @@ exact merged-commit release review. Those records belong to
 remain evidence for their own named commits; they must not be relabelled as
 receipts for a later source tree.
 
-## Next batch: survival extensions
+## Completed batch: #136–#138
 
-The following three issues were created together before implementation. Their
-existing inventory entries remain at contract/backend-comparison level [C].
-A planned reference is not completed numerical evidence.
+Reconciled on 5 October 2026 after [PR #142](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/142)
+merged as [`78d632c`](https://github.com/DiogoRibeiro7/PharmaStatsR/commit/78d632cb3bd0c1fba90b357a377b0065e7084003).
+The counting-process, landmark, and no-censoring Fine–Gray references are all in
+that tree. Each numerical-reference label supplements existing contract tests
+and retains experimental support status.
+
+| Issue and merged PR | Independent evidence added | Important untested boundaries |
+| --- | --- | --- |
+| [#136](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136), [#140](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/140) | [Counting-process Cox](cox-timevarying.md): interval risk sets, changing exposure, delayed entry, likelihood, model-based uncertainty, selected rows and interval splitting. The reference also exposed and led to correction of weight/ID argument forwarding. | Robust variances, recurrent events, arbitrary subject histories, event-time ties, near-tie correction and causal exposure effects. |
+| [#137](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137), [#141](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/141) | [Landmark Cox](landmark-analysis.md): strict eligibility, shifted time origin, subject identities, Breslow likelihood, model-based uncertainty and missing-data boundaries. | Data-driven landmark choice, causal effects, robust variances, time-varying covariates and prediction calibration. |
+| [#138](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138), [#142](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/142) | [No-censoring Fine–Gray](competing-risks.md): retained competing-event subjects, coefficient, pseudo-likelihood, score, information, inverse information and baseline-hazard jumps. | Estimated censoring weights, censoring groups, coefficient covariance, tied events, time-varying effects and predictions. |
+
+### Checked survival-batch CI evidence
+
+These results belong to the final PR head
+[`95107ee`](https://github.com/DiogoRibeiro7/PharmaStatsR/commit/95107ee8239db158aca72005d6805c495bb3f6e4),
+which includes the earlier merged counting-process and landmark work. They are
+not results for the later merge commit or for the diagnostics implementation.
+
+| Workflow or job | Observed result |
+| --- | --- |
+| [Routine R package checks](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37335771876) | Success |
+| [Strict documentation build](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37335771956) | Success |
+| [Five-job R validation matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37335771812) | All five jobs succeeded |
+| [Ubuntu R release / all Suggests](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/jobs/111850043611) | Suggested-package verification, source build/inspection and CRAN-style source check steps succeeded |
+
+The all-Suggests job verifies `cmprsk` is installed, so the fitted Fine–Gray
+reference runs there rather than skipping for an absent backend. The arithmetic
+risk-table test also runs without that optional package. Workflow/job evidence
+for this PR head does not replace the separate exact-merged-source release gate
+in #58. No tag or CRAN submission decision is made by this reconciliation.
+
+## Current batch: diagnostics and resampling, #143–#145
+
+All three issues were created before implementation. The first reference is
+supplied alongside this record; its own PR checks and review must establish
+acceptance. The two resampling items remain planned, not completed evidence.
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#136: counting-process Cox](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/136) | Explicit interval risk sets, a changing covariate and delayed entry; independent likelihood, coefficient and model-based covariance, including interval-splitting invariance. |
-| 2 | [#137: landmark Cox](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/137) | Independently checked eligibility at a fixed landmark, shifted times, selected subject identities, likelihood and model-based covariance. |
-| 3 | [#138: no-censoring Fine–Gray](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/138) | Explicit subdistribution risk sets, independent coefficient, pseudo-likelihood, information and baseline-hazard jumps; covariance needs separate evidence. |
+| 1 | [#143: linear-model diagnostics](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) | [Independent unweighted OLS diagnostics](model-diagnostics.md): fixed residuals, hat diagonals, standardized residuals, Cook's distances, strict cutoffs, missing-row policy and affine-response invariance. |
+| 2 | [#144: wild bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) | Independent finite sign-support coefficient draws, conditional mean and covariance, offsets and transformed terms. |
+| 3 | [#145: permutation F-test](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) | Independent global F statistic, a small enumerated permutation support, upper-tail counts, Monte Carlo correction and numerical tie boundaries. |
 
 Implement one focused PR at a time, in this order. Each issue defines its
 acceptance criteria, assumptions, numerical tolerances to record, and exclusions.
