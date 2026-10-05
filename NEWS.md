@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add an independent 120-permutation global F reference with exact tail counts, seeded draws, response transformations, and selected-row checks. Count numerical ties using a relative tolerance of 100 machine epsilons; raw comparisons could understate p-values. Returned F values and random draws are unchanged. Recompute previous permutation p-values when tied statistics occur.
 - Add independent finite-support wild-bootstrap references for raw-residual coefficient draws, including exact sign support, conditional mean and covariance, seeded replicate ordering, one-draw boundaries, RNG-state restoration, and transformed predictors with offsets retained exactly once. No production behavior, API, dependency, or workflow changes.
 - Add independent unweighted linear-model diagnostic references from fixed normal-equation arithmetic, including residuals, leverage, standardized residuals, Cook's distances, exact screening boundaries, selected/missing rows, and affine-response invariance. Reconcile the completed survival-reference batch and queue wild-bootstrap and permutation references. No production behavior, API, dependency, or workflow changes.
 - Add an independent no-censoring Fine-Gray reference for subdistribution risk sets, coefficients, pseudo-likelihood, score, information, inverse information, and baseline hazard jumps; check event-code relabelling and row permutations. This does not validate the separate coefficient covariance estimator or estimated censoring weights. No fitting behavior, API, dependency, or workflow changes.
@@ -147,7 +148,7 @@
 
 ## 0.1.8
 - Added dose-response helpers `pharma_emax`, `pharma_sigmoid_emax`, and `pharma_emax_nlme`.
-- Included a new dataset `pharma_dose_response` for nonlinear models.
+- Included a new example dataset `pharma_dose_response` for nonlinear models.
 - Roadmap item for dose-response and PK/PD analyses marked complete.
 
 ## 0.1.9
@@ -419,7 +420,7 @@
   data and formula validation.
 - `pharma_lmm()` now validates its inputs and confirms that the `lme4` package
   is available before fitting models.
-- `pharma_competing_risks()` now validates inputs and confirms that the `cmprsk`
+- `pharma_competing_risks()` now validates its inputs and confirms that the `cmprsk`
   package is installed before fitting models.
 - Added tests for optional dependencies (e.g., geepack, cmprsk, survival, nlme, mice, openxlsx, reticulate) and updated the setup script to install them, enabling positive-path coverage.
 - Added tests covering `validate_inputs()` and ensuring key helpers error on

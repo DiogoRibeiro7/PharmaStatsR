@@ -20,7 +20,8 @@ pharma_perm_f_test(formula, data, R = 1000, ...)
 A list with \code{statistic}, the observed global F value;
 \code{perm}, a numeric vector of \code{R} permuted global F values; and
 \code{p.value}, the Monte Carlo upper-tail p-value using
-\code{(1 + sum(perm >= statistic)) / (R + 1)}.
+\code{(1 + exceedances) / (R + 1)}, including numerical ties as
+described below.
 }
 \description{
 Compare all non-intercept predictors jointly against an intercept-only
@@ -35,6 +36,12 @@ require exchangeable observations under that null. They do not
 isolate a treatment effect after adjusting for nuisance predictors,
 and are not suitable for clustered, repeated, or time-ordered data
 without an appropriate restricted permutation scheme.
+
+For a finite observed statistic, upper-tail comparisons include values
+within \code{100 * .Machine$double.eps * abs(statistic)} below it as numerical
+ties. Infinite statistics are compared directly. Returned F values are
+not rounded. This narrow tolerance addresses floating-point differences
+between theoretically equal statistics, not ill-conditioned model fits.
 }
 \examples{
 independent <- data.frame(

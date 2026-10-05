@@ -14,7 +14,8 @@
 #' @return A list with `statistic`, the observed global F value;
 #'   `perm`, a numeric vector of `R` permuted global F values; and
 #'   `p.value`, the Monte Carlo upper-tail p-value using
-#'   `(1 + sum(perm >= statistic)) / (R + 1)`.
+#'   `(1 + exceedances) / (R + 1)`, including numerical ties as
+#'   described below.
 #' @details
 #' Raw-response permutations test the global null that none of the
 #' non-intercept predictors are associated with the response. They
@@ -22,6 +23,12 @@
 #' isolate a treatment effect after adjusting for nuisance predictors,
 #' and are not suitable for clustered, repeated, or time-ordered data
 #' without an appropriate restricted permutation scheme.
+#'
+#' For a finite observed statistic, upper-tail comparisons include values
+#' within `100 * .Machine$double.eps * abs(statistic)` below it as numerical
+#' ties. Infinite statistics are compared directly. Returned F values are
+#' not rounded. This narrow tolerance addresses floating-point differences
+#' between theoretically equal statistics, not ill-conditioned model fits.
 #' @references
 #' R documentation for sequential ANOVA tables:
 #' \url{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/anova.lm.html}
@@ -94,9 +101,17 @@ pharma_perm_f_test <- function(formula, data, R = 1000, ...) {
   permutations <- vapply(seq_len(R), function(i) {
     global_f(response[sample.int(length(response))])
   }, numeric(1))
+  # QR refits can place mathematically tied statistics a few ulps apart.
+  # Do not subtract an infinite tolerance when the observed F is infinite.
+  tie_tolerance <- if (is.finite(observed)) {
+    100 * .Machine$double.eps * abs(observed)
+  } else {
+    0
+  }
+  exceedances <- sum(permutations >= observed - tie_tolerance)
   list(
     statistic = observed,
     perm = permutations,
-    p.value = (1 + sum(permutations >= observed)) / (R + 1)
+    p.value = (1 + exceedances) / (R + 1)
   )
 }
