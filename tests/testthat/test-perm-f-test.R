@@ -29,7 +29,8 @@ test_that("permutation statistic tests all predictors jointly", {
   })
   expect_equal(result$perm, reference, tolerance = 1e-8)
   expect_equal(result$p.value,
-               (1 + sum(reference >= result$statistic)) / 21)
+               (1 + sum(reference >= result$statistic -
+                 100 * .Machine$double.eps * abs(result$statistic))) / 21)
   expect_true(result$p.value >= 1 / 21 && result$p.value <= 1)
 })
 
@@ -83,7 +84,8 @@ test_that("permutations use only selected complete transformed responses", {
                unname(summary(fit)$fstatistic[["value"]]))
   expect_equal(actual$perm, expected)
   expect_equal(actual$p.value,
-               (1 + sum(expected >= actual$statistic)) / 13)
+               (1 + sum(expected >= actual$statistic -
+                 100 * .Machine$double.eps * abs(actual$statistic))) / 13)
 })
 
 test_that("permutation inputs and unsupported models fail explicitly", {
