@@ -23,6 +23,46 @@ are applied to every completed dataset. The imputation wrapper suppresses
 `mice` progress output. If `mice` is unavailable, each function names it and
 shows `install.packages('mice')` in the error. There is no substitute backend.
 
+## Independent deterministic imputation reference
+
+The [deterministic imputation reference tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-mice-imputation-reference.R) use the backend's `mean` method with a zero predictor matrix, so each missing numeric cell is replaced by the arithmetic mean of the observed values in its own column.
+
+| Row | id | x | y |
+| ---: | ---: | ---: | ---: |
+| 1 | 1 | 1 | 2 |
+| 2 | 2 | missing | 4 |
+| 3 | 3 | 3 | missing |
+| 4 | 4 | 5 | 8 |
+| 5 | 5 | missing | 10 |
+| 6 | 6 | 7 | missing |
+
+The observed `x` values average to 4, and the observed `y` values average to 6. Hence every completed dataset must contain `x = 4` in rows 2 and 5 and `y = 6` in rows 3 and 6. The test requests three imputations and one iteration with `c(id = "", x = "mean", y = "mean")` and an all-zero predictor matrix, then checks the stored method, predictor matrix, imputed-cell identities, completed datasets, and unchanged observed cells.
+
+All three completed datasets are intentionally identical: this reference validates deterministic replacement arithmetic, not between-imputation uncertainty. Row permutations are checked by the stable `id` column.
+
+For affine transformations `x* = 10 + 2x` and `y* = 5 - 3y`, the imputation targets follow directly:
+
+[
+\bar{x}^*=10+2(4)=18,\qquad \bar{y}^*=5-3(6)=-13.
+]
+
+Seeds 1 and 999 must therefore produce the same imputed values for this particular method. That does **not** imply that predictive mean matching or other stochastic `mice` methods are seed-independent.
+
+A base-R reconstruction is simply:
+
+```r
+dat <- data.frame(
+  id = 1:6,
+  x = c(1, NA, 3, 5, NA, 7),
+  y = c(2, 4, NA, 8, 10, NA)
+)
+c(x = mean(dat$x, na.rm = TRUE), y = mean(dat$y, na.rm = TRUE))
+# x = 4, y = 6
+```
+
+This reference does not validate predictive mean matching, regression imputation, chained-equation convergence, MAR/MNAR assumptions, coverage, or a study-specific imputation model. Those remain study-level choices and diagnostics.
+
+
 ## Fixed pooling reference
 
 A deterministic example has three untreated responses (0, 2, 4), two

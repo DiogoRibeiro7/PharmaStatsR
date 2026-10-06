@@ -112,19 +112,27 @@ permutations. The method guide and NEWS record the migration note. This record
 inspects workflow/job statuses; it does not claim a newly downloaded tarball hash,
 manual inspection, or exact-merged-source release receipt. #58 remains separate.
 
-## Current batch: cases bootstrap, #149–#150
+## Completed batch: cases bootstrap, #149–#150
 
-Both issues were defined before implementation. The first reference is supplied
-alongside this record and needs its own passing checks and review. The second
-remains planned, not completed evidence.
+Both issues were defined before implementation and are now merged. #151 adds the
+unequal-cluster reference and #152 adds the finite-support row-bootstrap reference.
+Both remain conditional method evidence rather than coverage or study-validity claims.
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#149: unequal-cluster bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) | [Independent cluster-size/total ledger](cluster-bootstrap.md): all 27 ordered samples, pooled-row and equal-copy means, conditional moments, row/copy identities and callback missing-value policies. |
-| 2 | [#150: row bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) | Independent finite row-sample support, numerical statistics under future RNG streams, and caller-plan restoration. |
+| 2 | [#150: row bootstrap](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) | [Independent row support](parallel-bootstrap.md): all 27 three-row samples, exact mean/variance, seeded future-stream execution, callback policies and plan restoration. |
 
-Implement one focused PR at a time. Preserve existing contracts, optional-backend
-guards and RNG behavior. The distinction between conditional arithmetic and
-frequentist coverage is part of each issue's scope. Reconcile both results before
-opening another implementation sequence. No new public API, dependency, version,
-release tag or submission is authorized by this planning record.
+The final #152 PR head passed its routine R check, strict documentation build and five-job validation matrix before merge. These PR-head results do not replace the exact-merged-source release evidence required by #58.
+
+## Current batch: missing data and complex survival, #153–#155
+
+All three issues were created before implementation. The deterministic imputation reference is first because its numerical targets are directly reconstructible without a second imputation run.
+
+| Order | Issue | Reviewable result |
+| --- | --- | --- |
+| 1 | [#153: deterministic multiple imputation](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) | Fixed observed-column mean targets, exact imputed cells/completed datasets, method and predictor-matrix contract, row identity and affine transformations. |
+| 2 | [#154: multistate cumulative hazards](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) | Independent transition risk sets and Breslow cumulative-hazard increments. |
+| 3 | [#155: joint-model evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) | Independent component-model inputs with backend-result checks explicitly classified as contracts. |
+
+Implement one focused PR at a time. No new public API, dependency, package version, release tag or submission is authorized by this planning record.

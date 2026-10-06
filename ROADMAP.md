@@ -9,8 +9,9 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | Independent 27-sample support, pooled-row and equal-copy means, conditional moments, row/copy identities and callback policies. |
-| 3 | [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Independent finite row-sample support, numerical statistics, future RNG streams and caller-plan restoration. |
+| 2 | [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic imputation | Independent observed-mean imputation targets, completed datasets, method/predictor-matrix contract, row identities and affine transformations. |
+| 3 | [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Independent transition-risk-set and Breslow cumulative-hazard references. |
+| 4 | [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Independent component-model inputs plus explicitly labelled backend output contracts. |
 
 The #123–#125, #129–#131, #136–#138, and #143–#145 implementation batches are
 complete. The [batch reconciliation](docs/evidence-batches.md) records the merged
@@ -19,12 +20,10 @@ its limits. The permutation reference exposed numerical-tie undercounting;
 previously affected p-values should be recomputed. PR-head checks are not a new
 merged-source artifact receipt for #58.
 
-The cases-bootstrap issues #149 and #150 were defined together before
-implementation. The unequal-cluster reference is supplied alongside this update,
-subject to its own passing checks and review; #150 remains planned. Work in the
-order above, one focused PR at a time. Change evidence labels only with the
-scoped independent calculation, passing checks and review. Reconcile the batch
-before scoping another sequence. The release decision in #58 remains separate.
+The cases-bootstrap issues #149 and #150 are complete. Their independent cluster
+and row references are reconciled after #152 passed its checks. The next batch
+#153–#155 was defined together before implementation. Work in the order above,
+one focused PR at a time. The release decision in #58 remains separate.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -83,8 +82,11 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#143](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/143) Linear-model diagnostics | Closed (#146) | Independent normal-equation diagnostics, strict cutoffs, affine responses and selected rows; corrected the test's omitted-row leverage expectation to zero. |
 | [#144](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/144) Wild bootstrap | Closed (#147) | Independent finite sign-support coefficient draws and moments, seeded ordering, transformed predictors and offsets retained once. |
 | [#145](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/145) Permutation F-test | Closed (#148) | Independent 120-permutation support, global F, exact tail counts and sampled p-values; corrected numerical-tie undercounting. |
-| [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | In review | Independent 27-sample ledger, pooled-row/equal-copy moments, seeded row/copy identities and callback policies; acceptance requires this PR's checks and review. |
-| [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Open | Planned independent finite-support statistic and future-backend RNG/plan reference. |
+| [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | Closed (#151) | Independent 27-sample ledger, pooled-row/equal-copy moments, seeded row/copy identities and callback policies. |
+| [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Closed (#152) | Independent 27-sample row-mean distribution, exact moments, future-stream execution checks and plan restoration. |
+| [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic multiple imputation | In review | Independent observed-column mean targets, exact completed datasets, row identity and affine-transform checks. |
+| [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Open | Planned transition-specific Breslow risk-set and cumulative-hazard reference. |
+| [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Open | Planned independent component-model evidence with carefully scoped backend output contracts. |
 
 ## How we work
 
