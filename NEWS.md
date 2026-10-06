@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Strengthen joint-model evidence with an independent balanced random-intercept fixed-effect reference and an independently solved Cox partial-likelihood component, plus explicit JM joint-model output-contract checks. The joint likelihood, quadrature, association estimator, and dynamic prediction remain backend-only evidence. No production behavior, API, dependency, or workflow changes.
 - Add an independent no-covariate multistate cumulative-hazard reference with explicit transition risk sets, Breslow increments, delayed entry at an event boundary, zero-event transition omission, row-order invariance, and common time translation. No production behavior, API, dependency, or workflow changes.
 - Add an independent deterministic multiple-imputation reference using fixed observed-column means, exact completed values, method/predictor-matrix checks, row-order identity, affine transformations, and seed invariance. Reconcile the completed #149–#150 cases-bootstrap batch and queue #153–#155. No production behavior, API, dependency, or workflow changes.
 - Add independent finite-support row-bootstrap references for all 27 samples of three observations, exact mean moments, future seed replay, two-worker execution, callback arguments and missing-value policies, plus caller-plan and test RNG restoration. No production behavior, API, dependency, or workflow changes.
