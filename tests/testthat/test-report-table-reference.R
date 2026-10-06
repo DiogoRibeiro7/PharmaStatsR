@@ -85,7 +85,7 @@ test_that("Excel and Word exports retain the independent numerical table", {
     returned <- pharma_report_table(fit, file = xlsx, conf.level = 0.95)
     saved <- openxlsx::read.xlsx(xlsx)
 
-    expect_equal(returned, expected, tolerance = 1e-10)
+    expect_equal(as.data.frame(returned), expected, tolerance = 1e-10)
     expect_identical(saved$term, expected$term)
     expect_equal(saved$estimate, expected$estimate, tolerance = 1e-10)
     expect_equal(saved$conf.low, expected$conf.low, tolerance = 1e-10)
@@ -101,7 +101,7 @@ test_that("Excel and Word exports retain the independent numerical table", {
     content <- officer::docx_summary(officer::read_docx(docx))
     cells <- content$text[content$content_type == "table cell"]
 
-    expect_equal(returned, expected, tolerance = 1e-10)
+    expect_equal(as.data.frame(returned), expected, tolerance = 1e-10)
     expect_true(all(expected$term %in% cells))
     expect_true(all(names(expected) %in% cells))
   }
