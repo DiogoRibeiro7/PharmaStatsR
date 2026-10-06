@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add independent finite-support row-bootstrap references for all 27 samples of three observations, exact mean moments, future seed replay, two-worker execution, callback arguments and missing-value policies, plus caller-plan and test RNG restoration. No production behavior, API, dependency, or workflow changes.
 - Add independent unequal-cluster bootstrap references for all 27 ordered samples of three clusters, pooled-row and equal-copy means, exact conditional moments, seeded copy/row identities, callback arguments, and missing-value policies. Reconcile the completed diagnostics/resampling batch and queue row-bootstrap references. No production behavior, API, dependency, or workflow changes.
 - Add an independent 120-permutation global F reference with exact tail counts, seeded draws, response transformations, and selected-row checks. Count numerical ties using a relative tolerance of 100 machine epsilons; raw comparisons could understate p-values. Returned F values and random draws are unchanged. Recompute previous permutation p-values when tied statistics occur.
 - Add independent finite-support wild-bootstrap references for raw-residual coefficient draws, including exact sign support, conditional mean and covariance, seeded replicate ordering, one-draw boundaries, RNG-state restoration, and transformed predictors with offsets retained exactly once. No production behavior, API, dependency, or workflow changes.
@@ -318,7 +319,7 @@
 
 ## 0.1.44
 - Stub Rscript exits with error so tests fail when R is missing.
-- setup.sh and scripts/style_and_doc.sh require a real R installation.
+- setup.sh and style_and_doc.sh require a real R installation.
 - README instructs contributors to install R before running these scripts.
 - SCATHING_CRITIQUE notes remaining audit log and setup issues.
 
