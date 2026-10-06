@@ -47,6 +47,51 @@ compares this example with a direct backend call. See the
 [method inventory](method-inventory.md) and [limitations](limitations.md)
 for the scope of review.
 
+## Independent cumulative-hazard reference
+
+The [numerical reference tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-multistate-reference.R) use a three-state illness-death structure with transitions (1\to2), (1\to3), and (2\to3). The Cox model has no covariates:
+
+```r
+survival::coxph(
+  survival::Surv(Tstart, Tstop, status) ~ strata(trans),
+  data = long, method = "breslow"
+)
+```
+
+For a transition-specific event at time (t), the reference risk set uses the counting-process rule (T_{start}<t\le T_{stop}). With no covariates, the Breslow increment is (d(t)/Y(t)).
+
+| Transition | Event time | At risk (Y(t)) | Events (d(t)) | Hazard increment |
+| ---: | ---: | ---: | ---: | ---: |
+| 1: 1 -> 2 | 1 | 6 | 1 | 1/6 |
+| 1: 1 -> 2 | 2 | 5 | 1 | 1/5 |
+| 1: 1 -> 2 | 4 | 3 | 1 | 1/3 |
+| 2: 1 -> 3 | 3 | 4 | 1 | 1/4 |
+| 2: 1 -> 3 | 5 | 1 | 1 | 1 |
+| 3: 2 -> 3 | 4 | 2 | 1 | 1/2 |
+| 3: 2 -> 3 | 5 | 2 | 1 | 1/2 |
+
+Thus the expected cumulative hazards on the common time grid 1 through 6 are:
+
+| Time | H(1 -> 2) | H(1 -> 3) | H(2 -> 3) |
+| ---: | ---: | ---: | ---: |
+| 1 | 1/6 | 0 | 0 |
+| 2 | 11/30 | 0 | 0 |
+| 3 | 11/30 | 1/4 | 0 |
+| 4 | 7/10 | 1/4 | 1/2 |
+| 5 | 7/10 | 5/4 | 1 |
+| 6 | 7/10 | 5/4 | 1 |
+
+The values are derived from the fixture's risk sets, not from a second `mstate::msfit()` call. The fitted wrapper is invoked with `variance = FALSE`, so this reference validates cumulative hazards only; variance and covariance estimation remain covered only by the existing backend comparison.
+
+A boundary is deliberate at time 4 for transition 3. Subject 4 enters state 2 at exactly time 4 and therefore is **not** in the risk set for the event at time 4. Only subjects 1 and 5 satisfy (T_{start}<4\le T_{stop}), giving the increment (1/2).
+
+The tests also set every transition-3 event indicator to zero and require the complete transition-3 cumulative hazard to remain zero. Shuffling input rows must preserve the full hazard table. Adding 10 to every start and stop time shifts the output time grid by 10 while leaving every cumulative-hazard value unchanged.
+
+Numerical hazard comparisons use absolute tolerance `1e-12`; fixed risk counts and subject identities use exact comparisons. The fixture has no simultaneous events within one transition, so it does not independently test tied-event approximations beyond the event/censor boundary at time 4.
+
+The backend documentation states that `msfit()` returns cumulative transition hazards and recommends Breslow ties because that path has been checked by the package authors. The reference does not convert hazards to state-occupation probabilities.
+
+
 ## R help
 
 Full arguments and return values: [`pharma_multistate_model()`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_multistate_model.Rd). In an installed package, run `help("pharma_multistate_model", package = "PharmaStatsR")`.
