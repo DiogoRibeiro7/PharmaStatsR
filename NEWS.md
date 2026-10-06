@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add an independent two-group linear-model reference for report-table estimates, confidence intervals, and p-values at two confidence levels, plus exporter round-trip checks against the same numerical targets. Reconcile the completed #159–#160 integration batch and queue #163–#165. No production behavior, API, dependency, or workflow changes.
 - Add deterministic fixed-fold caret model-selection evidence for GLM versus LDA, reconstructing hold-out predictions and mean Accuracy outside caret, plus response-factor conversion, failed-candidate omission, request-order tie handling, and variable-importance structure. No production behavior, API, dependency, or workflow changes.
 - Add independent Student and Welch two-sample t-test references for the SciPy bridge, including manual standard errors, degrees of freedom, transformed samples, group swapping, and a one-zero-variance boundary. Reconcile the completed #153–#155 evidence batch and queue #159–#160. No production behavior, API, dependency, or workflow changes.
 - Strengthen joint-model evidence with an independent balanced random-intercept fixed-effect reference and an independently solved Cox partial-likelihood component, plus explicit JM joint-model output-contract checks. The joint likelihood, quadrature, association estimator, and dynamic prediction remain backend-only evidence. No production behavior, API, dependency, or workflow changes.
