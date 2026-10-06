@@ -86,8 +86,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic multiple imputation | Closed (#156) | Independent observed-column mean targets, exact completed datasets, row identity and affine-transform checks. |
 | [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Closed (#157) | Independent transition-specific risk sets, Breslow increments, zero-event omission boundary and time-translation checks. |
 | [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Closed (#158) | Independent balanced LME/Cox component targets plus explicitly scoped joint-model backend output contracts. |
-| [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | In review | Independent Student/Welch formula targets, transformation identities and finite zero-variance boundary. |
-| [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Open | Planned fixed-fold model-selection evidence with backend-dependent claims separated explicitly. |
+| [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | Closed (#161) | Independent Student/Welch formula targets, transformation identities and finite zero-variance boundary. |
+| [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | In review | Fixed-fold GLM/LDA predictions reconstructed outside caret, plus winner, failure, tie and varImp contracts. |
 
 ## How we work
 

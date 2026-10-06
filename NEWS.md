@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add deterministic fixed-fold caret model-selection evidence for GLM versus LDA, reconstructing hold-out predictions and mean Accuracy outside caret, plus response-factor conversion, failed-candidate omission, request-order tie handling, and variable-importance structure. No production behavior, API, dependency, or workflow changes.
 - Add independent Student and Welch two-sample t-test references for the SciPy bridge, including manual standard errors, degrees of freedom, transformed samples, group swapping, and a one-zero-variance boundary. Reconcile the completed #153–#155 evidence batch and queue #159–#160. No production behavior, API, dependency, or workflow changes.
 - Strengthen joint-model evidence with an independent balanced random-intercept fixed-effect reference and an independently solved Cox partial-likelihood component, plus explicit JM joint-model output-contract checks. The joint likelihood, quadrature, association estimator, and dynamic prediction remain backend-only evidence. No production behavior, API, dependency, or workflow changes.
 - Add an independent no-covariate multistate cumulative-hazard reference with explicit transition risk sets, Breslow increments, delayed entry at an event boundary, zero-event transition omission, row-order invariance, and common time translation. No production behavior, API, dependency, or workflow changes.
