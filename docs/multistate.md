@@ -85,7 +85,7 @@ The values are derived from the fixture's risk sets, not from a second `mstate::
 
 A boundary is deliberate at time 4 for transition 3. Subject 4 enters state 2 at exactly time 4 and therefore is **not** in the risk set for the event at time 4. Only subjects 1 and 5 satisfy (T_{start}<4\le T_{stop}), giving the increment (1/2).
 
-The tests also set every transition-3 event indicator to zero and require the complete transition-3 cumulative hazard to remain zero. Shuffling input rows must preserve the full hazard table. Adding 10 to every start and stop time shifts the output time grid by 10 while leaving every cumulative-hazard value unchanged.
+The tests also set every transition-3 event indicator to zero. In this boundary, `mstate::msfit()` omits transition 3 from the returned `Haz` table rather than materializing a zero-valued curve. The independent arithmetic still implies zero cumulative hazard for that transition, but the wrapper preserves the backend's omission contract. Shuffling input rows must preserve the full hazard table. Adding 10 to every start and stop time shifts the output time grid by 10 while leaving every cumulative-hazard value unchanged.
 
 Numerical hazard comparisons use absolute tolerance `1e-12`; fixed risk counts and subject identities use exact comparisons. The fixture has no simultaneous events within one transition, so it does not independently test tied-event approximations beyond the event/censor boundary at time 4.
 
