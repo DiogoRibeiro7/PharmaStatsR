@@ -85,8 +85,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#149](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/149) Unequal-cluster bootstrap | Closed (#151) | Independent 27-sample ledger, pooled-row/equal-copy moments, seeded row/copy identities and callback policies. |
 | [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Closed (#152) | Independent 27-sample row-mean distribution, exact moments, future-stream execution checks and plan restoration. |
 | [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic multiple imputation | Closed (#156) | Independent observed-column mean targets, exact completed datasets, row identity and affine-transform checks. |
-| [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | In review | Independent transition-specific risk sets, Breslow increments, zero-event omission boundary and time-translation checks. |
-| [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Open | Planned independent component-model evidence with carefully scoped backend output contracts. |
+| [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Closed (#157) | Independent transition-specific risk sets, Breslow increments, zero-event omission boundary and time-translation checks. |
+| [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | In review | Independent balanced LME/Cox component targets plus explicitly scoped joint-model backend output contracts. |
 
 ## How we work
 

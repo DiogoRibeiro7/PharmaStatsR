@@ -60,4 +60,33 @@ test_that("joint model fits compatible nlme and Cox models", {
   fit <- pharma_joint_model(longitudinal, survival, timeVar = "obstime",
                             method = "weibull-PH-GH")
   expect_s3_class(fit, "jointModel")
+  expect_identical(fit$method, "weibull-PH-GH")
+  expect_identical(fit$timeVar, "obstime")
+  expect_identical(fit$parameterization, "value")
+  expect_equal(fit$convergence, 0, tolerance = 0)
+  expect_equal(fit$N, nrow(aids), tolerance = 0)
+  expect_equal(fit$n, nrow(aids.id), tolerance = 0)
+  expect_length(fit$d, nrow(aids.id))
+  expect_equal(sum(fit$d), sum(aids.id$death), tolerance = 0)
+  expect_length(fit$ni, fit$n)
+  expect_equal(sum(fit$ni), fit$N, tolerance = 0)
+
+  required_coefficients <- c("betas", "sigma", "gammas", "alpha", "sigma.t", "D")
+  expect_true(all(required_coefficients %in% names(fit$coefficients)))
+  expect_identical(
+    names(fit$coefficients$betas),
+    names(nlme::fixed.effects(longitudinal))
+  )
+  expect_true("(Intercept)" %in% names(fit$coefficients$gammas))
+  expect_identical(
+    setdiff(names(fit$coefficients$gammas), "(Intercept)"),
+    names(stats::coef(survival))
+  )
+  numeric_parts <- unlist(fit$coefficients[required_coefficients], use.names = FALSE)
+  expect_true(all(is.finite(numeric_parts)))
+  expect_gt(fit$coefficients$sigma, 0)
+
+  ll <- stats::logLik(fit)
+  expect_true(is.finite(as.numeric(ll)))
+  expect_equal(attr(ll, "nobs"), fit$n, tolerance = 0)
 })
