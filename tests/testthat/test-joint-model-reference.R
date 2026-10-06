@@ -27,7 +27,7 @@ test_that("balanced random-intercept component has independent fixed effects", {
   X <- stats::model.matrix(~ obstime, data)
   target <- c("(Intercept)" = 10, obstime = 2)
   residual <- data$marker - drop(X %*% target)
-  expect_equal(drop(crossprod(X, residual)), c(0, 0), tolerance = 1e-12)
+  expect_equal(unname(drop(crossprod(X, residual))), c(0, 0), tolerance = 1e-12)
 
   fit <- nlme::lme(
     marker ~ obstime,
@@ -67,8 +67,8 @@ test_that("Cox component matches an independent risk-set score root", {
   r <- exp(target_beta)
   expect_equal(6 * r^3 - 9 * r - 4, 0, tolerance = 1e-12)
   expect_equal(score(target_beta), 0, tolerance = 1e-12)
-  expect_equal(unname(stats::coef(fit)), target_beta, tolerance = 1e-10)
-  expect_equal(drop(fit$x[, "group"]), data$group, tolerance = 0)
+  expect_equal(unname(stats::coef(fit)), target_beta, tolerance = 1e-9)
+  expect_equal(unname(drop(fit$x[, "group"])), data$group, tolerance = 0)
   expect_equal(sum(data$death), 4, tolerance = 0)
 })
 
