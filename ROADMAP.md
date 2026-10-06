@@ -9,9 +9,8 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic imputation | Independent observed-mean imputation targets, completed datasets, method/predictor-matrix contract, row identities and affine transformations. |
-| 3 | [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Independent transition-risk-set and Breslow cumulative-hazard references. |
-| 4 | [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Independent component-model inputs plus explicitly labelled backend output contracts. |
+| 2 | [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | Independent Student/Welch standard errors, degrees of freedom, statistics and p-values. |
+| 3 | [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Fixed resampling folds and explicitly scoped model-selection evidence. |
 
 The #123–#125, #129–#131, #136–#138, and #143–#145 implementation batches are
 complete. The [batch reconciliation](docs/evidence-batches.md) records the merged
@@ -20,10 +19,10 @@ its limits. The permutation reference exposed numerical-tie undercounting;
 previously affected p-values should be recomputed. PR-head checks are not a new
 merged-source artifact receipt for #58.
 
-The cases-bootstrap issues #149 and #150 are complete. Their independent cluster
-and row references are reconciled after #152 passed its checks. The next batch
-#153–#155 was defined together before implementation. Work in the order above,
-one focused PR at a time. The release decision in #58 remains separate.
+The #153–#155 missing-data/complex-survival batch is complete after #158 passed
+its package, documentation and five-job validation checks. The next integration
+batch #159–#160 was defined before implementation. Work in the order above, one
+focused PR at a time. The release decision in #58 remains separate.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -86,7 +85,9 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#150](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/150) Row bootstrap | Closed (#152) | Independent 27-sample row-mean distribution, exact moments, future-stream execution checks and plan restoration. |
 | [#153](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) Deterministic multiple imputation | Closed (#156) | Independent observed-column mean targets, exact completed datasets, row identity and affine-transform checks. |
 | [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Closed (#157) | Independent transition-specific risk sets, Breslow increments, zero-event omission boundary and time-translation checks. |
-| [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | In review | Independent balanced LME/Cox component targets plus explicitly scoped joint-model backend output contracts. |
+| [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Closed (#158) | Independent balanced LME/Cox component targets plus explicitly scoped joint-model backend output contracts. |
+| [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | In review | Independent Student/Welch formula targets, transformation identities and finite zero-variance boundary. |
+| [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Open | Planned fixed-fold model-selection evidence with backend-dependent claims separated explicitly. |
 
 ## How we work
 
