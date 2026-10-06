@@ -154,8 +154,8 @@ Both issues were created before implementation.
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#159: SciPy t-test reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) | Independent Student/Welch sample-moment formulas, standard errors, degrees of freedom, statistics, t-tail p-values, transformations and a finite zero-variance boundary. |
-| 2 | [#160: deterministic caret selection](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) | Fixed resampling folds with the model-selection decision reconstructed where possible and remaining caret-dependent quantities labelled as backend contracts. |
+| 1 | [#159: SciPy t-test reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) | [Independent SciPy bridge reference](scipy-bridge.md#independent-numerical-reference): Student/Welch sample-moment formulas, standard errors, degrees of freedom, statistics, t-tail p-values, transformations and a finite zero-variance boundary. Merged in #161. |
+| 2 | [#160: deterministic caret selection](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) | [Fixed-fold selection reference](model-selection.md#fixed-fold-selection-reference): direct GLM and base-R LDA hold-out predictions reconstruct the winner; remaining caret object behavior is classified as contract evidence. |
 
 Implement one focused PR at a time. No release tag, submission, new required
 dependency, or broad API expansion is authorized by this planning record.
