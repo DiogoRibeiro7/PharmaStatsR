@@ -77,8 +77,9 @@ test_that("joint model fits compatible nlme and Cox models", {
     names(fit$coefficients$betas),
     names(nlme::fixed.effects(longitudinal))
   )
+  expect_true("(Intercept)" %in% names(fit$coefficients$gammas))
   expect_identical(
-    names(fit$coefficients$gammas),
+    setdiff(names(fit$coefficients$gammas), "(Intercept)"),
     names(stats::coef(survival))
   )
   numeric_parts <- unlist(fit$coefficients[required_coefficients], use.names = FALSE)
