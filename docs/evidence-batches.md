@@ -131,8 +131,8 @@ All three issues were created before implementation. The deterministic imputatio
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
-| 1 | [#153: deterministic multiple imputation](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) | Fixed observed-column mean targets, exact imputed cells/completed datasets, method and predictor-matrix contract, row identity and affine transformations. |
-| 2 | [#154: multistate cumulative hazards](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) | Independent transition risk sets and Breslow cumulative-hazard increments. |
+| 1 | [#153: deterministic multiple imputation](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) | [Deterministic mean-imputation reference](missing-data.md#independent-deterministic-imputation-reference): fixed observed-column means, exact imputed cells/completed datasets, method and predictor-matrix contract, row identity and affine transformations. Merged in #156. |
+| 2 | [#154: multistate cumulative hazards](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) | [Independent multistate reference](multistate.md#independent-cumulative-hazard-reference): transition risk sets, Breslow increments, delayed-entry boundary, zero-event transition omission, row order and time translation. |
 | 3 | [#155: joint-model evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) | Independent component-model inputs with backend-result checks explicitly classified as contracts. |
 
 Implement one focused PR at a time. No new public API, dependency, package version, release tag or submission is authorized by this planning record.
