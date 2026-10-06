@@ -125,7 +125,7 @@ Both remain conditional method evidence rather than coverage or study-validity c
 
 The final #152 PR head passed its routine R check, strict documentation build and five-job validation matrix before merge. These PR-head results do not replace the exact-merged-source release evidence required by #58.
 
-## Current batch: missing data and complex survival, #153–#155
+## Completed batch: missing data and complex survival, #153–#155
 
 All three issues were created before implementation. The deterministic imputation reference is first because its numerical targets are directly reconstructible without a second imputation run.
 
@@ -133,6 +133,29 @@ All three issues were created before implementation. The deterministic imputatio
 | --- | --- | --- |
 | 1 | [#153: deterministic multiple imputation](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/153) | [Deterministic mean-imputation reference](missing-data.md#independent-deterministic-imputation-reference): fixed observed-column means, exact imputed cells/completed datasets, method and predictor-matrix contract, row identity and affine transformations. Merged in #156. |
 | 2 | [#154: multistate cumulative hazards](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) | [Independent multistate reference](multistate.md#independent-cumulative-hazard-reference): transition risk sets, Breslow increments, delayed-entry boundary, zero-event transition omission, row order and time translation. Merged in #157. |
-| 3 | [#155: joint-model evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) | [Layered joint-model evidence](joint-model.md#evidence-layers): independent balanced LME/Cox component targets, with fitted joint-model quantities explicitly classified as backend contracts. |
+| 3 | [#155: joint-model evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) | [Layered joint-model evidence](joint-model.md#evidence-layers): independent balanced LME/Cox component targets, with fitted joint-model quantities explicitly classified as backend contracts. Merged in #158. |
 
 Implement one focused PR at a time. No new public API, dependency, package version, release tag or submission is authorized by this planning record.
+
+
+### Checked #153–#155 CI evidence
+
+The final batch PR head `4a8964e` contains the earlier merged deterministic
+imputation and multistate references. Its routine R package check, strict
+documentation build, and all five validation-matrix jobs passed before merge.
+The Ubuntu all-Suggests job exercised JM and the optional statistical backends.
+
+These PR-head results support this method-evidence batch. They are not a new
+exact-merged-source artifact receipt for the separate release gate in #58.
+
+## Current batch: statistical integrations, #159–#160
+
+Both issues were created before implementation.
+
+| Order | Issue | Reviewable result |
+| --- | --- | --- |
+| 1 | [#159: SciPy t-test reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) | Independent Student/Welch sample-moment formulas, standard errors, degrees of freedom, statistics, t-tail p-values, transformations and a finite zero-variance boundary. |
+| 2 | [#160: deterministic caret selection](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) | Fixed resampling folds with the model-selection decision reconstructed where possible and remaining caret-dependent quantities labelled as backend contracts. |
+
+Implement one focused PR at a time. No release tag, submission, new required
+dependency, or broad API expansion is authorized by this planning record.
