@@ -148,14 +148,36 @@ The Ubuntu all-Suggests job exercised JM and the optional statistical backends.
 These PR-head results support this method-evidence batch. They are not a new
 exact-merged-source artifact receipt for the separate release gate in #58.
 
-## Current batch: statistical integrations, #159–#160
+## Completed batch: statistical integrations, #159–#160
 
 Both issues were created before implementation.
 
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#159: SciPy t-test reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) | [Independent SciPy bridge reference](scipy-bridge.md#independent-numerical-reference): Student/Welch sample-moment formulas, standard errors, degrees of freedom, statistics, t-tail p-values, transformations and a finite zero-variance boundary. Merged in #161. |
-| 2 | [#160: deterministic caret selection](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) | [Fixed-fold selection reference](model-selection.md#fixed-fold-selection-reference): direct GLM and base-R LDA hold-out predictions reconstruct the winner; remaining caret object behavior is classified as contract evidence. |
+| 2 | [#160: deterministic caret selection](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) | [Fixed-fold selection reference](model-selection.md#fixed-fold-selection-reference): direct GLM and base-R LDA hold-out predictions reconstruct the winner; remaining caret object behavior is classified as contract evidence. Merged in #162. |
 
 Implement one focused PR at a time. No release tag, submission, new required
 dependency, or broad API expansion is authorized by this planning record.
+
+
+### Checked #159–#160 CI evidence
+
+The final batch PR head `ba23639` contains the earlier merged SciPy reference.
+Its routine R package check, strict documentation build, and all five validation
+matrix jobs passed before merge. These are method-evidence results for that PR
+head, not an exact-merged-source release receipt for #58.
+
+## Current batch: reporting and auditability, #163–#165
+
+All three issues were created before implementation.
+
+| Order | Issue | Reviewable result |
+| --- | --- | --- |
+| 1 | [#163: report-table numerical reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) | Independent two-group lm estimates, residual variance, standard errors, t-based confidence intervals and p-values, with exporter preservation. |
+| 2 | [#164: external HMAC audit vectors](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) | Fixed externally calculated HMAC-SHA256 chain values and tamper/wrong-key boundaries. |
+| 3 | [#165: SAP artifact contract](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) | Exact Markdown vector and written-file contract with ordering, UTF-8/literal text and validation-before-write checks. |
+
+Implement one focused PR at a time. Reporting and audit helpers remain
+scope-limited software utilities; this batch does not create a regulatory,
+security, or document-approval claim. #58 remains separate.

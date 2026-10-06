@@ -9,8 +9,9 @@ This roadmap orders work by the risk of misleading results and the evidence need
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | Independent Student/Welch standard errors, degrees of freedom, statistics and p-values. |
-| 3 | [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Fixed resampling folds and explicitly scoped model-selection evidence. |
+| 2 | [#163](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) Report-table reference | Independent lm estimates, confidence intervals, p-values and exporter preservation. |
+| 3 | [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | External fixed HMAC-SHA256 chain vectors and verification boundaries. |
+| 4 | [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | Exact Markdown/file output, literal text, ordering and validation-before-write guarantees. |
 
 The #123–#125, #129–#131, #136–#138, and #143–#145 implementation batches are
 complete. The [batch reconciliation](docs/evidence-batches.md) records the merged
@@ -87,7 +88,10 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#154](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/154) Multistate cumulative hazards | Closed (#157) | Independent transition-specific risk sets, Breslow increments, zero-event omission boundary and time-translation checks. |
 | [#155](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/155) Joint-model evidence | Closed (#158) | Independent balanced LME/Cox component targets plus explicitly scoped joint-model backend output contracts. |
 | [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | Closed (#161) | Independent Student/Welch formula targets, transformation identities and finite zero-variance boundary. |
-| [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | In review | Fixed-fold GLM/LDA predictions reconstructed outside caret, plus winner, failure, tie and varImp contracts. |
+| [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Closed (#162) | Fixed-fold GLM/LDA predictions reconstructed outside caret, plus winner, failure, tie and varImp contracts. |
+| [#163](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) Report-table numerical reference | In review | Independent two-group lm estimates, confidence intervals, p-values and exporter preservation. |
+| [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | Open | Planned external fixed HMAC-SHA256 chain vectors and failure boundaries. |
+| [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | Open | Planned exact Markdown and written-file contract with literal-text boundaries. |
 
 ## How we work
 
