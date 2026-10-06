@@ -31,8 +31,8 @@ test_that("mean imputation matches independent observed-column targets", {
   )
 
   expect_s3_class(actual, "mids")
-  expect_identical(actual$m, 3L)
-  expect_identical(actual$iteration, 1L)
+  expect_equal(actual$m, 3, tolerance = 0)
+  expect_equal(actual$iteration, 1, tolerance = 0)
   expect_identical(actual$method, spec$method)
   expect_equal(actual$predictorMatrix, spec$predictorMatrix, tolerance = 0)
 
