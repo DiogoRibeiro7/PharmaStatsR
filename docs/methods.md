@@ -14,6 +14,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Stratified binary association | [`pharma_cmh_test()`](cmh.md) | Core R dependencies; common Mantel–Haenszel odds ratio across prespecified strata |
 | Paired binary comparison | [`pharma_mcnemar_test()`](mcnemar.md) | Core R dependencies; asymptotic and exact discordant-pair inference |
 | Exact 2×2 association | [`pharma_fisher_test()`](fisher-exact.md) | Core R dependencies; conditional hypergeometric inference |
+| Ordered binary trend | [`pharma_cochran_armitage_test()`](cochran-armitage.md) | Core R dependencies; asymptotic score test across ordered groups |
 | Binary outcome model | [`pharma_logistic_regression()`](logistic-regression.md) | Core R dependencies; binomial GLM with logit link |
 | Quadratic response surface | [`pharma_response_surface()`](response-surface.md) | Core R dependencies; two numeric predictors and a full-rank design |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
