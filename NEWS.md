@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Harden CRAN readiness by expanding the package description and enforcing the two-worker ceiling for parallel bootstrap plans; cap the stored default core hint at two. No statistical calculation changes.
 - Add `pharma_fisher_test()` for exact 2×2 inference with explicit table orientation, alternatives, and confidence level. The independent reference enumerates the complete hypergeometric support, reproduces two-sided and one-sided exact tails, checks reciprocal odds-ratio orientation under row/column swaps, and covers an informative zero-cell boundary. No new dependency.
 - Add `pharma_mcnemar_test()` for paired 2×2 binary counts, returning both the continuity-controlled asymptotic chi-square test and an exact two-sided binomial p-value. The independent reference derives uncorrected and corrected statistics, the full finite binomial tail, diagonal-cell invariance, condition-swap invariance, and no-discordance boundaries. No new dependency.
 - Add `pharma_cmh_test()` for stratified 2×2 count tables, with strict count/margin validation, optional continuity correction, common Mantel–Haenszel odds ratio, and confidence interval. Independent references derive the conditional expectations, variance, corrected and uncorrected CMH statistics, common odds ratio, stratum-order invariance, and reciprocal row-swap behavior. No new dependency.
