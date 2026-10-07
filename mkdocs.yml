@@ -79,6 +79,7 @@ nav:
       - One-way ANOVA: anova.md
       - ANCOVA: ancova.md
       - Stratified CMH test: cmh.md
+      - Paired binary McNemar test: mcnemar.md
       - Logistic regression: logistic-regression.md
       - Linear mixed model: linear-mixed-model.md
       - Balanced two-factor ANOVA: factorial-anova.md

@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add `pharma_mcnemar_test()` for paired 2×2 binary counts, returning both the continuity-controlled asymptotic chi-square test and an exact two-sided binomial p-value. The independent reference derives uncorrected and corrected statistics, the full finite binomial tail, diagonal-cell invariance, condition-swap invariance, and no-discordance boundaries. No new dependency.
 - Add `pharma_cmh_test()` for stratified 2×2 count tables, with strict count/margin validation, optional continuity correction, common Mantel–Haenszel odds ratio, and confidence interval. Independent references derive the conditional expectations, variance, corrected and uncorrected CMH statistics, common odds ratio, stratum-order invariance, and reciprocal row-swap behavior. No new dependency.
 - Add `pharma_ancova()` for one categorical treatment and one numeric covariate, with an additive `lm`, an explicit treatment-by-covariate slope-homogeneity comparison, and adjusted treatment means at the observed covariate mean. The new reference derives coefficients, SSE, interaction F, adjusted means, transformation behavior, and covariate-translation invariance independently. No new dependency.
 - Strengthen the SAP template artifact contract with an explicit full Markdown reference, exact file/return agreement, UTF-8 and Markdown-sensitive literal text, empty section bodies, custom-only ordering, overwrite behavior, and byte-for-byte preservation after validation failures. No template semantics, API, dependency, or regulatory claim changes.
