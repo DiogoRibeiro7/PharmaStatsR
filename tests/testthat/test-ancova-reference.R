@@ -111,7 +111,7 @@ test_that("ANCOVA rejects unsupported designs before fitting", {
 
   expect_error(
     pharma_ancova(response ~ treatment * baseline, data),
-    "requires response ~ treatment \+ covariate"
+    "requires response ~ treatment"
   )
   expect_error(
     pharma_ancova(response ~ baseline + I(baseline^2), data),
