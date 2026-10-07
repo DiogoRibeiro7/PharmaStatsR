@@ -12,6 +12,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_ancova()`](ancova.md), [`pharma_factorial_anova()`](factorial-anova.md), [`pharma_repeated_anova()`](repeated-anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
 | Stratified binary association | [`pharma_cmh_test()`](cmh.md) | Core R dependencies; common Mantel–Haenszel odds ratio across prespecified strata |
+| Paired binary comparison | [`pharma_mcnemar_test()`](mcnemar.md) | Core R dependencies; asymptotic and exact discordant-pair inference |
 | Binary outcome model | [`pharma_logistic_regression()`](logistic-regression.md) | Core R dependencies; binomial GLM with logit link |
 | Quadratic response surface | [`pharma_response_surface()`](response-surface.md) | Core R dependencies; two numeric predictors and a full-rank design |
 | Global permutation model test | [`pharma_perm_f_test()`](permutation.md) | Core R dependencies; requires exchangeable responses |
