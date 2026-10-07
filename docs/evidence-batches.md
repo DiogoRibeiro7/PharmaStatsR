@@ -175,8 +175,8 @@ All three issues were created before implementation.
 | Order | Issue | Reviewable result |
 | --- | --- | --- |
 | 1 | [#163: report-table numerical reference](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) | [Independent report-table reference](report-exports.md#independent-linear-model-reference): two-group lm estimates, residual variance, standard errors, t-based confidence intervals and p-values, with exporter preservation. Merged in #166. |
-| 2 | [#164: external HMAC audit vectors](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) | [External HMAC reference vectors](audit-log.md#external-hmac-reference-vectors): fixed independent digests, serialization/link checks, tamper/wrong-key failures, valid-prefix limitation and append interoperability. |
-| 3 | [#165: SAP artifact contract](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) | Exact Markdown vector and written-file contract with ordering, UTF-8/literal text and validation-before-write checks. |
+| 2 | [#164: external HMAC audit vectors](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) | [External HMAC reference vectors](audit-log.md#external-hmac-reference-vectors): fixed independent digests, serialization/link checks, tamper/wrong-key failures, valid-prefix limitation and append interoperability. Merged in #167. |
+| 3 | [#165: SAP artifact contract](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) | [SAP template artifact contract](claims-audit.md#sap-template-artifact-contract): explicit Markdown vector, UTF-8/file equivalence, empty/literal text, custom-only ordering, overwrite and validation-before-write preservation. |
 
 Implement one focused PR at a time. Reporting and audit helpers remain
 scope-limited software utilities; this batch does not create a regulatory,
