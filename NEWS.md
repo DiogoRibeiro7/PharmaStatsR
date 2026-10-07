@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add `pharma_cmh_test()` for stratified 2×2 count tables, with strict count/margin validation, optional continuity correction, common Mantel–Haenszel odds ratio, and confidence interval. Independent references derive the conditional expectations, variance, corrected and uncorrected CMH statistics, common odds ratio, stratum-order invariance, and reciprocal row-swap behavior. No new dependency.
 - Add `pharma_ancova()` for one categorical treatment and one numeric covariate, with an additive `lm`, an explicit treatment-by-covariate slope-homogeneity comparison, and adjusted treatment means at the observed covariate mean. The new reference derives coefficients, SSE, interaction F, adjusted means, transformation behavior, and covariate-translation invariance independently. No new dependency.
 - Strengthen the SAP template artifact contract with an explicit full Markdown reference, exact file/return agreement, UTF-8 and Markdown-sensitive literal text, empty section bodies, custom-only ordering, overwrite behavior, and byte-for-byte preservation after validation failures. No template semantics, API, dependency, or regulatory claim changes.
 - Add external fixed HMAC-SHA256 audit-chain reference vectors calculated outside R/openssl, covering quoted/comma messages, wrong keys, authenticated-field tampering, valid-prefix tail-deletion limits, and appending to an externally generated chain. No serialization, API, dependency, or security/compliance behavior changes.
