@@ -3,7 +3,17 @@
 \name{pharma_stuart_maxwell_test}
 \alias{pharma_stuart_maxwell_test}
 \title{Stuart-Maxwell test for marginal homogeneity}
-\usage{pharma_stuart_maxwell_test(x)}
-\arguments{\item{x}{A numeric K-by-K matrix or table of nonnegative whole-number counts, with K >= 3.}}
-\value{An object of class \code{htest} containing the Stuart-Maxwell statistic.}
-\description{Test marginal homogeneity in a paired square categorical table with three or more categories.}
+\usage{
+pharma_stuart_maxwell_test(x)
+}
+\arguments{
+\item{x}{A numeric K-by-K matrix or table of nonnegative whole-number counts,
+with K >= 3.}
+}
+\value{
+An object of class \code{htest} containing the Stuart-Maxwell statistic.
+}
+\description{
+Test marginal homogeneity in a paired square categorical table with three
+or more categories.
+}
