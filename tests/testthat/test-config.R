@@ -50,7 +50,9 @@ test_that("core defaults are positive integers when detection fails", {
   expect_identical(PharmaStatsR:::.pharma_default_max_cores(NA_integer_), 1L)
   expect_identical(PharmaStatsR:::.pharma_default_max_cores(0L), 1L)
   expect_identical(PharmaStatsR:::.pharma_default_max_cores(1L), 1L)
-  expect_identical(PharmaStatsR:::.pharma_default_max_cores(4L), 3L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(3L), 2L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(4L), 2L)
+  expect_identical(PharmaStatsR:::.pharma_default_max_cores(128L), 2L)
 })
 
 test_that("configuration uses a usable default core count", {
