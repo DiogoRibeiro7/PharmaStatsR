@@ -1,5 +1,9 @@
 # PharmaStatsR News
 
+## Unreleased
+- Add `pharma_cochran_q_test()` for matched repeated binary outcomes and `pharma_stuart_maxwell_test()` for paired multinomial marginal homogeneity. Independent references derive Cochran Q from subject/condition totals, verify its two-condition McNemar identity, and derive the Stuart-Maxwell marginal-difference covariance and quadratic form with permutation and symmetric-table boundaries. No new dependencies.
+- Add `pharma_cochran_armitage_test()` for ordered binary rates, with default or custom strictly increasing scores and signed two- or one-sided normal inference. The independent reference derives the pooled event rate, score numerator, null variance, exact Z target, score translation/scale invariance, reversed-order sign behavior, and event-column swap behavior. No new dependency.
+
 ## 0.1.63
 - Harden CRAN readiness by expanding the package description and enforcing the two-worker ceiling for parallel bootstrap plans; cap the stored default core hint at two. No statistical calculation changes.
 - Add `pharma_fisher_test()` for exact 2×2 inference with explicit table orientation, alternatives, and confidence level. The independent reference enumerates the complete hypergeometric support, reproduces two-sided and one-sided exact tails, checks reciprocal odds-ratio orientation under row/column swaps, and covers an informative zero-cell boundary. No new dependency.
