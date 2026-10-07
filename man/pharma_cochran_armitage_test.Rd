@@ -18,8 +18,8 @@ non-events.}
 \item{scores}{Optional strictly increasing finite numeric scores of length K.
 Defaults to \code{0:(K - 1)}.}
 
-\item{alternative}{Character string: \code{"two.sided"}, \code{"greater"},
-or \code{"less"}.}
+\item{alternative}{Character string: \code{"two.sided"}, \code{"greater"}, or
+\code{"less"}.}
 }
 \value{
 An object of class \code{htest} with the signed Z statistic.
