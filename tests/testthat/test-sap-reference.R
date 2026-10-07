@@ -45,7 +45,7 @@ test_that("SAP reference matches the complete explicit Markdown vector", {
   expected <- sap_reference_expected()
 
   expect_identical(actual, expected)
-  expect_identical(actual[actual == ""], rep("", 6L))
+  expect_identical(actual[actual == ""], rep("", 7L))
   expect_identical(
     grep("^## ", actual, value = TRUE),
     c(
