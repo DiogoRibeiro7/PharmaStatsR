@@ -1,6 +1,6 @@
 ## Release candidate status
 
-Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Check that issue for the exact final merged commit, source tarball hash, and job links before using these comments for a submission. The maintainer designated the public contact and institutional affiliation on 4 October 2026; version 0.1.62 remains the working candidate pending the final release decision.
+Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Check that issue for the exact final merged commit, source tarball hash, and job links before using these comments for a submission. The maintainer designated the public contact and institutional affiliation on 4 October 2026; version 0.1.63 is the working candidate pending the final merged-commit validation.
 
 ## Test environments
 

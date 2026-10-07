@@ -1,6 +1,6 @@
 # Project status
 
-**4 October 2026 · version 0.1.62 · active development · not on CRAN**
+**4 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
