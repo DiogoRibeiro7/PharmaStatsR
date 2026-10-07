@@ -77,6 +77,7 @@ nav:
       - Core inference reference cases: core-reference-cases.md
       - Equivalence testing: equivalence.md
       - One-way ANOVA: anova.md
+      - ANCOVA: ancova.md
       - Logistic regression: logistic-regression.md
       - Linear mixed model: linear-mixed-model.md
       - Balanced two-factor ANOVA: factorial-anova.md

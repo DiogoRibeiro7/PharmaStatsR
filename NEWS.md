@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add `pharma_ancova()` for one categorical treatment and one numeric covariate, with an additive `lm`, an explicit treatment-by-covariate slope-homogeneity comparison, and adjusted treatment means at the observed covariate mean. The new reference derives coefficients, SSE, interaction F, adjusted means, transformation behavior, and covariate-translation invariance independently. No new dependency.
 - Strengthen the SAP template artifact contract with an explicit full Markdown reference, exact file/return agreement, UTF-8 and Markdown-sensitive literal text, empty section bodies, custom-only ordering, overwrite behavior, and byte-for-byte preservation after validation failures. No template semantics, API, dependency, or regulatory claim changes.
 - Add external fixed HMAC-SHA256 audit-chain reference vectors calculated outside R/openssl, covering quoted/comma messages, wrong keys, authenticated-field tampering, valid-prefix tail-deletion limits, and appending to an externally generated chain. No serialization, API, dependency, or security/compliance behavior changes.
 - Add an independent two-group linear-model reference for report-table estimates, confidence intervals, and p-values at two confidence levels, plus exporter round-trip checks against the same numerical targets. Reconcile the completed #159–#160 integration batch and queue #163–#165. No production behavior, API, dependency, or workflow changes.
