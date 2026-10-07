@@ -3,7 +3,17 @@
 \name{pharma_cochran_q_test}
 \alias{pharma_cochran_q_test}
 \title{Cochran Q test for repeated binary outcomes}
-\usage{pharma_cochran_q_test(x)}
-\arguments{\item{x}{A subject-by-condition matrix or data frame containing only 0/1 values and no missingness.}}
-\value{An object of class \code{htest} with Cochran's Q statistic.}
-\description{Compare marginal binary response rates across two or more matched conditions.}
+\usage{
+pharma_cochran_q_test(x)
+}
+\arguments{
+\item{x}{A subject-by-condition matrix or data frame containing only 0/1
+values and no missingness. Rows are matched subjects and columns are
+repeated conditions.}
+}
+\value{
+An object of class \code{htest} with Cochran's Q statistic.
+}
+\description{
+Compare marginal binary response rates across two or more matched conditions.
+}
