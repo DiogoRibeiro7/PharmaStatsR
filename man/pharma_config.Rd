@@ -15,8 +15,8 @@ pharma_config(...)
 \item \code{default_ci}: stored value (default 0.95); not used for intervals.
 \item \code{parallel_strategy}: stored label (default "sequential"); does not
 select a parallel backend.
-\item \code{max_cores}: stored value; the detected default is an integer of at
-least one. It does not limit backend workers.
+\item \code{max_cores}: stored value; the detected default is an integer between
+one and two. It does not select or resize backend workers.
 \item \code{cache_dir}: stored path (default \code{tempdir()}); no cache is created.
 }}
 }

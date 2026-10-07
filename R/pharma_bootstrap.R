@@ -180,9 +180,9 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #'   argument.
 #' @param R Positive whole number of bootstrap replicates.
 #' @param plan Future strategy name, function, or call accepted by
-#'   `future::plan()`; defaults to `"multisession"`, limited to two workers.
-#'   Caller-supplied strategies other than `"multisession"` retain their
-#'   own worker settings.
+#'   `future::plan()`; defaults to `"multisession"`. The configured strategy
+#'   must expose no more than two workers; plans above that limit are rejected
+#'   before bootstrap futures are launched.
 #' @param ... Additional arguments passed to `statistic`.
 #'
 #' @return A list with one statistic per bootstrap replicate. Set a seed
@@ -196,6 +196,15 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #'   pharma_parallel_bootstrap(pharma_sample, stat, R = 10,
 #'                             plan = "sequential")
 #' }
+.pharma_validate_future_workers <- function(workers) {
+  if (!is.numeric(workers) || length(workers) != 1L ||
+      is.na(workers) || !is.finite(workers) ||
+      workers < 1 || workers > 2) {
+    stop("`plan` must configure one or two workers", call. = FALSE)
+  }
+  invisible(as.integer(workers))
+}
+
 pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
                                       plan = "multisession", ...) {
   pharma_log("INFO", "Running pharma_parallel_bootstrap")
@@ -227,6 +236,8 @@ pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
   } else {
     future::plan(plan)
   }
+  .pharma_validate_future_workers(future::nbrOfWorkers())
+
   future.apply::future_lapply(seq_len(R), function(i) {
     indices <- sample.int(nrow(data), nrow(data), replace = TRUE)
     boot_data <- data[indices, , drop = FALSE]

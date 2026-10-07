@@ -11,8 +11,8 @@
 #'   - `default_ci`: stored value (default 0.95); not used for intervals.
 #'   - `parallel_strategy`: stored label (default "sequential"); does not
 #'     select a parallel backend.
-#'   - `max_cores`: stored value; the detected default is an integer of at
-#'     least one. It does not limit backend workers.
+#'   - `max_cores`: stored value; the detected default is an integer between
+#'     one and two. It does not select or resize backend workers.
 #'   - `cache_dir`: stored path (default `tempdir()`); no cache is created.
 #'
 #' @return A named list of current configuration values. The no-argument getter
@@ -59,7 +59,7 @@ pharma_config <- function(...) {
       !is.finite(cores) || cores < 2L) {
     return(1L)
   }
-  as.integer(cores) - 1L
+  min(2L, as.integer(cores) - 1L)
 }
 
 #' Temporarily modify configuration options

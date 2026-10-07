@@ -66,6 +66,23 @@ test_that("parallel bootstrap restores the plan after statistic failure", {
   expect_equal(future::plan(), before)
 })
 
+test_that("future worker validation enforces the two-worker ceiling", {
+  expect_identical(
+    PharmaStatsR:::.pharma_validate_future_workers(1L),
+    1L
+  )
+  expect_identical(
+    PharmaStatsR:::.pharma_validate_future_workers(2L),
+    2L
+  )
+  for (bad in list(0L, 3L, Inf, NA_real_, "2", c(1L, 2L))) {
+    expect_error(
+      PharmaStatsR:::.pharma_validate_future_workers(bad),
+      "one or two workers"
+    )
+  }
+})
+
 test_that("parallel bootstrap validates requested replicates and strategy", {
   skip_if_not_installed("future.apply")
   d <- data.frame(x = 1:4)
