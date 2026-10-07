@@ -82,6 +82,8 @@ nav:
       - Paired binary McNemar test: mcnemar.md
       - Fisher 2x2 exact test: fisher-exact.md
       - Cochran-Armitage trend test: cochran-armitage.md
+      - Cochran Q repeated binary test: cochran-q.md
+      - Stuart-Maxwell marginal homogeneity: stuart-maxwell.md
       - Logistic regression: logistic-regression.md
       - Linear mixed model: linear-mixed-model.md
       - Balanced two-factor ANOVA: factorial-anova.md
