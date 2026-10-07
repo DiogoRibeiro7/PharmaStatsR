@@ -167,6 +167,15 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
   results
 }
 
+.pharma_validate_future_workers <- function(workers) {
+  if (!is.numeric(workers) || length(workers) != 1L ||
+      is.na(workers) || !is.finite(workers) ||
+      workers < 1 || workers > 2) {
+    stop("`plan` must configure one or two workers", call. = FALSE)
+  }
+  invisible(as.integer(workers))
+}
+
 #' Row bootstrap with reproducible future workers
 #'
 #' Resample individual rows with replacement and evaluate `statistic` for
@@ -196,15 +205,6 @@ pharma_block_bootstrap <- function(data, cluster, statistic, R = 1000,
 #'   pharma_parallel_bootstrap(pharma_sample, stat, R = 10,
 #'                             plan = "sequential")
 #' }
-.pharma_validate_future_workers <- function(workers) {
-  if (!is.numeric(workers) || length(workers) != 1L ||
-      is.na(workers) || !is.finite(workers) ||
-      workers < 1 || workers > 2) {
-    stop("`plan` must configure one or two workers", call. = FALSE)
-  }
-  invisible(as.integer(workers))
-}
-
 pharma_parallel_bootstrap <- function(data, statistic, R = 1000,
                                       plan = "multisession", ...) {
   pharma_log("INFO", "Running pharma_parallel_bootstrap")
