@@ -1,6 +1,6 @@
 # Release candidate evidence
 
-Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a prospective CRAN candidate. This page defines the gate; it does **not** declare version 0.1.62 ready or authorize submission. The [API policy](api-support-policy.md) still marks all statistical methods experimental.
+Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a prospective CRAN candidate. This page defines the gate; it does **not** declare version 0.1.63 ready or authorize submission. The [API policy](api-support-policy.md) still marks all statistical methods experimental.
 
 ## One commit, one source package
 
