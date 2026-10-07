@@ -22,9 +22,9 @@ argument.}
 \item{R}{Positive whole number of bootstrap replicates.}
 
 \item{plan}{Future strategy name, function, or call accepted by
-\code{future::plan()}; defaults to \code{"multisession"}, limited to two workers.
-Caller-supplied strategies other than \code{"multisession"} retain their
-own worker settings.}
+\code{future::plan()}; defaults to \code{"multisession"}. The configured strategy
+must expose no more than two workers; plans above that limit are rejected
+before bootstrap futures are launched.}
 
 \item{...}{Additional arguments passed to \code{statistic}.}
 }
