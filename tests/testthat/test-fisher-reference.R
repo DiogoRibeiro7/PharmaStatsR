@@ -157,7 +157,7 @@ test_that("Fisher rejects malformed or uninformative tables", {
 
   expect_error(
     pharma_fisher_test(fisher_reference_table(), alternative = "upper"),
-    "arg should be one of"
+    "should be one of"
   )
   expect_error(
     pharma_fisher_test(fisher_reference_table(), conf.level = 1),
