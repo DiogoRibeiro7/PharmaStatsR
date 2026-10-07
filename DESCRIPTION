@@ -1,14 +1,19 @@
 Package: PharmaStatsR
 Type: Package
 Title: Statistical Methods and Workflows for Pharmaceutical Research
-Version: 0.1.62
+Version: 0.1.63
 Authors@R: person(given = "Diogo", family = "Ribeiro",
     email = "dfr@esmad.ipp.pt", role = c("aut", "cre"),
     comment = c(ORCID = "0009-0001-2022-7072",
                  affiliation = "Faculdade de Media Artes e Design, Universidade Técnica do Porto"))
-Description: Provides statistical wrappers, datasets, and example workflows to
-    demonstrate common analyses used in pharmaceutical research and
-    development.
+Description: Provides transparent wrappers and reproducible workflows for
+    common statistical analyses in pharmaceutical research, including
+    hypothesis tests, regression, survival and competing-risk models,
+    dose-response methods, adaptive designs, resampling, missing-data
+    workflows, and meta-analysis. Functions emphasize explicit inputs and
+    inspectable outputs, with optional backends for Bayesian, mixed-model,
+    reporting, and cross-language workflows. Includes small simulated datasets
+    and a vignette with worked examples.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
