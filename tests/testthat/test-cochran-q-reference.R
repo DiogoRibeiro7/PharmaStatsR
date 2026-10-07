@@ -44,7 +44,7 @@ test_that("two-condition Cochran Q equals uncorrected McNemar", {
   x <- rbind(c(1,0),c(1,0),c(1,0),c(0,1),c(1,1),c(0,0))
   q <- pharma_cochran_q_test(x)
   m <- pharma_mcnemar_test(matrix(c(1,3,1,1),2,byrow=TRUE), correct=FALSE)
-  expect_equal(q$statistic, m$statistic, tolerance = 0)
+  expect_equal(unname(q$statistic), unname(m$statistic), tolerance = 0)
   expect_equal(q$p.value, m$p.value, tolerance = 0)
 })
 
