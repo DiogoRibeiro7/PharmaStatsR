@@ -90,8 +90,8 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#159](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/159) SciPy t-test reference | Closed (#161) | Independent Student/Welch formula targets, transformation identities and finite zero-variance boundary. |
 | [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Closed (#162) | Fixed-fold GLM/LDA predictions reconstructed outside caret, plus winner, failure, tie and varImp contracts. |
 | [#163](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) Report-table numerical reference | Closed (#166) | Independent two-group lm estimates, confidence intervals, p-values and exporter preservation. |
-| [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | In review | External fixed HMAC-SHA256 chain vectors, tamper/wrong-key boundaries and valid-prefix limitation. |
-| [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | Open | Planned exact Markdown and written-file contract with literal-text boundaries. |
+| [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | Closed (#167) | External fixed HMAC-SHA256 chain vectors, tamper/wrong-key boundaries and valid-prefix limitation. |
+| [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | In review | Exact Markdown/file output, UTF-8 and literal-text boundaries, custom-only ordering and validation-before-write preservation. |
 
 ## How we work
 
