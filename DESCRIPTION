@@ -1,7 +1,7 @@
 Package: PharmaStatsR
 Type: Package
 Title: Statistical Methods and Workflows for Pharmaceutical Research
-Version: 0.1.62
+Version: 0.1.63
 Authors@R: person(given = "Diogo", family = "Ribeiro",
     email = "dfr@esmad.ipp.pt", role = c("aut", "cre"),
     comment = c(ORCID = "0009-0001-2022-7072",
