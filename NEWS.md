@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add `pharma_breslow_day_test()` for testing homogeneity of 2×2 stratum odds ratios around the Mantel-Haenszel common estimate. The independent reference derives fitted fixed-margin counts, conditional variances, the 14.4 two-stratum statistic, stratum-order invariance, and homogeneous/boundary cases. No new dependency.
 - Add `pharma_bowker_test()` for symmetry of paired multinomial square tables, with effective degrees of freedom from informative off-diagonal pairs. Independent references derive each pair contribution, the fixed 3×3 statistic, permutation/transpose invariance, the symmetric-table boundary, and the K=2 identity with uncorrected McNemar. No new dependency.
 - Add `pharma_cochran_q_test()` for matched repeated binary outcomes and `pharma_stuart_maxwell_test()` for paired multinomial marginal homogeneity. Independent references derive Cochran Q from subject/condition totals, verify its two-condition McNemar identity, and derive the Stuart-Maxwell marginal-difference covariance and quadratic form with permutation and symmetric-table boundaries. No new dependencies.
 - Add `pharma_cochran_armitage_test()` for ordered binary rates, with default or custom strictly increasing scores and signed two- or one-sided normal inference. The independent reference derives the pooled event rate, score numerator, null variance, exact Z target, score translation/scale invariance, reversed-order sign behavior, and event-column swap behavior. No new dependency.
