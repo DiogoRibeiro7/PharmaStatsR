@@ -84,6 +84,7 @@ nav:
       - Cochran-Armitage trend test: cochran-armitage.md
       - Cochran Q repeated binary test: cochran-q.md
       - Stuart-Maxwell marginal homogeneity: stuart-maxwell.md
+      - Bowker paired-category symmetry: bowker.md
       - Logistic regression: logistic-regression.md
       - Linear mixed model: linear-mixed-model.md
       - Balanced two-factor ANOVA: factorial-anova.md
