@@ -12,7 +12,7 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | --- | --- | --- |
 | Group comparisons and designs | `pharma_t_test()`, `pharma_tost()`, [`pharma_anova()`](anova.md), [`pharma_ancova()`](ancova.md), [`pharma_factorial_anova()`](factorial-anova.md), [`pharma_repeated_anova()`](repeated-anova.md), [`pharma_crossover_anova()`](crossover.md), [`pharma_latin_square_anova()`](latin-square.md) | Core R dependencies |
 | Stratified binary association | [`pharma_cmh_test()`](cmh.md) | Core R dependencies; common Mantel–Haenszel odds ratio across prespecified strata |
-| Stratified odds-ratio homogeneity | [`pharma_breslow_day_test()`](breslow-day.md) | Core R dependencies; Breslow-Day test of a common odds-ratio assumption |
+| Stratified odds-ratio homogeneity | [`pharma_breslow_day_test()`](breslow-day.md) | Core R dependencies; Breslow-Day test with optional Tarone adjustment |
 | Paired binary comparison | [`pharma_mcnemar_test()`](mcnemar.md) | Core R dependencies; asymptotic and exact discordant-pair inference |
 | Exact 2×2 association | [`pharma_fisher_test()`](fisher-exact.md) | Core R dependencies; conditional hypergeometric inference |
 | Ordered binary trend | [`pharma_cochran_armitage_test()`](cochran-armitage.md) | Core R dependencies; asymptotic score test across ordered groups |

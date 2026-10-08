@@ -4,17 +4,21 @@
 \alias{pharma_breslow_day_test}
 \title{Breslow-Day test for homogeneity of stratified odds ratios}
 \usage{
-pharma_breslow_day_test(x)
+pharma_breslow_day_test(x, tarone = FALSE)
 }
 \arguments{
 \item{x}{A numeric 2-by-2-by-K array of nonnegative whole-number counts,
 with K >= 2. Rows define the two exposure or treatment groups, columns
 define the two outcome levels, and the third dimension defines strata.}
+
+\item{tarone}{Logical; apply Tarone's adjustment to the Breslow-Day
+statistic. Defaults to \code{FALSE} to preserve the unadjusted test.}
 }
 \value{
-An object of class \code{htest} containing the Breslow-Day statistic,
-degrees of freedom, p-value, Mantel-Haenszel common odds ratio, fitted
-upper-left counts, and stratum variances.
+An object of class \code{htest} containing the selected homogeneity
+statistic, degrees of freedom, p-value, Mantel-Haenszel common odds ratio,
+fitted upper-left counts, stratum variances, the unadjusted Breslow-Day
+statistic, and the Tarone correction.
 }
 \description{
 Test whether stratum-specific 2-by-2 odds ratios are compatible with a
@@ -24,12 +28,15 @@ common odds ratio across strata.
 The common odds ratio is estimated with the Mantel-Haenszel cross-product
 estimator. Within each stratum, the fitted upper-left count is the unique
 count compatible with the fixed margins and that common odds ratio. The
-statistic sums squared observed-minus-fitted deviations divided by the
-large-sample conditional variance.
+unadjusted statistic sums squared observed-minus-fitted deviations divided
+by the large-sample conditional variance. With \code{tarone = TRUE}, Tarone's
+correction subtracts the squared sum of observed-minus-fitted deviations
+divided by the sum of their variances.
 }
 \examples{
 x <- array(0, dim = c(2, 2, 2))
 x[, , 1] <- matrix(c(8, 2, 2, 8), 2, byrow = TRUE)
 x[, , 2] <- matrix(c(2, 8, 8, 2), 2, byrow = TRUE)
 pharma_breslow_day_test(x)
+pharma_breslow_day_test(x, tarone = TRUE)
 }
