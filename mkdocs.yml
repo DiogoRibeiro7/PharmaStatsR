@@ -79,6 +79,7 @@ nav:
       - One-way ANOVA: anova.md
       - ANCOVA: ancova.md
       - Stratified CMH test: cmh.md
+      - Mantel-Haenszel common risk ratio: mh-risk-ratio.md
       - Breslow-Day odds-ratio homogeneity: breslow-day.md
       - Woolf odds-ratio homogeneity: woolf.md
       - Paired binary McNemar test: mcnemar.md
