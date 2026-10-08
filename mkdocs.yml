@@ -80,6 +80,7 @@ nav:
       - ANCOVA: ancova.md
       - Stratified CMH test: cmh.md
       - Breslow-Day odds-ratio homogeneity: breslow-day.md
+      - Woolf odds-ratio homogeneity: woolf.md
       - Paired binary McNemar test: mcnemar.md
       - Fisher 2x2 exact test: fisher-exact.md
       - Cochran-Armitage trend test: cochran-armitage.md
