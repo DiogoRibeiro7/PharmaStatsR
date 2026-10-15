@@ -1,0 +1,284 @@
+---
+title: "Data Preparation"
+author: "Diogo Ribeiro"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Preparation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(PharmaStatsR)
+```
+
+## Validate schema
+
+```{r}
+df <- data.frame(
+  SubjectID = c(1L, 1L, 2L),
+  Time = c(0, 1, 0),
+  DV = c(1.1, 1.2, 1.3),
+  WT = c(70, 70, 80)
+)
+validate_data_schema(df)
+```
+
+This checks the table structure: unique, nonempty column names, integer
+`SubjectID`, real numeric `Time` and `DV`, and at least one covariate. It allows
+missing observations. Each preprocessing function separately validates the
+variables it uses; passing the schema check does not make every column suitable
+for every method.
+
+## Impute missing values
+
+```{r}
+df2 <- data.frame(
+  x = c(1, NA, 3),
+  y = c(NA, 4, 5)
+)
+imputed <- impute_mean(df2, c("x", "y"))
+imputed_median <- impute_median(df2, c("x", "y"))
+```
+
+Mean and median imputation accept real numeric vectors. Both treat `NA` and
+`NaN` as missing, reject infinite values, and leave observed values unchanged.
+Constant columns with at least one observation can be imputed. An entirely
+missing target remains unchanged with a warning because there is no observed
+value from which to estimate a replacement. Empty tables remain unchanged.
+
+Selected variable names must be unique, present in the data, and nonmissing.
+Factor, character, logical, matrix, and list columns are not numeric imputation
+targets. Use an empty selection (`character(0)`) to leave the data unchanged.
+
+### Nearest-neighbor imputation
+
+`impute_ml()` supports numeric, logical, character, and factor vectors. Numeric
+targets use the neighbor mean; other targets use the neighbor mode. Factors
+keep their original levels, including unused levels.
+
+```{r}
+neighbors <- data.frame(
+  SubjectID = c(1L, 1000L, 1000L),
+  WT = c(60, 65, 80),
+  group = factor(c("A", NA, "B"), levels = c("A", "B", "C"))
+)
+impute_ml(neighbors, "group", k = 1, predictors = "WT")
+```
+
+The `predictors` argument selects columns for neighbor distances. The example
+uses only weight and returns the full table, including the unchanged subject
+identifiers. With the default `predictors = NULL`, every column other than the
+current target remains a predictor. Identifiers, time, and outcomes are not
+automatically excluded; choose suitable predictors for your analysis explicitly.
+
+One selection is shared across all targets. The current target is always removed
+from its own predictors, so a selection such as `c("WT", "AGE", "CRCL")` can also
+include target columns. Other targets are used as predictors only if included
+in that selection. An explicit `character(0)` selects no predictors; targets
+needing imputation remain unchanged with a warning. Complete targets do not
+produce that warning. Unknown, missing, or duplicate predictor names are rejected
+even when no imputation is needed. Predictor types and values are checked when
+they are used; excluded columns are preserved without influencing distances.
+
+With the default `distance = "euclidean"`, numeric predictors retain their units,
+so large-scale variables can dominate the distance. Character and factor
+predictors use factor codes; this imposes distances that may be inappropriate
+for nominal categories. Review the predictor choices and encoding for your
+analysis. Selecting columns does not change the
+distance metric or standardize their values.
+
+In Euclidean mode, missing predictors are filled internally with their encoded
+column mean, or zero when entirely missing. This does not fill their missing
+values in the returned table unless they are also selected targets. Infinite
+target or used predictor values are rejected. An entirely missing target, or a target without
+any predictor columns, remains unchanged with a warning.
+
+`k` must be a finite positive whole number. If it exceeds the number of comparable
+observed target values, all comparable donors are used. Distance ties follow
+original row order; mode ties use the first value among the selected neighbors.
+Targets are processed in the supplied order, so earlier imputations can affect
+later ones when those targets are also selected predictors.
+Euclidean distance calculation avoids overflow from squaring large values, but
+truly unrepresentable distances still require rescaling the numeric predictors.
+
+#### Mixed predictors with Gower distance
+
+Use `distance = "gower"` for comparisons of mixed predictor types,
+following the [Gower dissimilarity definition](https://stat.ethz.ch/R-manual/R-devel/library/cluster/html/daisy.html).
+
+| Predictor | Contribution |
+| --- | --- |
+| Numeric | Absolute difference divided by the observed range |
+| Ordered factor | As numeric, using the declared level scores |
+| Unordered factor or character | Zero for a match, one for a mismatch |
+| Logical | Symmetric match/mismatch, including a match for two `FALSE` values |
+
+By default, the distance averages contributions with equal weights. Missing predictor
+pairs are omitted; a donor with none available is excluded. Constant numeric
+predictors contribute zero when observed. Ranges use all supplied rows for each
+target, so this is not preprocessing fitted separately within training folds.
+
+```{r}
+mixed <- data.frame(
+  target = c(10, 20, NA),
+  weight = c(60, 90, 65),
+  group = factor(c("A", "B", "A"))
+)
+impute_ml(
+  mixed, "target",
+  k = 1, predictors = c("weight", "group"),
+  distance = "gower"
+)
+```
+
+If no comparable donor exists, the target stays missing and one warning per
+target reports the affected row count. Distances based on different numbers of
+observed predictors are still compared directly. Review missingness and predictor
+choices for the analysis; asymmetric binary treatment is not supported.
+Only selected target values change in the returned table.
+
+#### Control predictor influence
+
+Supply named `weights` to change predictors' relative influence with either
+distance. Unspecified predictors keep weight 1. Names match literal selected
+column names, so their order need not match the data or `predictors`. Weights
+must be finite, nonnegative numbers with unique, nonempty names. Unknown or
+unselected names are rejected, even if no target values are missing.
+
+```{r}
+weighted <- data.frame(
+  target = c(10, 20, NA), x = c(0, 2, 0), z = c(1, 0, 0)
+)
+impute_ml(weighted, "target", k = 1, predictors = c("x", "z"))
+impute_ml(weighted, "target",
+  k = 1, predictors = c("x", "z"),
+  weights = c(z = 9)
+)
+impute_ml(weighted, "target",
+  k = 1, predictors = c("x", "z"),
+  distance = "gower", weights = c(z = 9)
+)
+```
+
+With default Euclidean distance, the first donor is nearest and the missing
+target becomes 10. Weighting `z` by 9 changes the Euclidean distances from 1
+and 2 to 3 and 2, so the second donor supplies 20. Euclidean weights multiply
+squared differences: the distance is proportional to
+`sqrt(sum(weights * differences^2))`. The variables still retain their original
+units and categorical encoding.
+
+Gower uses a weighted mean of the available contributions. A missing predictor
+is omitted from both the numerator and the sum of weights for that pair. In
+the example, the weighted distances are 0.9 and 0.1. A donor must have at least
+one jointly observed predictor with positive weight to be comparable.
+
+Weight 0 excludes a predictor before its type or values are checked, just as
+leaving it out of `predictors` does. If no positive-weight predictors remain
+after excluding the current target, missing targets stay unchanged with a
+warning. The same named weights are used across targets; each target is always
+excluded from its own distance calculation. `weights = NULL` and `numeric(0)`
+retain equal weighting.
+
+Weights change neighbor selection, not the mean or mode of the selected donor
+values. Distance ties follow original row order; mode ties use the first value
+among the selected neighbors. Internal scaling
+limits overflow for large weights; extreme relative scales can still lose
+floating-point precision. Multiplying all predictor weights by the same
+positive factor preserves their relative influence. Weights are supplied by
+the caller; this function does not estimate or tune them from the data.
+
+## Center and scale
+
+```{r}
+cs <- center_scale(imputed, c("x", "y"))
+cs$data
+cs$params
+```
+
+Scaling uses the observed mean and sample standard deviation. Missing values
+remain missing; imputation is a separate choice:
+
+```{r}
+with_missing <- data.frame(x = c(1, NA, 3, 5))
+center_scale(with_missing, "x")
+```
+
+Each selected column needs at least two observed values, a finite mean, and a
+positive finite standard deviation. Constant, entirely missing, singleton,
+and infinite-valued columns raise an error instead of producing invalid scaled
+values. Very large or tiny finite values can also yield an unrepresentable
+standard deviation; change their units before scaling. Unselected columns are
+preserved.
+
+### Reuse scaling parameters on new data
+
+`center_scale()` estimates parameters from the supplied table. For model
+evaluation, call it on the training data and pass its saved `params` to
+`apply_center_scale()` for validation or future observations:
+
+```{r}
+training <- data.frame(SubjectID = 1:3, WT = c(60, 70, 80))
+validation <- data.frame(SubjectID = 4:6, WT = c(90, 100, NA))
+training_scaled <- center_scale(training, "WT")
+validation_scaled <- apply_center_scale(validation, training_scaled$params)
+training_scaled$params
+validation_scaled
+```
+
+The training mean is 70 and its sample standard deviation is 10, so the
+validation weights become 2, 3, and `NA`. No parameters are estimated from
+validation rows. This follows the fixed centering and scaling vectors supported
+by [base R's `scale()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/scale.html).
+
+Parameter rows are matched by literal column name, so their order and the data's
+column order can differ. Parameters require unique variable names, finite means,
+and positive finite standard deviations. Extra parameter columns are ignored.
+The result retains row order, row names, column order, and unselected columns.
+Missing values remain missing. A valid empty parameter table changes nothing.
+
+New data may have zero rows, a single row, constant columns, or entirely missing
+columns: these do not require new estimates. Selected columns must still be real
+numeric vectors with no infinite values. Unknown variables, invalid parameters,
+and unrepresentable transformed values raise errors.
+
+Split subjects before estimating preprocessing parameters when evaluating
+models on new subjects. Repeat the fitting and application steps within each
+training/validation split. The screening functions do not yet automate this
+workflow, and imputation and categorical encoding do not yet have saved recipes
+for new data.
+
+## Prepare a design matrix
+
+`prepare_model_matrix()` preserves the number, order, and names of input rows,
+including rows with missing values. It uses an explicit missing-value policy,
+so changing the global `na.action` option does not change the returned rows.
+
+```{r}
+matrix_data <- data.frame(
+  WT = c(60, NA, 80),
+  group = factor(c("A", "B", NA), levels = c("A", "B", "C")),
+  row.names = c("first", "second", "third")
+)
+design <- prepare_model_matrix(matrix_data, c("WT", "group"))
+design
+dim(prepare_model_matrix(matrix_data, character(0)))
+```
+
+The matrix has no intercept. Numeric covariates contribute one column;
+categorical terms use R's contrast rules, with the first categorical term using
+full indicator coding. Declared factor levels, including unused levels, are
+preserved. Character columns derive their levels from observed values. A factor
+needs at least two declared levels; a character column needs at least two
+observed categories. Logical columns use `FALSE` and `TRUE` levels.
+
+Infinite values and unsupported types such as list or matrix columns are
+rejected. Constant numeric columns are allowed, and no rank check is performed
+here. An empty selection produces one row per input row and zero columns.
+This helper does not impute data or record an encoding recipe to apply to future
+data; keep factor levels and contrast settings consistent yourself.
+
+By comparison, `fit_covariate_model()` excludes rows missing its response,
+subject identifier, or covariates using `na.exclude`. Its fitted model retains
+native `nlme` behavior, including padding residuals for excluded observations.

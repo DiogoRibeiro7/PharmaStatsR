@@ -1,0 +1,39 @@
+---
+title: "Quickstart"
+author: "Diogo Ribeiro"
+affiliation: "ESMAD - Instituto Politécnico do Porto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quickstart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This article provides a short example of preprocessing, Bayesian covariate
+screening, mixed-effects fitting, and diagnostics using **PharmaStatsR**.
+
+```{r, fig.alt="Simulated observed responses against mixed-effects fitted values."}
+library(PharmaStatsR)
+
+# using the example dataset bundled with the package
+data(pharmo_example)
+
+# introduce a missing value and impute with KNN model
+pharmo_example$WT[1] <- NA
+covariates <- c("WT", "AGE", "CRCL")
+imp <- impute_ml(
+  pharmo_example, c("WT", "AGE"),
+  k = 5, predictors = covariates
+)
+
+# Bayesian screening
+sel <- screen_covariates_bayesian(imp, "DV", c("WT", "AGE", "CRCL"), min_bf = 3)
+
+# fit and create a diagnostic plot
+model <- fit_covariate_model(imp, "DV", "SubjectID", sel)
+plot_obs_vs_pred(model, imp)
+```

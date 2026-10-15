@@ -124,6 +124,7 @@ nav:
       - Audit log integrity: audit-log.md
       - Reporting and monitoring scope: claims-audit.md
       - Model diagnostics: model-diagnostics.md
+      - Covariate workflows and migration: covariate-migration.md
       - Configuration and registries: configuration-registries.md
       - Limitations and validation: limitations.md
   - Development:

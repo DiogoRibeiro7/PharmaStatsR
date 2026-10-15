@@ -1,5 +1,9 @@
 # PharmaStatsR roadmap
 
+## Covariate module consolidation
+
+[Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) brings the complete pharmoCovR module into this package with its existing APIs and regression tests. See the [migration guide](docs/covariate-migration.md). Follow-up work includes preprocessing within training folds, reusable imputation/encoding recipes, nonstandard names in native mixed models, covariate-aware nonlinear models, simulation-based predictive checks, and browser accessibility checks. The integration does not resolve the release-candidate gate.
+
 **Status (5 October 2026):** active development, version 0.1.63; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. The [API support policy](docs/api-support-policy.md) classifies all public exports; the exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for the tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.

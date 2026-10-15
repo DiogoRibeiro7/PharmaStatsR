@@ -56,3 +56,7 @@ Other exported functions cover design, simulation, reporting, diagnostics, and o
 5. Review [limitations and validation](limitations.md) for project-wide constraints.
 
 A passing package check establishes that software examples and tests ran in that environment. It does not certify the statistical method for a particular study.
+
+## Covariate preprocessing and pharmacometric workflows
+
+The [consolidated covariate module](covariate-migration.md) covers weighted nearest-neighbor imputation, reusable scaling, AIC/BIC/LASSO screening, random-intercept fitting, reshape helpers, plots, an app, and reports. The guide distinguishes these functions from the existing multiple-imputation and mixed-model APIs and explains migration from pharmoCovR.

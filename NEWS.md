@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Consolidate the complete pharmoCovR module into PharmaStatsR: 18 functions, weighted Euclidean/Gower imputation, scaling, screening, model fitting, reshape helpers, diagnostics, reports, simulated data, five vignettes, and the regression suite. Existing function names and arguments are preserved; replace the package name with PharmaStatsR in library(), qualified calls, and data() calls. No runtime dependency on pharmoCovR. See docs/covariate-migration.md for provenance, overlap, support levels, dependencies, and method limits.
 - Add `pharma_mh_risk_ratio()` for a stratified cohort-style Mantel-Haenszel common risk ratio with Greenland-Robins log-scale variance. The fixed three-stratum reference derives R/S/T components, RR = 23/9, Var(log RR) = 2/23, reciprocal row-swap behavior, confidence-level handling, and zero-event boundaries. No new dependency.
 - Add `pharma_woolf_test()` for inverse-variance homogeneity testing of stratum log odds ratios. The independent three-stratum reference fixes the log odds ratios, variances, weights, pooled log odds ratio, Q statistic, stratum-order invariance, identical-strata boundary, and zero-cell rejection. No new dependency.
 - Extend `pharma_breslow_day_test()` with optional Tarone adjustment via `tarone = TRUE`, while preserving the unadjusted default. The fixed three-stratum reference records the common odds ratio 8/3, unadjusted statistic 10.9935914671, correction 0.1178429868, adjusted statistic 10.8757484803, and stratum-order invariance. No new dependency.

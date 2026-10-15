@@ -24,6 +24,12 @@ An alternative for local development is `devtools::load_all()` from the reposito
 
 The repository and R package were previously named `PharmaTestSuite`. Reinstall from the URL above and replace `library(PharmaTestSuite)` with `library(PharmaStatsR)` and `citation("PharmaTestSuite")` with `citation("PharmaStatsR")` in existing scripts. Exported `pharma_*` function names have not changed.
 
+## Covariate workflows from pharmoCovR
+
+PharmaStatsR now includes pharmoCovR's 18 functions for preprocessing, weighted nearest-neighbor imputation, covariate screening, mixed-model fitting, reshape helpers, diagnostic plots, a Shiny app, and reports. The implementation, tests, and five vignettes live in this package; pharmoCovR is not a runtime dependency.
+
+Existing scripts can replace `library(pharmoCovR)` with `library(PharmaStatsR)` and `pharmoCovR::` with `PharmaStatsR::`, retaining function names and arguments. Load the simulated data with `data("pharmo_example", package = "PharmaStatsR")`. See the [migration and method guide](docs/covariate-migration.md) for examples, dependencies, overlap with existing methods, and limitations.
+
 ## Quick start
 
 ```r
@@ -47,7 +53,7 @@ For worked examples and assumptions, read the [method guide](https://diogoribeir
 
 ## Project status and documentation
 
-The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. The P0 and P1 scope reviews, including [documentation reconciliation](docs/documentation-reconciliation.md), are closed within their stated scope. The [method-evidence batch record](docs/evidence-batches.md) reconciles the completed #129–#131 and #136–#138 reference batches, links their inspected final-PR checks, and defines the diagnostics/resampling batch (#143–#145). Its first implementation adds [independent unweighted linear-model diagnostics](docs/model-diagnostics.md); wild-bootstrap and permutation references remain queued. The [API support policy](docs/api-support-policy.md) classifies all 72 exports: two narrow stable column-check helpers, 58 experimental APIs, ten example-only exports, and two callable historical names proposed for future deprecation. All statistical methods are experimental. The [release candidate checklist](docs/release-candidate.md) and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) record the latest reviewed merged-commit source check; actual receipt at the designated maintainer address, the final version, candidate-comment review, and a tag decision remain. Closed issues cover their stated scope, not a package-wide clinical validation.
+The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. The P0 and P1 scope reviews, including [documentation reconciliation](docs/documentation-reconciliation.md), are closed within their stated scope. The [method-evidence batch record](docs/evidence-batches.md) reconciles the completed #129–#131 and #136–#138 reference batches, links their inspected final-PR checks, and defines the diagnostics/resampling batch (#143–#145). Its first implementation adds [independent unweighted linear-model diagnostics](docs/model-diagnostics.md); wild-bootstrap and permutation references remain queued. The [API support policy](docs/api-support-policy.md) classifies all 101 exports: two narrow stable column-check helpers, 86 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only. The [release candidate checklist](docs/release-candidate.md) and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) record the latest reviewed merged-commit source check; actual receipt at the designated maintainer address, the final version, candidate-comment review, and a tag decision remain. Closed issues cover their stated scope, not a package-wide clinical validation.
 
 The documentation source is in [`docs/`](docs/) with [`mkdocs.yml`](mkdocs.yml). GitHub Actions checks the MkDocs build on documentation pull requests and deploys the site to [GitHub Pages](https://diogoribeiro7.github.io/PharmaStatsR/) after relevant changes reach `main`. See the [documentation workflow](.github/workflows/docs.yml) and [local build instructions](https://diogoribeiro7.github.io/PharmaStatsR/development/#documentation-site).
 

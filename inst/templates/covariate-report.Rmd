@@ -1,0 +1,33 @@
+---
+title: "Pharmacometrics Report"
+output: html_document
+params:
+  model: NULL
+  data: NULL
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Summary
+
+The following table summarizes parameter estimates.
+
+```{r}
+if (requireNamespace("broom.mixed", quietly = TRUE)) {
+  broom.mixed::tidy(params$model)
+} else {
+  as.data.frame(summary(params$model)$tTable)
+}
+```
+
+# Diagnostics
+
+```{r, fig.width=7, fig.height=4}
+PharmaStatsR::plot_obs_vs_pred(params$model, params$data)
+```
+
+```{r, fig.width=7, fig.height=4}
+PharmaStatsR::plot_residuals(params$model)
+```

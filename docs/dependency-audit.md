@@ -6,7 +6,7 @@ Issue [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) tracks this
 
 | `DESCRIPTION` tier | Packages | Use |
 | --- | --- | --- |
-| `Imports` | `stats`, `utils`, `parallel`, `survival`, `nlme`, `broom`, `gsDesign` | Statistics and data helpers; survival models; mixed Emax; tidy model tables; sequential designs. These are installed with the package. |
+| `Imports` | `stats`, `utils`, `parallel`, `survival`, `nlme`, `broom`, `gsDesign`, `glmnet`, `tidyr`, `ggplot2`, `tidyselect` | Statistics and data helpers; survival models; mixed Emax; tidy model tables; sequential designs; covariate screening, reshaping, and plots. These are installed with the package. |
 | `Suggests` for checks and builds | `testthat`, `knitr`, `rmarkdown` | Tests and the vignette toolchain. `rmarkdown` also launches the example dashboards. |
 
 The development script `./setup.sh` installs its own test tools through `scripts/run_tests.R`. It no longer treats `openssl`, a Suggested runtime backend, as a prerequisite for the local test command. Tests for optional paths skip the available-backend case when the backend is absent; deterministic missing-backend tests should run regardless of what CI installed.
@@ -37,3 +37,7 @@ The test names below are in `tests/testthat/`. Every unavailable path is forced 
 | `rmarkdown`, `flexdashboard`, `shiny` | `pharma_dashboard(launch = TRUE)`, `pharma_interim_dashboard(launch = TRUE)` | `test-dashboard.R` forces each package for both entry points. | `test-dashboard.R` checks path forwarding with the runner mocked; selected PR job. Retrieving a path with `launch = FALSE` needs none of these packages. |
 
 The [routine PR checks](development.md#package-checks) include a required-dependencies job and a selected-backend job. The all-Suggests matrix verifies and logs every declared Suggested R package before running the package check, and audits source declarations on each matrix platform. A green routine PR run does not establish the `rstanarm` or guaranteed `lme4` installed paths. The dashboard tests do not open an interactive Shiny server. Record an all-Suggests run on the candidate commit under [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) before treating the optional integration evidence as release-ready. `caret` may request additional model engines for methods other than the explicitly tested `glm` candidate.
+
+## Consolidated covariate integrations
+
+The [covariate module](covariate-migration.md) uses optional `shiny` for its app and `rmarkdown`/`knitr` for reports (Pandoc required; PDF also needs LaTeX). `broom.mixed` optionally tidies report coefficients with a native-summary fallback. `nlmixr2est` fits the fixed nonlinear example and `nlmixr2data` supplies its example data. `cluster` is used only for independent Gower comparison tests and is explicitly installed in the selected-backend PR job. The all-Suggests matrix installs these backends. The `test-covariate-*.R` suite exercises the imported behavior and report/app resources under PharmaStatsR.
