@@ -282,4 +282,3 @@ data; keep factor levels and contrast settings consistent yourself.
 By comparison, `fit_covariate_model()` excludes rows missing its response,
 subject identifier, or covariates using `na.exclude`. Its fitted model retains
 native `nlme` behavior, including padding residuals for excluded observations.
-
