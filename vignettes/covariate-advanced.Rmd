@@ -1,0 +1,260 @@
+---
+title: "Advanced Usage"
+author: "Diogo Ribeiro"
+affiliation: "ESMAD - Instituto Politécnico do Porto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This article demonstrates how to work with time-varying covariates, compare
+screening approaches, and launch the interactive diagnostics app.
+
+```{r}
+library(PharmaStatsR)
+set.seed(123)
+data(pharmo_example)
+```
+
+## Compare Screening Methods
+
+These screening methods fit ordinary regression models, which do not model
+within-subject correlation. LASSO can hold out entire subjects during
+cross-validation using `id`. The BIC approach compares candidates separately;
+it is not a joint Bayesian model. Use these outputs as exploratory candidates
+for a reviewed model specification.
+
+```{r}
+covs <- c("WT", "AGE", "CRCL")
+sel_step <- screen_covariates_stepwise(pharmo_example, "DV", "SubjectID", covs)
+sel_lasso <- screen_covariates_lasso(
+  pharmo_example, "DV", covs,
+  id = "SubjectID", nfolds = 5
+)
+sel_bayes <- screen_covariates_bayesian(pharmo_example, "DV", covs, min_bf = 3)
+
+list(stepwise = sel_step, lasso = sel_lasso, bayesian = sel_bayes)
+```
+
+### AIC/BIC input requirements
+
+Stepwise and BIC screening accept a real numeric response and numeric, logical,
+character, or factor candidates. They filter rows once using the response and
+**all** candidates, so every model comparison uses the same observations.
+Missing values in unrelated columns, including the stepwise subject identifier,
+do not remove rows. Numeric values must be finite on the retained rows.
+
+At least three rows must remain, and both the response and each candidate must
+vary on those rows. A factor can become constant after filtering even when it
+varies in the original table. Such inputs now raise an error with the affected
+column name. Review or remove unsuitable candidates explicitly before retrying.
+Unused factor levels are dropped, and character candidates are treated as
+factors. These minimum checks do not resolve collinearity or guarantee that a
+large model can be estimated from a small sample.
+
+Column names are literal names, not formula expressions. For example, a column
+called `dose + weight` is one candidate, and a selected categorical column is
+returned as a whole term rather than individual contrast coefficients:
+
+```{r}
+set.seed(42)
+literal_names <- data.frame(
+  SubjectID = seq_len(100),
+  "dose + weight" = rnorm(100),
+  "treatment group" = factor(rep(c("A", "B"), 50)),
+  check.names = FALSE
+)
+literal_names[["drug response"]] <-
+  5 * literal_names[["dose + weight"]] +
+  3 * (literal_names[["treatment group"]] == "B") + rnorm(100)
+
+screen_covariates_stepwise(
+  literal_names, "drug response", "SubjectID",
+  c("dose + weight", "treatment group")
+)
+screen_covariates_bayesian(
+  literal_names, "drug response", c("dose + weight", "treatment group")
+)
+```
+
+Column and candidate names must be unique; the response cannot also be a
+candidate. An empty candidate selection returns `character(0)` without fitting.
+The BIC `min_bf` threshold must always be a finite positive numeric scalar,
+including when the candidate selection is empty. An empty result after screening
+means that no candidate met the selection criterion; unusable data raises an
+error instead. Literal-name support described here applies to these two
+screening functions; model-fitting wrappers still require syntactic names.
+
+## Reuse a subject-level split
+
+Generate fold labels once at the subject level and map them to the original
+rows. The same split can then be reused when comparing LASSO and elastic net.
+`foldid` takes precedence over `nfolds`; supplying `id` as well rejects any
+assignment that splits a retained subject across folds.
+
+```{r}
+subjects <- unique(pharmo_example$SubjectID)
+set.seed(123)
+subject_folds <- sample(rep(1:5, length.out = length(subjects)))
+folds <- subject_folds[match(pharmo_example$SubjectID, subjects)]
+
+lasso <- screen_covariates_lasso(
+  pharmo_example, "DV", covs,
+  id = "SubjectID", foldid = folds
+)
+elastic_net <- screen_covariates_lasso(
+  pharmo_example, "DV", covs,
+  alpha = 0.5,
+  id = "SubjectID", foldid = folds
+)
+list(lasso = lasso, elastic_net = elastic_net)
+```
+
+Keep one fold label for every original row, including rows with missing
+responses or candidates. The wrapper removes incomplete rows and their fold
+labels together, then renumbers the surviving labels. At least three folds
+must remain. When generating random folds, choose `nfolds` no larger than the
+number of retained subjects (or rows when `id` is omitted).
+
+The split balances subject counts, not observation counts. Cross-validation
+still uses the backend's observation-weighted error, so subjects with more
+records have more weight. Grouping does not refit preprocessing: imputation or
+feature transformations supplied before this call are shared across folds.
+For model evaluation, fit preprocessing on each training fold separately in
+an evaluation workflow. See the [glmnet reference](https://search.r-project.org/CRAN/refmans/glmnet/html/cv.glmnet.html)
+for details of the underlying cross-validation calculation.
+
+## Validate a mixed-effects fit
+
+`fit_covariate_model()` fits additive fixed effects and a random subject
+intercept using the default REML method in `nlme`. Its response must be numeric;
+the subject identifier and covariates can be numeric, logical, character, or
+factor vectors. Response, identifier, and covariate roles must be distinct.
+An empty covariate selection fits an intercept-only fixed-effects model.
+
+Rows missing any required value are excluded with `na.exclude`. On the retained
+rows, numeric values must be finite and the response must vary. At least three
+rows and two subjects must remain, with repeated observations for at least one
+subject. The fixed-effects design must have full column rank and more rows than
+coefficients. Constant or redundant predictors, or categorical predictors that
+lose all variation after exclusion, need to be reviewed before fitting.
+These checks do not guarantee convergence or establish scientific adequacy.
+
+Unlike AIC/BIC screening, the underlying `nlme` fitting and prediction machinery
+requires syntactic names. Quoting a name containing spaces is insufficient.
+The wrapper reports unsupported names before building formulas; names `.`,
+`...`, and `..1`, `..2`, etc. are also unsupported. Rename columns explicitly
+and use the resulting names consistently for fitting and future predictions:
+
+```{r}
+model_data <- pharmo_example
+names(model_data)[names(model_data) == "WT"] <- "body mass"
+names(model_data) <- make.names(names(model_data), unique = TRUE)
+
+model <- fit_covariate_model(
+  model_data, "DV", "SubjectID", c("Time", "body.mass", "AGE")
+)
+nlme::fixef(model)
+head(predict(model, newdata = model_data))
+```
+
+The result is a native `lme` object. Standard prediction and residual methods
+remain available, and `model$data` retains the supplied data. Residuals are
+padded for excluded rows. Prediction on new data follows `predict.lme()` rules,
+including its handling of missing predictors and previously unseen subjects.
+
+## Reshape Time-Varying Covariates
+
+```{r}
+long_data <- pharmo_example[, c("SubjectID", "Time", "WT")]
+wide <- reshape_timevarying(long_data, covariates = "WT")
+back_long <- reshape_timevarying(wide, covariates = "WT")
+head(back_long)
+```
+
+The function detects long format when the time column and every selected
+covariate are present. Otherwise, it reads wide columns named
+`<covariate>_<time label>`. Covariate names are literal, and the complete suffix
+is kept as the time label:
+
+```{r}
+visits <- data.frame(
+  SubjectID = c(1L, 1L),
+  Time = c("pre_dose", "post_dose"),
+  dose_rate = c(2, 3),
+  "WT(kg)" = c(70, 71),
+  check.names = FALSE
+)
+visit_wide <- reshape_timevarying(visits, c("dose_rate", "WT(kg)"))
+visit_wide
+reshape_timevarying(visit_wide, c("dose_rate", "WT(kg)"))
+```
+
+Names containing spaces or punctuation also work for `id` and `time_var`.
+Selections must be nonempty and unique, and every selected covariate must be
+represented. Identifier, time, and covariate names must differ. If the time
+column exists but some selected covariates are absent, the input is rejected
+instead of guessing its format.
+
+Each wide column must match exactly one selected covariate prefix. For example,
+`x_y_0` is ambiguous when selecting both `x` and `x_y`: it could mean `x` at
+`y_0` or `x_y` at `0`. Rename the covariates or reshape them separately in that
+case. Empty time suffixes and output-name collisions also raise errors.
+
+All columns other than time and the selected covariates identify wide rows.
+Duplicate combinations of these identifying columns and time raise an error;
+the helper does not aggregate repeated measurements. Metadata may distinguish
+multiple rows for one subject. Retained metadata names must not start with a
+selected covariate plus `_`, because those names would be read as repeated
+measurements on the return trip. The explicitly selected `id` is exempt and
+is always retained.
+
+The pivot keeps explicit missing values and fills missing covariate/time
+combinations with missing values. Consequently, sparse input can gain rows or
+cells on a round trip. Long input requires at least one nonmissing, nonempty
+time value; a wide table with zero rows can still supply its mapping through
+column names.
+
+Numeric-looking time labels are converted to numbers only when this keeps
+distinct labels distinct and does not create missing values. Labels such as
+`01` and `1` remain character when both occur, and literal `NA` and `NaN` labels
+remain text. Original factor, date, and other time classes are not stored in
+wide column names; restore the intended time class explicitly when needed.
+
+## Interactive Diagnostics App
+
+```{r eval=FALSE}
+model <- fit_covariate_model(pharmo_example, "DV", "SubjectID", c("WT", "AGE"))
+run_diagnostics_app(model, pharmo_example)
+```
+
+Launch `run_diagnostics_app()` without arguments to upload a CSV. Required
+columns are `SubjectID`, `Time`, and `DV`; additional covariates are optional.
+Column names must be unique, and the uploaded names are preserved. Time and DV
+must be numeric with no infinite values. Rows missing SubjectID, Time, or DV
+are excluded from the built-in fit and prediction plots, while the original
+loaded data are retained. Missing unused covariates do not exclude a row.
+Preloaded data receive the same structural validation before the app launches.
+
+Click **Fit model** to fit DV by Time with a random intercept for each subject.
+This button uses that fixed specification even when other covariates are
+present. To inspect a different fitted model, supply it with its corresponding
+data when launching the app, as in the example above.
+
+Upload and fitting errors appear in the status panel with the reason for the
+failure. Each new upload clears the previous model. If the upload fails, the
+previous data are also cleared, so old diagnostics cannot be mistaken for the
+new file's results. A failed refit clears the old model while retaining the
+loaded data. Upload corrected data and fit again to recover without restarting
+the app.
+
+The **Binned summary** tab shows observed percentiles and fitted medians. It
+does not simulate predictive uncertainty. Choose a whole number of time bins
+of at least two; changing the bins redraws the summary without refitting the
+model. Invalid bin values show a message in that plot and leave the fit intact.

@@ -1,0 +1,80 @@
+---
+title: "Diagnostics"
+author: "Diogo Ribeiro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Diagnostics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This vignette demonstrates plotting diagnostics for a fitted model.
+
+```{r}
+library(PharmaStatsR)
+set.seed(123)
+example_data <- data.frame(
+  SubjectID = rep(1:5, each = 2),
+  Time = rep(0:1, times = 5),
+  DV = rnorm(10),
+  WT = rnorm(10, 70, 5)
+)
+model <- fit_covariate_model(example_data, "DV", "SubjectID", "Time")
+```
+
+## Observed vs Predicted
+
+```{r, fig.alt="Observed responses against fitted values with an identity line."}
+plot_obs_vs_pred(model, example_data)
+```
+
+## Residuals
+
+```{r, fig.alt="Raw and normalized residuals plotted against observation time."}
+plot_residuals(model)
+```
+
+## Binned observed and fitted values
+
+`plot_vpc()` plots the observed 5th, 50th, and 95th percentiles together with
+the median fitted value in each time bin. Its ribbon describes the observed
+data, not predictive uncertainty. No new observations are simulated; a formal
+simulation-based visual predictive check requires a separate workflow.
+
+```{r, fig.alt="Observed percentile ribbon and fitted medians across time bins."}
+plot_vpc(model, example_data, bins = 2)
+```
+
+## Export a report
+
+`generate_report()` combines parameter estimates and diagnostic plots into an
+HTML or PDF file. Supply the fitted model and its diagnostic data:
+
+```{r eval=FALSE}
+report_path <- generate_report(
+  model, example_data,
+  output_file = "reports/analysis.html"
+)
+pdf_path <- generate_report(
+  model, example_data,
+  output_format = "pdf_document",
+  output_file = "reports/analysis.pdf"
+)
+```
+
+Relative paths are resolved from the working directory in which you call the
+function. Absolute paths are also accepted, and missing parent directories are
+created. If you omit a filename extension, the renderer adds one for the chosen
+format. The return value is the absolute path of the file actually produced;
+existing files at that destination may be overwritten. A directory alone is
+not a valid output filename.
+
+With `output_file = NULL`, the report is saved to a temporary file. Rendering
+uses a separate temporary copy of the installed template, so it does not
+require write access to the package directory. Intermediate files are cleaned
+up after success or failure. HTML includes its plot images; PDF requires a
+LaTeX installation in addition to Pandoc. Both formats require `rmarkdown`.

@@ -2,7 +2,10 @@
 
 # Run the package's unit tests with a small, explicit dependency set. Optional
 # modelling backends are covered by tests when installed, and guarded otherwise.
-required <- c("devtools", "testthat", "broom", "gsDesign")
+required <- c(
+  "devtools", "testthat", "broom", "gsDesign",
+  "glmnet", "tidyr", "ggplot2", "tidyselect"
+)
 missing <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
 
 if (length(missing) > 0L && identical(Sys.getenv("SKIP_R_INSTALL"), "1")) {

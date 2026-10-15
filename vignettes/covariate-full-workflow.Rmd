@@ -1,0 +1,107 @@
+---
+title: "Full Workflow"
+author: "Diogo Ribeiro"
+affiliation: "ESMAD - Instituto Politécnico do Porto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Full Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This vignette demonstrates an end-to-end analysis using **PharmaStatsR**. We load the example dataset, perform preprocessing, screen covariates, fit a model, generate diagnostics, and finally create a report.
+
+## Load and validate data
+
+```{r}
+library(PharmaStatsR)
+set.seed(123)
+
+# load packaged example data
+data(pharmo_example)
+
+# ensure required columns and types
+validate_data_schema(pharmo_example)
+```
+
+## Impute, center and scale
+
+```{r}
+# for illustration, introduce some missing values
+pharmo_example$WT[1] <- NA
+pharmo_example$AGE[2] <- NA
+
+# Use only covariates as imputation targets and predictors.
+covariates <- c("WT", "AGE", "CRCL")
+imputed <- impute_ml(
+  pharmo_example, c("WT", "AGE"),
+  k = 5, predictors = covariates
+)
+cs <- center_scale(imputed, c("WT", "AGE"))
+```
+
+## Covariate screening
+
+Hold out entire subjects when selecting the LASSO penalty. The preprocessing
+above is illustrative and uses the full dataset; an evaluation workflow should
+fit preprocessing separately within each training fold.
+
+```{r}
+# compare screening outputs
+selected_lasso <- screen_covariates_lasso(
+  cs$data,
+  response = "DV",
+  covariates = c("WT", "AGE", "CRCL"),
+  id = "SubjectID",
+  nfolds = 5
+)
+selected_bayes <- screen_covariates_bayesian(
+  cs$data,
+  response = "DV",
+  covariates = c("WT", "AGE", "CRCL"),
+  min_bf = 3
+)
+
+list(lasso = selected_lasso, bayesian = selected_bayes)
+```
+
+## Fit mixed-effects model
+
+```{r}
+selected <- unique(c(selected_lasso, selected_bayes))
+model <- fit_covariate_model(
+  cs$data,
+  response = "DV",
+  id = "SubjectID",
+  covariates = selected
+)
+summary(model)
+```
+
+## Diagnostics
+
+```{r fig.width=6, fig.height=4, fig.alt="Observed responses against fitted values."}
+plot_obs_vs_pred(model, cs$data)
+```
+
+```{r fig.width=6, fig.height=4, fig.alt="Raw and normalized residuals over time."}
+plot_residuals(model)
+```
+
+## Interactive diagnostics (Shiny)
+
+```{r, eval=FALSE}
+run_diagnostics_app(model, cs$data)
+```
+
+## Generate report
+
+```{r, eval=FALSE}
+if (requireNamespace("rmarkdown", quietly = TRUE)) {
+  generate_report(model, cs$data)
+}
+```
