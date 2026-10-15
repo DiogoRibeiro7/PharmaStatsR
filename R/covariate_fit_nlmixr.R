@@ -44,10 +44,18 @@ prepare_nlmixr_data <- function(data, response, id, covariates) {
 #'   validated for presence but not used by the internal example model.
 #'
 #' @return An object of class `nlmixr2FitData` from the SAEM fit.
+#' @details The example performs a full stochastic approximation
+#'   expectation-maximization (SAEM) fit and can take more than five seconds.
+#'   Run it explicitly with
+#'   `example("fit_nlmixr_model", package = "PharmaStatsR", run.donttest = TRUE)`.
 #' @examples
+#' \donttest{
+#' # A full SAEM fit is a lengthy example; estimation defaults are unchanged.
 #' if (requireNamespace("nlmixr2est", quietly = TRUE) &&
 #'   requireNamespace("nlmixr2data", quietly = TRUE)) {
-#'   fit_nlmixr_model(nlmixr2data::theo_sd, "DV", "ID", character(0))
+#'   fit <- fit_nlmixr_model(nlmixr2data::theo_sd, "DV", "ID", character(0))
+#'   head(fit$PRED)
+#' }
 #' }
 #' @export
 fit_nlmixr_model <- function(data, response, id, covariates) {

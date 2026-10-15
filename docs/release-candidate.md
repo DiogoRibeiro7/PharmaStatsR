@@ -56,6 +56,19 @@ This receipt applies only to `65bc1be`. The documentation refresh itself changes
 packaged README/NEWS content, so a later merged commit needs its own matrix,
 artifact, hash, and note review before it can become a final candidate.
 
+### Follow-up: classify the lengthy SAEM example
+
+The `fit_nlmixr_model()` help now marks its full SAEM example with
+`\donttest{}`, following the [CRAN guidance for lengthy examples](https://contributor.r-project.org/cran-cookbook/general_issues.html#structuring-of-examples).
+The estimator, default iterations, example dataset, and backend integration
+test remain unchanged. `R CMD check --as-cran` runs the lengthy example in its
+separate `checking examples with --run-donttest` pass. Verify that pass as well
+as the full-data test when reviewing the new all-Suggests artifact.
+
+The two notes above remain the historical result for `65bc1be`. Do not reuse
+that result or hash for the changed source; record the final merged check and
+its actual notes before a release decision.
+
 ## One commit, one source package
 
 1. Finish metadata, help, tests, vignette, NEWS, and the prospective [`cran-comments.md`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/cran-comments.md) on a PR. The package maintainer must verify that the existing address in `DESCRIPTION` can receive CRAN correspondence and that the recorded institutional affiliation is current. Any change to the public contact fields needs the maintainer's choice.
@@ -69,7 +82,7 @@ artifact, hash, and note review before it can become a final candidate.
 | Metadata: author/contact, package title, URLs, MIT license, dependencies, citation, NEWS | Title and project URLs reviewed; maintainer designated the public address and current affiliation. Check mail receipt and choose the final version before tagging. |
 | Built tarball contents, SHA-256, examples, tests, vignettes, CRAN-style check | Reviewed for `65bc1be` above. Repeat for the final merged source after this documentation refresh. |
 | macOS/Windows R release, Ubuntu R old release/devel, Ubuntu all-Suggests | All five passed on `65bc1be`; the full job also checked PDF/HTML manuals. |
-| `cran-comments.md` with environments and explained NOTEs | Draft records both notes from `65bc1be`. Review the nlmixr2 example runtime, then update for the final source. |
+| `cran-comments.md` with environments and explained NOTEs | Draft records the historical notes and the lengthy-example change. Verify the separate `--run-donttest` pass and update the notes for the final merged source. |
 | Candidate tag and [#21 portfolio tracker](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) | Select the final source/version and record the maintainer's separate release decision in #58. No new tag or submission follows from this receipt. |
 
 ## Policy review before submission

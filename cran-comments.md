@@ -18,7 +18,19 @@ The notes are:
 - **New submission**, from CRAN incoming feasibility.
 - **Example runtime**: `fit_nlmixr_model()` used 9 seconds elapsed and 13.166 seconds CPU in this run. Its optional SAEM example needs runtime review or reduction before submission; no exception has been accepted by this record.
 
-The README/NEWS changes in this documentation refresh alter the packaged source. Run the full matrix on the final merged SHA, inspect that artifact, and replace this baseline evidence before submission. A matching version number does not mean two tarballs are identical.
+## Lengthy-example follow-up
+
+The full `fit_nlmixr_model()` help example is now marked with `\donttest{}` in
+accordance with [CRAN's guidance for lengthy examples](https://contributor.r-project.org/cran-cookbook/general_issues.html#structuring-of-examples).
+`R CMD check --as-cran` still executes it in the separate `--run-donttest` pass.
+The original full-data integration test remains enabled when the backend is
+installed; the model, estimation defaults, and example data are unchanged.
+
+The two-note result above describes the historical `65bc1be` baseline. Run the
+full matrix on the final merged SHA, verify successful ordinary and
+`--run-donttest` example passes, inspect that artifact, and replace this baseline
+evidence with its actual notes before submission. A matching version number
+does not mean two tarballs are identical.
 
 ## Additional release review
 

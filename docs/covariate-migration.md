@@ -119,6 +119,26 @@ standalone launcher is installed at `shiny/covariate_diagnostics_app.R`;
 `run_diagnostics_app()` remains the public entry point. Generated HTML reports
 from the old repository are not shipped as input data.
 
+### Running the nonlinear example
+
+The `fit_nlmixr_model()` help example performs a full SAEM fit on dosing-event
+data from `nlmixr2data::theo_sd`. It uses the backend's estimation defaults and
+can take more than five seconds. The help marks it with `\donttest{}`, the
+[CRAN convention for lengthy examples](https://contributor.r-project.org/cran-cookbook/general_issues.html#structuring-of-examples).
+Run it explicitly after installing `nlmixr2est` and `nlmixr2data`:
+
+```r
+example("fit_nlmixr_model", package = "PharmaStatsR", run.donttest = TRUE)
+```
+
+Ordinary `R CMD check` skips that block by default; the repository's
+`R CMD check --as-cran` also executes examples in a separate `--run-donttest`
+pass. The full-data [backend integration test](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-nlmixr-helpers.R)
+still fits the same dosing data and checks the fitted class, nonempty result,
+and finite predictions whenever both optional packages are installed. These
+checks exercise the fitting path; they do not establish parameter recovery or
+model validity. The required-dependency jobs may skip this optional backend.
+
 ## Worked vignettes and evidence
 
 PharmaStatsR contains six vignettes: the original `pharma_workflow` plus
