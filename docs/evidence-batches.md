@@ -8,9 +8,10 @@ the [API support policy](api-support-policy.md) remains unchanged.
 As of 15 October 2026, all batches below are complete. Subsequent method
 additions and the covariate consolidation are recorded in the
 [roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) and
-[inventory](method-inventory.md). The current [release evidence](release-candidate.md)
-is tied to merged `65bc1be`; the older PR-head checks below remain historical
-evidence for their named batches.
+[inventory](method-inventory.md). The [release evidence](release-candidate.md)
+records a separately reviewed merged source; subsequent receipts are tracked
+in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). The older
+PR-head checks below remain historical evidence for their named batches.
 
 ## Completed batch: #129–#131
 
