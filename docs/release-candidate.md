@@ -1,6 +1,60 @@
 # Release candidate evidence
 
-Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a prospective CRAN candidate. This page defines the gate; it does **not** declare version 0.1.63 ready or authorize submission. The [API policy](api-support-policy.md) still marks all statistical methods experimental.
+Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a prospective CRAN candidate. This page records checked development evidence and the remaining gate. Version 0.1.63 is **not declared ready for submission**. The [API policy](api-support-policy.md) classifies statistical methods as experimental or example-only.
+
+## Reviewed development baseline: 15 October 2026
+
+[PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195) consolidated
+pharmoCovR into merged commit
+[`65bc1be17fc150e1af42eab6c2b6b33d7f167046`](https://github.com/DiogoRibeiro7/PharmaStatsR/commit/65bc1be17fc150e1af42eab6c2b6b33d7f167046).
+This supersedes the 7 October `7057b1b` candidate evidence for the current package:
+that earlier tarball does not contain the consolidated module or subsequent
+methods. The version number alone does not identify the checked source.
+
+All five jobs in [matrix run 38801594182](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182)
+passed on `65bc1be`:
+
+| Environment | Result |
+| --- | --- |
+| [macOS / R release / required](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/job/116651727912) | Passed |
+| [Windows / R release / required](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/job/116651729552) | Passed |
+| [Ubuntu / R oldrel-1 / required](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/job/116651728733) | Passed |
+| [Ubuntu / R devel / required](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/job/116651727640) | Passed |
+| [Ubuntu / R release / all Suggests](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/job/116651727500) | Passed, including SciPy, vignette rebuilding, and PDF/HTML manuals |
+
+The [routine R checks](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594157)
+and [documentation build/deployment](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594029)
+also passed on that SHA.
+
+### Inspected source artifact
+
+The downloaded [source/check artifact](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182/artifacts/12005470526)
+contains `PharmaStatsR_0.1.63.tar.gz`, a manifest and commit marker, check and
+install logs, example plots, and the PDF manual. Its commit marker matches
+`65bc1be17fc150e1af42eab6c2b6b33d7f167046`.
+
+- Source size: **437,317 bytes**, with **365 archive entries**.
+- SHA-256, independently recalculated from the downloaded tarball:
+  `b00c781b2ebbc79f1635959190df7c9aa5fd8fd9cda5300c4351a51b44e153b4`.
+- Inspection confirmed source, help, tests, six vignette sources, the built
+  `pharmo_example.rda` dataset, report/app resources, citation, and both license
+  records. Development-only `docs/`, `scripts/`, `.github/`, and `data-raw/`
+  directories are absent.
+
+On Ubuntu 24.04.5 with R 4.6.1 and every Suggested package installed,
+`R CMD check --as-cran` reported **0 errors, 0 warnings, and 2 notes**:
+
+1. **New submission**, from CRAN incoming feasibility.
+2. **Example runtime**, for `fit_nlmixr_model()`: 9 seconds elapsed and 13.166
+   seconds CPU in this run. Review or reduce this example's cost before a
+   submission; a passing CI result does not accept it as an exception.
+
+Examples, tests, vignette rebuilding, and PDF/HTML manual checks passed. The
+four required-dependency portability jobs use `--no-manual`.
+
+This receipt applies only to `65bc1be`. The documentation refresh itself changes
+packaged README/NEWS content, so a later merged commit needs its own matrix,
+artifact, hash, and note review before it can become a final candidate.
 
 ## One commit, one source package
 
@@ -13,10 +67,10 @@ Issue [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) tracks a pr
 | Evidence | Current state |
 | --- | --- |
 | Metadata: author/contact, package title, URLs, MIT license, dependencies, citation, NEWS | Title and project URLs reviewed; maintainer designated the public address and current affiliation. Check mail receipt and choose the final version before tagging. |
-| Built tarball contents, SHA-256, examples, tests, vignettes, CRAN-style check | The latest merged-commit full-check artifact is recorded in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58); repeat after any further source change. |
-| macOS/Windows R release, Ubuntu R old release/devel, Ubuntu all-Suggests | All five passed on the latest reviewed merged commit in #58, including PDF and HTML manual validation; repeat after any further source change. |
-| `cran-comments.md` with environments and explained NOTEs | Draft describes the tested environments and “New submission” NOTE; #58 records the current exact-SHA evidence, while maintainer review is pending. |
-| Candidate tag and #21 portfolio tracker | #21 is current; candidate tag awaits final checks and maintainer confirmation. |
+| Built tarball contents, SHA-256, examples, tests, vignettes, CRAN-style check | Reviewed for `65bc1be` above. Repeat for the final merged source after this documentation refresh. |
+| macOS/Windows R release, Ubuntu R old release/devel, Ubuntu all-Suggests | All five passed on `65bc1be`; the full job also checked PDF/HTML manuals. |
+| `cran-comments.md` with environments and explained NOTEs | Draft records both notes from `65bc1be`. Review the nlmixr2 example runtime, then update for the final source. |
+| Candidate tag and [#21 portfolio tracker](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) | Select the final source/version and record the maintainer's separate release decision in #58. No new tag or submission follows from this receipt. |
 
 ## Policy review before submission
 

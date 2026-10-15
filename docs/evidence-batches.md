@@ -1,9 +1,16 @@
 # Method-evidence batches
 
-This record reconciles scoped method work and identifies the next review queue.
+This record preserves the completed numerical-reference batches through #165.
 It is not a release checklist or a package-wide validation statement. The
 [export inventory](method-inventory.md) remains the per-function evidence ledger;
 the [API support policy](api-support-policy.md) remains unchanged.
+
+As of 15 October 2026, all batches below are complete. Subsequent method
+additions and the covariate consolidation are recorded in the
+[roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) and
+[inventory](method-inventory.md). The current [release evidence](release-candidate.md)
+is tied to merged `65bc1be`; the older PR-head checks below remain historical
+evidence for their named batches.
 
 ## Completed batch: #129–#131
 
@@ -168,7 +175,7 @@ Its routine R package check, strict documentation build, and all five validation
 matrix jobs passed before merge. These are method-evidence results for that PR
 head, not an exact-merged-source release receipt for #58.
 
-## Current batch: reporting and auditability, #163–#165
+## Completed batch: reporting and auditability, #163–#165
 
 All three issues were created before implementation.
 
@@ -178,6 +185,6 @@ All three issues were created before implementation.
 | 2 | [#164: external HMAC audit vectors](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) | [External HMAC reference vectors](audit-log.md#external-hmac-reference-vectors): fixed independent digests, serialization/link checks, tamper/wrong-key failures, valid-prefix limitation and append interoperability. Merged in #167. |
 | 3 | [#165: SAP artifact contract](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) | [SAP template artifact contract](claims-audit.md#sap-template-artifact-contract): explicit Markdown vector, UTF-8/file equivalence, empty/literal text, custom-only ordering, overwrite and validation-before-write preservation. |
 
-Implement one focused PR at a time. Reporting and audit helpers remain
+All three issues are closed and their implementations are merged. Reporting and audit helpers remain
 scope-limited software utilities; this batch does not create a regulatory,
 security, or document-approval claim. #58 remains separate.

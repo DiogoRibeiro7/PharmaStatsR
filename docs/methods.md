@@ -42,6 +42,9 @@ The [reporting and monitoring scope audit](claims-audit.md) compares sensitive h
 | Planned interim efficacy boundaries | `pharma_group_seq()` | `gsDesign` (required); see [group-sequential designs](sequential.md) |
 | Dose response | [`pharma_emax()`, `pharma_sigmoid_emax()`, and `pharma_emax_nlme()`](dose-response.md) | `nlme` is required for the repeated-subject fit; the other two use `stats` |
 | Package utilities | [`pharma_config()` and the function registries](configuration-registries.md) | Base R; process-local configuration and callables |
+| Covariate preprocessing and screening | [`impute_ml()`, `center_scale()`, `apply_center_scale()`, and the three screening helpers](covariate-migration.md) | Required dependencies; Gaussian screening and single-value imputation with documented limits |
+| Covariate mixed models and plots | [`fit_covariate_model()`, `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()`](covariate-migration.md) | Required `nlme` and `ggplot2`; random-intercept fit and descriptive plots |
+| Covariate app, rendered reports, and nonlinear example | [`run_diagnostics_app()`, `generate_report()`, `fit_nlmixr_model()`](covariate-migration.md) | Optional Shiny, report tools, and nlmixr2 backend; see [installation](installation.md#covariate-reports-app-and-nonlinear-example) |
 
 The formula interfaces of `pharma_t_test()` and [`pharma_anova()`](anova.md) reject missing response or group values. Decide whether to exclude or impute those observations before calling either function, and record the resulting analysis population. ANOVA estimates may also depend on group balance and the model specification.
 

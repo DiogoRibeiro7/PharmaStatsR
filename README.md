@@ -5,9 +5,21 @@
 
 [Documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) · [Roadmap](ROADMAP.md) · [Evidence inventory](docs/method-inventory.md) · [Contributing](CONTRIBUTING.md)
 
-PharmaStatsR is an R package with statistical wrappers and illustrative example data for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, and other research workflows. Some methods require optional R packages; the corresponding functions report when a backend is missing.
+PharmaStatsR brings statistical methods and covariate workflows together in one R package for pharmaceutical research. It covers hypothesis tests, regression, survival analysis, dose response, covariate preprocessing and screening, mixed models, diagnostic plots, and reports. Functions expose their inputs and returned results; the documentation records assumptions, evidence, and limitations.
 
 The package is under development and is **not on CRAN**. Its methods and sample data are intended for demonstration and research. They have not been validated for clinical decisions or regulatory compliance.
+
+## What is included
+
+| Workflow | Starting point |
+| --- | --- |
+| Comparisons, categorical outcomes, and study designs | [Method guide](docs/methods.md) |
+| Survival, correlated outcomes, and dose response | [Methods and evidence inventory](docs/method-inventory.md) |
+| Imputation, scaling, covariate screening, and mixed-model diagnostics | [Covariate workflow guide](docs/covariate-migration.md) |
+| Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
+| Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
+
+The package has **101 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -18,7 +30,7 @@ install.packages("remotes")
 remotes::install_github("DiogoRibeiro7/PharmaStatsR")
 ```
 
-An alternative for local development is `devtools::load_all()` from the repository root. Optional modelling backends can be installed as needed; see `DESCRIPTION` for the list and the [installation guide](https://diogoribeiro7.github.io/PharmaStatsR/installation/).
+To install the worked vignettes as well, use `remotes::install_github("DiogoRibeiro7/PharmaStatsR", build_vignettes = TRUE)` with `knitr`, `rmarkdown`, and Pandoc installed. For local development, use `devtools::load_all()` from the repository root. See [DESCRIPTION](DESCRIPTION) and the [installation guide](https://diogoribeiro7.github.io/PharmaStatsR/installation/) for required and optional dependencies.
 
 ## Migration from PharmaTestSuite
 
@@ -26,7 +38,7 @@ The repository and R package were previously named `PharmaTestSuite`. Reinstall 
 
 ## Covariate workflows from pharmoCovR
 
-PharmaStatsR now includes pharmoCovR's 18 functions for preprocessing, weighted nearest-neighbor imputation, covariate screening, mixed-model fitting, reshape helpers, diagnostic plots, a Shiny app, and reports. The implementation, tests, and five vignettes live in this package; pharmoCovR is not a runtime dependency.
+PharmaStatsR includes all 18 functions formerly provided by pharmoCovR, together with its regression tests, dataset, five vignettes, report template, and Shiny app. The standalone repository was deleted after [the consolidation merged](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195). Install and use PharmaStatsR for these workflows; it has no runtime dependency on pharmoCovR. Source attribution and the MIT notice are retained in [the imported-module notice](inst/NOTICE-pharmoCovR).
 
 Existing scripts can replace `library(pharmoCovR)` with `library(PharmaStatsR)` and `pharmoCovR::` with `PharmaStatsR::`, retaining function names and arguments. Load the simulated data with `data("pharmo_example", package = "PharmaStatsR")`. See the [migration and method guide](docs/covariate-migration.md) for examples, dependencies, overlap with existing methods, and limitations.
 
@@ -53,7 +65,11 @@ For worked examples and assumptions, read the [method guide](https://diogoribeir
 
 ## Project status and documentation
 
-The [roadmap](ROADMAP.md) tracks progress by issue and orders the remaining reviews. The P0 and P1 scope reviews, including [documentation reconciliation](docs/documentation-reconciliation.md), are closed within their stated scope. The [method-evidence batch record](docs/evidence-batches.md) reconciles the completed #129–#131 and #136–#138 reference batches, links their inspected final-PR checks, and defines the diagnostics/resampling batch (#143–#145). Its first implementation adds [independent unweighted linear-model diagnostics](docs/model-diagnostics.md); wild-bootstrap and permutation references remain queued. The [API support policy](docs/api-support-policy.md) classifies all 101 exports: two narrow stable column-check helpers, 86 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only. The [release candidate checklist](docs/release-candidate.md) and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) record the latest reviewed merged-commit source check; actual receipt at the designated maintainer address, the final version, candidate-comment review, and a tag decision remain. Closed issues cover their stated scope, not a package-wide clinical validation.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 101 exports: two stable column-check helpers, 86 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+
+The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
+
+The [release evidence](docs/release-candidate.md#reviewed-development-baseline-15-october-2026) records the merged consolidation at `65bc1be`: all five matrix jobs passed, and the inspected all-Suggests source check reported **0 errors, 0 warnings, and 2 notes**. The notes concern a new submission and the nlmixr2 example runtime. This is development evidence; [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open for final source/version selection, note review, maintainer-contact confirmation, and the release decision. Later changes need checks on their own merged commit.
 
 The documentation source is in [`docs/`](docs/) with [`mkdocs.yml`](mkdocs.yml). GitHub Actions checks the MkDocs build on documentation pull requests and deploys the site to [GitHub Pages](https://diogoribeiro7.github.io/PharmaStatsR/) after relevant changes reach `main`. See the [documentation workflow](.github/workflows/docs.yml) and [local build instructions](https://diogoribeiro7.github.io/PharmaStatsR/development/#documentation-site).
 

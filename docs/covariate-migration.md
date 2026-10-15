@@ -5,10 +5,14 @@ The covariate module is maintained directly in PharmaStatsR. It includes all
 tests, report template, Shiny app, and five analysis vignettes. Installing or
 loading pharmoCovR is not required.
 
-The import comes from [pharmoCovR commit
-b4d8c6f](https://github.com/DiogoRibeiro7/pharmoCovR/commit/b4d8c6f512103d64e5614eb19b5f0c0c6644666a),
-including predictor weighting from its PR #22. The source's MIT notice is
-retained in `inst/NOTICE-pharmoCovR`. Package references and resource paths were
+The import records the original pharmoCovR commit
+`b4d8c6f512103d64e5614eb19b5f0c0c6644666a`, including predictor weighting.
+The standalone repository was deleted after [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195)
+merged on 15 October 2026. The preserved implementation is available in
+[PharmaStatsR commit `65bc1be`](https://github.com/DiogoRibeiro7/PharmaStatsR/tree/65bc1be17fc150e1af42eab6c2b6b33d7f167046).
+The source's MIT notice is retained in
+[`inst/NOTICE-pharmoCovR`](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/inst/NOTICE-pharmoCovR).
+Package references and resource paths were
 adapted; public function names, arguments, defaults, and statistical algorithms
 were preserved. [Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194)
 tracks the consolidation. Existing PharmaStatsR exports remain available.
@@ -37,10 +41,13 @@ plot_residuals(model)
 ```
 
 Use explicit `PharmaStatsR::` calls if both packages are attached, because their
-shared function names can mask each other. The standalone pharmoCovR repository
-and historical releases are not modified by this import; no automatic package
-uninstallation or replacement occurs. Source-tree paths and private functions
-are not part of the public migration contract.
+shared function names can mask each other. Existing local installations of
+pharmoCovR are not automatically uninstalled or replaced, but the deleted
+repository and its release URLs are no longer installation sources. Use
+`remotes::install_github("DiogoRibeiro7/PharmaStatsR")` for the maintained package.
+Source-tree paths and private functions are not part of the public migration
+contract. The historical commit identifier above is attribution; the old Git
+history was not imported into PharmaStatsR.
 
 ## Functions and scope
 
@@ -114,9 +121,11 @@ from the old repository are not shipped as input data.
 
 ## Worked vignettes and evidence
 
-The installed vignettes are `covariate-quickstart`, `covariate-data-preparation`,
-`covariate-diagnostics`, `covariate-advanced`, and `covariate-full-workflow`.
-For example:
+PharmaStatsR contains six vignettes: the original `pharma_workflow` plus
+`covariate-quickstart`, `covariate-data-preparation`, `covariate-diagnostics`,
+`covariate-advanced`, and `covariate-full-workflow`. Build them when installing
+from GitHub with `build_vignettes = TRUE`; see [installation](installation.md#worked-vignettes).
+Then open, for example:
 
 ```r
 vignette("covariate-data-preparation", package = "PharmaStatsR")

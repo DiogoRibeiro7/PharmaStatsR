@@ -1,6 +1,6 @@
 ## Release candidate status
 
-Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). Check that issue for the exact final merged commit, source tarball hash, and job links before using these comments for a submission. The maintainer designated the public contact and institutional affiliation on 4 October 2026; version 0.1.63 is the working candidate pending the final merged-commit validation.
+Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58), refreshed on 15 October 2026 after the covariate consolidation. Version 0.1.63 remains a development version for this record. The evidence below is tied to merged commit `65bc1be17fc150e1af42eab6c2b6b33d7f167046`, not a final release decision. The 7 October `7057b1b` candidate is superseded for the current source. Select and recheck the final merged commit before using these comments for submission.
 
 ## Test environments
 
@@ -11,9 +11,14 @@ Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58). 
 
 ## R CMD check results
 
-The current reviewed merged-commit run in #58 built a source tarball and checked it with `R CMD check --as-cran` on Ubuntu R release with all Suggests. It reported **0 errors, 0 warnings, 1 NOTE**. Examples, tests, vignette rebuild, PDF manual, and HTML manual passed. The four required-dependency portability jobs also passed with `--no-manual`.
+The [merged-commit matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182) built and checked `PharmaStatsR_0.1.63.tar.gz` on Ubuntu 24.04.5 / R 4.6.1 with all Suggests. Its SHA-256 is `b00c781b2ebbc79f1635959190df7c9aa5fd8fd9cda5300c4351a51b44e153b4`. `R CMD check --as-cran` reported **0 errors, 0 warnings, 2 notes**. Examples, tests, vignette rebuilding, PDF manual, and HTML manual passed. All four required-dependency portability jobs passed with `--no-manual`. The [release evidence](docs/release-candidate.md) records artifact inspection and job links.
 
-The single NOTE is **“New submission”** from CRAN incoming feasibility. This is the proposed first submission of PharmaStatsR; no other NOTE was reported in that run. Issue #58 records the latest exact merged SHA, source hash, and matrix results. Any subsequent source change requires a new full matrix on its merged SHA and an update to #58 before these comments are used for submission; revise the result if that check differs.
+The notes are:
+
+- **New submission**, from CRAN incoming feasibility.
+- **Example runtime**: `fit_nlmixr_model()` used 9 seconds elapsed and 13.166 seconds CPU in this run. Its optional SAEM example needs runtime review or reduction before submission; no exception has been accepted by this record.
+
+The README/NEWS changes in this documentation refresh alter the packaged source. Run the full matrix on the final merged SHA, inspect that artifact, and replace this baseline evidence before submission. A matching version number does not mean two tarballs are identical.
 
 ## Additional release review
 

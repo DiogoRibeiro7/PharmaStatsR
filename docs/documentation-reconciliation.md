@@ -1,6 +1,40 @@
 # Documentation reconciliation
 
-This record closes the documentation scope in [issue #56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56). It describes the package at the reviewed commit, not a claim that every method is statistically validated. The [export and evidence inventory](method-inventory.md) remains the entry point for individual source files, help topics, tests, and site pages.
+The [export and evidence inventory](method-inventory.md) is the entry point for
+source files, help topics, tests, and site pages. Documentation coverage does
+not establish statistical validity for every method.
+
+## Current inventory after consolidation
+
+At merged commit `65bc1be` on 15 October 2026, `NAMESPACE` contains **101 exports**:
+95 functions and six illustrative data objects. Every export has a source
+definition, one documented Rd alias, an inventory row, and a support level.
+The additional `pharmo_example` dataset has its own help topic and is loaded
+with `data()`; it is not another namespace export. The package contains six
+vignettes: the original workflow and five covariate guides.
+
+The [merged routine R checks](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594157)
+passed, including generated-help consistency. The [five-job matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182)
+passed, including examples, tests, vignette rebuilding, and PDF/HTML manuals
+with all Suggested backends. The [documentation build and deployment](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594029)
+also passed. The [release evidence](release-candidate.md) records the source hash
+and both notes; later commits require their own checks.
+
+The README, installation and quick-start guides, data inventory, migration
+guide, and status pages describe the consolidated package. The retired
+pharmoCovR repository is no longer linked as an installation or source endpoint;
+its original commit identifier and MIT attribution remain recorded.
+
+The current [API policy](api-support-policy.md) assigns two stable, 86
+experimental, 11 example-only, and two deprecation-candidate labels. Use the
+current inventory for method evidence: the historical list below predates
+the subsequent numerical-reference work and covariate consolidation.
+
+## Historical scope of issue #56
+
+The following snapshot records the original closure of [issue #56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56)
+through PR #99. Its 72-export counts, evidence gaps, and check notes describe
+that earlier source, not the current package.
 
 | Check | Evidence and result |
 | --- | --- |

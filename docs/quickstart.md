@@ -44,4 +44,30 @@ summary(fit)
 
 `pharma_survival_fit()` is a wrapper around `survival::coxph()` and returns a Cox model. For a Kaplan–Meier curve with an optional log-rank test, use `pharma_kaplan_meier()`.
 
-For another example, see the [workflow vignette](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/vignettes/pharma_workflow.Rmd) and the installed R help pages. Check [limitations](limitations.md) before applying any result to real data.
+## Prepare covariates and fit a random-intercept model
+
+The consolidated dataset is loaded with `data()` rather than a namespace export:
+
+```r
+data("pharmo_example", package = "PharmaStatsR")
+validate_data_schema(pharmo_example)
+
+scaled <- center_scale(pharmo_example, c("WT", "AGE", "CRCL"))
+covariate_fit <- fit_covariate_model(
+  scaled$data, "DV", "SubjectID", c("Time", "WT", "AGE")
+)
+plot_obs_vs_pred(covariate_fit, scaled$data)
+plot_residuals(covariate_fit)
+```
+
+This uses an `nlme` random subject intercept and the package's required
+dependencies. The simulated outcome is illustrative. The plots describe this
+fit; they do not validate a pharmacokinetic model. For evaluation on held-out
+data, estimate preprocessing on training data only and apply the saved scaling
+parameters to the held-out data. See the [covariate guide](covariate-migration.md)
+for imputation, screening, reports, apps, and the nonlinear example's limits.
+
+The package contains [six worked vignettes](covariate-migration.md#worked-vignettes-and-evidence),
+including the [original workflow](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/vignettes/pharma_workflow.Rmd).
+See [installation](installation.md#worked-vignettes) to build them from GitHub.
+Check [limitations](limitations.md) before applying any result to real data.
