@@ -12,7 +12,7 @@ This roadmap orders work by the risk of misleading results and the evidence need
 
 | Order | Work | Reviewable result |
 | --- | --- | --- |
-| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Use the [inspected `65bc1be` baseline](docs/release-candidate.md), review the nlmixr2 example runtime note, confirm contact/version/source choices, then check the final merged source and review its artifact before deciding on a tag. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Use the [inspected `971a37a` baseline](docs/release-candidate.md) and artifact verifier, confirm contact/version/source choices, then check the final merged source and review its receipt before deciding on a tag. The full SAEM example passed and its former timing note is absent from this run. |
 | 2 | Covariate follow-up scope | Define focused issues for preprocessing within training folds and reusable imputation/encoding recipes. Preserve saved transformations and held-out-data boundaries. |
 | 3 | Further model and app work | Scope nonstandard names in native mixed models, covariate-aware nonlinear fitting, simulation-based predictive checks, and browser accessibility separately. These are future work, not completed migration features. |
 
@@ -56,7 +56,7 @@ for substantial methods. The release decision in #58 remains separate.
 | Issue | Status | Outcome |
 | --- | --- | --- |
 | [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Closed within scope | All 101 exports have a [support level](docs/api-support-policy.md); the two historical names have migration guidance and remain callable. No export is deprecated or removed. |
-| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release record](docs/release-candidate.md) verifies the `65bc1be` source hash, five-job matrix, manuals, and full check with two notes. Resolve final source/version/contact choices and runtime-note review, then repeat for the final merged candidate. |
+| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release record](docs/release-candidate.md) verifies the `971a37a` source hash, five-job matrix, full examples, manuals, and check with one New submission note. The matrix retains a machine-readable receipt; final source/version/contact choices and the release decision remain open. |
 
 **Release gate:** a release candidate is reviewable only after the P0/P1 evidence is complete and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) records the exact check results. A tag, GitHub release, and CRAN submission are separate decisions. The [portfolio tracking issue](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) should reflect the current state rather than an earlier audit snapshot.
 

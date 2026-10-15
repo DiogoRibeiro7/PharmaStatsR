@@ -12,6 +12,8 @@ on:
       - 'NEWS.md'
       - 'README.md'
       - 'cran-comments.md'
+      - 'scripts/verify_release_artifact.py'
+      - 'scripts/tests/**'
       - 'R/**'
       - 'data/**'
       - 'inst/**'
@@ -30,6 +32,8 @@ on:
       - 'NEWS.md'
       - 'README.md'
       - 'cran-comments.md'
+      - 'scripts/verify_release_artifact.py'
+      - 'scripts/tests/**'
       - 'R/**'
       - 'data/**'
       - 'inst/**'
@@ -119,6 +123,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      - name: Test artifact verification
+        run: python -m unittest discover -s scripts/tests -v
       - name: Install SciPy for bridge tests
         run: |
           python -m pip install scipy==1.17.0
@@ -131,7 +137,7 @@ jobs:
           extra-packages: any::rcmdcheck
       - name: Verify all Suggested R packages are installed
         run: Rscript scripts/check_suggests_installed.R
-      - name: Build and inspect the candidate source package
+      - name: Build and record the candidate source package
         shell: bash
         run: |
           R CMD build .
@@ -140,16 +146,6 @@ jobs:
           tar -tzf "$tarball" > candidate-contents.txt
           sha256sum "$tarball" > candidate-sha256.txt
           git rev-parse HEAD > candidate-commit.txt
-          for path in DESCRIPTION NAMESPACE LICENSE R man tests vignettes inst/CITATION; do
-            if ! grep -Eq "^PharmaStatsR/${path}(/|$)" candidate-contents.txt; then
-              echo "Missing package path: $path" >&2
-              exit 1
-            fi
-          done
-          if grep -Eq '^PharmaStatsR/(\.github|docs|data-raw|scripts)/' candidate-contents.txt; then
-            echo 'Development-only files found in the source package.' >&2
-            exit 1
-          fi
           cat candidate-sha256.txt candidate-commit.txt
       - name: Check the built source package as CRAN
         shell: bash
@@ -157,6 +153,10 @@ jobs:
           tarball=$(find . -maxdepth 1 -type f -name 'PharmaStatsR_*.tar.gz' -print -quit)
           test -n "$tarball"
           R CMD check --as-cran "$tarball"
+      - name: Verify candidate evidence
+        env:
+          CANDIDATE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python scripts/verify_release_artifact.py . --commit "$CANDIDATE_COMMIT" > candidate-verification.json
       - name: Upload candidate source and check evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -167,6 +167,7 @@ jobs:
             candidate-contents.txt
             candidate-sha256.txt
             candidate-commit.txt
+            candidate-verification.json
             PharmaStatsR.Rcheck/00check.log
             PharmaStatsR.Rcheck/00install.out
             PharmaStatsR.Rcheck/*.pdf

@@ -1,39 +1,53 @@
 ## Release candidate status
 
-Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58), refreshed on 15 October 2026 after the covariate consolidation. Version 0.1.63 remains a development version for this record. The evidence below is tied to merged commit `65bc1be17fc150e1af42eab6c2b6b33d7f167046`, not a final release decision. The 7 October `7057b1b` candidate is superseded for the current source. Select and recheck the final merged commit before using these comments for submission.
+Draft for [issue #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58),
+refreshed on 15 October 2026. Version 0.1.63 remains in development. This evidence
+belongs to merged commit `971a37aaf203fad523807c254db930ce588ccbcd`; it is not a
+final release decision. Later changes, including README/NEWS changes, require
+checks of their own source. Select the final merged commit and replace this
+baseline with its actual receipt before submission.
 
 ## Test environments
 
 - macOS, R release, required dependencies and check tools.
 - Windows, R release, required dependencies and check tools.
 - Ubuntu, R oldrel-1 and devel, required dependencies and check tools.
-- Ubuntu, R release, all declared Suggested R packages and Python SciPy 1.17.0, with TinyTeX and HTML Tidy for full manual validation.
+- Ubuntu 24.04.5, R 4.6.1, all declared Suggested R packages and Python SciPy
+  1.17.0, with TinyTeX and HTML Tidy for full manual validation.
 
 ## R CMD check results
 
-The [merged-commit matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182) built and checked `PharmaStatsR_0.1.63.tar.gz` on Ubuntu 24.04.5 / R 4.6.1 with all Suggests. Its SHA-256 is `b00c781b2ebbc79f1635959190df7c9aa5fd8fd9cda5300c4351a51b44e153b4`. `R CMD check --as-cran` reported **0 errors, 0 warnings, 2 notes**. Examples, tests, vignette rebuilding, PDF manual, and HTML manual passed. All four required-dependency portability jobs passed with `--no-manual`. The [release evidence](docs/release-candidate.md) records artifact inspection and job links.
+The [merged-commit matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38814107301)
+built and checked `PharmaStatsR_0.1.63.tar.gz`. The downloaded source is 438,365
+bytes with SHA-256
+`0ec1a1447d6b55719ecd8aae122080c742a314a2dedc8d7235026c53c42e705c`.
+The [artifact](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38814107301/artifacts/12010840213)
+contains a matching commit marker and manifest, check/install logs, and PDF manual.
 
-The notes are:
+`R CMD check --as-cran` reported **0 errors, 0 warnings, and 1 NOTE**:
 
 - **New submission**, from CRAN incoming feasibility.
-- **Example runtime**: `fit_nlmixr_model()` used 9 seconds elapsed and 13.166 seconds CPU in this run. Its optional SAEM example needs runtime review or reduction before submission; no exception has been accepted by this record.
 
-## Lengthy-example follow-up
+Ordinary examples, the separate `--run-donttest` example pass, tests, vignette
+rebuilding, and PDF/HTML manuals all passed. All four required-dependency
+portability jobs passed with `--no-manual`. The [release record](docs/release-candidate.md)
+contains job links and verification instructions.
 
-The full `fit_nlmixr_model()` help example is now marked with `\donttest{}` in
-accordance with [CRAN's guidance for lengthy examples](https://contributor.r-project.org/cran-cookbook/general_issues.html#structuring-of-examples).
-`R CMD check --as-cran` still executes it in the separate `--run-donttest` pass.
-The original full-data integration test remains enabled when the backend is
-installed; the model, estimation defaults, and example data are unchanged.
+## Lengthy example
 
-The two-note result above describes the historical `65bc1be` baseline. Run the
-full matrix on the final merged SHA, verify successful ordinary and
-`--run-donttest` example passes, inspect that artifact, and replace this baseline
-evidence with its actual notes before submission. A matching version number
-does not mean two tarballs are identical.
+The full `fit_nlmixr_model()` SAEM help example uses `\donttest{}` following
+[CRAN's guidance for lengthy examples](https://contributor.r-project.org/cran-cookbook/general_issues.html#structuring-of-examples).
+The all-Suggests CRAN-style check executed it in the separate `--run-donttest`
+pass (50 seconds elapsed, 41 seconds CPU). The original full-data integration
+test remains enabled when its backend is installed. Model settings and data
+are unchanged. The prior `65bc1be` timing note is absent from this merged run;
+this one-note result supersedes that older two-note baseline for this source.
 
 ## Additional release review
 
-- Confirm the designated public maintainer address receives CRAN correspondence, review the recorded affiliation, and decide the final release version.
-- Review the final source artifact, license, dependency availability, size, timing, and current CRAN policy against the exact candidate commit in #58.
+- Confirm the public maintainer address receives CRAN correspondence, review
+  affiliation, and choose the final release version/source.
+- Review the final artifact, PDF, every NOTE, license/provenance, dependency
+  availability, size/timing, and current CRAN policy in #58. The verifier checks
+  evidence consistency; human review and release decisions remain separate.
 - No downstream reverse-dependency results are available for a first submission.

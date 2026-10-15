@@ -9,3 +9,6 @@
 build/
 PharmaStatsR.Rcheck/
 *.tar.gz
+
+# Python maintenance tools
+__pycache__/
