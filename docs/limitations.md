@@ -44,6 +44,17 @@ The `pharma_validation_report()` and `check_ich_columns()` names are kept for co
 
 The [ICH E9(R1) guideline](https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf) describes an estimand through the treatment conditions, population, variable, handling of intercurrent events, and population-level summary. A few column names cannot establish those attributes. Names and historical descriptions in this package can imply broader regulatory coverage than the implementation provides. Examine the function source and independently verify calculations before using outputs for a study. See the [security policy](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/SECURITY.md) for private vulnerability reporting.
 
+## Consolidated covariate workflows
+
+The [covariate guide](covariate-migration.md#statistical-limits) documents the
+18 migrated functions. Single-value imputation does not quantify imputation
+uncertainty. AIC/BIC/LASSO screening uses ordinary Gaussian models; grouped
+folds do not refit preprocessing within each training fold. The linear mixed
+model has a fixed random-intercept specification. `plot_vpc()` is a descriptive
+binned summary, not a simulation-based predictive check. The nonlinear SAEM
+helper is an example-only fixed model and warns that supplied covariates are
+ignored. These boundaries are preserved by the consolidation.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.

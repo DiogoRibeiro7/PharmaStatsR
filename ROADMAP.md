@@ -2,20 +2,19 @@
 
 ## Covariate module consolidation
 
-[Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) brings the complete pharmoCovR module into this package with its existing APIs and regression tests. See the [migration guide](docs/covariate-migration.md). Follow-up work includes preprocessing within training folds, reusable imputation/encoding recipes, nonstandard names in native mixed models, covariate-aware nonlinear models, simulation-based predictive checks, and browser accessibility checks. The integration does not resolve the release-candidate gate.
+[Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) is complete: [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195) merged the full pharmoCovR module with its existing APIs and regression tests. The standalone repository was then deleted. See the [migration guide](docs/covariate-migration.md) for preserved provenance, package references, and method limits. The integration does not resolve the release-candidate gate.
 
-**Status (5 October 2026):** active development, version 0.1.63; not on CRAN. The initial P0 inventory, claims audit, and core reference cases are complete. The P1 design contracts, survival and resampling reviews, cross-platform matrix, simulated-data audit, optional-backend audit, and [documentation reconciliation](docs/documentation-reconciliation.md) are closed within their stated scope. The [API support policy](docs/api-support-policy.md) classifies all public exports; the exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for the tested paths, not validation of every statistical method.
+**Status (15 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 101 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
 ## Next sequence
 
-| Order | Issue | Reviewable result |
+| Order | Work | Reviewable result |
 | --- | --- | --- |
-| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | The latest exact-commit checks are in #58. Confirm mail receipt, final version, and candidate comments before deciding on a tag; repeat exact-main checks after further source changes. |
-| 2 | [#163](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) Report-table reference | Independent lm estimates, confidence intervals, p-values and exporter preservation. |
-| 3 | [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | External fixed HMAC-SHA256 chain vectors and verification boundaries. |
-| 4 | [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | Exact Markdown/file output, literal text, ordering and validation-before-write guarantees. |
+| 1 | [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) Release candidate | Use the [inspected `65bc1be` baseline](docs/release-candidate.md), review the nlmixr2 example runtime note, confirm contact/version/source choices, then check the final merged source and review its artifact before deciding on a tag. |
+| 2 | Covariate follow-up scope | Define focused issues for preprocessing within training folds and reusable imputation/encoding recipes. Preserve saved transformations and held-out-data boundaries. |
+| 3 | Further model and app work | Scope nonstandard names in native mixed models, covariate-aware nonlinear fitting, simulation-based predictive checks, and browser accessibility separately. These are future work, not completed migration features. |
 
 The #123–#125, #129–#131, #136–#138, and #143–#145 implementation batches are
 complete. The [batch reconciliation](docs/evidence-batches.md) records the merged
@@ -24,10 +23,9 @@ its limits. The permutation reference exposed numerical-tie undercounting;
 previously affected p-values should be recomputed. PR-head checks are not a new
 merged-source artifact receipt for #58.
 
-The #153–#155 missing-data/complex-survival batch is complete after #158 passed
-its package, documentation and five-job validation checks. The next integration
-batch #159–#160 was defined before implementation. Work in the order above, one
-focused PR at a time. The release decision in #58 remains separate.
+The #153–#155 missing-data/complex-survival, #159–#160 integration, and #163–#165
+reporting/auditability batches are complete. Work in focused PRs with new issues
+for substantial methods. The release decision in #58 remains separate.
 
 ## P0 — Establish scope and numerical evidence
 
@@ -49,7 +47,7 @@ focused PR at a time. The release decision in #58 remains separate.
 | [#53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53) Optional backend and dependency audit | Closed | The [entry-point ledger](docs/dependency-audit.md) maps guards and tests; required-dependency checks cover the minimal install, and [the five-job candidate matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/37120561275) passed on commit `d06f614`. The separate #58 release gate remains open. |
 | [#54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54) Cross-platform check matrix | Closed | Weekly/manual checks cover R versions, platforms, and an all-Suggests backend job; candidate runs still need to be recorded under #58. |
 | [#55](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/55) Simulated dataset audit | Closed | Schemas, provenance, and design invariants are documented and tested. |
-| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Closed | The [reconciliation record](docs/documentation-reconciliation.md) counts all 72 exports, records source/help and site coverage, and links checks of examples and the vignette in defined dependency sets. Help drift is gated in CI; the temporary diff no longer adds a package NOTE. Method validation and the exact-commit candidate matrix remain separate. |
+| [#56](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/56) Documentation reconciliation | Closed within original scope | The [reconciliation record](docs/documentation-reconciliation.md) separates the historical 72-export audit from the current 101-export inventory, six vignettes, and source/help/site evidence. Help drift remains gated in CI. |
 
 **Gate:** each supported method has its assumptions, input behavior, numerical evidence, and limitations recorded in [#47](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/47). Changes that alter earlier results have NEWS and migration notes. CI can reproduce its results on a named commit; documentation builds and package checks pass.
 
@@ -57,8 +55,8 @@ focused PR at a time. The release decision in #58 remains separate.
 
 | Issue | Status | Outcome |
 | --- | --- | --- |
-| [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Closed within scope | All 72 exports have a [support level](docs/api-support-policy.md); the two historical names have migration guidance and remain callable. No export is deprecated or removed. |
-| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release checklist](docs/release-candidate.md) and [current merged-commit evidence](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) cover the source build, hash, full CRAN-style check, five-job matrix, and manuals. Maintainer metadata, candidate comments, and the tag decision remain; repeat checks after any source change. |
+| [#57](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/57) Experimental API policy | Closed within scope | All 101 exports have a [support level](docs/api-support-policy.md); the two historical names have migration guidance and remain callable. No export is deprecated or removed. |
+| [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) CRAN candidate gate | In progress | The [release record](docs/release-candidate.md) verifies the `65bc1be` source hash, five-job matrix, manuals, and full check with two notes. Resolve final source/version/contact choices and runtime-note review, then repeat for the final merged candidate. |
 
 **Release gate:** a release candidate is reviewable only after the P0/P1 evidence is complete and [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) records the exact check results. A tag, GitHub release, and CRAN submission are separate decisions. The [portfolio tracking issue](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/21) should reflect the current state rather than an earlier audit snapshot.
 
@@ -95,7 +93,13 @@ The completed #109–#113 and #120 work strengthened evidence for exports whose 
 | [#160](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/160) Deterministic caret selection | Closed (#162) | Fixed-fold GLM/LDA predictions reconstructed outside caret, plus winner, failure, tie and varImp contracts. |
 | [#163](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/163) Report-table numerical reference | Closed (#166) | Independent two-group lm estimates, confidence intervals, p-values and exporter preservation. |
 | [#164](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/164) Audit HMAC vectors | Closed (#167) | External fixed HMAC-SHA256 chain vectors, tamper/wrong-key boundaries and valid-prefix limitation. |
-| [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | In review | Exact Markdown/file output, UTF-8 and literal-text boundaries, custom-only ordering and validation-before-write preservation. |
+| [#165](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/165) SAP artifact contract | Closed | Exact Markdown/file output, UTF-8 and literal-text boundaries, custom-only ordering and validation-before-write preservation. |
+
+Subsequent completed method issues include ANCOVA (#170), CMH (#172), McNemar
+(#173), Fisher (#174), Cochran–Armitage (#178), Cochran Q (#179), Stuart–Maxwell
+(#180), Bowker (#184), Breslow–Day and its Tarone adjustment (#186/#188), Woolf
+(#190), and Mantel–Haenszel common risk ratio (#192). Their per-method guides and
+reference tests are linked in the [inventory](docs/method-inventory.md).
 
 ## How we work
 

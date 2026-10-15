@@ -3,8 +3,10 @@
 ## Requirements
 
 Install a recent version of R. The core package imports `survival`, `stats`,
-`utils`, `nlme`, `broom`, `gsDesign`, and `parallel`; R resolves required packages
-during installation.
+`utils`, `nlme`, `broom`, `gsDesign`, `parallel`, `glmnet`, `tidyr`, `ggplot2`,
+and `tidyselect`; R resolves required packages during installation. Covariate
+preprocessing, screening, and linear mixed-model diagnostics are included in
+this installation.
 
 PharmaStatsR is not on CRAN. Install it from its **public** GitHub repository:
 
@@ -43,6 +45,50 @@ Excel and Word table export use separate optional R packages. The
 [report export guide](report-exports.md) lists the packages for each format.
 
 See the [method guide](methods.md) for examples of optional dependencies. The package's complete dependency metadata is in [DESCRIPTION](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/DESCRIPTION).
+
+## Covariate reports, app, and nonlinear example
+
+| Feature | Additional requirements |
+| --- | --- |
+| `run_diagnostics_app()` | `shiny` |
+| `generate_report(..., output_format = "html_document")` | `rmarkdown`, `knitr`, and Pandoc |
+| `generate_report(..., output_format = "pdf_document")` | The HTML-report requirements plus LaTeX |
+| Mixed-model coefficient tidying in reports | `broom.mixed` is optional; the report retains a native `nlme` summary fallback. |
+| `fit_nlmixr_model()` | `nlmixr2est`; its worked example also uses `nlmixr2data`. This is a fixed model example, not covariate-aware nonlinear fitting. |
+
+The [covariate guide](covariate-migration.md) documents the installed resources,
+entry points, and method limits. These helpers are distinct from the older
+dashboard and table-export APIs.
+
+## Worked vignettes
+
+The repository contains six vignettes. GitHub installation does not build them
+by default. To make them available through `vignette()`:
+
+```r
+install.packages(c("knitr", "rmarkdown"))
+# Pandoc must also be available; rmarkdown::pandoc_available() checks this.
+remotes::install_github("DiogoRibeiro7/PharmaStatsR", build_vignettes = TRUE)
+vignette(package = "PharmaStatsR")
+vignette("covariate-quickstart", package = "PharmaStatsR")
+```
+
+The [quick start](quickstart.md) also provides examples without a vignette build.
+
+## Migrating from pharmoCovR
+
+The standalone pharmoCovR repository was deleted after its complete package
+functionality was merged into PharmaStatsR. Install from the PharmaStatsR URL
+above, replace `library(pharmoCovR)` with `library(PharmaStatsR)`, and replace
+`pharmoCovR::` prefixes with `PharmaStatsR::`. Function names and arguments are
+preserved. Load the additional dataset explicitly:
+
+```r
+data("pharmo_example", package = "PharmaStatsR")
+```
+
+The [migration guide](covariate-migration.md) records provenance and the original
+MIT notice. No separate pharmoCovR installation is needed.
 
 ## Migrating from PharmaTestSuite
 
