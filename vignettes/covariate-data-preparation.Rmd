@@ -403,11 +403,7 @@ both to predict future observations, preserving the predictor order:
 
 ```{r}
 future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
-completed <- apply_imputation(future, screened$imputation)
-predict(screened$fit,
-  newx = as.matrix(completed[screened$imputation$var]),
-  s = screened$lambda.min
-)
+predict_lasso_imputed(screened, future)
 ```
 
 Do not scale future data again: the fitted model already accounts for training
@@ -476,11 +472,8 @@ Use the final saved donor model and recorded covariate order for new rows:
 
 ```{r}
 future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
-completed <- apply_knn_imputation(future, knn_screened$imputation)
-predict(knn_screened$fit,
-  newx = as.matrix(completed[knn_screened$covariates]),
-  s = knn_screened$lambda.min
-)
+predict_lasso_imputed(knn_screened, future)
+predict_lasso_imputed(knn_screened, future, lambda = c(0.5, 2))
 ```
 
 If a missing training or held-out value has no comparable donors, screening
@@ -488,3 +481,16 @@ stops with its fold and target; it does not drop rows or fall back to mean
 imputation. Saved fold and final models retain selected training predictor
 values. For performance assessment, use independent data or outer resampling
 that includes any selection of `k`, weights, and the model penalty.
+
+`predict_lasso_imputed()` chooses the saved imputer and restores the full
+candidate order. It returns a matrix even for one row or penalty; column
+`lambda_j` refers to row `j` of the screening result's CV table. Reordered raw
+columns and extra columns are allowed, but every original candidate is
+required, including candidates with zero coefficients. Empty new data return
+zero rows. No response or subject ID is needed.
+
+Restore a result with `readRDS()` in a fresh session and call this helper after
+loading PharmaStatsR. It registers the glmnet methods as needed. Only penalties
+from the fitted grid are accepted; prediction does not interpolate, refit,
+retune, or add uncertainty intervals. These are final-model predictions, not
+the held-out values saved during screening.

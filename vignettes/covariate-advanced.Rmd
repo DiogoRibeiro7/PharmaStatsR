@@ -135,7 +135,9 @@ use the separate
 `screen_covariates_lasso_imputed()` helper with a prespecified `lambda` grid.
 It retains rows with missing predictors and returns held-out predictions,
 fold replacement tables or donor models, and the final model; see the data-preparation vignette
-for a worked example. Categorical preprocessing within folds remains manual.
+for a worked example. Use `predict_lasso_imputed()` to apply the final saved
+imputer and restore predictor order when predicting new rows. Categorical
+preprocessing within folds remains manual.
 
 ## Validate a mixed-effects fit
 

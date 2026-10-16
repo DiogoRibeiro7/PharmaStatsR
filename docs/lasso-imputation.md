@@ -146,11 +146,7 @@ retained development rows. Reuse it to complete new predictors:
 
 ```r
 knn_future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
-knn_completed <- apply_knn_imputation(knn_future, knn_result$imputation)
-predict(knn_result$fit,
-  newx = as.matrix(knn_completed[knn_result$covariates]),
-  s = knn_result$lambda.min
-)
+predict_lasso_imputed(knn_result, knn_future)
 # approximately 0, 1.387628, -1.387628
 ```
 
@@ -168,25 +164,27 @@ model and the held-out predictions have different roles.
 
 ```r
 new_data <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
-completed <- apply_imputation(new_data, result$imputation)
-predicted <- predict(
-  result$fit,
-  newx = as.matrix(completed[result$covariates]),
-  s = result$lambda.min
-)
+predicted <- predict_lasso_imputed(result, new_data)
 predicted
 # approximately 0, 1.387628, -1.387628
 ```
 
-This example uses the default mean imputer. For `method = "knn"`, use
-`apply_knn_imputation()` as shown above. Select columns in `result$covariates`
-order, including predictors whose coefficients were shrunk to zero.
-The fitted model already accounts for its
-training standardization; do not rescale the new table. Persist the result with
-`saveRDS(result, "screening.rds")` and restore it with `readRDS()`. No response or
-subject identifier is needed to predict new rows. In a fresh R session, load
-`glmnet` with `library(glmnet)` before calling `predict()` on a saved model so
-its prediction methods are registered.
+[`predict_lasso_imputed()`](predict-lasso-imputed.md) chooses the saved
+mean/median or kNN imputer and restores the full candidate order, including
+predictors whose coefficients were shrunk to zero. It does not impute from new
+rows or rescale them. All raw candidate columns are required; no response or
+subject identifier is needed.
+
+Persist the result with `saveRDS()` and restore it with `readRDS()`. In a fresh
+session, load PharmaStatsR and use the same helper; it registers the glmnet
+methods as needed. Older mean/median results without method/order metadata
+remain supported through their original replacement table.
+
+The default predicts at `lambda.min`; an explicit `lambda` vector must use
+values from `result$cv$lambda`. Columns `lambda_j` correspond to rows of that
+table and retain request order. Missing comparable kNN donors cause an error.
+The [prediction guide](predict-lasso-imputed.md) covers empty/singleton data,
+reordered penalties, saved-result consistency checks, and numerical references.
 
 ## Independent numerical references
 

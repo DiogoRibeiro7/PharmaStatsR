@@ -6,7 +6,7 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **108 exports**: 102 functions
+The [inventory](method-inventory.md) now contains **109 exports**: 103 functions
 and six illustrative data objects. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
@@ -17,6 +17,8 @@ and held-out prediction evidence. The later [saved neighbor pair](fitted-knn.md)
 adds training-only donors and scales, fixed distance references, and batch-independence tests.
 Numeric screening now integrates these donors within folds via `method = "knn"`,
 with hand-calculated completions, analytic MSE, and no-donor error evidence.
+The [prediction helper](predict-lasso-imputed.md) adds saved-imputer dispatch,
+fitted-grid prediction, and schema checks with analytic references.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

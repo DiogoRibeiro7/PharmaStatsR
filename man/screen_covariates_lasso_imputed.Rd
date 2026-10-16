@@ -73,11 +73,10 @@ for mean/median, or saved donor models for \code{"knn"}.}
 \item{imputation}{The final replacement table for \code{\link[=apply_imputation]{apply_imputation()}}, or
 the final donor model for \code{\link[=apply_knn_imputation]{apply_knn_imputation()}} when \code{method = "knn"}.}
 }
-Save the result with \code{\link[base:saveRDS]{base::saveRDS()}}. To predict on new data, apply
-\code{imputation} with the corresponding helper, select predictors in \code{covariates}
-order, then call
-\code{\link[stats:predict]{stats::predict()}} on \code{fit} with \code{newx} and \code{s = lambda.min}. The model
-already includes its training standardization; do not rescale new data.
+Save the result with \code{\link[base:saveRDS]{base::saveRDS()}}. Use \code{\link[=predict_lasso_imputed]{predict_lasso_imputed()}} to apply
+its final imputer, restore predictor order, and predict at \code{lambda.min} or
+other penalties from the fitted grid. The model already includes its training
+standardization; do not impute or rescale new data before this helper.
 }
 \description{
 Fits mean, median, or nearest-neighbor imputation on each training fold, fits a
@@ -138,23 +137,16 @@ result <- screen_covariates_lasso_imputed(
 result$cv # MSE: 8/3, 1, 1/4
 result$selected # "x1"
 new_data <- data.frame(x1 = c(NA, 1), x2 = c(1, -1))
-completed <- apply_imputation(new_data, result$imputation)
-predict(result$fit,
-  newx = as.matrix(completed[result$imputation$var]),
-  s = result$lambda.min
-)
+predict_lasso_imputed(result, new_data)
 neighbors <- screen_covariates_lasso_imputed(
   training, "y", c("x1", "x2"),
   lambda = c(2, 1, 0.5),
   method = "knn", k = 2, foldid = rep(1:3, each = 6)
 )
 neighbors$cv # the two nearest donor values average to zero in this example
-completed <- apply_knn_imputation(new_data, neighbors$imputation)
-predict(neighbors$fit,
-  newx = as.matrix(completed[neighbors$covariates]),
-  s = neighbors$lambda.min
-)
+predict_lasso_imputed(neighbors, new_data)
 }
 \seealso{
-\code{\link[=fit_imputation]{fit_imputation()}}, \code{\link[=fit_knn_imputation]{fit_knn_imputation()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
+\code{\link[=predict_lasso_imputed]{predict_lasso_imputed()}}, \code{\link[=fit_imputation]{fit_imputation()}},
+\code{\link[=fit_knn_imputation]{fit_knn_imputation()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
 }
