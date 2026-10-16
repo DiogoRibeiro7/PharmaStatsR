@@ -22,8 +22,9 @@
 #' target values, ordered by distance and then training row order. Their
 #' unweighted target mean is the replacement. Rows with no comparable donors
 #' remain missing with a warning. This is single imputation and does not
-#' quantify missing-data uncertainty. It does not modify [impute_ml()] or add
-#' nearest-neighbor preprocessing to the screening functions.
+#' quantify missing-data uncertainty. For numeric screening within training
+#' folds, use [screen_covariates_lasso_imputed()] with `method = "knn"`.
+#' [impute_ml()] retains its existing behavior.
 #'
 #' @param data Training data frame with unique, nonmissing, nonempty names.
 #' @param vars Nonempty character vector of unique numeric target names. Every

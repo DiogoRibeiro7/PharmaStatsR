@@ -88,7 +88,7 @@ Refit all three transformations within each training fold when evaluating or
 tuning a model. An outer train/test split does not protect inner tuning folds.
 The [imputation guide](fitted-imputation.md#refit-inside-every-training-fold)
 shows an explicit subject-fold loop. The separate [numeric LASSO
-helper](lasso-imputation.md) integrates mean/median imputation and standardization
+helper](lasso-imputation.md) integrates mean/median or nearest-neighbor imputation and standardization
 within folds; it does not support categorical candidates. Categorical fold
 preprocessing remains future work. [Saved nearest-neighbor models](fitted-knn.md)
 are available separately for numeric targets and mixed predictors.

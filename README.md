@@ -84,8 +84,10 @@ apply_encoding(data.frame(x = 100, group = "B"), encoding)
 The [encoding guide](docs/fitted-encoding.md) explains saved contrasts, unseen
 categories, and composition with imputation and scaling. For numeric screening,
 [`screen_covariates_lasso_imputed()`](docs/lasso-imputation.md) fits mean/median
-replacements separately inside training folds and returns held-out predictions,
+replacements or nearest-neighbor donors (`method = "knn"`) inside training folds and returns held-out predictions,
 saved fold parameters, and the final model for a prespecified penalty grid.
+The neighbor option learns donors and ranges separately for each training fold;
+`k` and distance weights are fixed within the call.
 The [training-preprocessing guide](docs/fitted-imputation.md) shows saved scaling,
 serialization, and fitting fresh parameters within each subject-level fold.
 

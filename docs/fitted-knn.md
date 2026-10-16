@@ -80,8 +80,9 @@ evaluating new subjects. Prespecify ordinal levels or derive them from training
 data. Tuning `k` or weights requires the same separation and an outer evaluation
 of the selected procedure.
 
-This pair is separate from [numeric LASSO fold imputation](lasso-imputation.md),
-which supports mean/median replacements only. The original `impute_ml()` still
+[Numeric LASSO screening](lasso-imputation.md#nearest-neighbor-preprocessing-within-folds)
+now fits this imputer separately within training folds using `method = "knn"`.
+That screening interface supports numeric predictors only. The original `impute_ml()` still
 uses donors and scales from its supplied dataset and supports categorical targets;
 this saved model supports numeric targets and Gower distance only.
 

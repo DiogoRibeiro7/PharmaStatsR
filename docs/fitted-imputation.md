@@ -96,8 +96,9 @@ can be composed with these helpers manually. For numeric Gaussian screening,
 [`screen_covariates_lasso_imputed()`](lasso-imputation.md) now fits replacements
 and standardization inside each training fold for a prespecified penalty grid.
 The separate [saved nearest-neighbor pair](fitted-knn.md) now reuses training
-donors and scales. Categorical and nearest-neighbor preprocessing inside
-screening folds remain separate follow-ups.
+donors and scales; the numeric screening helper integrates it with
+`method = "knn"`. Categorical preprocessing inside screening folds remains
+a separate follow-up.
 
 ## Boundaries and evidence
 
