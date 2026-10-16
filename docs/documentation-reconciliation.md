@@ -6,7 +6,7 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **110 exports**: 104 functions
+The [inventory](method-inventory.md) now contains **111 exports**: 105 functions
 and six illustrative data objects. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
@@ -24,6 +24,8 @@ recipes, saved mixed-data prediction, and analytic mixed-design MSE references;
 that addition did not change the export count. The later
 [mixed-model prediction helper](covariate-mixed-model.md) adds original-name
 prediction and balanced REML/BLUP evidence alongside opt-in fitting name repair.
+The [simulation-based percentile plot](simulated-vpc.md) adds replicated-dataset
+summary tables, fixed order-statistic references, and plotted-coordinate checks.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

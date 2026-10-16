@@ -67,6 +67,7 @@ history was not imported into PharmaStatsR.
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
+| Simulated percentile checks (added after consolidation) | `plot_simulated_vpc()` | Observed percentiles against replicate-wise simulation bands, with numerical summaries and row/bin membership; see the [guide](simulated-vpc.md). The caller supplies complete response replicates. |
 | App and reports | `run_diagnostics_app()`, `generate_report()` | CSV diagnostics with failure feedback; HTML/PDF reports with isolated rendering and explicit output paths. |
 
 The module keeps its descriptive function names for migration compatibility.
@@ -119,8 +120,10 @@ function.
 - Mixed-model fitting keeps strict names by default; `repair_names = TRUE`
   records safe backend aliases. Use `predict_covariate_model()` for original-name
   point predictions. It defaults to population effects; unknown subjects return
-  `NA` for conditional predictions. Covariate-aware nonlinear models and
-  simulation-based predictive checks remain future work.
+  `NA` for conditional predictions. Covariate-aware nonlinear models remain
+  future work. `plot_simulated_vpc()` now summarizes supplied response replicates;
+  their generation, subject dependence, and parameter uncertainty must be
+  specified by the caller. Automatic model simulation remains future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
   Reactive server tests cover upload, fitting, rendering, and recovery; they do
   not establish browser accessibility or usability.

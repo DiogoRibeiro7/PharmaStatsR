@@ -19,7 +19,7 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **110 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **111 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -109,9 +109,14 @@ and records their backend mapping while retaining a native `lme` object.
 `predict_covariate_model()` uses the original names and distinguishes population
 from existing-subject predictions. Strict fitting defaults remain unchanged.
 
+For diagnostics from replicated datasets, [`plot_simulated_vpc()`](docs/simulated-vpc.md)
+compares observed percentiles with simulation-based percentile bands and exposes
+the numerical summaries. Supply complete response replicates aligned to the
+observed rows; their generation must preserve the intended model and study design.
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 110 exports: two stable column-check helpers, 95 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 111 exports: two stable column-check helpers, 96 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 
