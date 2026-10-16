@@ -135,7 +135,10 @@ use the separate
 `screen_covariates_lasso_imputed()` helper with a prespecified `lambda` grid.
 It retains rows with missing predictors and returns held-out predictions,
 fold replacement tables or donor models, and the final model; see the data-preparation vignette
-for a worked example. Use `predict_lasso_imputed()` to apply the final saved
+for a worked example. Set `encode = TRUE` to fit additive categorical encoding
+inside each training fold as well; missing or unseen categorical values fail.
+Selection maps nonzero design columns back to raw variables, without a grouped
+penalty or post-selection inference. Use `predict_lasso_imputed()` to apply the final saved
 imputer and restore predictor order when predicting new rows. Categorical
 preprocessing within folds remains manual.
 

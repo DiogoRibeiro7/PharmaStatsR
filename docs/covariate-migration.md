@@ -94,7 +94,9 @@ function.
 - `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
   explicit folds, with complete-case filtering and no preprocessing hook. The
   separate `screen_covariates_lasso_imputed()` refits mean/median or nearest-neighbor imputation and
-  standardization within training folds for a prespecified penalty grid. Both
+  standardization within training folds for a prespecified penalty grid. Its
+  [`encode = TRUE` mode](lasso-encoding.md) also fits categorical encoding within
+  folds and records selected raw variables and design columns. Both
   use Gaussian models and observation-weighted scoring, not mixed models.
 - Euclidean distance retains predictor units and categorical factor codes.
   Gower uses observed-range scaling and available-pair weighted averages.
@@ -102,15 +104,17 @@ function.
   to the imputed mean or mode. Earlier targets can influence later targets.
 - `fit_imputation()` and `apply_imputation()` now support saved numeric mean or
   median replacements. Fit them inside each training fold, manually or through
-  `screen_covariates_lasso_imputed()` for numeric screening. Categorical fold
-  preprocessing remains future work. The separate [saved neighbor pair](fitted-knn.md)
+  `screen_covariates_lasso_imputed()` for numeric screening or opt-in encoded
+  designs. The separate [saved neighbor pair](fitted-knn.md)
   reuses training donors and scales for numeric targets, with no cascading
   imputations and bounded contributions for values outside training ranges.
   Numeric screening uses it within folds via `method = "knn"`; unavailable
   donors raise contextual errors rather than leaving a model matrix incomplete.
 - `fit_encoding()` and `apply_encoding()` save training categorical coding and
-  column order. New observed categories raise errors; folds still need explicit
-  training-only fitting.
+  column order. New observed categories raise errors. Fit inside each training
+  fold manually or through `screen_covariates_lasso_imputed(encode = TRUE)`.
+  The latter requires observed categorical values and applies column-wise
+  penalties, not grouped categorical selection.
 - Native mixed-model fitting still requires supported column names. Covariate-aware
   nonlinear models and simulation-based predictive checks remain future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.

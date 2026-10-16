@@ -88,8 +88,12 @@ replacements or nearest-neighbor donors (`method = "knn"`) inside training folds
 saved fold parameters, and the final model for a prespecified penalty grid.
 The neighbor option learns donors and ranges separately for each training fold;
 `k` and distance weights are fixed within the call.
+Set [`encode = TRUE`](docs/lasso-encoding.md) for raw categorical candidates: each
+fold learns its own encoding after numeric imputation, and the result records
+both selected raw variables and design columns. Missing or unseen categories
+raise contextual errors; penalties apply to individual encoded columns.
 Use [`predict_lasso_imputed(result, newdata)`](docs/predict-lasso-imputed.md) to
-apply the saved imputer and predict in the correct column order, including
+apply the saved imputer and optional encoding in the correct column order, including
 after restoring an RDS file in a fresh session.
 The [training-preprocessing guide](docs/fitted-imputation.md) shows saved scaling,
 serialization, and fitting fresh parameters within each subject-level fold.

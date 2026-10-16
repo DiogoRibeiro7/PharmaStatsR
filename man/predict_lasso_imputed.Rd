@@ -9,7 +9,8 @@ predict_lasso_imputed(object, newdata, lambda = NULL)
 \arguments{
 \item{object}{Result from \code{\link[=screen_covariates_lasso_imputed]{screen_covariates_lasso_imputed()}}, or its RDS
 round trip. Its final imputation parameters, Gaussian model, selected
-penalty, and recorded penalty grid must remain available and consistent.}
+penalty, recorded penalty grid, and encoding recipe (if fitted) must
+remain available and consistent.}
 
 \item{newdata}{Data frame containing every original candidate predictor,
 matched by literal name. Column order may differ; empty data are allowed.}
@@ -38,12 +39,20 @@ Mean/median results use \code{\link[=apply_imputation]{apply_imputation()}}; nea
 Missing values without comparable kNN donors raise a prediction-context
 error. Rows are not dropped and there is no fallback imputation.
 
-Supply raw numeric predictors, including candidates whose final coefficients
+Supply raw predictors, including candidates whose final coefficients
 are zero. Extra columns are ignored; no response or subject identifier is
 required. Numeric missing values (\code{NA}/\code{NaN}) are allowed when the saved
 imputer can fill them; infinite values and incompatible column types fail.
 Do not impute or rescale new data first. The fitted model already accounts
 for training standardization.
+
+Results fitted with \code{encode = TRUE} also reuse their saved \code{\link[=fit_encoding]{fit_encoding()}}
+recipe, after numeric imputation. Categorical inputs must be observed and
+known to the recipe; factors or characters may supply categorical values,
+while logical candidates must stay logical. Later contrast options and
+unused new factor levels do not change the saved coding. Supply all original
+raw candidates, not their indicator columns. No encoding is learned from
+the prediction batch. kNN retains its saved distance schema as well.
 
 Only penalties from \code{object$cv$lambda} are accepted, with exact matching to
 that recorded grid. The helper predicts the stored model path and selects
@@ -76,5 +85,5 @@ predict_lasso_imputed(result, future, lambda = c(0.5, 2))
 }
 \seealso{
 \code{\link[=screen_covariates_lasso_imputed]{screen_covariates_lasso_imputed()}}, \code{\link[=apply_imputation]{apply_imputation()}},
-\code{\link[=apply_knn_imputation]{apply_knn_imputation()}}
+\code{\link[=apply_knn_imputation]{apply_knn_imputation()}}, \code{\link[=apply_encoding]{apply_encoding()}}
 }

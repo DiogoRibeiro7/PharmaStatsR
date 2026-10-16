@@ -10,12 +10,20 @@
 #' Missing values without comparable kNN donors raise a prediction-context
 #' error. Rows are not dropped and there is no fallback imputation.
 #'
-#' Supply raw numeric predictors, including candidates whose final coefficients
+#' Supply raw predictors, including candidates whose final coefficients
 #' are zero. Extra columns are ignored; no response or subject identifier is
 #' required. Numeric missing values (`NA`/`NaN`) are allowed when the saved
 #' imputer can fill them; infinite values and incompatible column types fail.
 #' Do not impute or rescale new data first. The fitted model already accounts
 #' for training standardization.
+#'
+#' Results fitted with `encode = TRUE` also reuse their saved [fit_encoding()]
+#' recipe, after numeric imputation. Categorical inputs must be observed and
+#' known to the recipe; factors or characters may supply categorical values,
+#' while logical candidates must stay logical. Later contrast options and
+#' unused new factor levels do not change the saved coding. Supply all original
+#' raw candidates, not their indicator columns. No encoding is learned from
+#' the prediction batch. kNN retains its saved distance schema as well.
 #'
 #' Only penalties from `object$cv$lambda` are accepted, with exact matching to
 #' that recorded grid. The helper predicts the stored model path and selects
@@ -33,7 +41,8 @@
 #'
 #' @param object Result from [screen_covariates_lasso_imputed()], or its RDS
 #'   round trip. Its final imputation parameters, Gaussian model, selected
-#'   penalty, and recorded penalty grid must remain available and consistent.
+#'   penalty, recorded penalty grid, and encoding recipe (if fitted) must
+#'   remain available and consistent.
 #' @param newdata Data frame containing every original candidate predictor,
 #'   matched by literal name. Column order may differ; empty data are allowed.
 #' @param lambda Optional nonempty vector of distinct penalties from
@@ -61,7 +70,7 @@
 #' predict_lasso_imputed(result, future)
 #' predict_lasso_imputed(result, future, lambda = c(0.5, 2))
 #' @seealso [screen_covariates_lasso_imputed()], [apply_imputation()],
-#'   [apply_knn_imputation()]
+#'   [apply_knn_imputation()], [apply_encoding()]
 #' @export
 predict_lasso_imputed <- function(object, newdata, lambda = NULL) {
   # RDS restoration does not itself register the backend's S3 methods.
@@ -77,7 +86,10 @@ predict_lasso_imputed <- function(object, newdata, lambda = NULL) {
     stop("Every requested `lambda` must be a value in `object$cv$lambda`")
   }
   completed <- tryCatch(
-    apply_lasso_imputation(newdata, object$imputation, specification$method),
+    apply_lasso_design(
+      newdata, object$imputation, specification$method,
+      specification$covariates, specification$encoding
+    ),
     error = function(error) {
       stop("Prediction data: ", conditionMessage(error), call. = FALSE)
     }
@@ -87,7 +99,7 @@ predict_lasso_imputed <- function(object, newdata, lambda = NULL) {
     return(matrix(numeric(0), 0L, length(selected), dimnames = list(NULL, labels)))
   }
   values <- stats::predict(object$fit,
-    newx = as.matrix(completed[specification$covariates]), type = "response"
+    newx = completed, type = "response"
   )
   values <- as.matrix(values)[, selected, drop = FALSE]
   if (!identical(dim(values), c(nrow(newdata), length(selected))) ||
@@ -118,17 +130,29 @@ validate_lasso_prediction <- function(object) {
     is.na(method) || !method %in% c("mean", "median", "knn")) {
     invalid("missing or unsupported imputation method")
   }
-  if (!valid_encoding_names(covariates) || length(covariates) < 2L) {
+  encoding <- object[["encoding", exact = TRUE]]
+  if (!valid_encoding_names(covariates) || length(covariates) < if (is.null(encoding)) 2L else 1L) {
     invalid("missing or invalid candidate predictor order")
   }
+  numeric_vars <- columns <- covariates
+  if (!is.null(encoding)) {
+    validate_encoding_recipe(encoding)
+    if (!identical(names(encoding$variables), covariates) || length(encoding$columns) < 2L) {
+      invalid("encoding disagrees with the candidate predictor order or design size")
+    }
+    numeric_vars <- covariates[vapply(encoding$variables, function(variable) {
+      variable$kind == "numeric"
+    }, logical(1))]
+    columns <- encoding$columns
+  }
   if (method == "knn") {
-    if (!is.list(params) || !identical(params$vars, covariates)) {
+    if (!is.list(params) || !identical(params$vars, numeric_vars)) {
       invalid("donor model targets disagree with the candidate predictor order")
     }
   } else {
     validate_imputation_params(params)
-    if (!identical(params$var, covariates) || !is.character(params$method) ||
-      anyNA(params$method) || length(params$method) != length(covariates) ||
+    if (!identical(params$var, numeric_vars) || !is.character(params$method) ||
+      anyNA(params$method) || length(params$method) != length(numeric_vars) ||
       any(params$method != method)) {
       invalid("replacement table disagrees with the imputation method or predictor order")
     }
@@ -155,10 +179,10 @@ validate_lasso_prediction <- function(object) {
   coefficients <- tryCatch(as.matrix(stats::coef(fit)), error = function(error) {
     invalid("cannot read the saved model coefficients")
   })
-  if (!identical(dim(coefficients), c(length(covariates) + 1L, length(grid))) ||
-    !identical(rownames(coefficients)[-1L], covariates) ||
+  if (!identical(dim(coefficients), c(length(columns) + 1L, length(grid))) ||
+    !identical(rownames(coefficients)[-1L], columns) ||
     any(!is.finite(coefficients))) {
     invalid("model coefficients disagree with the candidate predictor order or are nonfinite")
   }
-  list(method = method, covariates = covariates, grid = grid)
+  list(method = method, covariates = covariates, grid = grid, encoding = encoding)
 }

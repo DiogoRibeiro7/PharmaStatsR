@@ -4,7 +4,9 @@
 nearest-neighbor donors inside each training fold, fits a Gaussian penalized
 model, and predicts that fold's held-out observations. It returns the selected predictors, tuning scores,
 held-out predictions, each fold's imputation model, and a final model with its
-saved imputation parameters. The API is experimental.
+saved imputation parameters. The API is experimental. For raw categorical
+candidates, opt into [`encode = TRUE`](lasso-encoding.md), which also fits and
+saves encoding within each training fold; the examples below use numeric-only defaults.
 
 Pass the raw numeric development data and a prespecified penalty grid. An
 imputation or other learned transformation applied before this call is not
@@ -220,8 +222,10 @@ character-vector return. The new helper returns a list and retains rows with
 missing predictors; this is an explicit choice of a different screening
 procedure. It does not change the existing function's defaults.
 
-This implementation supports numeric mean/median and nearest-neighbor imputation. The
-[saved categorical encoder](fitted-encoding.md) remains a separate manual
-transformation; categorical preprocessing is not integrated into this screening loop. Single-value imputation does not quantify
+This implementation supports numeric mean/median and nearest-neighbor imputation.
+With [`encode = TRUE`](lasso-encoding.md), it also fits additive categorical
+encoding within folds and saves the final recipe for prediction. Categorical
+values must be observed and known to the training recipe. Penalties act on
+encoded columns, not grouped categorical effects. Single-value imputation does not quantify
 missing-data uncertainty or establish missingness assumptions. Gaussian
 screening is not mixed-effects selection or post-selection inference.

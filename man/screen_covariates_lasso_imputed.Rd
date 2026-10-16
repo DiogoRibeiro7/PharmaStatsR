@@ -2,7 +2,7 @@
 % Please edit documentation in R/covariate_lasso_imputed.R
 \name{screen_covariates_lasso_imputed}
 \alias{screen_covariates_lasso_imputed}
-\title{Screen numeric covariates with training-fold imputation}
+\title{Screen covariates with training-fold imputation and optional encoding}
 \usage{
 screen_covariates_lasso_imputed(
   data,
@@ -15,7 +15,8 @@ screen_covariates_lasso_imputed(
   nfolds = 10L,
   foldid = NULL,
   k = 5L,
-  weights = NULL
+  weights = NULL,
+  encode = FALSE
 )
 }
 \arguments{
@@ -23,8 +24,11 @@ screen_covariates_lasso_imputed(
 
 \item{response}{Name of a real numeric response column.}
 
-\item{covariates}{At least two unique real numeric predictor column names,
-matched literally. Exclude the response and subject identifier.}
+\item{covariates}{Unique predictor column names, matched literally. With
+\code{encode = FALSE}, at least two real numeric columns are required. With
+\code{encode = TRUE}, at least one numeric, character, factor, or logical
+candidate is required, producing at least two design columns. Exclude
+the response and subject identifier.}
 
 \item{lambda}{A prespecified numeric vector of at least two distinct, finite,
 strictly positive penalties. Values are sorted in decreasing order. Choose
@@ -54,11 +58,17 @@ Ignored for mean/median imputation. Must be at most \code{.Machine$integer.max}.
 selected covariates, used only with \code{method = "knn"}. Omitted weights are
 one; zero weights exclude distance predictors. Each target needs another
 positive-weight predictor. These are not observation or scoring weights.}
+
+\item{encode}{Logical, default \code{FALSE} for the existing numeric-only
+workflow. \code{TRUE} fits and saves categorical encoding within each training
+fold and on the final development data. Mean/median allow categorical-only
+designs (an empty numeric replacement table); kNN needs a numeric target.}
 }
 \value{
 A plain list containing:
 \describe{
-\item{selected}{Nonzero final-model covariates at \code{lambda.min}, in input order.}
+\item{selected}{Raw covariates with any nonzero final-model design column
+at \code{lambda.min}, in input order.}
 \item{lambda.min}{The penalty with minimum held-out mean squared error.}
 \item{alpha}{The supplied mixing parameter, retained for reproducibility.}
 \item{method}{The chosen imputation method.}
@@ -73,6 +83,10 @@ for mean/median, or saved donor models for \code{"knn"}.}
 \item{imputation}{The final replacement table for \code{\link[=apply_imputation]{apply_imputation()}}, or
 the final donor model for \code{\link[=apply_knn_imputation]{apply_knn_imputation()}} when \code{method = "knn"}.}
 }
+With \code{encode = TRUE}, three additional entries are returned: \code{encoding}
+(the final recipe), \code{fold_encoding} (recipes named by normalized fold),
+and \code{selected_columns} (nonzero final design-column names at \code{lambda.min}).
+These entries are absent for default numeric-only calls.
 Save the result with \code{\link[base:saveRDS]{base::saveRDS()}}. Use \code{\link[=predict_lasso_imputed]{predict_lasso_imputed()}} to apply
 its final imputer, restore predictor order, and predict at \code{lambda.min} or
 other penalties from the fitted grid. The model already includes its training
@@ -84,6 +98,8 @@ Gaussian LASSO/elastic-net path, and scores its held-out predictions. Uses
 \code{\link[glmnet:glmnet]{glmnet::glmnet()}} with an intercept and training-specific standardization.
 An explicit penalty grid is required; no grid is estimated from validation
 rows. This is an experimental API.
+Set \code{encode = TRUE} to fit additive categorical encoding within each
+training fold as well as numeric imputation.
 }
 \details{
 Only rows with missing responses are excluded. Missing numeric predictors
@@ -93,7 +109,7 @@ response, and at least one varying predictor after imputation. For \code{"knn"},
 every missing training or held-out entry also needs comparable training
 donors; otherwise an error names the affected fold and target. Infinite
 values on retained rows raise errors. Entirely missing held-out predictors
-are allowed when they can be imputed. Supply raw numeric predictors:
+are allowed when they can be imputed. Supply raw predictors:
 preprocessing performed before this call cannot be undone or refitted by it.
 
 Selection minimizes mean squared error across all retained held-out rows,
@@ -106,13 +122,13 @@ use an independent test set or outer resampling for that purpose.
 Supplying \code{id} keeps a subject's retained observations in one fold; it does
 not fit a mixed model or give subjects equal scoring weight. Default random
 folds balance subjects (or rows without \code{id}). Set a seed for reproducible
-random folds. Explicit \code{foldid} does not generate random folds. Categorical
-encoding and one-standard-error selection are
-not implemented here. \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}} keeps its existing
+random folds. Explicit \code{foldid} does not generate random folds.
+One-standard-error selection is not implemented here.
+\code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}} keeps its existing
 complete-case behavior.
 
-With \code{method = "knn"}, all selected covariates are imputation targets and
-distance predictors; the current target is excluded from its own distance.
+With \code{method = "knn"}, numeric candidates are imputation targets and all
+candidates are distance predictors; the current target is excluded from its own distance.
 Neither the response nor \code{id} enters the donor model. \code{\link[=fit_knn_imputation]{fit_knn_imputation()}}
 saves training donors and numeric ranges, and \code{\link[=apply_knn_imputation]{apply_knn_imputation()}} uses
 bounded, available-pair weighted Gower distances. It averages up to \code{k}
@@ -122,6 +138,25 @@ imputations. No held-out row becomes a donor or changes the saved scales.
 There is no fallback imputation. \code{k} and \code{weights} are fixed within the call;
 they are not tuned. Saved fold and final models retain selected training
 predictor values. See the imputer's help for full distance and weight rules.
+
+With \code{encode = TRUE}, numeric, character, factor, and logical candidates
+are accepted. Imputation fills numeric candidates only, then \code{\link[=fit_encoding]{fit_encoding()}}
+learns the training design and \code{\link[=apply_encoding]{apply_encoding()}} reuses it for held-out
+rows. Categorical values must be observed. Unknown held-out categories raise
+a fold-context error; there is no pooling, category imputation, or silent
+row removal. Characters learn levels from training rows; factors retain
+declared levels, which must come from a prespecified schema or training data.
+Unused declared levels are allowed but their effects cannot be estimated
+from training observations that do not contain them.
+
+Encoding uses the additive, no-intercept design of \code{\link[=fit_encoding]{fit_encoding()}}: the
+first categorical term has full indicators and subsequent terms use the
+contrasts active during fitting. The Gaussian model supplies an intercept.
+Penalties apply to individual standardized design columns, not whole
+categorical variables. Selection depends on coding; redundant indicator
+coefficients may be nonunique. \code{selected} maps nonzero columns back to raw
+candidates and is not a grouped test or post-selection inference. Each
+training design needs at least two columns and one varying column.
 }
 \examples{
 block <- data.frame(
@@ -145,8 +180,15 @@ neighbors <- screen_covariates_lasso_imputed(
 )
 neighbors$cv # the two nearest donor values average to zero in this example
 predict_lasso_imputed(neighbors, new_data)
+training$group <- ifelse(training$x2 == -1, "A", "B")
+mixed <- screen_covariates_lasso_imputed(
+  training, "y", c("x1", "group"),
+  lambda = c(2, 1, 0.5),
+  encode = TRUE, foldid = rep(1:3, each = 6)
+)
+predict_lasso_imputed(mixed, data.frame(group = "B", x1 = NA_real_))
 }
 \seealso{
 \code{\link[=predict_lasso_imputed]{predict_lasso_imputed()}}, \code{\link[=fit_imputation]{fit_imputation()}},
-\code{\link[=fit_knn_imputation]{fit_knn_imputation()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
+\code{\link[=fit_knn_imputation]{fit_knn_imputation()}}, \code{\link[=fit_encoding]{fit_encoding()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
 }

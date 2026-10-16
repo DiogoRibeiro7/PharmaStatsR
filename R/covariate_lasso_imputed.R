@@ -1,10 +1,12 @@
-#' Screen numeric covariates with training-fold imputation
+#' Screen covariates with training-fold imputation and optional encoding
 #'
 #' Fits mean, median, or nearest-neighbor imputation on each training fold, fits a
 #' Gaussian LASSO/elastic-net path, and scores its held-out predictions. Uses
 #' [glmnet::glmnet()] with an intercept and training-specific standardization.
 #' An explicit penalty grid is required; no grid is estimated from validation
 #' rows. This is an experimental API.
+#' Set `encode = TRUE` to fit additive categorical encoding within each
+#' training fold as well as numeric imputation.
 #'
 #' Only rows with missing responses are excluded. Missing numeric predictors
 #' (`NA` or `NaN`) are filled using that fold's training replacements or donors. Each
@@ -13,7 +15,7 @@
 #' every missing training or held-out entry also needs comparable training
 #' donors; otherwise an error names the affected fold and target. Infinite
 #' values on retained rows raise errors. Entirely missing held-out predictors
-#' are allowed when they can be imputed. Supply raw numeric predictors:
+#' are allowed when they can be imputed. Supply raw predictors:
 #' preprocessing performed before this call cannot be undone or refitted by it.
 #'
 #' Selection minimizes mean squared error across all retained held-out rows,
@@ -26,13 +28,13 @@
 #' Supplying `id` keeps a subject's retained observations in one fold; it does
 #' not fit a mixed model or give subjects equal scoring weight. Default random
 #' folds balance subjects (or rows without `id`). Set a seed for reproducible
-#' random folds. Explicit `foldid` does not generate random folds. Categorical
-#' encoding and one-standard-error selection are
-#' not implemented here. [screen_covariates_lasso()] keeps its existing
+#' random folds. Explicit `foldid` does not generate random folds.
+#' One-standard-error selection is not implemented here.
+#' [screen_covariates_lasso()] keeps its existing
 #' complete-case behavior.
 #'
-#' With `method = "knn"`, all selected covariates are imputation targets and
-#' distance predictors; the current target is excluded from its own distance.
+#' With `method = "knn"`, numeric candidates are imputation targets and all
+#' candidates are distance predictors; the current target is excluded from its own distance.
 #' Neither the response nor `id` enters the donor model. [fit_knn_imputation()]
 #' saves training donors and numeric ranges, and [apply_knn_imputation()] uses
 #' bounded, available-pair weighted Gower distances. It averages up to `k`
@@ -43,10 +45,32 @@
 #' they are not tuned. Saved fold and final models retain selected training
 #' predictor values. See the imputer's help for full distance and weight rules.
 #'
+#' With `encode = TRUE`, numeric, character, factor, and logical candidates
+#' are accepted. Imputation fills numeric candidates only, then [fit_encoding()]
+#' learns the training design and [apply_encoding()] reuses it for held-out
+#' rows. Categorical values must be observed. Unknown held-out categories raise
+#' a fold-context error; there is no pooling, category imputation, or silent
+#' row removal. Characters learn levels from training rows; factors retain
+#' declared levels, which must come from a prespecified schema or training data.
+#' Unused declared levels are allowed but their effects cannot be estimated
+#' from training observations that do not contain them.
+#'
+#' Encoding uses the additive, no-intercept design of [fit_encoding()]: the
+#' first categorical term has full indicators and subsequent terms use the
+#' contrasts active during fitting. The Gaussian model supplies an intercept.
+#' Penalties apply to individual standardized design columns, not whole
+#' categorical variables. Selection depends on coding; redundant indicator
+#' coefficients may be nonunique. `selected` maps nonzero columns back to raw
+#' candidates and is not a grouped test or post-selection inference. Each
+#' training design needs at least two columns and one varying column.
+#'
 #' @param data A `data.frame` with unique, nonmissing, nonempty column names.
 #' @param response Name of a real numeric response column.
-#' @param covariates At least two unique real numeric predictor column names,
-#'   matched literally. Exclude the response and subject identifier.
+#' @param covariates Unique predictor column names, matched literally. With
+#'   `encode = FALSE`, at least two real numeric columns are required. With
+#'   `encode = TRUE`, at least one numeric, character, factor, or logical
+#'   candidate is required, producing at least two design columns. Exclude
+#'   the response and subject identifier.
 #' @param lambda A prespecified numeric vector of at least two distinct, finite,
 #'   strictly positive penalties. Values are sorted in decreasing order. Choose
 #'   the grid independently of held-out outcomes and preprocessing statistics.
@@ -68,10 +92,15 @@
 #'   selected covariates, used only with `method = "knn"`. Omitted weights are
 #'   one; zero weights exclude distance predictors. Each target needs another
 #'   positive-weight predictor. These are not observation or scoring weights.
+#' @param encode Logical, default `FALSE` for the existing numeric-only
+#'   workflow. `TRUE` fits and saves categorical encoding within each training
+#'   fold and on the final development data. Mean/median allow categorical-only
+#'   designs (an empty numeric replacement table); kNN needs a numeric target.
 #'
 #' @return A plain list containing:
 #' \describe{
-#'   \item{selected}{Nonzero final-model covariates at `lambda.min`, in input order.}
+#'   \item{selected}{Raw covariates with any nonzero final-model design column
+#'     at `lambda.min`, in input order.}
 #'   \item{lambda.min}{The penalty with minimum held-out mean squared error.}
 #'   \item{alpha}{The supplied mixing parameter, retained for reproducibility.}
 #'   \item{method}{The chosen imputation method.}
@@ -86,6 +115,10 @@
 #'   \item{imputation}{The final replacement table for [apply_imputation()], or
 #'     the final donor model for [apply_knn_imputation()] when `method = "knn"`.}
 #' }
+#' With `encode = TRUE`, three additional entries are returned: `encoding`
+#' (the final recipe), `fold_encoding` (recipes named by normalized fold),
+#' and `selected_columns` (nonzero final design-column names at `lambda.min`).
+#' These entries are absent for default numeric-only calls.
 #' Save the result with [base::saveRDS()]. Use [predict_lasso_imputed()] to apply
 #' its final imputer, restore predictor order, and predict at `lambda.min` or
 #' other penalties from the fitted grid. The model already includes its training
@@ -112,21 +145,34 @@
 #' )
 #' neighbors$cv # the two nearest donor values average to zero in this example
 #' predict_lasso_imputed(neighbors, new_data)
+#' training$group <- ifelse(training$x2 == -1, "A", "B")
+#' mixed <- screen_covariates_lasso_imputed(
+#'   training, "y", c("x1", "group"),
+#'   lambda = c(2, 1, 0.5),
+#'   encode = TRUE, foldid = rep(1:3, each = 6)
+#' )
+#' predict_lasso_imputed(mixed, data.frame(group = "B", x1 = NA_real_))
 #' @seealso [predict_lasso_imputed()], [fit_imputation()],
-#'   [fit_knn_imputation()], [screen_covariates_lasso()]
+#'   [fit_knn_imputation()], [fit_encoding()], [screen_covariates_lasso()]
 #' @export
 screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
                                             method = c("mean", "median", "knn"), alpha = 1,
                                             id = NULL, nfolds = 10L, foldid = NULL,
-                                            k = 5L, weights = NULL) {
+                                            k = 5L, weights = NULL, encode = FALSE) {
   method <- match.arg(method)
+  if (!is.logical(encode) || length(encode) != 1L || is.na(encode) || !is.null(dim(encode))) {
+    stop("`encode` must be TRUE or FALSE")
+  }
   covariates <- validate_model_covariates(data, covariates)
   if (!is.character(response) || !is.null(dim(response)) || length(response) != 1L ||
     is.na(response) || !response %in% names(data)) {
     stop("`response` must name a real numeric column in `data`")
   }
-  if (length(covariates) < 2L) {
+  if (!encode && length(covariates) < 2L) {
     stop("Imputed LASSO screening requires at least two numeric covariates")
+  }
+  if (encode && !length(covariates)) {
+    stop("Encoded screening requires at least one candidate covariate")
   }
   if (response %in% covariates) {
     stop("`response` cannot also be a candidate covariate")
@@ -154,7 +200,12 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
     weights <- prepare_imputation_weights(weights, covariates)
   }
   vars <- c(response, covariates)
-  if (!all(vapply(data[vars], is_numeric_vector, logical(1)))) {
+  if (encode) {
+    validate_model_vectors(data, covariates)
+    validate_model_names(covariates)
+  }
+  if (!is_numeric_vector(data[[response]]) ||
+    (!encode && !all(vapply(data[covariates], is_numeric_vector, logical(1))))) {
     stop("Response and covariate columns must be real numeric vectors")
   }
   keep <- !is.na(data[[response]])
@@ -162,7 +213,9 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   if (nrow(retained) < 3L) {
     stop("At least three observed-response rows are required")
   }
-  if (any(vapply(retained, function(column) any(is.infinite(column)), logical(1)))) {
+  if (any(vapply(retained, function(column) {
+    is_numeric_vector(column) && any(is.infinite(column))
+  }, logical(1)))) {
     stop("Response and covariates must not contain infinite values on retained rows")
   }
   subjects <- if (is.null(id)) NULL else data[[id]]
@@ -170,27 +223,32 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   labels <- sort(unique(folds))
   predictions <- matrix(NA_real_, nrow(retained), length(lambda))
   fold_imputation <- stats::setNames(vector("list", length(labels)), as.character(labels))
+  fold_encoding <- fold_imputation
   for (fold in labels) {
     held_out <- folds == fold
     context <- sprintf("Training data excluding fold %s", fold)
     trained <- fit_imputed_lasso_path(
       retained[!held_out, , drop = FALSE], response, covariates,
-      method, lambda, alpha, context, k, weights
+      method, lambda, alpha, context, k, weights, encode
     )
     completed <- tryCatch(
-      apply_lasso_imputation(retained[held_out, , drop = FALSE], trained$imputation, method),
+      apply_lasso_design(
+        retained[held_out, , drop = FALSE], trained$imputation,
+        method, covariates, trained$encoding
+      ),
       error = function(error) {
         stop(sprintf("Held-out data for fold %s: %s", fold, conditionMessage(error)), call. = FALSE)
       }
     )
     predicted <- stats::predict(trained$fit,
-      newx = as.matrix(completed[covariates]), s = lambda
+      newx = completed, s = lambda
     )
     if (any(!is.finite(predicted))) {
       stop(sprintf("Nonfinite held-out predictions for fold %s", fold))
     }
     predictions[held_out, ] <- predicted
     fold_imputation[[as.character(fold)]] <- trained$imputation
+    if (encode) fold_encoding[[as.character(fold)]] <- trained$encoding
   }
   mse <- colMeans((predictions - retained[[response]])^2)
   if (any(!is.finite(mse))) {
@@ -198,7 +256,7 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   }
   best <- which.min(mse)
   final <- fit_imputed_lasso_path(
-    retained, response, covariates, method, lambda, alpha, "Final training data", k, weights
+    retained, response, covariates, method, lambda, alpha, "Final training data", k, weights, encode
   )
   coefficients <- as.matrix(stats::coef(final$fit, s = lambda[best]))[-1L, 1L]
   aligned_predictions <- matrix(NA_real_, nrow(data), length(lambda),
@@ -207,32 +265,51 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   aligned_predictions[keep, ] <- predictions
   aligned_folds <- rep(NA_integer_, nrow(data))
   aligned_folds[keep] <- folds
-  list(
-    selected = covariates[coefficients != 0], lambda.min = lambda[best], alpha = unname(alpha),
+  selected_columns <- names(coefficients)[coefficients != 0]
+  selected <- if (encode) {
+    covariates[vapply(final$encoding$variables, function(variable) {
+      any(variable$columns %in% selected_columns)
+    }, logical(1))]
+  } else {
+    covariates[coefficients != 0]
+  }
+  result <- list(
+    selected = selected, lambda.min = lambda[best], alpha = unname(alpha),
     method = method, covariates = covariates,
     cv = data.frame(lambda = lambda, mse = unname(mse)),
     predictions = aligned_predictions, foldid = aligned_folds,
     fold_imputation = fold_imputation, fit = final$fit,
     imputation = final$imputation
   )
+  if (encode) {
+    result$encoding <- final$encoding
+    result$fold_encoding <- fold_encoding
+    result$selected_columns <- selected_columns
+  }
+  result
 }
 
 fit_imputed_lasso_path <- function(data, response, covariates, method,
-                                   lambda, alpha, context, k = 5L, weights = NULL) {
+                                   lambda, alpha, context, k = 5L, weights = NULL,
+                                   encode = FALSE) {
   tryCatch(
     {
       if (length(unique(data[[response]])) < 2L) {
         stop("constant response")
       }
+      numeric_vars <- covariates[vapply(data[covariates], is_numeric_vector, logical(1))]
       params <- if (method == "knn") {
-        fit_knn_imputation(data, covariates, covariates, k, weights)
+        if (!length(numeric_vars)) stop("kNN imputation requires at least one numeric candidate")
+        fit_knn_imputation(data, numeric_vars, covariates, k, weights)
       } else {
-        fit_imputation(data, covariates, method)
+        fit_imputation(data, numeric_vars, method)
       }
       completed <- apply_lasso_imputation(data, params, method)
-      x <- as.matrix(completed[covariates])
-      varying <- vapply(completed[covariates], function(column) {
-        length(unique(column)) > 1L
+      encoding <- if (encode) fit_encoding(completed, covariates) else NULL
+      x <- lasso_design(completed, covariates, encoding)
+      if (ncol(x) < 2L) stop("The fitted design needs at least two columns")
+      varying <- vapply(seq_len(ncol(x)), function(column) {
+        length(unique(x[, column])) > 1L
       }, logical(1))
       if (!any(varying)) {
         stop("no varying covariates after imputation")
@@ -246,12 +323,28 @@ fit_imputed_lasso_path <- function(data, response, covariates, method,
         any(!is.finite(as.matrix(stats::coef(fit))))) {
         stop("glmnet did not produce a complete finite path for the requested lambda grid")
       }
-      list(fit = fit, imputation = params)
+      list(fit = fit, imputation = params, encoding = encoding)
     },
     error = function(error) {
       stop(context, ": ", conditionMessage(error), call. = FALSE)
     }
   )
+}
+
+apply_lasso_design <- function(data, params, method, covariates, encoding = NULL) {
+  completed <- apply_lasso_imputation(data, params, method)
+  lasso_design(completed, covariates, encoding)
+}
+
+lasso_design <- function(data, covariates, encoding = NULL) {
+  if (is.null(encoding)) {
+    return(as.matrix(data[covariates]))
+  }
+  design <- apply_encoding(data, encoding)
+  if (any(!is.finite(design))) {
+    stop("Encoded predictors must be finite; categorical values cannot be missing")
+  }
+  design
 }
 
 apply_lasso_imputation <- function(data, params, method) {

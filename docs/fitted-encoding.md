@@ -87,10 +87,11 @@ apply_encoding(scaled_validation, encoding)
 Refit all three transformations within each training fold when evaluating or
 tuning a model. An outer train/test split does not protect inner tuning folds.
 The [imputation guide](fitted-imputation.md#refit-inside-every-training-fold)
-shows an explicit subject-fold loop. The separate [numeric LASSO
-helper](lasso-imputation.md) integrates mean/median or nearest-neighbor imputation and standardization
-within folds; it does not support categorical candidates. Categorical fold
-preprocessing remains future work. [Saved nearest-neighbor models](fitted-knn.md)
+shows an explicit subject-fold loop. The [LASSO helper](lasso-imputation.md)
+integrates mean/median or nearest-neighbor imputation and standardization within
+folds. Its opt-in [`encode = TRUE` mode](lasso-encoding.md) also fits encoding
+inside each training fold and reuses the saved recipe for prediction. Missing
+and unknown categorical values fail explicitly. [Saved nearest-neighbor models](fitted-knn.md)
 are available separately for numeric targets and mixed predictors.
 
 ## Boundaries and evidence

@@ -38,6 +38,16 @@ The first slope is `max(2 - lambda * sqrt(3/2), 0)`, and the intercept and secon
 slope are zero. These analytic values underpin the tests; the
 [screening guide](lasso-imputation.md#independent-numerical-references) derives them.
 
+## Results with categorical encoding
+
+For results fitted with [`encode = TRUE`](lasso-encoding.md), supply every
+original raw numeric/categorical candidate. The helper applies saved numeric
+imputation, saved encoding, then the model. It does not learn levels or consult
+new contrast options. Missing or unknown categories fail; logical candidates
+must stay logical. Factors or characters can supply saved categorical values,
+subject also to the kNN distance schema when used. Empty batches and singleton
+categories retain the full fitted design.
+
 ## Choose penalties from the fitted grid
 
 Omitting `lambda` uses `result$lambda.min`. Explicit requests must be distinct
