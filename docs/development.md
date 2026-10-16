@@ -23,6 +23,16 @@ The [dependency audit](dependency-audit.md) maps `Imports`, `Suggests`, runtime 
 
 The matrix audits source dependency declarations on every platform. `setup-r-dependencies@v2` caches installed packages between compatible runs; its job log and the all-Suggests verification step record package versions. The Actions run page ties each result to a commit SHA and keeps step logs. Failed checks upload the `check/` directory when it exists. Use **Run workflow** on the matrix workflow and select the candidate branch before reviewing a release; record the resulting SHA and job results in issue #54 or the release candidate issue #58. Scheduled runs use the default branch.
 
+The all-Suggests job tests `scripts/verify_release_artifact.py`, then runs it on
+the built source and check output. It retains `candidate-verification.json`
+alongside the tarball, checksum, manifest, commit marker, logs, and manual. The
+verifier checks artifact consistency and requires the ordinary and
+`--run-donttest` example passes, tests, vignette rebuilding, and PDF/HTML manual
+checks to finish with OK or a reported NOTE. Errors, warnings, missing evidence,
+and mismatched records fail verification. Every NOTE remains visible for review;
+the script does not approve a release. Changes to the verifier or its tests also
+trigger the full matrix. See [download and verification instructions](release-candidate.md#verify-a-downloaded-artifact).
+
 The routine workflow and the matrix portability jobs use `check-r-package@v2` with `R CMD check --no-manual --as-cran`; the action disables the CRAN incoming check by default. The matrix all-Suggests job invokes `R CMD build` and `R CMD check --as-cran` directly on the built tarball, including its manual and incoming check. Its check may therefore expose findings that routine jobs did not. The [release candidate gate](release-candidate.md) requires reviewing all results on a single final SHA, including the uploaded tarball, manual, and any NOTEs. A green matrix is not statistical validation or a CRAN submission decision.
 
 Use a platform-specific skip only for a feature that is genuinely unavailable on that platform, with a focused reason and issue link. A missing optional backend may use `skip_if_not_installed()`, but it must have a deterministic missing-package test. When a check appears flaky, rerun it once on the same SHA, preserve the logs, and investigate the cause before removing or weakening the assertion.

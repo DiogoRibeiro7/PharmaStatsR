@@ -8,7 +8,7 @@ The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 | --- | --- | --- |
 | P0: scope and initial numerical evidence | [Export inventory #47](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/47), [claims audit #48](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/48), [core reference cases #49](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/49) | Individual methods in the [evidence inventory](method-inventory.md) still await review. |
 | P1: method families and reliability | [Design contracts #50](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/50), [survival family #51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51), [resampling review #52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52), [optional backends #53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53), [check matrix #54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54), [simulated-data audit #55](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/55), [documentation reconciliation #56](documentation-reconciliation.md) | Individual methods in the [evidence inventory](method-inventory.md) still await independent review. |
-| P2: API and release | [Support policy #57](api-support-policy.md) classifies all 101 exports, with migration guidance for historical names. The inspected `65bc1be` source passed its five-job matrix and full all-Suggests check. | [Candidate gate #58](release-candidate.md) remains open: review both notes, confirm mail receipt and final version/source, rerun checks after changes, and make the release decision. |
+| P2: API and release | [Support policy #57](api-support-policy.md) classifies all 101 exports, with migration guidance for historical names. The [reviewed source](release-candidate.md) passed its five-job matrix and full all-Suggests check, including lengthy examples; automated artifact verification now retains a JSON receipt. | [Candidate gate #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open: confirm mail receipt and final version/source, review its checks and every NOTE, and make the release decision. |
 | P3: stronger method evidence | The scoped numerical-reference batches through [reporting/auditability #163–#165](evidence-batches.md#completed-batch-reporting-and-auditability-163165) are complete, as are the subsequent categorical-outcome and stratified-risk helpers recorded in the inventory. | Further gaps in the [inventory](method-inventory.md) need individual issues and review. |
 | Covariate consolidation | [#194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) closed with [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195): 18 functions, regression tests, data, five vignettes, reports, and app resources now live here. The standalone pharmoCovR repository was deleted. | The [migration guide](covariate-migration.md) records remaining limits: training-fold preprocessing, reusable imputation/encoding, nonlinear covariate models, predictive simulation, and browser checks. |
 
@@ -29,19 +29,20 @@ The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 - The [validation matrix](development.md#package-checks) and routine PR checks exercise the package in named environments. Their success establishes software-check results for those commits, not study-specific statistical validity.
 - [Limitations and validation](limitations.md) describes known method and workflow boundaries.
 
-## Latest checked source and remaining release work
+## Reviewed source and remaining release work
 
 The [reviewed development baseline](release-candidate.md#reviewed-development-baseline-15-october-2026)
-is merged commit `65bc1be17fc150e1af42eab6c2b6b33d7f167046`. The routine R checks,
+is merged commit `971a37aaf203fad523807c254db930ce588ccbcd`. The routine R checks,
 documentation build/deployment, and all five matrix jobs passed. Inspection of
-the all-Suggests artifact confirmed **0 errors, 0 warnings, and 2 notes**:
-new submission and the nlmixr2 example runtime. The source hash and job links
-are recorded in the release evidence.
+the all-Suggests artifact confirmed **0 errors, 0 warnings, and 1 New submission
+note**. Ordinary examples, the full SAEM fit in the lengthy-example pass, tests,
+vignettes, and manuals passed. The source hash and job links are recorded in the
+release evidence. Subsequent receipts are tracked in #58.
 
 The older 7 October candidate does not contain the consolidated package.
 The documentation refresh also changes packaged README/NEWS content; final
-candidate selection requires checks of its own merged source. Review the
-runtime note, maintainer contact, final version, comments, and tag decision
+candidate selection requires checks of its own merged source. Review its
+NOTEs, maintainer contact, final version, comments, and tag decision
 under [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58).
 The [documentation reconciliation](documentation-reconciliation.md) separates
 current coverage from historical audits. No CRAN submission date is set.
