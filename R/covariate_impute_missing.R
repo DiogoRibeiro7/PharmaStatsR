@@ -12,6 +12,8 @@
 #' @examples
 #' df <- data.frame(a = c(1, NA, 3), b = c(NA, NA, 2))
 #' impute_mean(df, c("a", "b"))
+#' @seealso [fit_imputation()] and [apply_imputation()] for training-fitted
+#'   replacements reused on new data.
 #' @export
 impute_mean <- function(data, vars) {
   impute_location(data, vars, mean)
@@ -31,6 +33,8 @@ impute_mean <- function(data, vars) {
 #' @examples
 #' df <- data.frame(a = c(1, NA, 3), b = c(NA, NA, 2))
 #' impute_median(df, c("a", "b"))
+#' @seealso [fit_imputation()] and [apply_imputation()] for training-fitted
+#'   replacements reused on new data.
 #' @export
 impute_median <- function(data, vars) {
   impute_location(data, vars, stats::median)

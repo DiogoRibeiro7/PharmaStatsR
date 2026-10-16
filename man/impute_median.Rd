@@ -24,3 +24,7 @@ rejected. Constant columns with observed values can be imputed.
 df <- data.frame(a = c(1, NA, 3), b = c(NA, NA, 2))
 impute_median(df, c("a", "b"))
 }
+\seealso{
+\code{\link[=fit_imputation]{fit_imputation()}} and \code{\link[=apply_imputation]{apply_imputation()}} for training-fitted
+replacements reused on new data.
+}

@@ -55,6 +55,12 @@ binned summary, not a simulation-based predictive check. The nonlinear SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 
+The later [fitted-imputation helpers](fitted-imputation.md) save numeric
+mean/median replacements for reuse. Their fit/apply separation enables manual
+training-fold preprocessing, but does not automatically refit transformations
+inside LASSO cross-validation. Saved categorical encoders and nearest-neighbor
+donor models are not provided.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.
