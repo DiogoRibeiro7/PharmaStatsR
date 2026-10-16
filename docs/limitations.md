@@ -58,8 +58,10 @@ ignored. These boundaries are preserved by the consolidation.
 The later [fitted-imputation helpers](fitted-imputation.md) save numeric
 mean/median replacements for reuse. Their fit/apply separation enables manual
 training-fold preprocessing, but does not automatically refit transformations
-inside LASSO cross-validation. Saved categorical encoders and nearest-neighbor
-donor models are not provided.
+inside LASSO cross-validation. The [saved encoding helpers](fitted-encoding.md)
+retain training coding and reject unseen observed categories, without adding
+interactions or checking rank. Saved nearest-neighbor donor models remain future
+work.
 
 ## Validation for a real analysis
 

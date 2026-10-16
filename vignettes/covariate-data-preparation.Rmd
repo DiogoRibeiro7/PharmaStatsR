@@ -279,8 +279,8 @@ and unrepresentable transformed values raise errors.
 Split subjects before estimating preprocessing parameters when evaluating
 models on new subjects. Repeat the fitting and application steps within each
 training/validation split. The screening functions do not yet automate this
-workflow, and imputation and categorical encoding do not yet have saved recipes
-for new data.
+workflow. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
+`apply_encoding()` pairs provide saved recipes for manual composition.
 
 ## Prepare a design matrix
 
@@ -310,7 +310,54 @@ Infinite values and unsupported types such as list or matrix columns are
 rejected. Constant numeric columns are allowed, and no rank check is performed
 here. An empty selection produces one row per input row and zero columns.
 This helper does not impute data or record an encoding recipe to apply to future
-data; keep factor levels and contrast settings consistent yourself.
+data. Use the fit/apply pair below when reusing training coding.
+
+### Reuse training encoding on new data
+
+`fit_encoding()` saves training levels, actual numeric coding, and matrix column
+order. `apply_encoding()` preserves those columns even when a new batch has only
+one known category. It does not reevaluate contrasts, so changes to R's contrast
+options do not alter a saved recipe. The result is a plain numeric matrix,
+without the `assign` and `contrasts` attributes from `model.matrix()`.
+
+```{r}
+encoding <- fit_encoding(matrix_data, c("WT", "group"))
+future <- data.frame(WT = c(75, NA), group = c("B", NA))
+apply_encoding(future, encoding)
+```
+
+The columns remain `WT`, `groupA`, `groupB`, and `groupC`. Missing rows stay in
+place; a missing category makes its entire coding block missing. An observed
+category absent from the training recipe raises an error. Unused levels declared
+on a new factor are harmless, and new factor level order does not change coding.
+
+Factors retain their declared training levels. Prespecify their schema or learn
+it from training data; constructing factors from the full dataset before a split
+can reveal held-out categories. Character training columns need two observed
+categories, and factor training columns need two declared levels. Numeric inputs
+stay numeric, logical inputs stay logical, and categorical inputs may be factors
+or characters. An empty selection produces a zero-column matrix; empty new data
+retain the saved columns. No rank check or interaction terms are added.
+
+Fit numeric imputation, scaling, and encoding on the same training population
+and apply them in that order:
+
+```{r}
+training <- data.frame(x = c(1, NA, 3, 8), group = c("A", "B", "A", "B"))
+imputation <- fit_imputation(training, "x")
+completed_training <- apply_imputation(training, imputation)
+scaling <- center_scale(completed_training, "x")
+encoding <- fit_encoding(scaling$data, c("x", "group"))
+validation <- data.frame(x = c(NA, 100), group = c("B", "A"))
+completed_validation <- apply_imputation(validation, imputation)
+scaled_validation <- apply_center_scale(completed_validation, scaling$params)
+apply_encoding(scaled_validation, encoding)
+```
+
+Refit each transformation within every training fold, keeping subjects together
+when evaluating new subjects. The screening helpers do not automate this
+workflow. Save a recipe with `saveRDS()` and restore it with `readRDS()`; it stores
+numeric coding and schema, with no training rows or contrast functions.
 
 By comparison, `fit_covariate_model()` excludes rows missing its response,
 subject identifier, or covariates using `na.exclude`. Its fitted model retains

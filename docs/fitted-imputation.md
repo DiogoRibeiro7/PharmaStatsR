@@ -91,8 +91,9 @@ on all development training data for use on future data.
 
 `screen_covariates_lasso()` still delegates to `cv.glmnet()` without a
 fold-specific imputation hook. Passing a globally imputed table to it does not
-refit imputation inside its folds. Reusable categorical encoding, saved
-nearest-neighbor donor models, and automatic fold integration remain future work.
+refit imputation inside its folds. [Saved categorical encoding](fitted-encoding.md)
+can be composed with these helpers manually; saved nearest-neighbor donor models
+and automatic fold integration remain future work.
 
 ## Boundaries and evidence
 

@@ -22,6 +22,7 @@
 #' @examples
 #' df <- data.frame(id = 1:3, age = c(20, 25, 30), sex = c("M", "F", "F"))
 #' prepare_model_matrix(df, c("age", "sex"))
+#' @seealso [fit_encoding()], [apply_encoding()] for saved training coding.
 #' @export
 prepare_model_matrix <- function(data, covariates) {
   covariates <- validate_model_covariates(data, covariates)

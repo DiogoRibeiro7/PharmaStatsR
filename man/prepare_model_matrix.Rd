@@ -35,3 +35,6 @@ must be renamed because R treats these as special evaluation symbols.
 df <- data.frame(id = 1:3, age = c(20, 25, 30), sex = c("M", "F", "F"))
 prepare_model_matrix(df, c("age", "sex"))
 }
+\seealso{
+\code{\link[=fit_encoding]{fit_encoding()}}, \code{\link[=apply_encoding]{apply_encoding()}} for saved training coding.
+}

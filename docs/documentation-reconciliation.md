@@ -6,10 +6,11 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **103 exports**: 97 functions
-and six illustrative data objects. The two later additions, `fit_imputation()`
-and `apply_imputation()`, have source, generated help, fixed numerical references,
-an inventory row, and [training-preprocessing guidance](fitted-imputation.md).
+The [inventory](method-inventory.md) now contains **105 exports**: 99 functions
+and six illustrative data objects. The later `fit_imputation()` /
+`apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
+generated help, fixed numerical references, inventory rows, and guides for
+[saved imputation](fitted-imputation.md) and [encoding](fitted-encoding.md).
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

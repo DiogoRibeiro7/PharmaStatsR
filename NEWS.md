@@ -1,6 +1,7 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add experimental `fit_encoding()` and `apply_encoding()` to save training categorical levels, actual numeric coding, and matrix column order. Saved recipes retain missing rows, reject unseen observed categories, and survive contrast-option changes and RDS serialization. Add fixed coding references, an imputation/scaling composition example, a guide, and updated API inventories; no new dependencies or model-fitting changes.
 - Add `fit_imputation()` and `apply_imputation()` to save training mean/median replacements and reuse them on new numeric data. Fixed arithmetic references and held-out perturbation tests cover saved parameters, subject-fold boundaries, and composition with scaling. Add a guide and vignette example; the existing imputation APIs and LASSO preprocessing behavior are unchanged.
 - Verify release artifacts automatically in the all-Suggests matrix: compare the expected commit, source checksum and manifest; require the migrated resources and completed example/test/vignette/manual checks; retain a JSON receipt with every NOTE for review. Add standalone verification instructions and refresh the inspected merged-source evidence.
 - Mark the full `fit_nlmixr_model()` SAEM help example as lengthy with `\donttest{}` and document explicit execution. CRAN-style checks still run it in their separate `--run-donttest` pass, and the full-data backend integration test remains in the suite. Model defaults, iterations, data, and the public API are unchanged.

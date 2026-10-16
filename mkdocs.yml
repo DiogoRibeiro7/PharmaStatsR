@@ -126,6 +126,7 @@ nav:
       - Model diagnostics: model-diagnostics.md
       - Covariate workflows and migration: covariate-migration.md
       - Training-fitted imputation: fitted-imputation.md
+      - Training-fitted encoding: fitted-encoding.md
       - Configuration and registries: configuration-registries.md
       - Limitations and validation: limitations.md
   - Development:
