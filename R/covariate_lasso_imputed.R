@@ -1,18 +1,20 @@
 #' Screen numeric covariates with training-fold imputation
 #'
-#' Fits mean or median imputation separately on each training fold, fits a
+#' Fits mean, median, or nearest-neighbor imputation on each training fold, fits a
 #' Gaussian LASSO/elastic-net path, and scores its held-out predictions. Uses
 #' [glmnet::glmnet()] with an intercept and training-specific standardization.
 #' An explicit penalty grid is required; no grid is estimated from validation
 #' rows. This is an experimental API.
 #'
 #' Only rows with missing responses are excluded. Missing numeric predictors
-#' (`NA` or `NaN`) are filled using that fold's training replacements. Each
+#' (`NA` or `NaN`) are filled using that fold's training replacements or donors. Each
 #' training fold must have an observed value for every predictor, a varying
-#' response, and at least one varying predictor after imputation. Infinite
+#' response, and at least one varying predictor after imputation. For `"knn"`,
+#' every missing training or held-out entry also needs comparable training
+#' donors; otherwise an error names the affected fold and target. Infinite
 #' values on retained rows raise errors. Entirely missing held-out predictors
-#' are allowed. Supply raw numeric predictors: preprocessing performed before
-#' this call cannot be undone or refitted by it.
+#' are allowed when they can be imputed. Supply raw numeric predictors:
+#' preprocessing performed before this call cannot be undone or refitted by it.
 #'
 #' Selection minimizes mean squared error across all retained held-out rows,
 #' giving each observation equal weight. Exact ties favor the largest penalty.
@@ -25,9 +27,21 @@
 #' not fit a mixed model or give subjects equal scoring weight. Default random
 #' folds balance subjects (or rows without `id`). Set a seed for reproducible
 #' random folds. Explicit `foldid` does not generate random folds. Categorical
-#' encoding, nearest-neighbor imputation, and one-standard-error selection are
+#' encoding and one-standard-error selection are
 #' not implemented here. [screen_covariates_lasso()] keeps its existing
 #' complete-case behavior.
+#'
+#' With `method = "knn"`, all selected covariates are imputation targets and
+#' distance predictors; the current target is excluded from its own distance.
+#' Neither the response nor `id` enters the donor model. [fit_knn_imputation()]
+#' saves training donors and numeric ranges, and [apply_knn_imputation()] uses
+#' bounded, available-pair weighted Gower distances. It averages up to `k`
+#' comparable donor values, breaking exact distance ties in original training
+#' row order. Each target uses the original recipient values, without cascading
+#' imputations. No held-out row becomes a donor or changes the saved scales.
+#' There is no fallback imputation. `k` and `weights` are fixed within the call;
+#' they are not tuned. Saved fold and final models retain selected training
+#' predictor values. See the imputer's help for full distance and weight rules.
 #'
 #' @param data A `data.frame` with unique, nonmissing, nonempty column names.
 #' @param response Name of a real numeric response column.
@@ -37,7 +51,7 @@
 #'   strictly positive penalties. Values are sorted in decreasing order. Choose
 #'   the grid independently of held-out outcomes and preprocessing statistics.
 #'   A backend path that does not cover the full grid raises an error.
-#' @param method Training replacement summary: `"mean"` or `"median"`.
+#' @param method Training imputation: `"mean"` (default), `"median"`, or `"knn"`.
 #' @param alpha Finite number in `[0, 1]`: `1` is LASSO (default), `0` is ridge,
 #'   and intermediate values use an elastic-net penalty. Ridge generally does
 #'   not select a sparse subset.
@@ -48,22 +62,33 @@
 #' @param foldid Optional positive integer labels, one per original data row.
 #'   Labels are subset to retained rows and renumbered in sorted order. At least
 #'   three nonempty folds must remain; a retained subject cannot span folds.
+#' @param k Positive integer neighbor count for `method = "knn"`, default five.
+#'   Ignored for mean/median imputation. Must be at most `.Machine$integer.max`.
+#' @param weights Optional named nonnegative finite distance weights for the
+#'   selected covariates, used only with `method = "knn"`. Omitted weights are
+#'   one; zero weights exclude distance predictors. Each target needs another
+#'   positive-weight predictor. These are not observation or scoring weights.
 #'
 #' @return A plain list containing:
 #' \describe{
 #'   \item{selected}{Nonzero final-model covariates at `lambda.min`, in input order.}
 #'   \item{lambda.min}{The penalty with minimum held-out mean squared error.}
 #'   \item{alpha}{The supplied mixing parameter, retained for reproducibility.}
+#'   \item{method}{The chosen imputation method.}
+#'   \item{covariates}{All candidate names in the order required for prediction.}
 #'   \item{cv}{Data frame with decreasing `lambda` and observation-weighted `mse`.}
 #'   \item{predictions}{Held-out prediction matrix, with original row names/order
 #'     and columns corresponding to rows of `cv`. Excluded response rows are `NA`.}
 #'   \item{foldid}{Normalized fold labels in original row order; `NA` for exclusions.}
-#'   \item{fold_imputation}{Named list of training imputation tables by normalized fold.}
+#'   \item{fold_imputation}{Named list by normalized fold: replacement tables
+#'     for mean/median, or saved donor models for `"knn"`.}
 #'   \item{fit}{The final `glmnet` path fitted on all retained development rows.}
-#'   \item{imputation}{The final training replacement table for [apply_imputation()].}
+#'   \item{imputation}{The final replacement table for [apply_imputation()], or
+#'     the final donor model for [apply_knn_imputation()] when `method = "knn"`.}
 #' }
 #' Save the result with [base::saveRDS()]. To predict on new data, apply
-#' `imputation`, select predictors in `imputation$var` order, then call
+#' `imputation` with the corresponding helper, select predictors in `covariates`
+#' order, then call
 #' [stats::predict()] on `fit` with `newx` and `s = lambda.min`. The model
 #' already includes its training standardization; do not rescale new data.
 #' @examples
@@ -85,11 +110,23 @@
 #'   newx = as.matrix(completed[result$imputation$var]),
 #'   s = result$lambda.min
 #' )
-#' @seealso [fit_imputation()], [screen_covariates_lasso()]
+#' neighbors <- screen_covariates_lasso_imputed(
+#'   training, "y", c("x1", "x2"),
+#'   lambda = c(2, 1, 0.5),
+#'   method = "knn", k = 2, foldid = rep(1:3, each = 6)
+#' )
+#' neighbors$cv # the two nearest donor values average to zero in this example
+#' completed <- apply_knn_imputation(new_data, neighbors$imputation)
+#' predict(neighbors$fit,
+#'   newx = as.matrix(completed[neighbors$covariates]),
+#'   s = neighbors$lambda.min
+#' )
+#' @seealso [fit_imputation()], [fit_knn_imputation()], [screen_covariates_lasso()]
 #' @export
 screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
-                                            method = c("mean", "median"), alpha = 1,
-                                            id = NULL, nfolds = 10L, foldid = NULL) {
+                                            method = c("mean", "median", "knn"), alpha = 1,
+                                            id = NULL, nfolds = 10L, foldid = NULL,
+                                            k = 5L, weights = NULL) {
   method <- match.arg(method)
   covariates <- validate_model_covariates(data, covariates)
   if (!is.character(response) || !is.null(dim(response)) || length(response) != 1L ||
@@ -120,6 +157,10 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
     stop("`lambda` must contain at least two distinct finite positive penalties")
   }
   lambda <- sort(unname(lambda), decreasing = TRUE)
+  if (method == "knn") {
+    validate_knn_k(k)
+    weights <- prepare_imputation_weights(weights, covariates)
+  }
   vars <- c(response, covariates)
   if (!all(vapply(data[vars], is_numeric_vector, logical(1)))) {
     stop("Response and covariate columns must be real numeric vectors")
@@ -142,9 +183,14 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
     context <- sprintf("Training data excluding fold %s", fold)
     trained <- fit_imputed_lasso_path(
       retained[!held_out, , drop = FALSE], response, covariates,
-      method, lambda, alpha, context
+      method, lambda, alpha, context, k, weights
     )
-    completed <- apply_imputation(retained[held_out, , drop = FALSE], trained$imputation)
+    completed <- tryCatch(
+      apply_lasso_imputation(retained[held_out, , drop = FALSE], trained$imputation, method),
+      error = function(error) {
+        stop(sprintf("Held-out data for fold %s: %s", fold, conditionMessage(error)), call. = FALSE)
+      }
+    )
     predicted <- stats::predict(trained$fit,
       newx = as.matrix(completed[covariates]), s = lambda
     )
@@ -160,7 +206,7 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   }
   best <- which.min(mse)
   final <- fit_imputed_lasso_path(
-    retained, response, covariates, method, lambda, alpha, "Final training data"
+    retained, response, covariates, method, lambda, alpha, "Final training data", k, weights
   )
   coefficients <- as.matrix(stats::coef(final$fit, s = lambda[best]))[-1L, 1L]
   aligned_predictions <- matrix(NA_real_, nrow(data), length(lambda),
@@ -171,6 +217,7 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
   aligned_folds[keep] <- folds
   list(
     selected = covariates[coefficients != 0], lambda.min = lambda[best], alpha = unname(alpha),
+    method = method, covariates = covariates,
     cv = data.frame(lambda = lambda, mse = unname(mse)),
     predictions = aligned_predictions, foldid = aligned_folds,
     fold_imputation = fold_imputation, fit = final$fit,
@@ -179,14 +226,18 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
 }
 
 fit_imputed_lasso_path <- function(data, response, covariates, method,
-                                   lambda, alpha, context) {
+                                   lambda, alpha, context, k = 5L, weights = NULL) {
   tryCatch(
     {
       if (length(unique(data[[response]])) < 2L) {
         stop("constant response")
       }
-      params <- fit_imputation(data, covariates, method)
-      completed <- apply_imputation(data, params)
+      params <- if (method == "knn") {
+        fit_knn_imputation(data, covariates, covariates, k, weights)
+      } else {
+        fit_imputation(data, covariates, method)
+      }
+      completed <- apply_lasso_imputation(data, params, method)
       x <- as.matrix(completed[covariates])
       varying <- vapply(completed[covariates], function(column) {
         length(unique(column)) > 1L
@@ -208,5 +259,17 @@ fit_imputed_lasso_path <- function(data, response, covariates, method,
     error = function(error) {
       stop(context, ": ", conditionMessage(error), call. = FALSE)
     }
+  )
+}
+
+apply_lasso_imputation <- function(data, params, method) {
+  if (method != "knn") {
+    return(apply_imputation(data, params))
+  }
+  # The standalone imputer warns and leaves incomparable entries missing.
+  # Screening requires a completed matrix; propagate a contextual error instead.
+  withCallingHandlers(
+    apply_knn_imputation(data, params),
+    warning = function(warning) stop(conditionMessage(warning), call. = FALSE)
   )
 }

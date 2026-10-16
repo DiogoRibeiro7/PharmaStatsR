@@ -15,6 +15,8 @@ The subsequent `screen_covariates_lasso_imputed()` adds [numeric training-fold
 preprocessing](lasso-imputation.md), with independent coefficient/MSE references
 and held-out prediction evidence. The later [saved neighbor pair](fitted-knn.md)
 adds training-only donors and scales, fixed distance references, and batch-independence tests.
+Numeric screening now integrates these donors within folds via `method = "knn"`,
+with hand-calculated completions, analytic MSE, and no-donor error evidence.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

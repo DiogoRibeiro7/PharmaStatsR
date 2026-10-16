@@ -59,13 +59,16 @@ The later [fitted-imputation helpers](fitted-imputation.md) save numeric
 mean/median replacements for reuse. Their fit/apply separation enables manual
 training-fold preprocessing, but does not automatically refit transformations
 inside the original LASSO helper. The separate [numeric fold-imputation
-helper](lasso-imputation.md) refits replacements and standardization for each
+helper](lasso-imputation.md) refits mean/median replacements or nearest-neighbor
+donors, followed by standardization, for each
 training fold using a prespecified penalty grid. Its tuning MSE needs separate
 outer evaluation for performance assessment. The [saved encoding helpers](fitted-encoding.md)
 retain training coding and reject unseen observed categories, without adding
 interactions or checking rank. [Saved nearest-neighbor models](fitted-knn.md)
 retain selected training data and use bounded Gower contributions for numeric
-targets; they do not automate screening-fold preprocessing or uncertainty estimation.
+targets. Numeric screening integrates those donors within folds with
+`method = "knn"` and stops if any predictor cannot be imputed; it does not
+fall back to another imputation method or estimate missing-data uncertainty.
 
 ## Validation for a real analysis
 

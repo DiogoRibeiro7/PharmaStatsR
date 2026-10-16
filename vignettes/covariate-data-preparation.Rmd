@@ -279,7 +279,8 @@ and unrepresentable transformed values raise errors.
 Split subjects before estimating preprocessing parameters when evaluating
 models on new subjects. Repeat the fitting and application steps within each
 training/validation split. The numeric `screen_covariates_lasso_imputed()`
-helper automates mean/median replacement and model standardization for a
+helper automates mean/median or nearest-neighbor imputation and model
+standardization for a
 prespecified penalty grid; categorical fold preprocessing remains manual. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
 `apply_encoding()` pairs provide saved recipes for manual composition.
 
@@ -414,8 +415,7 @@ standardization. Save the result with `saveRDS()` when needed. Use an independen
 test set or outer resampling to assess the selected procedure; the minimum
 tuning error is not an unbiased estimate of future performance. An all-missing
 training predictor or unusable training model raises an error naming its fold.
-Categorical encoding within folds and nearest-neighbor models remain separate
-workflows; single-value imputation does not quantify missing-data uncertainty.
+Categorical encoding within folds remains a separate workflow; single-value imputation does not quantify missing-data uncertainty.
 
 ## Reusing nearest-neighbor donors
 
@@ -441,4 +441,50 @@ Save with `saveRDS()` and restore with `readRDS()`. This model retains selected
 training target and predictor values, unlike the mean/median summary table.
 Refit it separately inside each validation fold. Nominal predictors allow unseen
 values as mismatches; ordered predictors require known training levels. The
-screening helpers do not integrate this nearest-neighbor workflow.
+`screen_covariates_lasso_imputed()` helper integrates this nearest-neighbor
+workflow for numeric candidates as shown below.
+
+## Nearest-neighbor imputation inside screening folds
+
+Choose `method = "knn"` to fit a fresh donor model within every training fold.
+Mean remains the default. The response and subject identifier never enter the
+donor model. `k` and distance weights are fixed during the call, not tuned.
+
+```{r}
+block <- data.frame(
+  x1 = c(-1, -1, 1, 1, NA, NA), x2 = c(-1, 1, -1, 1, -1, 1),
+  y = c(-2, -2, 2, 2, 0, 0)
+)
+training <- block[rep(seq_len(6), 3), ]
+knn_screened <- screen_covariates_lasso_imputed(
+  training, "y", c("x1", "x2"), lambda = c(2, 1, 0.5),
+  method = "knn", k = 2, foldid = rep(1:3, each = 6)
+)
+knn_screened$cv
+knn_screened$method
+knn_screened$fold_imputation[[1]]$k
+```
+
+For each missing `x1`, the first two closest donors have values -1 and 1.
+Their mean is zero, so the orthogonal coefficient and MSE reference above still
+applies: errors are `8/3`, `1`, and `1/4`. Every training partition has its own
+donors and ranges; held-out rows cannot influence each other's imputations.
+The current target is excluded from its distance calculation, and imputations
+never cascade across targets.
+
+Use the final saved donor model and recorded covariate order for new rows:
+
+```{r}
+future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
+completed <- apply_knn_imputation(future, knn_screened$imputation)
+predict(knn_screened$fit,
+  newx = as.matrix(completed[knn_screened$covariates]),
+  s = knn_screened$lambda.min
+)
+```
+
+If a missing training or held-out value has no comparable donors, screening
+stops with its fold and target; it does not drop rows or fall back to mean
+imputation. Saved fold and final models retain selected training predictor
+values. For performance assessment, use independent data or outer resampling
+that includes any selection of `k`, weights, and the model penalty.

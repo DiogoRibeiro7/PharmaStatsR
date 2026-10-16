@@ -60,7 +60,7 @@ history was not imported into PharmaStatsR.
 | Saved imputation (added after consolidation) | `fit_imputation()`, `apply_imputation()` | Save numeric training mean/median replacements and apply them to new data without refitting; see the [training-preprocessing guide](fitted-imputation.md). |
 | Saved encoding (added after consolidation) | `fit_encoding()`, `apply_encoding()` | Save training levels, numeric coding, and output columns for use on new data; see the [encoding guide](fitted-encoding.md). |
 | Screening | `screen_covariates_stepwise()`, `screen_covariates_bayesian()`, `screen_covariates_lasso()` | AIC stepwise, univariate BIC scores, and Gaussian penalized regression; these are not mixed-effects selection procedures. |
-| Numeric screening with fold imputation (added after consolidation) | `screen_covariates_lasso_imputed()` | Prespecified Gaussian penalty grid; training-fold mean/median imputation and standardization; held-out predictions and saved final parameters. See the [guide](lasso-imputation.md). |
+| Numeric screening with fold imputation (added after consolidation) | `screen_covariates_lasso_imputed()` | Prespecified Gaussian penalty grid; training-fold mean/median or nearest-neighbor imputation and standardization; held-out predictions and saved final parameters. See the [guide](lasso-imputation.md). |
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept. |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
@@ -92,7 +92,7 @@ function.
   joint Bayesian model.
 - `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
   explicit folds, with complete-case filtering and no preprocessing hook. The
-  separate `screen_covariates_lasso_imputed()` refits mean/median imputation and
+  separate `screen_covariates_lasso_imputed()` refits mean/median or nearest-neighbor imputation and
   standardization within training folds for a prespecified penalty grid. Both
   use Gaussian models and observation-weighted scoring, not mixed models.
 - Euclidean distance retains predictor units and categorical factor codes.
@@ -105,6 +105,8 @@ function.
   preprocessing remains future work. The separate [saved neighbor pair](fitted-knn.md)
   reuses training donors and scales for numeric targets, with no cascading
   imputations and bounded contributions for values outside training ranges.
+  Numeric screening uses it within folds via `method = "knn"`; unavailable
+  donors raise contextual errors rather than leaving a model matrix incomplete.
 - `fit_encoding()` and `apply_encoding()` save training categorical coding and
   column order. New observed categories raise errors; folds still need explicit
   training-only fitting.

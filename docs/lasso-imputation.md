@@ -1,9 +1,9 @@
 # LASSO screening with training-fold imputation
 
-`screen_covariates_lasso_imputed()` learns numeric mean or median replacements
-inside each training fold, fits a Gaussian penalized model, and predicts that
-fold's held-out observations. It returns the selected predictors, tuning scores,
-held-out predictions, each fold's replacement table, and a final model with its
+`screen_covariates_lasso_imputed()` learns numeric mean/median replacements or
+nearest-neighbor donors inside each training fold, fits a Gaussian penalized
+model, and predicts that fold's held-out observations. It returns the selected predictors, tuning scores,
+held-out predictions, each fold's imputation model, and a final model with its
 saved imputation parameters. The API is experimental.
 
 Pass the raw numeric development data and a prespecified penalty grid. An
@@ -66,7 +66,8 @@ no one-standard-error rule or tuning of `alpha` in this helper.
   fold. The response is never imputed.
 - Every training fold needs at least one observed value in every predictor, a
   varying response, and at least one varying predictor after imputation. An
-  all-missing held-out predictor is allowed. Unusable training sets raise an
+  all-missing held-out predictor is allowed when it can be imputed. With kNN,
+  every missing entry also needs comparable training donors. Unusable sets raise an
   error naming the fold; they are not silently dropped or fitted globally.
 - `foldid` must contain one positive integer per original row. After excluding
   missing responses, surviving labels are renumbered in sorted order; at least
@@ -78,17 +79,89 @@ no one-standard-error rule or tuning of `alpha` in this helper.
 - `result$predictions` has the original row names and order. Its columns align
   with rows of `result$cv`. Excluded response rows contain `NA`, as do their
   entries in `result$foldid`. Missing-predictor rows receive predictions.
-- `result$fold_imputation` stores the training replacement table for each
-  normalized fold, so the fitted preprocessing can be inspected.
+- `result$fold_imputation` stores the training replacement table or saved donor
+  model for each normalized fold, so the fitted preprocessing can be inspected.
+- `result$method` records the chosen method; `result$covariates` records the
+  complete predictor order needed when predicting new data.
 
 For example, if three folds have observed predictor values `(1, 2)`, `(3, 9)`,
 and `(8, 20)`, their training-only mean replacements are `10`, `31/4`, and
 `15/4`; the medians are `17/2`, `5`, and `5/2`. The full-development replacements
 are different: mean `43/6` and median `11/2`. Tests fix each value explicitly.
 
+## Nearest-neighbor preprocessing within folds
+
+Set `method = "knn"` to use [saved nearest-neighbor imputation](fitted-knn.md).
+The default remains `"mean"`; `"median"` is unchanged. `k` and `weights` apply
+only to kNN and are fixed during this call, not tuned.
+
+```r
+knn_result <- screen_covariates_lasso_imputed(
+  training, "y", c("x1", "x2"), lambda = c(2, 1, 0.5),
+  method = "knn", k = 2, id = "SubjectID", foldid = folds
+)
+knn_result$cv # MSE: 8/3, 1, 1/4 for this reference
+knn_result$method # "knn"
+knn_result$fold_imputation[[1]]$k # 2
+```
+
+Each training partition supplies its own donor values and numeric ranges.
+All selected numeric covariates are both targets and distance predictors,
+excluding the current target from its own distances. The outcome and subject ID
+never enter the donor model. The same saved model completes training and
+held-out rows before fitting/predicting with the Gaussian path. Standardization
+is then estimated from that fold's completed training matrix.
+
+Distances use available-pair weighted Gower contributions, bounded at one for
+values outside the saved training range. Average up to `k` comparable donor
+targets; exact distance ties follow original training row order. Earlier
+imputations never feed later targets, and held-out rows cannot become donors
+or alter each other's imputations. Missing training target values never donate.
+
+Named `weights` affect distances, not the donor mean or MSE. Omitted weights
+are one. Zero weights exclude distance predictors, while those columns remain
+imputation targets and model candidates. Each target needs another positive
+weight predictor. See the [distance rules](fitted-knn.md#distance-and-donor-rules).
+
+If the standalone imputer would leave an entry missing because no comparable
+donors exist, screening stops with the affected training/held-out fold and
+target. It does not drop those rows or substitute a different imputation method.
+For example, a row missing every candidate predictor cannot be completed.
+
+In the reference above, the first two closest donors for each missing `x1`
+have values -1 and 1, so the imputed value is zero. The analytic coefficients
+and MSE below therefore apply to this kNN example too. A second fixed case uses
+folds with observed `x1` pairs `(1,2)`, `(3,9)`, `(8,20)`, located at `x2=-1,0`,
+and missing `x1` at `x2=1`. For `k=1`, the three training-fold replacements
+are **9, 2, 2**, while the full-data replacement is **2**. These values differ
+from mean/median replacements and are fixed independently of the backend fit.
+
+The [kNN screening tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-lasso-knn.R)
+check those completions and model predictions, training-only ranges and donors,
+held-out perturbations, response/ID exclusion, weights, noncascading targets,
+row identity, serialization, and unusable-fold errors.
+
+After tuning, `knn_result$imputation` is a fresh donor model fitted on all
+retained development rows. Reuse it to complete new predictors:
+
+```r
+knn_future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
+knn_completed <- apply_knn_imputation(knn_future, knn_result$imputation)
+predict(knn_result$fit,
+  newx = as.matrix(knn_completed[knn_result$covariates]),
+  s = knn_result$lambda.min
+)
+# approximately 0, 1.387628, -1.387628
+```
+
+Saving a kNN screening result retains selected training predictor values in
+each fold model and the final model. It contains multiple training partitions,
+so its size grows with the number of folds and rows. Keep `k` and weights fixed
+in advance or evaluate their selection in an outer resampling design.
+
 ## Reuse the final model
 
-After tuning, the helper fits a fresh replacement table and model path on all
+After tuning, the helper fits fresh imputation parameters and a model path on all
 retained development rows. `selected` contains the nonzero coefficients from
 that final fit at `lambda.min`, in the requested predictor order. The final
 model and the held-out predictions have different roles.
@@ -98,15 +171,17 @@ new_data <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
 completed <- apply_imputation(new_data, result$imputation)
 predicted <- predict(
   result$fit,
-  newx = as.matrix(completed[result$imputation$var]),
+  newx = as.matrix(completed[result$covariates]),
   s = result$lambda.min
 )
 predicted
 # approximately 0, 1.387628, -1.387628
 ```
 
-Select columns in `result$imputation$var` order, including predictors whose
-coefficients were shrunk to zero. The fitted model already accounts for its
+This example uses the default mean imputer. For `method = "knn"`, use
+`apply_knn_imputation()` as shown above. Select columns in `result$covariates`
+order, including predictors whose coefficients were shrunk to zero.
+The fitted model already accounts for its
 training standardization; do not rescale the new table. Persist the result with
 `saveRDS(result, "screening.rds")` and restore it with `readRDS()`. No response or
 subject identifier is needed to predict new rows. In a fresh R session, load
@@ -147,9 +222,8 @@ character-vector return. The new helper returns a list and retains rows with
 missing predictors; this is an explicit choice of a different screening
 procedure. It does not change the existing function's defaults.
 
-This implementation supports numeric mean/median imputation only. The
+This implementation supports numeric mean/median and nearest-neighbor imputation. The
 [saved categorical encoder](fitted-encoding.md) remains a separate manual
-transformation. [Saved nearest-neighbor models](fitted-knn.md) are also available
-separately; neither transformation is integrated into this screening loop. Single-value imputation does not quantify
+transformation; categorical preprocessing is not integrated into this screening loop. Single-value imputation does not quantify
 missing-data uncertainty or establish missingness assumptions. Gaussian
 screening is not mixed-effects selection or post-selection inference.

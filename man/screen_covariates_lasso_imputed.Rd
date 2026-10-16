@@ -9,11 +9,13 @@ screen_covariates_lasso_imputed(
   response,
   covariates,
   lambda,
-  method = c("mean", "median"),
+  method = c("mean", "median", "knn"),
   alpha = 1,
   id = NULL,
   nfolds = 10L,
-  foldid = NULL
+  foldid = NULL,
+  k = 5L,
+  weights = NULL
 )
 }
 \arguments{
@@ -29,7 +31,7 @@ strictly positive penalties. Values are sorted in decreasing order. Choose
 the grid independently of held-out outcomes and preprocessing statistics.
 A backend path that does not cover the full grid raises an error.}
 
-\item{method}{Training replacement summary: \code{"mean"} or \code{"median"}.}
+\item{method}{Training imputation: \code{"mean"} (default), \code{"median"}, or \code{"knn"}.}
 
 \item{alpha}{Finite number in \verb{[0, 1]}: \code{1} is LASSO (default), \code{0} is ridge,
 and intermediate values use an elastic-net penalty. Ridge generally does
@@ -44,6 +46,14 @@ most the number of retained subjects or rows. Ignored with \code{foldid}.}
 \item{foldid}{Optional positive integer labels, one per original data row.
 Labels are subset to retained rows and renumbered in sorted order. At least
 three nonempty folds must remain; a retained subject cannot span folds.}
+
+\item{k}{Positive integer neighbor count for \code{method = "knn"}, default five.
+Ignored for mean/median imputation. Must be at most \code{.Machine$integer.max}.}
+
+\item{weights}{Optional named nonnegative finite distance weights for the
+selected covariates, used only with \code{method = "knn"}. Omitted weights are
+one; zero weights exclude distance predictors. Each target needs another
+positive-weight predictor. These are not observation or scoring weights.}
 }
 \value{
 A plain list containing:
@@ -51,21 +61,26 @@ A plain list containing:
 \item{selected}{Nonzero final-model covariates at \code{lambda.min}, in input order.}
 \item{lambda.min}{The penalty with minimum held-out mean squared error.}
 \item{alpha}{The supplied mixing parameter, retained for reproducibility.}
+\item{method}{The chosen imputation method.}
+\item{covariates}{All candidate names in the order required for prediction.}
 \item{cv}{Data frame with decreasing \code{lambda} and observation-weighted \code{mse}.}
 \item{predictions}{Held-out prediction matrix, with original row names/order
 and columns corresponding to rows of \code{cv}. Excluded response rows are \code{NA}.}
 \item{foldid}{Normalized fold labels in original row order; \code{NA} for exclusions.}
-\item{fold_imputation}{Named list of training imputation tables by normalized fold.}
+\item{fold_imputation}{Named list by normalized fold: replacement tables
+for mean/median, or saved donor models for \code{"knn"}.}
 \item{fit}{The final \code{glmnet} path fitted on all retained development rows.}
-\item{imputation}{The final training replacement table for \code{\link[=apply_imputation]{apply_imputation()}}.}
+\item{imputation}{The final replacement table for \code{\link[=apply_imputation]{apply_imputation()}}, or
+the final donor model for \code{\link[=apply_knn_imputation]{apply_knn_imputation()}} when \code{method = "knn"}.}
 }
 Save the result with \code{\link[base:saveRDS]{base::saveRDS()}}. To predict on new data, apply
-\code{imputation}, select predictors in \code{imputation$var} order, then call
+\code{imputation} with the corresponding helper, select predictors in \code{covariates}
+order, then call
 \code{\link[stats:predict]{stats::predict()}} on \code{fit} with \code{newx} and \code{s = lambda.min}. The model
 already includes its training standardization; do not rescale new data.
 }
 \description{
-Fits mean or median imputation separately on each training fold, fits a
+Fits mean, median, or nearest-neighbor imputation on each training fold, fits a
 Gaussian LASSO/elastic-net path, and scores its held-out predictions. Uses
 \code{\link[glmnet:glmnet]{glmnet::glmnet()}} with an intercept and training-specific standardization.
 An explicit penalty grid is required; no grid is estimated from validation
@@ -73,12 +88,14 @@ rows. This is an experimental API.
 }
 \details{
 Only rows with missing responses are excluded. Missing numeric predictors
-(\code{NA} or \code{NaN}) are filled using that fold's training replacements. Each
+(\code{NA} or \code{NaN}) are filled using that fold's training replacements or donors. Each
 training fold must have an observed value for every predictor, a varying
-response, and at least one varying predictor after imputation. Infinite
+response, and at least one varying predictor after imputation. For \code{"knn"},
+every missing training or held-out entry also needs comparable training
+donors; otherwise an error names the affected fold and target. Infinite
 values on retained rows raise errors. Entirely missing held-out predictors
-are allowed. Supply raw numeric predictors: preprocessing performed before
-this call cannot be undone or refitted by it.
+are allowed when they can be imputed. Supply raw numeric predictors:
+preprocessing performed before this call cannot be undone or refitted by it.
 
 Selection minimizes mean squared error across all retained held-out rows,
 giving each observation equal weight. Exact ties favor the largest penalty.
@@ -91,9 +108,21 @@ Supplying \code{id} keeps a subject's retained observations in one fold; it does
 not fit a mixed model or give subjects equal scoring weight. Default random
 folds balance subjects (or rows without \code{id}). Set a seed for reproducible
 random folds. Explicit \code{foldid} does not generate random folds. Categorical
-encoding, nearest-neighbor imputation, and one-standard-error selection are
+encoding and one-standard-error selection are
 not implemented here. \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}} keeps its existing
 complete-case behavior.
+
+With \code{method = "knn"}, all selected covariates are imputation targets and
+distance predictors; the current target is excluded from its own distance.
+Neither the response nor \code{id} enters the donor model. \code{\link[=fit_knn_imputation]{fit_knn_imputation()}}
+saves training donors and numeric ranges, and \code{\link[=apply_knn_imputation]{apply_knn_imputation()}} uses
+bounded, available-pair weighted Gower distances. It averages up to \code{k}
+comparable donor values, breaking exact distance ties in original training
+row order. Each target uses the original recipient values, without cascading
+imputations. No held-out row becomes a donor or changes the saved scales.
+There is no fallback imputation. \code{k} and \code{weights} are fixed within the call;
+they are not tuned. Saved fold and final models retain selected training
+predictor values. See the imputer's help for full distance and weight rules.
 }
 \examples{
 block <- data.frame(
@@ -114,7 +143,18 @@ predict(result$fit,
   newx = as.matrix(completed[result$imputation$var]),
   s = result$lambda.min
 )
+neighbors <- screen_covariates_lasso_imputed(
+  training, "y", c("x1", "x2"),
+  lambda = c(2, 1, 0.5),
+  method = "knn", k = 2, foldid = rep(1:3, each = 6)
+)
+neighbors$cv # the two nearest donor values average to zero in this example
+completed <- apply_knn_imputation(new_data, neighbors$imputation)
+predict(neighbors$fit,
+  newx = as.matrix(completed[neighbors$covariates]),
+  s = neighbors$lambda.min
+)
 }
 \seealso{
-\code{\link[=fit_imputation]{fit_imputation()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
+\code{\link[=fit_imputation]{fit_imputation()}}, \code{\link[=fit_knn_imputation]{fit_knn_imputation()}}, \code{\link[=screen_covariates_lasso]{screen_covariates_lasso()}}
 }
