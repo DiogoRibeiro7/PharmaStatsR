@@ -62,7 +62,8 @@ history was not imported into PharmaStatsR.
 | Screening | `screen_covariates_stepwise()`, `screen_covariates_bayesian()`, `screen_covariates_lasso()` | AIC stepwise, univariate BIC scores, and Gaussian penalized regression; these are not mixed-effects selection procedures. |
 | Saved screening prediction (added after consolidation) | `predict_lasso_imputed()` | Apply the final saved imputer, restore predictor order, and predict at fitted penalties; see the [guide](predict-lasso-imputed.md). |
 | Numeric screening with fold imputation (added after consolidation) | `screen_covariates_lasso_imputed()` | Prespecified Gaussian penalty grid; training-fold mean/median or nearest-neighbor imputation and standardization; held-out predictions and saved final parameters. See the [guide](lasso-imputation.md). |
-| Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept. |
+| Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept; [opt-in literal-name repair](covariate-mixed-model.md). |
+| Mixed-model prediction | `predict_covariate_model()` | Original-name population or subject predictions from native fits, including saved name mappings. |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
@@ -115,8 +116,11 @@ function.
   fold manually or through `screen_covariates_lasso_imputed(encode = TRUE)`.
   The latter requires observed categorical values and applies column-wise
   penalties, not grouped categorical selection.
-- Native mixed-model fitting still requires supported column names. Covariate-aware
-  nonlinear models and simulation-based predictive checks remain future work.
+- Mixed-model fitting keeps strict names by default; `repair_names = TRUE`
+  records safe backend aliases. Use `predict_covariate_model()` for original-name
+  point predictions. It defaults to population effects; unknown subjects return
+  `NA` for conditional predictions. Covariate-aware nonlinear models and
+  simulation-based predictive checks remain future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
   Reactive server tests cover upload, fitting, rendering, and recovery; they do
   not establish browser accessibility or usability.

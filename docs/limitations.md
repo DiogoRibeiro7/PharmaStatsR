@@ -50,7 +50,11 @@ The [covariate guide](covariate-migration.md#statistical-limits) documents the
 18 migrated functions. Single-value imputation does not quantify imputation
 uncertainty. AIC/BIC/LASSO screening uses ordinary Gaussian models; grouped
 folds alone do not refit preprocessing within each training fold. The linear mixed
-model has a fixed random-intercept specification. `plot_vpc()` is a descriptive
+model has a fixed random-intercept specification. Its later
+[literal-name repair and prediction](covariate-mixed-model.md) preserve that
+model: summaries retain backend labels, original-name prediction uses the saved
+map, and unknown subjects return `NA` at level 1. No prediction intervals or
+new subject effects are estimated. `plot_vpc()` is a descriptive
 binned summary, not a simulation-based predictive check. The nonlinear SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
