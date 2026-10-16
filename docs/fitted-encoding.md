@@ -90,7 +90,8 @@ The [imputation guide](fitted-imputation.md#refit-inside-every-training-fold)
 shows an explicit subject-fold loop. The separate [numeric LASSO
 helper](lasso-imputation.md) integrates mean/median imputation and standardization
 within folds; it does not support categorical candidates. Categorical fold
-preprocessing and saved nearest-neighbor donor models remain future work.
+preprocessing remains future work. [Saved nearest-neighbor models](fitted-knn.md)
+are available separately for numeric targets and mixed predictors.
 
 ## Boundaries and evidence
 

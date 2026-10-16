@@ -56,6 +56,7 @@ history was not imported into PharmaStatsR.
 | Schema | `validate_data_schema()` | Unique names, integer `SubjectID`, numeric `Time`/`DV`, and at least one covariate. This is a table check, not a study-design check. |
 | Imputation | `impute_mean()`, `impute_median()`, `impute_ml()` | Numeric location imputation or nearest neighbors; explicit predictors and named nonnegative weights; targets without usable donors stay missing with a warning. |
 | Scaling | `center_scale()`, `apply_center_scale()` | Estimate centering/scaling parameters once and apply saved parameters to new data. |
+| Saved neighbors (added after consolidation) | `fit_knn_imputation()`, `apply_knn_imputation()` | Numeric targets, mixed predictors, training-only donors and frozen Gower scales; see the [guide](fitted-knn.md). |
 | Saved imputation (added after consolidation) | `fit_imputation()`, `apply_imputation()` | Save numeric training mean/median replacements and apply them to new data without refitting; see the [training-preprocessing guide](fitted-imputation.md). |
 | Saved encoding (added after consolidation) | `fit_encoding()`, `apply_encoding()` | Save training levels, numeric coding, and output columns for use on new data; see the [encoding guide](fitted-encoding.md). |
 | Screening | `screen_covariates_stepwise()`, `screen_covariates_bayesian()`, `screen_covariates_lasso()` | AIC stepwise, univariate BIC scores, and Gaussian penalized regression; these are not mixed-effects selection procedures. |
@@ -101,7 +102,9 @@ function.
 - `fit_imputation()` and `apply_imputation()` now support saved numeric mean or
   median replacements. Fit them inside each training fold, manually or through
   `screen_covariates_lasso_imputed()` for numeric screening. Categorical fold
-  preprocessing and reusable nearest-neighbor models remain future work.
+  preprocessing remains future work. The separate [saved neighbor pair](fitted-knn.md)
+  reuses training donors and scales for numeric targets, with no cascading
+  imputations and bounded contributions for values outside training ranges.
 - `fit_encoding()` and `apply_encoding()` save training categorical coding and
   column order. New observed categories raise errors; folds still need explicit
   training-only fitting.

@@ -6,14 +6,15 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **106 exports**: 100 functions
+The [inventory](method-inventory.md) now contains **108 exports**: 102 functions
 and six illustrative data objects. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
 [saved imputation](fitted-imputation.md) and [encoding](fitted-encoding.md).
 The subsequent `screen_covariates_lasso_imputed()` adds [numeric training-fold
 preprocessing](lasso-imputation.md), with independent coefficient/MSE references
-and held-out prediction evidence.
+and held-out prediction evidence. The later [saved neighbor pair](fitted-knn.md)
+adds training-only donors and scales, fixed distance references, and batch-independence tests.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

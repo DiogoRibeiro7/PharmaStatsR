@@ -19,7 +19,7 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **106 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **108 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -89,9 +89,14 @@ saved fold parameters, and the final model for a prespecified penalty grid.
 The [training-preprocessing guide](docs/fitted-imputation.md) shows saved scaling,
 serialization, and fitting fresh parameters within each subject-level fold.
 
+For numeric nearest-neighbor imputation, [`fit_knn_imputation()` and
+`apply_knn_imputation()`](docs/fitted-knn.md) save training donors and mixed-data
+Gower scales. New batches reuse them without contributing donors or changing
+other rows' imputations.
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 106 exports: two stable column-check helpers, 91 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 108 exports: two stable column-check helpers, 93 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 
