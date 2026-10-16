@@ -416,3 +416,29 @@ tuning error is not an unbiased estimate of future performance. An all-missing
 training predictor or unusable training model raises an error naming its fold.
 Categorical encoding within folds and nearest-neighbor models remain separate
 workflows; single-value imputation does not quantify missing-data uncertainty.
+
+## Reusing nearest-neighbor donors
+
+`fit_knn_imputation()` saves numeric training targets and mixed predictor scales.
+`apply_knn_imputation()` uses only these training donors; new rows do not affect
+each other. Select predictors explicitly, excluding outcomes and identifiers.
+
+```{r}
+training <- data.frame(value = c(10, 20), x = c(0, 10), group = c("a", "b"))
+neighbors <- fit_knn_imputation(training, "value", c("x", "group"), k = 1)
+future <- data.frame(value = c(NA, 99), x = c(2, 1000), group = c("a", "b"))
+apply_knn_imputation(future, neighbors)
+```
+
+The missing target becomes 10: mixed Gower distances are 0.1 and 0.9. The
+observed 99 stays unchanged and never becomes a donor. With `k = 2`, the
+replacement would be 15. Numeric contributions use frozen training ranges and
+are capped at one outside them. Missing predictor pairs are omitted; no
+comparable donor leaves a value missing with a warning. Ties follow training
+row order. Every target uses original input predictors, avoiding cascading.
+
+Save with `saveRDS()` and restore with `readRDS()`. This model retains selected
+training target and predictor values, unlike the mean/median summary table.
+Refit it separately inside each validation fold. Nominal predictors allow unseen
+values as mismatches; ordered predictors require known training levels. The
+screening helpers do not integrate this nearest-neighbor workflow.

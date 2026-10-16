@@ -63,8 +63,9 @@ helper](lasso-imputation.md) refits replacements and standardization for each
 training fold using a prespecified penalty grid. Its tuning MSE needs separate
 outer evaluation for performance assessment. The [saved encoding helpers](fitted-encoding.md)
 retain training coding and reject unseen observed categories, without adding
-interactions or checking rank. Saved nearest-neighbor donor models remain future
-work.
+interactions or checking rank. [Saved nearest-neighbor models](fitted-knn.md)
+retain selected training data and use bounded Gower contributions for numeric
+targets; they do not automate screening-fold preprocessing or uncertainty estimation.
 
 ## Validation for a real analysis
 

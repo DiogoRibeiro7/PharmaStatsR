@@ -29,7 +29,8 @@ prepare_gower_predictors <- function(data) {
 }
 
 gower_imputation_distances <- function(predictors, donors, recipient,
-                                       weights = rep(1, length(predictors))) {
+                                       weights = rep(1, length(predictors)),
+                                       max_contribution = Inf) {
   totals <- numeric(length(donors))
   weight_sums <- numeric(length(donors))
   scales <- numeric(length(donors))
@@ -39,7 +40,7 @@ gower_imputation_distances <- function(predictors, donors, recipient,
     }
     column <- predictors[[j]]
     if (is.numeric(column)) {
-      contribution <- abs(column[donors] - column[recipient])
+      contribution <- pmin(abs(column[donors] - column[recipient]), max_contribution)
     } else {
       contribution <- as.numeric(column[donors] != column[recipient])
     }

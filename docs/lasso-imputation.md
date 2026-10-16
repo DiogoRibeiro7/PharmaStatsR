@@ -149,7 +149,7 @@ procedure. It does not change the existing function's defaults.
 
 This implementation supports numeric mean/median imputation only. The
 [saved categorical encoder](fitted-encoding.md) remains a separate manual
-transformation; categorical encoding within folds and saved nearest-neighbor
-donor models remain follow-ups. Single-value imputation does not quantify
+transformation. [Saved nearest-neighbor models](fitted-knn.md) are also available
+separately; neither transformation is integrated into this screening loop. Single-value imputation does not quantify
 missing-data uncertainty or establish missingness assumptions. Gaussian
 screening is not mixed-effects selection or post-selection inference.
