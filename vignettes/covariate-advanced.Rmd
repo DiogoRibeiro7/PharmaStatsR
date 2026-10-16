@@ -130,6 +130,12 @@ For model evaluation, fit preprocessing on each training fold separately in
 an evaluation workflow. See the [glmnet reference](https://search.r-project.org/CRAN/refmans/glmnet/html/cv.glmnet.html)
 for details of the underlying cross-validation calculation.
 
+For numeric mean/median imputation inside training folds, use the separate
+`screen_covariates_lasso_imputed()` helper with a prespecified `lambda` grid.
+It retains rows with missing predictors and returns held-out predictions,
+fold replacement tables, and the final model; see the data-preparation vignette
+for a worked example. Categorical preprocessing within folds remains manual.
+
 ## Validate a mixed-effects fit
 
 `fit_covariate_model()` fits additive fixed effects and a random subject

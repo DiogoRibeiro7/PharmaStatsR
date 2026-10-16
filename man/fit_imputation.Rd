@@ -49,5 +49,5 @@ apply_imputation(validation, params) # fills with 4, not 100
 }
 \seealso{
 \code{\link[=apply_imputation]{apply_imputation()}}, \code{\link[=impute_mean]{impute_mean()}}, \code{\link[=impute_median]{impute_median()}},
-\code{\link[=center_scale]{center_scale()}}, \code{\link[=apply_center_scale]{apply_center_scale()}}
+\code{\link[=center_scale]{center_scale()}}, \code{\link[=apply_center_scale]{apply_center_scale()}}, \code{\link[=screen_covariates_lasso_imputed]{screen_covariates_lasso_imputed()}}
 }

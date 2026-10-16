@@ -278,8 +278,9 @@ and unrepresentable transformed values raise errors.
 
 Split subjects before estimating preprocessing parameters when evaluating
 models on new subjects. Repeat the fitting and application steps within each
-training/validation split. The screening functions do not yet automate this
-workflow. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
+training/validation split. The numeric `screen_covariates_lasso_imputed()`
+helper automates mean/median replacement and model standardization for a
+prespecified penalty grid; categorical fold preprocessing remains manual. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
 `apply_encoding()` pairs provide saved recipes for manual composition.
 
 ## Prepare a design matrix
@@ -355,10 +356,63 @@ apply_encoding(scaled_validation, encoding)
 ```
 
 Refit each transformation within every training fold, keeping subjects together
-when evaluating new subjects. The screening helpers do not automate this
-workflow. Save a recipe with `saveRDS()` and restore it with `readRDS()`; it stores
+when evaluating new subjects. The original screening helpers do not automate
+this workflow; the numeric imputed-LASSO helper below has its own fold loop.
+Save a recipe with `saveRDS()` and restore it with `readRDS()`; it stores
 numeric coding and schema, with no training rows or contrast functions.
 
 By comparison, `fit_covariate_model()` excludes rows missing its response,
 subject identifier, or covariates using `na.exclude`. Its fitted model retains
 native `nlme` behavior, including padding residuals for excluded observations.
+
+## Numeric LASSO with imputation inside training folds
+
+`screen_covariates_lasso_imputed()` fits numeric mean/median replacements and
+Gaussian-model standardization separately in each training fold. Supply raw
+predictors and a prespecified penalty grid. Only missing responses are excluded;
+missing predictor rows receive held-out predictions. The original
+`screen_covariates_lasso()` keeps its complete-case behavior.
+
+```{r}
+block <- data.frame(
+  x1 = c(-1, -1, 1, 1, NA, NA), x2 = c(-1, 1, -1, 1, -1, 1),
+  y = c(-2, -2, 2, 2, 0, 0)
+)
+training <- block[rep(seq_len(6), 3), ]
+training$SubjectID <- rep(1:9, each = 2)
+screened <- screen_covariates_lasso_imputed(
+  training, "y", c("x1", "x2"), lambda = c(2, 1, 0.5),
+  id = "SubjectID", foldid = rep(1:3, each = 6)
+)
+screened$cv
+screened$selected
+screened$fold_imputation[[1]]
+```
+
+This orthogonal reference has mean-zero training replacements. The first slope
+is `max(2 - lambda * sqrt(3 / 2), 0)`, with zero intercept and second slope.
+The held-out mean squared errors are `8/3`, `1`, and `1/4`, selecting `x1` at
+penalty `0.5`. Each observation contributes equally to the score; grouping
+subjects controls splitting, not subject weights or within-subject correlation.
+Exact error ties favor the largest penalty. Ridge and elastic net are available
+through `alpha`; the result stores the supplied value.
+
+The final model and replacement table use all retained development rows. Reuse
+both to predict future observations, preserving the predictor order:
+
+```{r}
+future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
+completed <- apply_imputation(future, screened$imputation)
+predict(screened$fit,
+  newx = as.matrix(completed[screened$imputation$var]),
+  s = screened$lambda.min
+)
+```
+
+Do not scale future data again: the fitted model already accounts for training
+standardization. Save the result with `saveRDS()` when needed. Use an independent
+test set or outer resampling to assess the selected procedure; the minimum
+tuning error is not an unbiased estimate of future performance. An all-missing
+training predictor or unusable training model raises an error naming its fold.
+Categorical encoding within folds and nearest-neighbor models remain separate
+workflows; single-value imputation does not quantify missing-data uncertainty.

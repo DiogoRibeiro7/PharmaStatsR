@@ -59,6 +59,7 @@ history was not imported into PharmaStatsR.
 | Saved imputation (added after consolidation) | `fit_imputation()`, `apply_imputation()` | Save numeric training mean/median replacements and apply them to new data without refitting; see the [training-preprocessing guide](fitted-imputation.md). |
 | Saved encoding (added after consolidation) | `fit_encoding()`, `apply_encoding()` | Save training levels, numeric coding, and output columns for use on new data; see the [encoding guide](fitted-encoding.md). |
 | Screening | `screen_covariates_stepwise()`, `screen_covariates_bayesian()`, `screen_covariates_lasso()` | AIC stepwise, univariate BIC scores, and Gaussian penalized regression; these are not mixed-effects selection procedures. |
+| Numeric screening with fold imputation (added after consolidation) | `screen_covariates_lasso_imputed()` | Prespecified Gaussian penalty grid; training-fold mean/median imputation and standardization; held-out predictions and saved final parameters. See the [guide](lasso-imputation.md). |
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept. |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
@@ -88,16 +89,19 @@ function.
   regression. The stepwise `id` argument is checked for presence but does not
   model correlation. BIC-based scores are not posterior probabilities from a
   joint Bayesian model.
-- LASSO supports numeric candidates and subject-grouped or explicit folds.
-  Grouping holds out subjects; preprocessing is not refitted within each fold.
-  Perform data splitting before estimating preprocessing for model evaluation.
+- `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
+  explicit folds, with complete-case filtering and no preprocessing hook. The
+  separate `screen_covariates_lasso_imputed()` refits mean/median imputation and
+  standardization within training folds for a prespecified penalty grid. Both
+  use Gaussian models and observation-weighted scoring, not mixed models.
 - Euclidean distance retains predictor units and categorical factor codes.
   Gower uses observed-range scaling and available-pair weighted averages.
   Predictor weights affect donor selection; selected donors contribute equally
   to the imputed mean or mode. Earlier targets can influence later targets.
 - `fit_imputation()` and `apply_imputation()` now support saved numeric mean or
-  median replacements. Fit them inside each training fold; automatic integration
-  with LASSO folds and reusable nearest-neighbor models remain future work.
+  median replacements. Fit them inside each training fold, manually or through
+  `screen_covariates_lasso_imputed()` for numeric screening. Categorical fold
+  preprocessing and reusable nearest-neighbor models remain future work.
 - `fit_encoding()` and `apply_encoding()` save training categorical coding and
   column order. New observed categories raise errors; folds still need explicit
   training-only fitting.

@@ -30,6 +30,8 @@
 #'   remain. Supplying this vector avoids random fold generation.
 #'
 #' @return Character vector of selected covariate names.
+#' @seealso [screen_covariates_lasso_imputed()] for training-fold numeric
+#'   imputation with a prespecified penalty grid and held-out predictions.
 #' @examples
 #' set.seed(123)
 #' df <- data.frame(

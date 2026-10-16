@@ -79,3 +79,7 @@ screen_covariates_lasso(
   id = "SubjectID", foldid = folds
 )
 }
+\seealso{
+\code{\link[=screen_covariates_lasso_imputed]{screen_covariates_lasso_imputed()}} for training-fold numeric
+imputation with a prespecified penalty grid and held-out predictions.
+}

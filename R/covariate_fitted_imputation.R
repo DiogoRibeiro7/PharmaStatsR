@@ -34,7 +34,7 @@
 #' validation <- data.frame(x = c(NA, 100))
 #' apply_imputation(validation, params) # fills with 4, not 100
 #' @seealso [apply_imputation()], [impute_mean()], [impute_median()],
-#'   [center_scale()], [apply_center_scale()]
+#'   [center_scale()], [apply_center_scale()], [screen_covariates_lasso_imputed()]
 #' @export
 fit_imputation <- function(data, vars, method = c("mean", "median")) {
   method <- match.arg(method)

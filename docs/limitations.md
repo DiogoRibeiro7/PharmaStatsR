@@ -49,7 +49,7 @@ The [ICH E9(R1) guideline](https://database.ich.org/sites/default/files/E9-R1_St
 The [covariate guide](covariate-migration.md#statistical-limits) documents the
 18 migrated functions. Single-value imputation does not quantify imputation
 uncertainty. AIC/BIC/LASSO screening uses ordinary Gaussian models; grouped
-folds do not refit preprocessing within each training fold. The linear mixed
+folds alone do not refit preprocessing within each training fold. The linear mixed
 model has a fixed random-intercept specification. `plot_vpc()` is a descriptive
 binned summary, not a simulation-based predictive check. The nonlinear SAEM
 helper is an example-only fixed model and warns that supplied covariates are
@@ -58,7 +58,10 @@ ignored. These boundaries are preserved by the consolidation.
 The later [fitted-imputation helpers](fitted-imputation.md) save numeric
 mean/median replacements for reuse. Their fit/apply separation enables manual
 training-fold preprocessing, but does not automatically refit transformations
-inside LASSO cross-validation. The [saved encoding helpers](fitted-encoding.md)
+inside the original LASSO helper. The separate [numeric fold-imputation
+helper](lasso-imputation.md) refits replacements and standardization for each
+training fold using a prespecified penalty grid. Its tuning MSE needs separate
+outer evaluation for performance assessment. The [saved encoding helpers](fitted-encoding.md)
 retain training coding and reject unseen observed categories, without adding
 interactions or checking rank. Saved nearest-neighbor donor models remain future
 work.
