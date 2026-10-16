@@ -69,6 +69,9 @@ retain selected training data and use bounded Gower contributions for numeric
 targets. Numeric screening integrates those donors within folds with
 `method = "knn"` and stops if any predictor cannot be imputed; it does not
 fall back to another imputation method or estimate missing-data uncertainty.
+The [saved-result prediction helper](predict-lasso-imputed.md) reuses final
+parameters without refitting and returns point predictions at fitted penalties;
+it does not add prediction intervals or post-selection inference.
 
 ## Validation for a real analysis
 

@@ -86,11 +86,10 @@
 #'   \item{imputation}{The final replacement table for [apply_imputation()], or
 #'     the final donor model for [apply_knn_imputation()] when `method = "knn"`.}
 #' }
-#' Save the result with [base::saveRDS()]. To predict on new data, apply
-#' `imputation` with the corresponding helper, select predictors in `covariates`
-#' order, then call
-#' [stats::predict()] on `fit` with `newx` and `s = lambda.min`. The model
-#' already includes its training standardization; do not rescale new data.
+#' Save the result with [base::saveRDS()]. Use [predict_lasso_imputed()] to apply
+#' its final imputer, restore predictor order, and predict at `lambda.min` or
+#' other penalties from the fitted grid. The model already includes its training
+#' standardization; do not impute or rescale new data before this helper.
 #' @examples
 #' block <- data.frame(
 #'   x1 = c(-1, -1, 1, 1, NA, NA), x2 = c(-1, 1, -1, 1, -1, 1),
@@ -105,23 +104,16 @@
 #' result$cv # MSE: 8/3, 1, 1/4
 #' result$selected # "x1"
 #' new_data <- data.frame(x1 = c(NA, 1), x2 = c(1, -1))
-#' completed <- apply_imputation(new_data, result$imputation)
-#' predict(result$fit,
-#'   newx = as.matrix(completed[result$imputation$var]),
-#'   s = result$lambda.min
-#' )
+#' predict_lasso_imputed(result, new_data)
 #' neighbors <- screen_covariates_lasso_imputed(
 #'   training, "y", c("x1", "x2"),
 #'   lambda = c(2, 1, 0.5),
 #'   method = "knn", k = 2, foldid = rep(1:3, each = 6)
 #' )
 #' neighbors$cv # the two nearest donor values average to zero in this example
-#' completed <- apply_knn_imputation(new_data, neighbors$imputation)
-#' predict(neighbors$fit,
-#'   newx = as.matrix(completed[neighbors$covariates]),
-#'   s = neighbors$lambda.min
-#' )
-#' @seealso [fit_imputation()], [fit_knn_imputation()], [screen_covariates_lasso()]
+#' predict_lasso_imputed(neighbors, new_data)
+#' @seealso [predict_lasso_imputed()], [fit_imputation()],
+#'   [fit_knn_imputation()], [screen_covariates_lasso()]
 #' @export
 screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
                                             method = c("mean", "median", "knn"), alpha = 1,
