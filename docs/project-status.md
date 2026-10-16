@@ -1,6 +1,6 @@
 # Project status
 
-**15 October 2026 · version 0.1.63 · active development · not on CRAN**
+**16 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
@@ -8,14 +8,14 @@ The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 | --- | --- | --- |
 | P0: scope and initial numerical evidence | [Export inventory #47](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/47), [claims audit #48](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/48), [core reference cases #49](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/49) | Individual methods in the [evidence inventory](method-inventory.md) still await review. |
 | P1: method families and reliability | [Design contracts #50](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/50), [survival family #51](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/51), [resampling review #52](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/52), [optional backends #53](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/53), [check matrix #54](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/54), [simulated-data audit #55](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/55), [documentation reconciliation #56](documentation-reconciliation.md) | Individual methods in the [evidence inventory](method-inventory.md) still await independent review. |
-| P2: API and release | [Support policy #57](api-support-policy.md) classifies all 101 exports, with migration guidance for historical names. The [reviewed source](release-candidate.md) passed its five-job matrix and full all-Suggests check, including lengthy examples; automated artifact verification now retains a JSON receipt. | [Candidate gate #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open: confirm mail receipt and final version/source, review its checks and every NOTE, and make the release decision. |
+| P2: API and release | [Support policy #57](api-support-policy.md) classifies all 103 exports, with migration guidance for historical names. The [reviewed source](release-candidate.md) passed its five-job matrix and full all-Suggests check, including lengthy examples; automated artifact verification now retains a JSON receipt. | [Candidate gate #58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open: confirm mail receipt and final version/source, review its checks and every NOTE, and make the release decision. |
 | P3: stronger method evidence | The scoped numerical-reference batches through [reporting/auditability #163–#165](evidence-batches.md#completed-batch-reporting-and-auditability-163165) are complete, as are the subsequent categorical-outcome and stratified-risk helpers recorded in the inventory. | Further gaps in the [inventory](method-inventory.md) need individual issues and review. |
-| Covariate consolidation | [#194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) closed with [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195): 18 functions, regression tests, data, five vignettes, reports, and app resources now live here. The standalone pharmoCovR repository was deleted. | The [migration guide](covariate-migration.md) records remaining limits: training-fold preprocessing, reusable imputation/encoding, nonlinear covariate models, predictive simulation, and browser checks. |
+| Covariate workflows | [#194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) consolidated 18 functions and their resources. Later [fitted-imputation helpers](fitted-imputation.md) save numeric training replacements for reuse alongside saved scaling. | [#199](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/199) records the numeric imputation scope. Automatic LASSO fold preprocessing, categorical encoding, saved neighbor models, nonlinear covariates, predictive simulation, and browser checks remain follow-ups. |
 
 ## Current package inventory
 
-- **101 namespace exports:** 95 functions and six illustrative data objects.
-- **Support labels:** two stable, 86 experimental, 11 example-only, and two
+- **103 namespace exports:** 97 functions and six illustrative data objects.
+- **Support labels:** two stable, 88 experimental, 11 example-only, and two
   deprecation candidates that remain callable.
 - **Seven datasets:** the six exported objects plus `pharmo_example`, loaded with
   `data("pharmo_example", package = "PharmaStatsR")`.

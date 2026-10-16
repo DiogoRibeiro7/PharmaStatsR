@@ -52,7 +52,40 @@ Selected variable names must be unique, present in the data, and nonmissing.
 Factor, character, logical, matrix, and list columns are not numeric imputation
 targets. Use an empty selection (`character(0)`) to leave the data unchanged.
 
-### Nearest-neighbor imputation
+### Reuse training replacements
+
+Split data first, then fit mean or median replacements on training rows only:
+
+```{r}
+training <- data.frame(x = c(1, NA, 3, 8))
+validation <- data.frame(x = c(NA, 100, NaN))
+params <- fit_imputation(training, "x")
+params
+apply_imputation(validation, params)
+```
+
+The saved training mean is 4. The validation value 100 does not influence it.
+Use `method = "median"` to save the observed training median, 3. The parameter
+table can be saved with `saveRDS()` and loaded with `readRDS()`. Entirely missing
+selected training columns raise an error; new columns may be entirely missing.
+Both functions use literal variable names and reject infinite selected values.
+
+To combine imputation and scaling, fit both on the same training population:
+
+```{r}
+completed_training <- apply_imputation(training, params)
+scaling <- center_scale(completed_training, "x")
+apply_center_scale(apply_imputation(validation, params), scaling$params)
+```
+
+For cross-validation, fit a separate imputation table and scaling parameters
+inside every training fold; keep repeated subjects together when holding out
+new subjects. A table imputed before `screen_covariates_lasso()` is still not
+re-imputed inside its internal folds. These helpers perform numeric single-value
+imputation without estimating missing-data uncertainty; they do not provide
+categorical encoding or a reusable nearest-neighbor model.
+
+### Nearest-neighbor imputation within one table
 
 `impute_ml()` supports numeric, logical, character, and factor vectors. Numeric
 targets use the neighbor mean; other targets use the neighbor mode. Factors

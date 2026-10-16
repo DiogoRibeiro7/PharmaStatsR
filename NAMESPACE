@@ -92,8 +92,10 @@ export(with_pharma_config)
 
 # Consolidated covariate workflows from pharmoCovR.
 export(apply_center_scale)
+export(apply_imputation)
 export(center_scale)
 export(fit_covariate_model)
+export(fit_imputation)
 export(fit_nlmixr_model)
 export(generate_report)
 export(impute_mean)

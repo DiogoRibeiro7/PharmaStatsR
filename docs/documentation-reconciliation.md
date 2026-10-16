@@ -4,9 +4,18 @@ The [export and evidence inventory](method-inventory.md) is the entry point for
 source files, help topics, tests, and site pages. Documentation coverage does
 not establish statistical validity for every method.
 
-## Current inventory after consolidation
+## Current inventory
 
-At merged commit `65bc1be` on 15 October 2026, `NAMESPACE` contains **101 exports**:
+The [inventory](method-inventory.md) now contains **103 exports**: 97 functions
+and six illustrative data objects. The two later additions, `fit_imputation()`
+and `apply_imputation()`, have source, generated help, fixed numerical references,
+an inventory row, and [training-preprocessing guidance](fitted-imputation.md).
+The package still has seven datasets and six vignettes. The reconciliation below
+preserves the earlier consolidation checks for their named source.
+
+## Consolidation baseline: 15 October 2026
+
+At merged commit `65bc1be` on 15 October 2026, `NAMESPACE` contained **101 exports**:
 95 functions and six illustrative data objects. Every export has a source
 definition, one documented Rd alias, an inventory row, and a support level.
 The additional `pharmo_example` dataset has its own help topic and is loaded
@@ -17,15 +26,17 @@ The [merged routine R checks](https://github.com/DiogoRibeiro7/PharmaStatsR/acti
 passed, including generated-help consistency. The [five-job matrix](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594182)
 passed, including examples, tests, vignette rebuilding, and PDF/HTML manuals
 with all Suggested backends. The [documentation build and deployment](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/runs/38801594029)
-also passed. The [release evidence](release-candidate.md) records the source hash
-and both notes; later commits require their own checks.
+also passed. That source had two notes, including the lengthy-example timing
+finding addressed later. The [release evidence](release-candidate.md) and
+[#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) record later receipts;
+each applies only to its named source.
 
 The README, installation and quick-start guides, data inventory, migration
 guide, and status pages describe the consolidated package. The retired
 pharmoCovR repository is no longer linked as an installation or source endpoint;
 its original commit identifier and MIT attribution remain recorded.
 
-The current [API policy](api-support-policy.md) assigns two stable, 86
+The current [API policy](api-support-policy.md) assigns two stable, 88
 experimental, 11 example-only, and two deprecation-candidate labels. Use the
 current inventory for method evidence: the historical list below predates
 the subsequent numerical-reference work and covariate consolidation.
