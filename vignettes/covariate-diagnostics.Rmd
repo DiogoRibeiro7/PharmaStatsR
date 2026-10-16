@@ -86,6 +86,28 @@ required. Inspect `attr(predictive_plot, "vpc_bins")` and
 `attr(predictive_plot, "vpc_settings")` to audit the binning. Existing app and
 report diagnostics retain the descriptive `plot_vpc()`.
 
+## Simulate from a fitted covariate model
+
+For the Gaussian random-intercept model fitted earlier in this vignette, use
+`simulate_covariate_model()` to generate complete replicated responses at the
+supplied rows. It holds fitted coefficients and variances fixed and draws fresh
+subject intercepts and independent residuals in every replicate:
+
+```{r, fig.alt="Observed percentiles compared with percentile bands from the fitted random-intercept model."}
+set.seed(217)
+fitted_simulations <- simulate_covariate_model(model, example_data, nsim = 500)
+attr(fitted_simulations, "simulation_parameters")
+plot_simulated_vpc(example_data, fitted_simulations, bins = 2)
+```
+
+This redraws all subject effects, including for known training identifiers. It
+does not condition on their fitted BLUPs or include parameter uncertainty.
+Original-name mappings from `repair_names = TRUE` are supported; the response
+column is not required for simulation. Supply complete covariates and IDs and
+select the comparison cohort explicitly. Random slopes, nested groups, nonlinear
+fits, residual correlation, and residual weights are outside this simulator's
+scope. The function consumes the caller's R random stream.
+
 ## Export a report
 
 `generate_report()` combines parameter estimates and diagnostic plots into an

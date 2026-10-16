@@ -59,7 +59,12 @@ binned summary, not a simulation-based predictive check. The separate
 [`plot_simulated_vpc()`](simulated-vpc.md) summarizes supplied response replicates
 with percentile bands. It does not generate simulations, model censoring, perform
 prediction correction, or test model adequacy; the supplied simulation design
-determines dependence and parameter uncertainty. The nonlinear SAEM
+determines dependence and parameter uncertainty. The later
+[`simulate_covariate_model()`](covariate-simulation.md) generates Gaussian
+random-intercept replications with fresh subject effects and residuals, holding
+fitted coefficients and variances fixed. It does not condition on fitted subject
+effects or sample parameter uncertainty, and rejects other random/residual
+structures. The nonlinear SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 

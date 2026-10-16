@@ -47,7 +47,10 @@ random effects or correlation. A matrix of fitted means alone does not reproduce
 that variability. Specify whether predictions concern new subjects or existing
 subjects and whether parameters are fixed or resampled. Parameter uncertainty
 appears in the plot only when it was included in the supplied simulations.
-Model-specific simulation adapters are outside this helper's scope.
+The plotting function has no model-specific adapter. For fits from
+`fit_covariate_model()`, the separate [`simulate_covariate_model()`](covariate-simulation.md)
+generates Gaussian random-intercept population replications with fixed fitted
+parameters, preserving the required row alignment.
 
 ## Calculation and interpretation
 

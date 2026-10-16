@@ -31,7 +31,7 @@ Start with the included example datasets and inspect the returned estimates and 
 
 ### Prepare covariates and inspect a model
 
-Impute missing values, reuse scaling parameters, screen covariates, and produce diagnostics or reports. [Explore the consolidated module](covariate-migration.md), including [simulation-based percentile diagnostics](simulated-vpc.md) from supplied replicated datasets.
+Impute missing values, reuse scaling parameters, screen covariates, and produce diagnostics or reports. [Explore the consolidated module](covariate-migration.md), including [simulation-based percentile diagnostics](simulated-vpc.md) and [replicated responses from fitted random-intercept models](covariate-simulation.md).
 
 </div>
 
@@ -51,7 +51,7 @@ PharmaStatsR is an R package with statistical wrappers, illustrative data, and e
 
 The [project status](project-status.md) shows which roadmap reviews have closed, which remain open, and what evidence is needed before a release candidate. The [export and evidence inventory](method-inventory.md) records review levels for individual methods.
 
-Version 0.1.63 includes 111 namespace exports, seven illustrative datasets, and
+Version 0.1.63 includes 112 namespace exports, seven illustrative datasets, and
 six vignettes. All 18 functions formerly maintained in pharmoCovR now live here;
 the standalone repository has been deleted. Follow the [migration guide](covariate-migration.md)
 to update existing scripts, or start with the [installation guide](installation.md).
