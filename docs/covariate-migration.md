@@ -57,6 +57,7 @@ history was not imported into PharmaStatsR.
 | Imputation | `impute_mean()`, `impute_median()`, `impute_ml()` | Numeric location imputation or nearest neighbors; explicit predictors and named nonnegative weights; targets without usable donors stay missing with a warning. |
 | Scaling | `center_scale()`, `apply_center_scale()` | Estimate centering/scaling parameters once and apply saved parameters to new data. |
 | Saved imputation (added after consolidation) | `fit_imputation()`, `apply_imputation()` | Save numeric training mean/median replacements and apply them to new data without refitting; see the [training-preprocessing guide](fitted-imputation.md). |
+| Saved encoding (added after consolidation) | `fit_encoding()`, `apply_encoding()` | Save training levels, numeric coding, and output columns for use on new data; see the [encoding guide](fitted-encoding.md). |
 | Screening | `screen_covariates_stepwise()`, `screen_covariates_bayesian()`, `screen_covariates_lasso()` | AIC stepwise, univariate BIC scores, and Gaussian penalized regression; these are not mixed-effects selection procedures. |
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept. |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
@@ -97,9 +98,11 @@ function.
 - `fit_imputation()` and `apply_imputation()` now support saved numeric mean or
   median replacements. Fit them inside each training fold; automatic integration
   with LASSO folds and reusable nearest-neighbor models remain future work.
-- Native mixed-model fitting still requires supported column names. Categorical
-  encoding recipes, covariate-aware nonlinear
-  models, and simulation-based predictive checks remain future work.
+- `fit_encoding()` and `apply_encoding()` save training categorical coding and
+  column order. New observed categories raise errors; folds still need explicit
+  training-only fitting.
+- Native mixed-model fitting still requires supported column names. Covariate-aware
+  nonlinear models and simulation-based predictive checks remain future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
   Reactive server tests cover upload, fitting, rendering, and recovery; they do
   not establish browser accessibility or usability.

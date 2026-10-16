@@ -19,7 +19,7 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **103 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **105 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -71,12 +71,24 @@ params <- fit_imputation(training, "x", method = "mean")
 apply_imputation(data.frame(x = c(NA, 100)), params) # returns 4 and 100
 ```
 
+Save training categories and model-matrix columns for new data:
+
+```r
+training <- data.frame(x = c(1, 2, 3), group = c("A", "B", "A"))
+encoding <- fit_encoding(training, c("x", "group"))
+apply_encoding(data.frame(x = 100, group = "B"), encoding)
+#     x groupA groupB
+# 1 100      0      1
+```
+
+The [encoding guide](docs/fitted-encoding.md) explains saved contrasts, unseen
+categories, and composition with imputation and scaling.
 The [training-preprocessing guide](docs/fitted-imputation.md) shows saved scaling,
 serialization, and fitting fresh parameters within each subject-level fold.
 
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 103 exports: two stable column-check helpers, 88 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 105 exports: two stable column-check helpers, 90 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 
