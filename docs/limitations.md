@@ -55,7 +55,11 @@ model has a fixed random-intercept specification. Its later
 model: summaries retain backend labels, original-name prediction uses the saved
 map, and unknown subjects return `NA` at level 1. No prediction intervals or
 new subject effects are estimated. `plot_vpc()` is a descriptive
-binned summary, not a simulation-based predictive check. The nonlinear SAEM
+binned summary, not a simulation-based predictive check. The separate
+[`plot_simulated_vpc()`](simulated-vpc.md) summarizes supplied response replicates
+with percentile bands. It does not generate simulations, model censoring, perform
+prediction correction, or test model adequacy; the supplied simulation design
+determines dependence and parameter uncertainty. The nonlinear SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 

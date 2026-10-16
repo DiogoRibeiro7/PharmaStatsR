@@ -49,6 +49,43 @@ simulation-based visual predictive check requires a separate workflow.
 plot_vpc(model, example_data, bins = 2)
 ```
 
+## Simulation-based percentile check
+
+Use `plot_simulated_vpc()` when complete replicated responses are available.
+The example below simulates a known Gaussian random-intercept process on the
+same observation schedule. A single subject effect is shared by that subject's
+rows within each replicate. This illustrates the input contract; the parameters
+are specified rather than fitted to `example_data`.
+
+```{r, fig.alt="Observed percentiles and simulated percentile bands in separate probability panels."}
+set.seed(215)
+predictive_data <- data.frame(
+  SubjectID = rep(seq_len(20), each = 4),
+  Time = rep(0:3, times = 20)
+)
+simulate_response <- function() {
+  subject_effect <- rnorm(20, sd = 0.7)
+  2 + 0.5 * predictive_data$Time +
+    subject_effect[predictive_data$SubjectID] +
+    rnorm(nrow(predictive_data), sd = 0.3)
+}
+predictive_data$DV <- simulate_response()
+simulations <- replicate(500, simulate_response())
+predictive_plot <- plot_simulated_vpc(predictive_data, simulations, bins = 4)
+predictive_plot
+head(predictive_plot$data)
+```
+
+The plot computes each percentile separately within each replicate and time
+bin, then summarizes its distribution across replicates. The default bands
+are central 90% simulation intervals for those percentile statistics. They
+are neither individual-response intervals nor a formal model-adequacy test.
+The supplied simulations determine subject dependence and any parameter
+uncertainty. Missing or nonfinite values are rejected, and row alignment is
+required. Inspect `attr(predictive_plot, "vpc_bins")` and
+`attr(predictive_plot, "vpc_settings")` to audit the binning. Existing app and
+report diagnostics retain the descriptive `plot_vpc()`.
+
 ## Export a report
 
 `generate_report()` combines parameter estimates and diagnostic plots into an
