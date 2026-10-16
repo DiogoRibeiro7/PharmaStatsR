@@ -92,8 +92,11 @@ on all development training data for use on future data.
 `screen_covariates_lasso()` still delegates to `cv.glmnet()` without a
 fold-specific imputation hook. Passing a globally imputed table to it does not
 refit imputation inside its folds. [Saved categorical encoding](fitted-encoding.md)
-can be composed with these helpers manually; saved nearest-neighbor donor models
-and automatic fold integration remain future work.
+can be composed with these helpers manually. For numeric Gaussian screening,
+[`screen_covariates_lasso_imputed()`](lasso-imputation.md) now fits replacements
+and standardization inside each training fold for a prespecified penalty grid.
+Categorical preprocessing within folds and saved nearest-neighbor donor models
+remain future work.
 
 ## Boundaries and evidence
 
