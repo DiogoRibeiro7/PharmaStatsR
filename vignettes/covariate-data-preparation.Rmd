@@ -281,7 +281,8 @@ models on new subjects. Repeat the fitting and application steps within each
 training/validation split. The numeric `screen_covariates_lasso_imputed()`
 helper automates mean/median or nearest-neighbor imputation and model
 standardization for a
-prespecified penalty grid; categorical fold preprocessing remains manual. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
+prespecified penalty grid. Its opt-in `encode = TRUE` mode also fits categorical
+encoding inside each training fold. The `fit_imputation()` / `apply_imputation()` and `fit_encoding()` /
 `apply_encoding()` pairs provide saved recipes for manual composition.
 
 ## Prepare a design matrix
@@ -494,3 +495,53 @@ loading PharmaStatsR. It registers the glmnet methods as needed. Only penalties
 from the fitted grid are accepted; prediction does not interpolate, refit,
 retune, or add uncertainty intervals. These are final-model predictions, not
 the held-out values saved during screening.
+
+## Encode categorical candidates inside each fold
+
+Use `encode = TRUE` to fit numeric imputation and additive categorical encoding
+on each training subset. Numeric-only calls keep their existing defaults and
+result structure. This example has a numeric effect and a two-level group effect:
+
+```{r}
+block <- data.frame(
+  x = c(-1, -1, 1, 1, NA, NA), group = rep(c("A", "B"), 3),
+  y = c(-5, 1, -1, 5, -3, 3)
+)
+training <- block[rep(seq_len(6), 3), ]
+encoded <- screen_covariates_lasso_imputed(
+  training, "y", c("x", "group"), lambda = c(4, 2, 1, 0.5),
+  encode = TRUE, foldid = rep(1:3, each = 6)
+)
+encoded$cv # MSE: 35/3, 20/3, 2, 0.5
+encoded$selected # raw variables x and group
+encoded$selected_columns # nonzero final encoded columns
+encoded$fold_encoding[[1]]
+predict_lasso_imputed(encoded, data.frame(group = c("B", "A"), x = c(NA, 1)))
+# approximately 2.5 and -1.112372
+```
+
+The completed numeric predictor has population variance `2/3`. Let `z` be `-1`
+for A and `1` for B; then `y = 2*x + 3*z`, with orthogonal `x` and `z`. LASSO
+predictions are `x * max(2 - lambda * sqrt(3/2), 0) + z * max(3 - lambda, 0)`.
+These fixed predictions yield the MSE values above without depending on a
+particular redundant indicator coefficient representation.
+
+The first categorical term uses full indicators; subsequent terms use the
+contrasts active during fitting. The saved recipe freezes actual coding.
+Penalties apply to individual standardized columns, so selection depends on
+coding and is not group LASSO or a test of a categorical effect. The raw-variable
+selection maps any nonzero design column back to its original candidate.
+Full indicators and the model intercept can yield nonunique coefficients.
+
+Character levels come only from training rows. Factors retain declared levels;
+define schemas from prior knowledge or training data. Effects of declared but
+unobserved categories cannot be estimated. Missing or unknown categorical values
+raise contextual errors; no categorical imputation, pooling, or row removal is
+performed. With `method = "knn"`, numeric targets use all raw candidates as
+distance predictors before encoding, and training-only donors remain fixed.
+
+Only encoded results add `encoding`, `fold_encoding`, and `selected_columns`.
+Save the entire result and predict raw future candidates with
+`predict_lasso_imputed()`; it applies final imputation, encoding, and the model
+without fitting anything from the new batch. Independent evaluation or outer
+resampling is still needed after choosing a penalty.

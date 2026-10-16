@@ -72,6 +72,11 @@ fall back to another imputation method or estimate missing-data uncertainty.
 The [saved-result prediction helper](predict-lasso-imputed.md) reuses final
 parameters without refitting and returns point predictions at fitted penalties;
 it does not add prediction intervals or post-selection inference.
+[Opt-in categorical fold encoding](lasso-encoding.md) saves additive recipes and
+rejects missing or unknown categories. Factor schemas must be prespecified or
+training-derived. Column-wise penalties depend on coding; selecting any encoded
+column maps back to a raw variable but is not a grouped test. Redundant indicator
+coefficients may be nonunique, and unobserved levels have no estimable effect.
 
 ## Validation for a real analysis
 
