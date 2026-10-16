@@ -19,7 +19,7 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **109 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **110 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -103,9 +103,15 @@ For numeric nearest-neighbor imputation, [`fit_knn_imputation()` and
 Gower scales. New batches reuse them without contributing donors or changing
 other rows' imputations.
 
+For [covariate mixed models](docs/covariate-mixed-model.md),
+`fit_covariate_model(..., repair_names = TRUE)` accepts literal column names
+and records their backend mapping while retaining a native `lme` object.
+`predict_covariate_model()` uses the original names and distinguishes population
+from existing-subject predictions. Strict fitting defaults remain unchanged.
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 109 exports: two stable column-check helpers, 94 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 110 exports: two stable column-check helpers, 95 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 

@@ -130,6 +130,7 @@ nav:
       - LASSO with training-fold imputation: lasso-imputation.md
       - Categorical encoding inside LASSO folds: lasso-encoding.md
       - Predict from saved screening results: predict-lasso-imputed.md
+      - Covariate mixed models and prediction: covariate-mixed-model.md
       - Saved nearest-neighbor imputation: fitted-knn.md
       - Configuration and registries: configuration-registries.md
       - Limitations and validation: limitations.md

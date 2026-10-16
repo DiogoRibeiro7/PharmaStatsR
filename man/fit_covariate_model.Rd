@@ -4,7 +4,7 @@
 \alias{fit_covariate_model}
 \title{Fit mixed-effects model with covariates}
 \usage{
-fit_covariate_model(data, response, id, covariates)
+fit_covariate_model(data, response, id, covariates, repair_names = FALSE)
 }
 \arguments{
 \item{data}{A \code{data.frame} with response, id and covariate columns.}
@@ -14,9 +14,16 @@ fit_covariate_model(data, response, id, covariates)
 \item{id}{Name of the subject ID variable.}
 
 \item{covariates}{Character vector of unique covariate names.}
+
+\item{repair_names}{Logical, default \code{FALSE} to retain strict syntactic-name
+validation. \code{TRUE} repairs the selected names without collisions with
+other columns and stores their mapping on the fitted object.}
 }
 \value{
-An object of class \code{lme}.
+A native object of class \code{lme}. With \code{repair_names = TRUE}, the added
+\code{column_map} data frame contains \code{role} (\code{response}, \code{id}, or \code{covariate}),
+\code{original}, and \code{model} columns in response/id/covariate order. Treat this
+mapping as fitted output; it is retained by an RDS round trip.
 }
 \description{
 Fits a linear mixed-effects model with a random subject intercept using
@@ -38,6 +45,18 @@ and selections are rejected. The \code{nlme} backend requires syntactic R column
 names: rename names containing spaces or formula operators before fitting.
 The names \code{.}, \code{...}, and \code{..1}, \code{..2}, etc. are also unsupported. No column
 name is accepted as a formula expression.
+With \code{repair_names = TRUE}, selected columns instead receive deterministic,
+unique syntactic names before reaching the backend. Names are treated
+literally, including formula operators, backticks, and R evaluation symbols.
+Values, factor attributes, and row order are unchanged. The caller's data
+are not modified.
+
+Repaired fits remain native \code{lme} objects. Their formulas, coefficient labels,
+and stored data use the backend names; \code{column_map} records the original
+names, backend names, and roles. Use \code{\link[=predict_covariate_model]{predict_covariate_model()}} with raw new
+rows to apply that map. Native \code{\link[stats:predict]{stats::predict()}} still expects the backend
+names. Name repair does not change the model, estimation, or missing-data
+policy, and does not imply support for formula expressions in column inputs.
 }
 \examples{
 df <- data.frame(
@@ -47,4 +66,13 @@ df <- data.frame(
   WT = rnorm(30, 70, 5)
 )
 fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+names(df)[names(df) == "WT"] <- "body mass"
+repaired <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "body mass"),
+  repair_names = TRUE
+)
+repaired$column_map
+predict_covariate_model(repaired, df[1:3, ], level = 0)
+}
+\seealso{
+\code{\link[=predict_covariate_model]{predict_covariate_model()}}
 }

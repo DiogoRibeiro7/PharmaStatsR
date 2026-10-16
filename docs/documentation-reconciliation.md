@@ -6,7 +6,7 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **109 exports**: 103 functions
+The [inventory](method-inventory.md) now contains **110 exports**: 104 functions
 and six illustrative data objects. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
@@ -21,7 +21,9 @@ The [prediction helper](predict-lasso-imputed.md) adds saved-imputer dispatch,
 fitted-grid prediction, and schema checks with analytic references.
 [Opt-in categorical fold encoding](lasso-encoding.md) now adds training-only
 recipes, saved mixed-data prediction, and analytic mixed-design MSE references;
-the export count remains unchanged.
+that addition did not change the export count. The later
+[mixed-model prediction helper](covariate-mixed-model.md) adds original-name
+prediction and balanced REML/BLUP evidence alongside opt-in fitting name repair.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 

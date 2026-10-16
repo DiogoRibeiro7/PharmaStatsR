@@ -63,13 +63,31 @@ prepare_model_matrix <- function(data, covariates) {
 #' names: rename names containing spaces or formula operators before fitting.
 #' The names `.`, `...`, and `..1`, `..2`, etc. are also unsupported. No column
 #' name is accepted as a formula expression.
+#' With `repair_names = TRUE`, selected columns instead receive deterministic,
+#' unique syntactic names before reaching the backend. Names are treated
+#' literally, including formula operators, backticks, and R evaluation symbols.
+#' Values, factor attributes, and row order are unchanged. The caller's data
+#' are not modified.
+#'
+#' Repaired fits remain native `lme` objects. Their formulas, coefficient labels,
+#' and stored data use the backend names; `column_map` records the original
+#' names, backend names, and roles. Use [predict_covariate_model()] with raw new
+#' rows to apply that map. Native [stats::predict()] still expects the backend
+#' names. Name repair does not change the model, estimation, or missing-data
+#' policy, and does not imply support for formula expressions in column inputs.
 #'
 #' @param data A `data.frame` with response, id and covariate columns.
 #' @param response Name of the response variable.
 #' @param id Name of the subject ID variable.
 #' @param covariates Character vector of unique covariate names.
+#' @param repair_names Logical, default `FALSE` to retain strict syntactic-name
+#'   validation. `TRUE` repairs the selected names without collisions with
+#'   other columns and stores their mapping on the fitted object.
 #'
-#' @return An object of class `lme`.
+#' @return A native object of class `lme`. With `repair_names = TRUE`, the added
+#'   `column_map` data frame contains `role` (`response`, `id`, or `covariate`),
+#'   `original`, and `model` columns in response/id/covariate order. Treat this
+#'   mapping as fitted output; it is retained by an RDS round trip.
 #' @examples
 #' df <- data.frame(
 #'   SubjectID = rep(1:10, each = 3),
@@ -78,8 +96,19 @@ prepare_model_matrix <- function(data, covariates) {
 #'   WT = rnorm(30, 70, 5)
 #' )
 #' fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+#' names(df)[names(df) == "WT"] <- "body mass"
+#' repaired <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "body mass"),
+#'   repair_names = TRUE
+#' )
+#' repaired$column_map
+#' predict_covariate_model(repaired, df[1:3, ], level = 0)
+#' @seealso [predict_covariate_model()]
 #' @export
-fit_covariate_model <- function(data, response, id, covariates) {
+fit_covariate_model <- function(data, response, id, covariates, repair_names = FALSE) {
+  if (!is.logical(repair_names) || length(repair_names) != 1L ||
+    is.na(repair_names) || !is.null(dim(repair_names))) {
+    stop("`repair_names` must be TRUE or FALSE")
+  }
   covariates <- validate_model_covariates(data, covariates)
   for (name in list(response = response, id = id)) {
     if (!is.character(name) || length(name) != 1L || !is.null(dim(name)) ||
@@ -94,6 +123,24 @@ fit_covariate_model <- function(data, response, id, covariates) {
   if (response == id || response %in% covariates || id %in% covariates) {
     stop("Response, subject identifier, and covariates must be distinct")
   }
+  if (repair_names) {
+    original <- c(response, id, covariates)
+    backend <- make.names(original)
+    special <- backend %in% c(".", "...") | grepl("^\\.\\.[0-9]+$", backend)
+    backend[special] <- paste0("covariate_column_", which(special))
+    # Reserve unselected names too; simultaneous renaming preserves collisions
+    # such as original 'body mass' and 'body.mass' as separate columns.
+    reserved <- setdiff(names(data), original)
+    backend <- utils::tail(make.unique(c(reserved, backend)), length(original))
+    column_map <- data.frame(
+      role = c("response", "id", rep("covariate", length(covariates))),
+      original = original, model = backend, stringsAsFactors = FALSE
+    )
+    names(data)[match(original, names(data))] <- backend
+    response <- backend[1L]
+    id <- backend[2L]
+    covariates <- backend[-c(1L, 2L)]
+  }
   validate_model_names(c(response, id, covariates), syntactic = TRUE)
 
   if (length(covariates) == 0) {
@@ -103,10 +150,12 @@ fit_covariate_model <- function(data, response, id, covariates) {
   }
   validate_lme_data(data, response, id, covariates, fixed_formula)
 
-  nlme::lme(
+  model <- nlme::lme(
     fixed = fixed_formula,
     random = stats::as.formula(paste("~1 |", id)),
     data = data,
     na.action = stats::na.exclude
   )
+  if (repair_names) model$column_map <- column_map
+  model
 }

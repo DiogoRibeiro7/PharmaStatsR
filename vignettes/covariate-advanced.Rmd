@@ -89,7 +89,8 @@ The BIC `min_bf` threshold must always be a finite positive numeric scalar,
 including when the candidate selection is empty. An empty result after screening
 means that no candidate met the selection criterion; unusable data raises an
 error instead. Literal-name support described here applies to these two
-screening functions; model-fitting wrappers still require syntactic names.
+screening functions. Mixed-model fitting can opt into literal names with
+`repair_names = TRUE`; its strict default still requires syntactic names.
 
 ## Reuse a subject-level split
 
@@ -158,28 +159,39 @@ coefficients. Constant or redundant predictors, or categorical predictors that
 lose all variation after exclusion, need to be reviewed before fitting.
 These checks do not guarantee convergence or establish scientific adequacy.
 
-Unlike AIC/BIC screening, the underlying `nlme` fitting and prediction machinery
-requires syntactic names. Quoting a name containing spaces is insufficient.
-The wrapper reports unsupported names before building formulas; names `.`,
-`...`, and `..1`, `..2`, etc. are also unsupported. Rename columns explicitly
-and use the resulting names consistently for fitting and future predictions:
+The backend requires syntactic names internally. Set `repair_names = TRUE` to
+record collision-free aliases while keeping original names in your input data:
 
 ```{r}
 model_data <- pharmo_example
 names(model_data)[names(model_data) == "WT"] <- "body mass"
-names(model_data) <- make.names(names(model_data), unique = TRUE)
-
 model <- fit_covariate_model(
-  model_data, "DV", "SubjectID", c("Time", "body.mass", "AGE")
+  model_data, "DV", "SubjectID", c("Time", "body mass", "AGE"),
+  repair_names = TRUE
 )
+model$column_map
 nlme::fixef(model)
-head(predict(model, newdata = model_data))
+head(predict_covariate_model(model, model_data))
+head(predict_covariate_model(model, model_data, level = 1))
 ```
 
-The result is a native `lme` object. Standard prediction and residual methods
-remain available, and `model$data` retains the supplied data. Residuals are
-padded for excluded rows. Prediction on new data follows `predict.lme()` rules,
-including its handling of missing predictors and previously unseen subjects.
+The result stays a native `lme` object. Its formulas, coefficient labels, and
+stored data use the mapped backend names. Native `predict()` expects those
+names; `predict_covariate_model()` instead selects original columns and applies
+the saved map, including after RDS restoration. The caller's data are unchanged.
+Strict calls without name repair retain their existing interface and data names.
+
+The helper defaults to population predictions (`level = 0`), requiring only
+covariates. `level = 1` requires the subject ID and adds its fitted intercept;
+unknown subjects return `NA`, without a population fallback. Missing predictors
+or required IDs raise errors. Results are numeric vectors named by input rows,
+with singleton and empty batches supported. No intervals are added.
+
+A fixed balanced reference in the tests has intercept `2`, slope `1.5`, four
+subject offsets `(-3, -1, 1, 3)`, visits `(-1, 0, 1)`, and residuals `(1, -2, 1)`
+within each subject. REML gives residual variance `24/7`, random-intercept
+variance `116/21`, and subject-effect shrinkage `29/35`. These references verify
+that repair and prediction preserve the numerical model.
 
 ## Reshape Time-Varying Covariates
 
