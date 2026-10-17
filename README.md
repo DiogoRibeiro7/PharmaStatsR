@@ -42,6 +42,10 @@ PharmaStatsR includes all 18 functions formerly provided by pharmoCovR, together
 
 Existing scripts can replace `library(pharmoCovR)` with `library(PharmaStatsR)` and `pharmoCovR::` with `PharmaStatsR::`, retaining function names and arguments. Load the simulated data with `data("pharmo_example", package = "PharmaStatsR")`. See the [migration and method guide](docs/covariate-migration.md) for examples, dependencies, overlap with existing methods, and limitations.
 
+The [interactive diagnostics guide](docs/diagnostics-app.md) covers CSV fitting,
+keyboard navigation, plot descriptions and numerical tables, with the scope of
+the browser accessibility checks.
+
 ## Quick start
 
 ```r

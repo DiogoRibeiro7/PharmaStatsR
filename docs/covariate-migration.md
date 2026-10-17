@@ -129,8 +129,10 @@ function.
   redraws all subject effects, including for training IDs, and excludes
   parameter uncertainty. Other model simulators remain future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
-  Reactive server tests cover upload, fitting, rendering, and recovery; they do
-  not establish browser accessibility or usability.
+  [Keyboard access and numerical alternatives](diagnostics-app.md) complement
+  its plots. Server and Chromium browser tests cover upload, fitting, rendering,
+  navigation, and recovery; manual assistive-technology and usability testing
+  remain outside this evidence.
 
 ## Dependencies and installed resources
 

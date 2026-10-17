@@ -31,6 +31,14 @@ prediction plots; the original loaded data are retained in the session.
 The binned summary shows observed percentiles and fitted medians; it is not
 a simulation-based predictive check. A supplied model should correspond to
 the supplied data.
+
+The app has visible keyboard focus, a skip link, and live status feedback.
+Each plot has a text description and an expandable numerical table with
+captions and column headers. Tables display six significant digits; Row
+identifies the analysis data row name, not a subject identifier. Use Tab to
+reach controls, Enter or Space to open numerical data, and arrow keys within
+the diagnostic tabs (with current Shiny). Automated Chromium checks cover
+the documented workflow, not all browsers or assistive technologies.
 }
 \examples{
 \dontrun{

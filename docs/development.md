@@ -39,6 +39,39 @@ Use a platform-specific skip only for a feature that is genuinely unavailable on
 
 For numeric methods, include tests against an independently calculated or known result, boundary and invalid-input cases, and reproducible random examples.
 
+## Diagnostics browser checks
+
+The [Diagnostics browser checks workflow](https://github.com/DiogoRibeiro7/PharmaStatsR/actions/workflows/diagnostics-browser.yml)
+runs on each PR, push to main, and manual dispatch. It loads the package source
+with `pkgload`, runs a local Shiny server bound to `127.0.0.1`, and exercises the
+[diagnostics workflow](diagnostics-app.md) with Chromium, Playwright and axe-core.
+It uses synthetic CSVs and makes no external data uploads. The Node dependencies
+are locked in `scripts/browser/package-lock.json` and are excluded from the R
+source package. No new runtime R package is required.
+
+With R and Node 24 on PATH, install the package's hard dependencies plus `pkgload`
+and current `shiny`, then run:
+
+```sh
+cd scripts/browser
+npm ci --ignore-scripts
+npx playwright install --with-deps chromium
+npm test
+```
+
+Port 3877 must be free. The runner starts and stops its own server and fails if
+that port is already occupied. To use an installed Chrome locally, set the
+environment variable `PLAYWRIGHT_CHANNEL=chrome` before `npm test`; CI uses the
+Chromium version bundled with the locked Playwright release. On PowerShell, use
+`$env:PLAYWRIGHT_CHANNEL = "chrome"`.
+
+The HTML report includes full axe JSON for every audited state, including
+incomplete checks that require manual review. Screenshots of the binned summary
+and narrow layout are retained on success, and traces/screenshots on failure.
+CI uploads `diagnostics-browser-evidence` even when tests fail. Tests fail on any
+automated axe violation; no rules are disabled. This is scoped automated evidence,
+not a WCAG certification or a substitute for assistive-technology testing.
+
 ## Documentation site
 
 Python 3 is needed to build the site:

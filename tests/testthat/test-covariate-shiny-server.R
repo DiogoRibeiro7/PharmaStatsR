@@ -34,6 +34,7 @@ test_that("CSV uploads can be fitted and all diagnostics render", {
     session$setInputs(csv = upload, bins = 2)
     expect_match(output$status, "Data loaded")
     expect_equal(rv_data(), d)
+    expect_identical(output$source_name, paste("Data source:", upload$name))
     expect_null(rv_model())
     session$setInputs(fit = 2)
     expect_identical(output$status, "Model ready.")
@@ -87,6 +88,7 @@ test_that("invalid CSV uploads clear old data and models and allow recovery", {
       expect_match(output$status, "^Upload failed:")
       expect_match(output$status, expected[i])
       expect_null(rv_data())
+      expect_identical(output$source_name, "")
       expect_null(rv_model())
       error_status <- output$status
       session$setInputs(fit = i)
@@ -190,10 +192,80 @@ test_that("cancelled uploads preserve data and invalid preload fails early", {
   shiny::testServer(app, {
     session$setInputs(csv = list(name = "cancelled.csv"))
     expect_identical(rv_data(), d)
+    expect_identical(output$source_name, "Data source: preloaded data")
     expect_match(output$status, "Data loaded")
   })
   expect_error(
     PharmaStatsR:::build_diagnostics_app(data = data.frame(Time = 0, DV = 1)),
     "Missing required columns: SubjectID"
   )
+})
+
+
+test_that("numerical tables retain analysis rows and plotted values", {
+  skip_if_not_installed("shiny")
+  d <- make_diagnostics_data()
+  d$DV[2] <- NA_real_
+  rownames(d) <- paste0("row-", seq_len(nrow(d)))
+  app <- PharmaStatsR:::build_diagnostics_app(data = d)
+  # Parse ordinary table cells without adding a package dependency.
+  cells <- function(output) {
+    html <- as.character(output$html)
+    matches <- regmatches(html, gregexpr("<td>[^<]*</td>", html))[[1]]
+    sub("</td>$", "", sub("^<td>", "", matches))
+  }
+  shiny::testServer(app, {
+    session$setInputs(fit = 1, bins = 2)
+    observed <- matrix(cells(output$obs_pred_data), ncol = 4, byrow = TRUE)
+    expect_identical(observed[, 1], rownames(d)[-2])
+    expect_equal(as.numeric(observed[, 2]), d$Time[-2])
+    plotted <- ggplot2::ggplot_build(plot_obs_vs_pred(rv_model(), plot_data()))$data[[1]]
+    expect_equal(as.numeric(observed[, 3]), plotted$y, tolerance = 1e-5)
+    expect_equal(as.numeric(observed[, 4]), plotted$x, tolerance = 1e-5)
+
+    residual <- matrix(cells(output$residuals_data), ncol = 4, byrow = TRUE)
+    expect_identical(residual[, 1], rep(rownames(d)[-2], 2L))
+    expect_equal(as.numeric(residual[, 2]), rep(d$Time[-2], 2L))
+    expect_equal(
+      as.numeric(residual[, 3]),
+      c(
+        unname(residuals(rv_model(), type = "response")),
+        unname(residuals(rv_model(), type = "normalized"))
+      ),
+      tolerance = 1e-5
+    )
+    expect_identical(residual[, 4], rep(c("Raw", "Normalized"), each = 23))
+
+    binned <- matrix(as.numeric(cells(output$vpc_data)), ncol = 5, byrow = TRUE)
+    expect_equal(unname(binned), unname(as.matrix(plot_vpc(rv_model(), plot_data(), bins = 2)$data)), tolerance = 1e-5)
+    expect_match(output$obs_pred$alt, "subject-specific")
+    expect_match(output$residuals$alt, "Raw and normalized")
+    expect_match(output$vpc$alt, "does not simulate predictive")
+    session$setInputs(bins = 1)
+    expect_match(output$bins_feedback, "whole number")
+    expect_error(output$vpc_data, "whole number", class = "validation")
+    session$setInputs(bins = 3)
+    expect_identical(output$bins_feedback, "")
+    expect_match(output$vpc_data$html, "<table")
+
+    # Replacement data invalidate all three text alternatives along with plots.
+    upload <- make_diagnostics_upload(make_diagnostics_data())
+    on.exit(unlink(upload$datapath), add = TRUE)
+    session$setInputs(csv = upload)
+    expect_error(output$obs_pred_data, class = "shiny.silent.error")
+    expect_error(output$residuals_data, class = "shiny.silent.error")
+    expect_error(output$vpc_data, class = "shiny.silent.error")
+  })
+})
+
+test_that("table captions, headers and row names are escaped as text", {
+  skip_if_not_installed("shiny")
+  values <- data.frame(Row = "<script>alert(1)</script>", value = 1.23456789)
+  names(values)[2] <- "A & B"
+  html <- as.character(PharmaStatsR:::diagnostics_data_table(values, "<Values>"))
+  expect_match(html, "<caption>&lt;Values&gt;</caption>", fixed = TRUE)
+  expect_match(html, '<th scope="col">A &amp; B</th>', fixed = TRUE)
+  expect_match(html, "&lt;script&gt;alert(1)&lt;/script&gt;", fixed = TRUE)
+  expect_false(grepl("<script>", html, fixed = TRUE))
+  expect_match(html, "<td>1.23457</td>", fixed = TRUE)
 })
