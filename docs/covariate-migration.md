@@ -65,7 +65,7 @@ history was not imported into PharmaStatsR.
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept; [opt-in literal-name repair](covariate-mixed-model.md). |
 | Mixed-model prediction | `predict_covariate_model()` | Original-name population or subject predictions from native fits, including saved name mappings. |
 | Mixed-model simulation (added after consolidation) | `simulate_covariate_model()` | Population response replicates from the fitted Gaussian random-intercept model, with parameters held fixed; see the [guide](covariate-simulation.md). |
-| Weight-allometric nonlinear fitting (added after consolidation) | `fit_nlmixr_allometric()` | Prespecified oral model with subject-constant weight and fixed clearance/volume exponents; [equations and event contract](allometric-nonlinear.md). |
+| Weight-allometric nonlinear fitting (added after consolidation) | `fit_nlmixr_allometric()` | Prespecified oral model with subject-constant weight and fixed clearance/volume exponents; optional natural-scale starting values and saved initialization metadata. See [equations and event contract](allometric-nonlinear.md). |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |

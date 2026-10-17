@@ -29,6 +29,15 @@
 #' @param control Named list of arguments to [nlmixr2est::saemControl()].
 #'   Defaults are those of the backend with `print = 0`; set `seed` explicitly
 #'   for a recorded stochastic fit. Unknown control names are rejected.
+#' @param initial Named list of positive finite scalar starting values. Allowed
+#'   names are `ka`, `cl`, `v`, `eta_ka_var`, `eta_cl_var`, and `residual_sd`.
+#'   Unspecified values default to 1, except `v = exp(1)`. `ka`, `cl`, and `v`
+#'   are on their natural scales, with clearance and volume at
+#'   `reference_weight` and zero subject effects; they are logged internally.
+#'   `eta_ka_var` and `eta_cl_var` are variances of the log-scale subject
+#'   effects, not standard deviations or coefficients of variation.
+#'   `residual_sd` is a standard deviation on the response scale. These are
+#'   starting values for estimation, not fixed parameters or fitted estimates.
 #'
 #' @details With `r = weight / reference_weight`, the model is
 #'   `ka = exp(tka + eta.ka)`, `cl = exp(tcl + eta.cl) * r^0.75`, and
@@ -47,9 +56,17 @@
 #'   literal in the stored model; it is not recomputed from prediction data.
 #'   SAEM controls, random streams, convergence and uncertainty are backend
 #'   behavior. The wrapper does not restore RNG state or certify an optimum.
+#'   Supply alternative `initial` values to investigate sensitivity to starts;
+#'   there is no automatic multi-start search or selection. Changing the
+#'   reference weight without changing initial clearance and volume changes
+#'   the starting concentration curve. For an equivalent starting model, scale
+#'   `cl` by `(new_reference / old_reference)^0.75` and `v` by
+#'   `new_reference / old_reference`. All starts must be strictly positive;
+#'   zero starts do not fix or remove a variance component.
 #'
 #' @return A native `nlmixr2FitData` object. Attribute `allometry` records
-#'   `reference_weight`, the fixed `exponents`, and a `column_map` data frame
+#'   `reference_weight`, the fixed `exponents`, a named numeric `initial` vector
+#'   containing all six resolved natural-scale starts, and a `column_map` data frame
 #'   with `role`, `original`, and `model` columns. Native fit tables can omit
 #'   dose records and reorder observations; they are not input-row predictions.
 #' @seealso [fit_nlmixr_model()] for the unchanged example-only wrapper.
@@ -57,7 +74,8 @@
 #' \dontrun{
 #' fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd,
 #'   weight = "WT",
-#'   reference_weight = 70, control = list(seed = 99)
+#'   reference_weight = 70, control = list(seed = 99),
+#'   initial = list(ka = 1.5, cl = 3.2, v = 32)
 #' )
 #' attr(fit, "allometry")
 #' head(fit$PRED)
@@ -65,8 +83,9 @@
 #' @export
 fit_nlmixr_allometric <- function(data, weight, reference_weight = 70,
                                   response = "DV", id = "ID", time = "TIME",
-                                  control = list()) {
+                                  control = list(), initial = list()) {
   fit_data <- prepare_allometric_data(data, weight, reference_weight, response, id, time)
+  starts <- allometric_initial_values(initial)
   if (!is.list(control) || is.object(control) ||
     (length(control) > 0L && (is.null(names(control)) ||
       anyNA(names(control)) || any(!nzchar(names(control))) || anyDuplicated(names(control))))) {
@@ -81,12 +100,13 @@ fit_nlmixr_allometric <- function(data, weight, reference_weight = 70,
   }
   settings <- utils::modifyList(list(print = 0), control, keep.null = TRUE)
   fit <- nlmixr2est::nlmixr2(
-    allometric_nlmixr_model(reference_weight),
+    allometric_nlmixr_model(reference_weight, starts),
     data = fit_data, est = "saem",
     control = do.call(nlmixr2est::saemControl, settings)
   )
   attr(fit, "allometry") <- list(
     reference_weight = unname(reference_weight), exponents = c(cl = 0.75, v = 1),
+    initial = starts,
     column_map = data.frame(
       role = c("response", "id", "time", "weight"),
       original = c(response, id, time, weight), model = c("DV", "ID", "TIME", "WT"),
@@ -169,19 +189,44 @@ prepare_allometric_data <- function(data, weight, reference_weight, response, id
   )
 }
 
-allometric_nlmixr_model <- function(reference_weight) {
+allometric_initial_values <- function(initial = list()) {
+  values <- c(ka = 1, cl = 1, v = exp(1), eta_ka_var = 1, eta_cl_var = 1, residual_sd = 1)
+  if (!is.list(initial) || is.object(initial) || !is.null(dim(initial)) ||
+    (length(initial) > 0L && (is.null(names(initial)) || anyNA(names(initial)) ||
+      any(!nzchar(names(initial))) || anyDuplicated(names(initial))))) {
+    stop("`initial` must be a list of uniquely named starting values")
+  }
+  unknown <- setdiff(names(initial), names(values))
+  if (length(unknown)) {
+    stop(
+      "Unknown initial values: ", paste(unknown, collapse = ", "),
+      ". Allowed names: ", paste(names(values), collapse = ", ")
+    )
+  }
+  for (name in names(initial)) {
+    value <- initial[[name]]
+    if (!is_numeric_vector(value) || is.object(value) || length(value) != 1L ||
+      !is.finite(value) || value <= 0) {
+      stop("`initial$", name, "` must be one positive finite numeric value")
+    }
+    values[name] <- unname(value)
+  }
+  values
+}
+
+allometric_nlmixr_model <- function(reference_weight, initial = allometric_initial_values()) {
   # Substitute a validated numeric literal, never user-provided R code. The
   # stored backend model remains self-contained after serialization.
   model <- function() NULL
   body(model) <- substitute(
     {
       ini({
-        tka <- 0
-        tcl <- 0
-        tv <- 1
-        eta.ka ~ 1
-        eta.cl ~ 1
-        add.sd <- 1
+        tka <- LOG_KA
+        tcl <- LOG_CL
+        tv <- LOG_V
+        eta.ka ~ VAR_KA
+        eta.cl ~ VAR_CL
+        add.sd <- SD_ERROR
       })
       model({
         ka <- exp(tka + eta.ka)
@@ -190,7 +235,12 @@ allometric_nlmixr_model <- function(reference_weight) {
         linCmt() ~ add(add.sd)
       })
     },
-    list(REF = unname(reference_weight))
+    list(
+      REF = unname(reference_weight),
+      LOG_KA = log(initial[["ka"]]), LOG_CL = log(initial[["cl"]]), LOG_V = log(initial[["v"]]),
+      VAR_KA = initial[["eta_ka_var"]], VAR_CL = initial[["eta_cl_var"]],
+      SD_ERROR = initial[["residual_sd"]]
+    )
   )
   model
 }

@@ -10,6 +10,8 @@ explicit bolus doses are required; infusion, implicit repeated doses,
 steady-state, censoring, and multiple endpoints are rejected. Analytic
 concentration references test the structural model; a successful SAEM run does
 not establish identifiability, a global optimum, or calibrated uncertainty.
+Optional starting values enable sensitivity checks for this fixed model; they
+do not fix parameters, change bounds, or implement automatic multi-start selection.
 
 ## What the checks actually do
 
