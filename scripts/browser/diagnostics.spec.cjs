@@ -9,6 +9,13 @@ const upload = (page, contents, name = 'example.csv') => page.getByLabel('Upload
   name, mimeType: 'text/csv', buffer: Buffer.from(contents),
 });
 async function audit(page, testInfo, state) {
+  // Shiny may retain and dim an old table while a visible output recalculates.
+  // Audit the settled result, including completion of its opacity transition.
+  await expect(page.locator('html')).not.toHaveClass(/shiny-busy/);
+  await expect(page.locator('.recalculating:visible')).toHaveCount(0);
+  for (const output of await page.locator('.shiny-bound-output:visible').all()) {
+    await expect(output).toHaveCSS('opacity', '1');
+  }
   const results = await new AxeBuilder({ page }).analyze();
   await testInfo.attach(`axe-${state}`, { body: JSON.stringify(results, null, 2), contentType: 'application/json' });
   expect(results.violations, `axe violations in ${state}`).toEqual([]);
@@ -40,10 +47,13 @@ test('keyboard upload, fitting, tabs and numerical alternatives', async ({ page 
   await expect(page.getByRole('link', { name: 'Skip to diagnostics' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('main', { name: 'Diagnostics', exact: true })).toBeFocused();
-  await page.reload();
-  await expect(page.locator('#status')).toHaveText('No data loaded.');
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
+  // Reverse through the controls from the skip target. Reloading a URL with
+  // its fragment can restore focus differently across browser/platform pairs.
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.getByRole('button', { name: 'Fit model', exact: true })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.getByRole('spinbutton', { name: 'Time bins' })).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
   const chooser = page.getByLabel('Upload data (.csv)');
   await expect(chooser).toBeFocused();
   const box = await chooser.boundingBox();
