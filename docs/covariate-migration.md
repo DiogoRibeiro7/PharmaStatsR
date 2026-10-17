@@ -65,6 +65,7 @@ history was not imported into PharmaStatsR.
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept; [opt-in literal-name repair](covariate-mixed-model.md). |
 | Mixed-model prediction | `predict_covariate_model()` | Original-name population or subject predictions from native fits, including saved name mappings. |
 | Mixed-model simulation (added after consolidation) | `simulate_covariate_model()` | Population response replicates from the fitted Gaussian random-intercept model, with parameters held fixed; see the [guide](covariate-simulation.md). |
+| Weight-allometric nonlinear fitting (added after consolidation) | `fit_nlmixr_allometric()` | Prespecified oral model with subject-constant weight and fixed clearance/volume exponents; [equations and event contract](allometric-nonlinear.md). |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
@@ -121,8 +122,9 @@ function.
 - Mixed-model fitting keeps strict names by default; `repair_names = TRUE`
   records safe backend aliases. Use `predict_covariate_model()` for original-name
   point predictions. It defaults to population effects; unknown subjects return
-  `NA` for conditional predictions. Covariate-aware nonlinear models remain
-  future work. `plot_simulated_vpc()` now summarizes supplied response replicates;
+  `NA` for conditional predictions. The separate [weight-allometric fitter](allometric-nonlinear.md)
+  uses fixed powers of subject-constant weight in a one-compartment oral model.
+  Broader nonlinear covariate specifications remain future work. `plot_simulated_vpc()` now summarizes supplied response replicates;
   their generation, subject dependence, and parameter uncertainty must be
   specified by the caller. The later `simulate_covariate_model()` supplies
   Gaussian random-intercept replications using fixed fitted parameters. It
@@ -144,7 +146,7 @@ mixed-model wrapper. Optional integrations stay optional:
 - `rmarkdown` and `knitr`, with Pandoc, render reports; PDF needs LaTeX.
 - `broom.mixed` optionally tidies report coefficients; the template retains its
   native `nlme` summary fallback.
-- `nlmixr2est` fits the fixed nonlinear example; `nlmixr2data` supplies its example
+- `nlmixr2est` fits the fixed nonlinear example and the weight-allometric model; `nlmixr2data` supplies their worked-example
   data. `cluster` supplies independent Gower reference tests, not the imputation
   implementation.
 

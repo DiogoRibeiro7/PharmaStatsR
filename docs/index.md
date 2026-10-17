@@ -51,7 +51,7 @@ PharmaStatsR is an R package with statistical wrappers, illustrative data, and e
 
 The [project status](project-status.md) shows which roadmap reviews have closed, which remain open, and what evidence is needed before a release candidate. The [export and evidence inventory](method-inventory.md) records review levels for individual methods.
 
-Version 0.1.63 includes 112 namespace exports, seven illustrative datasets, and
+Version 0.1.63 includes 113 namespace exports, seven illustrative datasets, and
 six vignettes. All 18 functions formerly maintained in pharmoCovR now live here;
 the standalone repository has been deleted. Follow the [migration guide](covariate-migration.md)
 to update existing scripts, or start with the [installation guide](installation.md).

@@ -2,6 +2,15 @@
 
 PharmaStatsR is under development and not on CRAN. The included datasets are small illustrative examples, not evidence about real treatments or patients. Do not use them for clinical decisions or include patient data in issues.
 
+The experimental [weight-allometric fitter](allometric-nonlinear.md) supports
+one prespecified oral model with fixed weight exponents, independent random
+effects on absorption and clearance, and additive residual error. It does not
+estimate weight exponents or select covariates. Constant subject weights and
+explicit bolus doses are required; infusion, implicit repeated doses,
+steady-state, censoring, and multiple endpoints are rejected. Analytic
+concentration references test the structural model; a successful SAEM run does
+not establish identifiability, a global optimum, or calibrated uncertainty.
+
 ## What the checks actually do
 
 | Helper | Implemented behavior | Limit |
@@ -64,7 +73,7 @@ determines dependence and parameter uncertainty. The later
 random-intercept replications with fresh subject effects and residuals, holding
 fitted coefficients and variances fixed. It does not condition on fitted subject
 effects or sample parameter uncertainty, and rejects other random/residual
-structures. The nonlinear SAEM
+structures. The original `fit_nlmixr_model()` SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 
