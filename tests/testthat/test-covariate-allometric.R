@@ -209,6 +209,7 @@ test_that("backend allometric concentrations match closed-form oral targets", {
 test_that("fitting forwards named controls and records original literal names", {
   skip_if_not_installed("nlmixr2est")
   captured <- NULL
+  parse_model <- nlmixr2est::nlmixr2
   local_mocked_bindings(
     nlmixr2 = function(object, data, est, control) {
       captured <<- list(model = object, data = data, est = est, control = control)
@@ -221,7 +222,11 @@ test_that("fitting forwards named controls and records original literal names", 
   fit <- fit_nlmixr_allometric(d, "weight kg",
     reference_weight = 80,
     response = "response value", id = "subject id", time = "sample time",
-    control = list(seed = 123, nBurn = 50, nEm = 50, print = 1)
+    control = list(seed = 123, nBurn = 50, nEm = 50, print = 1),
+    initial = list(
+      ka = 2, cl = 4, v = 20, eta_ka_var = 0.25,
+      eta_cl_var = 0.36, residual_sd = 0.7
+    )
   )
   expect_identical(d, original)
   expect_identical(captured$est, "saem")
@@ -237,6 +242,13 @@ test_that("fitting forwards named controls and records original literal names", 
     c("response value", "subject id", "sample time", "weight kg")
   )
   expect_identical(fit$PRED, 1:12)
+  ui <- parse_model(captured$model)
+  expect_equal(ui$theta, c(tka = log(2), tcl = log(4), tv = log(20), add.sd = 0.7))
+  expect_equal(unname(ui$omega), diag(c(0.25, 0.36)))
+  expect_identical(
+    attr(fit, "allometry")$initial,
+    c(ka = 2, cl = 4, v = 20, eta_ka_var = 0.25, eta_cl_var = 0.36, residual_sd = 0.7)
+  )
 })
 
 test_that("real SAEM fitting retains allometry and native population predictions", {
@@ -251,6 +263,10 @@ test_that("real SAEM fitting retains allometry and native population predictions
   metadata <- attr(fit, "allometry")
   expect_identical(metadata$reference_weight, 70)
   expect_identical(metadata$exponents, c(cl = 0.75, v = 1))
+  expect_identical(
+    metadata$initial,
+    c(ka = 1, cl = 1, v = exp(1), eta_ka_var = 1, eta_cl_var = 1, residual_sd = 1)
+  )
   expect_identical(metadata$column_map$model, c("DV", "ID", "TIME", "WT"))
   params <- c(fit$theta, eta.ka = 0, eta.cl = 0)
   solved <- nlmixr2est::rxSolve(fit$ui,
@@ -261,4 +277,133 @@ test_that("real SAEM fitting retains allometry and native population predictions
   restored <- unserialize(serialize(fit, NULL))
   expect_identical(attr(restored, "allometry"), metadata)
   expect_equal(restored$PRED, fit$PRED)
+})
+
+
+test_that("starting values preserve defaults and resolve named natural-scale overrides", {
+  defaults <- c(ka = 1, cl = 1, v = exp(1), eta_ka_var = 1, eta_cl_var = 1, residual_sd = 1)
+  resolve <- PharmaStatsR:::allometric_initial_values
+  expect_identical(resolve(), defaults)
+  initial <- list(residual_sd = 0.7, ka = c(named = 2L), eta_cl_var = 0.36)
+  original <- initial
+  expected <- defaults
+  expected[c("ka", "eta_cl_var", "residual_sd")] <- c(2, 0.36, 0.7)
+  expect_identical(resolve(initial), expected)
+  expect_identical(initial, original)
+  expect_identical(resolve(rev(initial)), expected)
+  expect_identical(resolve(as.list(defaults)), defaults)
+})
+
+test_that("invalid starting values fail before backend loading or estimation", {
+  local_mocked_bindings(
+    requireNamespace = function(...) stop("backend must not be consulted"), .package = "base"
+  )
+  d <- allometric_fixture()
+  for (bad in list(
+    NULL, c(ka = 2), list(2), list(ka = 1, ka = 2),
+    structure(list(1), names = NA_character_), structure(list(1), names = ""),
+    structure(list(ka = 2), class = "custom"), structure(list(ka = 2), dim = c(1L, 1L))
+  )) {
+    expect_error(fit_nlmixr_allometric(d, "WT", initial = bad), "uniquely named")
+  }
+  expect_error(fit_nlmixr_allometric(d, "WT", initial = list(tka = 0)), "Unknown initial values: tka")
+  expect_error(fit_nlmixr_allometric(d, "WT", initial = list(KA = 2)), "Allowed names")
+  for (name in c("ka", "cl", "v", "eta_ka_var", "eta_cl_var", "residual_sd")) {
+    for (value in list(
+      NULL, 0, -1, NA_real_, NaN, Inf, -Inf, "2", TRUE,
+      c(1, 2), numeric(), matrix(2), 1 + 1i, list(2), quote(stop("not evaluated")),
+      structure(2, class = "custom")
+    )) {
+      initial <- setNames(list(value), name)
+      expect_error(
+        fit_nlmixr_allometric(d, "WT", initial = initial),
+        paste0("initial\\$", name, ".*positive finite numeric")
+      )
+    }
+  }
+})
+
+test_that("compiled initialization uses logs, variances and residual SD without fixing them", {
+  skip_if_not_installed("nlmixr2est")
+  resolve <- PharmaStatsR:::allometric_initial_values
+  build <- function(starts = resolve(), reference = 70) {
+    nlmixr2est::nlmixr2(PharmaStatsR:::allometric_nlmixr_model(reference, starts))
+  }
+  default <- build()
+  expect_equal(default$theta, c(tka = 0, tcl = 0, tv = 1, add.sd = 1), tolerance = 1e-14)
+  expect_equal(unname(default$omega), diag(2))
+  expect_false(any(default$iniDf$fix))
+  starts <- resolve(list(
+    ka = 2, cl = 4, v = 20,
+    eta_ka_var = 0.25, eta_cl_var = 0.36, residual_sd = 0.7
+  ))
+  ui <- build(starts)
+  expect_equal(ui$theta, c(tka = log(2), tcl = log(4), tv = log(20), add.sd = 0.7), tolerance = 1e-14)
+  expect_equal(
+    ui$omega,
+    matrix(c(0.25, 0, 0, 0.36), 2, dimnames = list(c("eta.ka", "eta.cl"), c("eta.ka", "eta.cl")))
+  )
+  expect_false(any(ui$iniDf$fix))
+  expect_identical(ui$covariates, "WT")
+  restored <- unserialize(serialize(ui, NULL))
+  expect_equal(restored$theta, ui$theta)
+  expect_equal(restored$omega, ui$omega)
+
+  # No parameter override: the solver must use the supplied initialization.
+  d <- prepare_allometric_fixture()
+  solve <- function(model) {
+    nlmixr2est::rxSolve(model,
+      events = d,
+      omega = NA, sigma = NA, returnType = "data.frame"
+    )
+  }
+  out <- solve(ui)
+  obs <- d[d$EVID == 0, ]
+  cl <- 4 * (obs$WT / 70)^0.75
+  v <- 20 * obs$WT / 70
+  ke <- cl / v
+  target <- 200 / (v * (2 - ke)) * (exp(-ke * obs$TIME) - exp(-2 * obs$TIME))
+  expect_equal(out$pred, target, tolerance = 1e-8)
+  expect_equal(out$pred[5:8], c(
+    2.983099871469540, 3.796641499118717,
+    3.622246706371695, 2.494408341607328
+  ), tolerance = 1e-8)
+  expect_equal(solve(restored)$pred, target, tolerance = 1e-8)
+  starts[c("cl", "v")] <- starts[c("cl", "v")] * c(2^0.75, 2)
+  expect_equal(solve(build(starts, 140))$pred, target, tolerance = 1e-8)
+})
+
+test_that("custom starts reach a real fit and remain distinct from fitted estimates", {
+  skip_if_not_installed("nlmixr2est")
+  skip_if_not_installed("nlmixr2data")
+  initial <- list(
+    ka = 1.5, cl = 3.2, v = 32, eta_ka_var = 0.25,
+    eta_cl_var = 0.36, residual_sd = 0.7
+  )
+  original <- initial
+  fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd, "WT",
+    control = list(seed = 99), initial = initial
+  )
+  expect_s3_class(fit, "nlmixr2FitData")
+  expect_true(all(is.finite(fit$PRED)))
+  expect_true(all(is.finite(fit$theta)))
+  expect_identical(initial, original)
+  metadata <- attr(fit, "allometry")
+  expect_identical(metadata$initial, unlist(initial))
+  expect_identical(metadata$reference_weight, 70)
+  expect_identical(metadata$exponents, c(cl = 0.75, v = 1))
+  expect_false(isTRUE(all.equal(
+    unname(fit$theta[c("tka", "tcl", "tv")]),
+    log(c(1.5, 3.2, 32))
+  )))
+  restored <- unserialize(serialize(fit, NULL))
+  expect_identical(attr(restored, "allometry"), metadata)
+  expect_equal(restored$PRED, fit$PRED)
+  # Native fitted predictions still agree with the fitted stored model.
+  solved <- nlmixr2est::rxSolve(restored$ui,
+    params = restored$theta,
+    events = prepare_allometric_fixture(nlmixr2data::theo_sd),
+    omega = NA, sigma = NA, returnType = "data.frame"
+  )
+  expect_equal(solved$pred, fit$PRED, tolerance = 1e-6)
 })

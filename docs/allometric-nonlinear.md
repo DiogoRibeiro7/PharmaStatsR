@@ -33,9 +33,10 @@ describes the parameter and random-effect specification.
 Weight and `reference_weight` must share units: use 70 for weight measured in
 kg, or 70000 for the equivalent reference in g. Other units must also agree:
 for example, dose in mg, time in hours, volume in L, clearance in L/hour, and
-response in mg/L. No conversion is performed. Initial log parameters are
-`tka = 0`, `tcl = 0`, `tv = 1`, with initial subject variances and residual
-standard deviation of 1. These starts are fixed by this wrapper.
+response in mg/L. No conversion is performed. Default initial log parameters
+remain `tka = 0`, `tcl = 0`, `tv = 1`, with initial subject variances and residual
+standard deviation of 1. Use `initial` to override selected starts on the
+scales described below.
 
 ## Fit and inspect
 
@@ -59,8 +60,59 @@ backend random streams and convergence behavior still apply. The wrapper does
 not restore the caller's RNG state. Inspect convergence, sensitivity to starts,
 identifiability, residual structure and uncertainty separately. A successful
 fit is not evidence of a global optimum or calibrated inference. The narrow
-wrapper has no argument for alternative initial parameter values or structural
-models; use the backend directly when these are required.
+wrapper supports explicit starting values for this model; use the backend
+directly for alternative structural models, parameter bounds, or fixed
+parameter values.
+
+## Explicit starting values
+
+`initial` is a named list. Unspecified entries keep the defaults below, and all
+supplied values must be positive finite numeric scalars. Unknown or duplicate
+names, missing values, zero, and nonnumeric values fail before the backend is
+loaded. Names are case-sensitive. A numeric vector is not a named list.
+
+| Name | Meaning and scale | Default | Backend initialization |
+| --- | --- | ---: | --- |
+| `ka` | Absorption rate, inverse time | 1 | `tka = log(ka)` |
+| `cl` | Apparent clearance at reference weight and zero subject effects, volume/time | 1 | `tcl = log(cl)` |
+| `v` | Apparent volume at reference weight, volume | `exp(1)` | `tv = log(v)` |
+| `eta_ka_var` | Variance of the log-absorption subject effect | 1 | Diagonal `eta.ka` variance |
+| `eta_cl_var` | Variance of the log-clearance subject effect | 1 | Diagonal `eta.cl` variance |
+| `residual_sd` | Additive residual standard deviation, response units | 1 | `add.sd` |
+
+Subject-effect entries are **variances**, not standard deviations or
+coefficients of variation. `residual_sd` is a **standard deviation**, not a
+variance. All six parameters remain free to be estimated. Zero starts do not
+fix a parameter or remove a random effect and are rejected. The fixed weight
+exponents and independence of subject effects are unchanged.
+
+For example, supply a different starting model on the public example data:
+
+```r
+fit_alternative <- fit_nlmixr_allometric(
+  nlmixr2data::theo_sd, weight = "WT", reference_weight = 70,
+  control = list(seed = 99),
+  initial = list(ka = 1.5, cl = 3.2, v = 32,
+    eta_ka_var = 0.25, eta_cl_var = 0.36, residual_sd = 0.7)
+)
+attr(fit_alternative, "allometry")$initial # all six resolved starts
+fit_alternative$theta                    # fitted backend parameters
+```
+
+These example values are illustrative, not recommended for arbitrary drugs or
+units. Choose starts using the study's model and units, then compare convergence,
+parameter estimates, objective values and diagnostics across prespecified
+starts and seeds. Identical seeds do not guarantee the same fitted solution
+from different starts. The wrapper performs one fit per call; it does not
+search over starts, select a best fit, or establish global convergence.
+
+If changing the reference from `old_reference` to `new_reference` while
+preserving the same starting concentration curve, multiply initial `cl` by
+`(new_reference / old_reference)^0.75` and initial `v` by
+`new_reference / old_reference`. Other starts stay unchanged. Simply changing
+the reference while keeping the same numeric clearance and volume changes
+the starting model. Changing weight and reference together to a common new
+weight unit leaves their ratio unchanged.
 
 ## Required event records
 
@@ -95,8 +147,10 @@ conversion of unsupported events.
 ## Native result and saved metadata
 
 The result is a native `nlmixr2FitData` object. Attribute `allometry` stores the
-reference weight, `c(cl = 0.75, v = 1)`, and a `column_map` with `role`, `original`,
-and `model` columns. The backend receives only `ID`, `TIME`, `DV`, `WT`, `EVID`,
+reference weight, `c(cl = 0.75, v = 1)`, the complete named numeric `initial`
+vector, and a `column_map` with `role`, `original`, and `model` columns. `initial`
+records resolved starting values on the documented user scales, separately
+from fitted estimates. Older saved fits may lack this metadata field. The backend receives only `ID`, `TIME`, `DV`, `WT`, `EVID`,
 `AMT`, and `CMT`. Mapping does not overwrite similarly named unused input columns.
 The reference weight is embedded as a numeric literal in the stored model.
 
@@ -137,8 +191,14 @@ at weights 35, 70 and 140 (tolerance `1e-8`). They also verify:
 - Subject effects change absorption and clearance as specified; volume keeps
   its weight scaling without a random effect.
 - A second explicit dose adds its delayed single-dose contribution.
-- Saved model specifications retain their reference and numerical predictions.
-- A real SAEM fit on `theo_sd` produces a native result with metadata; its
+- Compiled initialization matches the supplied log parameters, diagonal
+  variances and residual SD, with every parameter free to be estimated.
+  Omitted starts reproduce the original initialization exactly.
+- Starting concentrations, solved without overriding backend parameters, match
+  the same fixed targets; adjusting starts for a new reference preserves them.
+- Saved model specifications retain their reference, starts and predictions.
+- Real SAEM fits with default and custom starts on `theo_sd` retain their
+  resolved starts separately from fitted estimates. Each fit's
   population predictions match evaluation of the fitted stored model with
   zero subject effects (tolerance `1e-6`).
 

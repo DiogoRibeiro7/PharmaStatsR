@@ -128,14 +128,18 @@ For a prespecified one-compartment oral model, use
 ```r
 # Requires optional nlmixr2est and nlmixr2data; runs a full SAEM fit.
 fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
-  reference_weight = 70, control = list(seed = 99)
+  reference_weight = 70, control = list(seed = 99),
+  initial = list(ka = 1.5, cl = 3.2, v = 32)
 )
-attr(fit, "allometry")
+attr(fit, "allometry")$initial
 ```
 
 Clearance scales with weight to the fixed power 0.75; volume scales linearly.
 The guide defines the supported explicit oral-dose records, subject-constant
-weight requirement, native result, and numerical-reference scope.
+weight requirement, native result, and numerical-reference scope. Optional
+`initial` values support sensitivity checks using prespecified starts; omitted
+entries retain their defaults. The saved metadata distinguishes starts from
+fitted estimates.
 
 ## Project status and documentation
 
