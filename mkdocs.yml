@@ -133,6 +133,7 @@ nav:
       - Covariate mixed models and prediction: covariate-mixed-model.md
       - Simulation-based percentile diagnostics: simulated-vpc.md
       - Fitted mixed-model simulation: covariate-simulation.md
+      - Interactive diagnostics app: diagnostics-app.md
       - Saved nearest-neighbor imputation: fitted-knn.md
       - Configuration and registries: configuration-registries.md
       - Limitations and validation: limitations.md

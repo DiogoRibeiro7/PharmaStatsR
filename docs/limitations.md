@@ -91,6 +91,11 @@ training-derived. Column-wise penalties depend on coding; selecting any encoded
 column maps back to a raw variable but is not a grouped test. Redundant indicator
 coefficients may be nonunique, and unobserved levels have no estimable effect.
 
+The [diagnostics app](diagnostics-app.md) provides keyboard access and numerical
+alternatives. Automated Chromium/axe checks cover its documented synthetic
+workflow; they do not establish accessibility conformance, screen-reader
+announcements, other browser engines, or large-data usability.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.

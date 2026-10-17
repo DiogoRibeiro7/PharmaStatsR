@@ -23,7 +23,7 @@ URL: https://github.com/DiogoRibeiro7/PharmaStatsR,
 BugReports: https://github.com/DiogoRibeiro7/PharmaStatsR/issues
 Imports: survival, stats, utils, nlme, broom, gsDesign, parallel,
     glmnet, tidyr, ggplot2, tidyselect
-Suggests: testthat (>= 3.2.0), knitr, rmarkdown, flexdashboard, shiny, rstanarm,
+Suggests: testthat (>= 3.2.0), knitr, rmarkdown, flexdashboard, shiny (>= 1.6.0), rstanarm,
     bayesplot, mice, future, future.apply, caret, cmprsk, openssl, lme4, geepack,
     metafor, netmeta, JM, mstate, openxlsx, flextable,
     officer, reticulate, cluster, nlmixr2est, nlmixr2data, broom.mixed

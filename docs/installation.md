@@ -50,7 +50,7 @@ See the [method guide](methods.md) for examples of optional dependencies. The pa
 
 | Feature | Additional requirements |
 | --- | --- |
-| `run_diagnostics_app()` | `shiny` |
+| `run_diagnostics_app()` | `shiny` >= 1.6.0; current release recommended for keyboard tab navigation |
 | `generate_report(..., output_format = "html_document")` | `rmarkdown`, `knitr`, and Pandoc |
 | `generate_report(..., output_format = "pdf_document")` | The HTML-report requirements plus LaTeX |
 | Mixed-model coefficient tidying in reports | `broom.mixed` is optional; the report retains a native `nlme` summary fallback. |
