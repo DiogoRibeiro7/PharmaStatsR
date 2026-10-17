@@ -16,10 +16,11 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Comparisons, categorical outcomes, and study designs | [Method guide](docs/methods.md) |
 | Survival, correlated outcomes, and dose response | [Methods and evidence inventory](docs/method-inventory.md) |
 | Imputation, scaling, covariate screening, and mixed-model diagnostics | [Covariate workflow guide](docs/covariate-migration.md) |
+| Weight-allometric oral pharmacokinetics | [Nonlinear mixed-effects fitting](docs/allometric-nonlinear.md) |
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **112 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **113 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -121,9 +122,24 @@ For fitted covariate random-intercept models, [`simulate_covariate_model()`](doc
 generates those replicates with fresh subject effects and residual errors,
 holding estimated parameters fixed.
 
+For a prespecified one-compartment oral model, use
+[`fit_nlmixr_allometric()`](docs/allometric-nonlinear.md):
+
+```r
+# Requires optional nlmixr2est and nlmixr2data; runs a full SAEM fit.
+fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
+  reference_weight = 70, control = list(seed = 99)
+)
+attr(fit, "allometry")
+```
+
+Clearance scales with weight to the fixed power 0.75; volume scales linearly.
+The guide defines the supported explicit oral-dose records, subject-constant
+weight requirement, native result, and numerical-reference scope.
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 112 exports: two stable column-check helpers, 97 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 113 exports: two stable column-check helpers, 98 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 

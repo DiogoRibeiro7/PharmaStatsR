@@ -54,6 +54,7 @@ See the [method guide](methods.md) for examples of optional dependencies. The pa
 | `generate_report(..., output_format = "html_document")` | `rmarkdown`, `knitr`, and Pandoc |
 | `generate_report(..., output_format = "pdf_document")` | The HTML-report requirements plus LaTeX |
 | Mixed-model coefficient tidying in reports | `broom.mixed` is optional; the report retains a native `nlme` summary fallback. |
+| `fit_nlmixr_allometric()` | `nlmixr2est`; `nlmixr2data` supplies the worked example. See the [weight-allometric guide](allometric-nonlinear.md) for the fixed model and supported event records. |
 | `fit_nlmixr_model()` | `nlmixr2est`; its worked example also uses `nlmixr2data`. This is a fixed model example, not covariate-aware nonlinear fitting. |
 
 The [covariate guide](covariate-migration.md) documents the installed resources,

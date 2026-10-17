@@ -131,6 +131,7 @@ nav:
       - Categorical encoding inside LASSO folds: lasso-encoding.md
       - Predict from saved screening results: predict-lasso-imputed.md
       - Covariate mixed models and prediction: covariate-mixed-model.md
+      - Weight-allometric nonlinear fitting: allometric-nonlinear.md
       - Simulation-based percentile diagnostics: simulated-vpc.md
       - Fitted mixed-model simulation: covariate-simulation.md
       - Interactive diagnostics app: diagnostics-app.md

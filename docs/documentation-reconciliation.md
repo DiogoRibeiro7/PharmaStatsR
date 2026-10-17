@@ -6,8 +6,8 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **112 exports**: 106 functions
-and six illustrative data objects. The later `fit_imputation()` /
+The [inventory](method-inventory.md) now contains **113 exports**: 107 functions
+and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
 [saved imputation](fitted-imputation.md) and [encoding](fitted-encoding.md).
@@ -34,7 +34,7 @@ preserves the earlier consolidation checks for their named source.
 ## Consolidation baseline: 15 October 2026
 
 At merged commit `65bc1be` on 15 October 2026, `NAMESPACE` contained **101 exports**:
-95 functions and six illustrative data objects. Every export has a source
+95 functions and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Every export has a source
 definition, one documented Rd alias, an inventory row, and a support level.
 The additional `pharmo_example` dataset has its own help topic and is loaded
 with `data()`; it is not another namespace export. The package contains six

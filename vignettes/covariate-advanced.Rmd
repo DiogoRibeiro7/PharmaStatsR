@@ -251,6 +251,36 @@ distinct labels distinct and does not create missing values. Labels such as
 remain text. Original factor, date, and other time classes are not stored in
 wide column names; restore the intended time class explicitly when needed.
 
+## Weight-Allometric Nonlinear Fitting
+
+`fit_nlmixr_allometric()` fits a prespecified one-compartment oral model with
+first-order absorption. Subject-constant weight scales clearance with exponent
+0.75 and volume with exponent 1; the exponents are fixed assumptions. Independent
+normal subject effects act on log absorption and log clearance, with additive
+normal residual error. Optional `nlmixr2est` is required.
+
+```{r allometric-fit, eval=FALSE}
+# Requires nlmixr2data too; a full stochastic SAEM fit can take several minutes.
+fit_pk <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
+  reference_weight = 70, control = list(seed = 99)
+)
+attr(fit_pk, "allometry")
+head(fit_pk$PRED)
+```
+
+The input must include explicit oral dose and observation records (`EVID`,
+`AMT`), positive integer IDs, nonnegative time, and finite weight on every row.
+Missing observation responses and time-varying weight are rejected. Infusion,
+additional-dose, steady-state, censoring, and multiple-endpoint modifier
+columns are unsupported even when zero. Weight and its reference must use the
+same units; dose, volume, response, clearance and time units must be consistent.
+The native fit can reorder rows and omit doses. Inspect convergence and model
+adequacy separately. `fit_nlmixr_model()` remains the original fixed example.
+
+See `help("fit_nlmixr_allometric")` and the
+[weight-allometric guide](https://diogoribeiro7.github.io/PharmaStatsR/allometric-nonlinear/)
+for the equations, complete event contract, metadata, and numerical references.
+
 ## Interactive Diagnostics App
 
 ```{r eval=FALSE}
