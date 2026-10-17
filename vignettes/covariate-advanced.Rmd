@@ -277,9 +277,10 @@ same units; dose, volume, response, clearance and time units must be consistent.
 The native fit can reorder rows and omit doses. Inspect convergence and model
 adequacy separately. `fit_nlmixr_model()` remains the original fixed example.
 
-See `help("fit_nlmixr_allometric")` and the
-[weight-allometric guide](https://diogoribeiro7.github.io/PharmaStatsR/allometric-nonlinear/)
-for the equations, complete event contract, metadata, and numerical references.
+See `help("fit_nlmixr_allometric")` for the complete event contract and metadata.
+The [documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) includes
+workflow guides and the evidence inventory; the weight-allometric guide adds
+the equations and numerical references when this version is published.
 
 ## Interactive Diagnostics App
 
