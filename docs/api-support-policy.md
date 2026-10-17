@@ -1,6 +1,6 @@
 # API support and lifecycle
 
-PharmaStatsR is in active development at version 0.1.63. The [export inventory](method-inventory.md) assigns one support level to each of the 111 entries in `NAMESPACE`: two stable, 96 experimental, 11 example-only, and two deprecation candidates. These labels describe the package's **software API commitment**. They do not validate a statistical method for a particular study or establish regulatory compliance. Read the individual help and [limitations](limitations.md) before using a method.
+PharmaStatsR is in active development at version 0.1.63. The [export inventory](method-inventory.md) assigns one support level to each of the 112 entries in `NAMESPACE`: two stable, 97 experimental, 11 example-only, and two deprecation candidates. These labels describe the package's **software API commitment**. They do not validate a statistical method for a particular study or establish regulatory compliance. Read the individual help and [limitations](limitations.md) before using a method.
 
 | Level | What to expect |
 | --- | --- |

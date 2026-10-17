@@ -64,6 +64,7 @@ history was not imported into PharmaStatsR.
 | Numeric screening with fold imputation (added after consolidation) | `screen_covariates_lasso_imputed()` | Prespecified Gaussian penalty grid; training-fold mean/median or nearest-neighbor imputation and standardization; held-out predictions and saved final parameters. See the [guide](lasso-imputation.md). |
 | Models | `prepare_model_matrix()`, `fit_covariate_model()` | Design matrix construction and a linear `nlme` model with a random subject intercept; [opt-in literal-name repair](covariate-mixed-model.md). |
 | Mixed-model prediction | `predict_covariate_model()` | Original-name population or subject predictions from native fits, including saved name mappings. |
+| Mixed-model simulation (added after consolidation) | `simulate_covariate_model()` | Population response replicates from the fitted Gaussian random-intercept model, with parameters held fixed; see the [guide](covariate-simulation.md). |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
@@ -123,7 +124,10 @@ function.
   `NA` for conditional predictions. Covariate-aware nonlinear models remain
   future work. `plot_simulated_vpc()` now summarizes supplied response replicates;
   their generation, subject dependence, and parameter uncertainty must be
-  specified by the caller. Automatic model simulation remains future work.
+  specified by the caller. The later `simulate_covariate_model()` supplies
+  Gaussian random-intercept replications using fixed fitted parameters. It
+  redraws all subject effects, including for training IDs, and excludes
+  parameter uncertainty. Other model simulators remain future work.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
   Reactive server tests cover upload, fitting, rendering, and recovery; they do
   not establish browser accessibility or usability.

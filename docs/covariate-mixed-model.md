@@ -124,6 +124,12 @@ fitting with `na.exclude`; response variation, full fixed-effects rank, sufficie
 rows, and repeated subjects remain required. These checks do not guarantee
 optimizer convergence or scientific adequacy.
 
-This addition covers fitting and prediction. Existing diagnostic/report helpers
+For population response replications from the fitted model, use the separate
+[`simulate_covariate_model()`](covariate-simulation.md). It redraws subject
+intercepts and residual errors under fixed fitted parameters, including for
+known IDs; it does not simulate around the conditional BLUP predictions above.
+Its response matrix composes with [simulation-based percentile checks](simulated-vpc.md).
+
+This guide covers fitting and prediction. Existing diagnostic/report helpers
 retain their documented `DV`/`Time` and native-prediction input requirements.
 The [inventory](method-inventory.md) records the experimental support level.
