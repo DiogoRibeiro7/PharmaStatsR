@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Harden `screen_covariates_bayesian()` against saturated models and non-finite
+  Gaussian BIC values. These cases now raise contextual errors instead of
+  selecting a saturated candidate or silently returning an empty selection.
+  Add independent RSS/rank-penalty references, threshold and cohort boundaries,
+  transformation checks, and updated help, README and a worked guide. Valid
+  finite comparisons, the public signature and return type are unchanged.
+
 - Add experimental `simulate_nlmixr_allometric()` for population response
   replicates from saved allometric fits, using fitted log-subject variances
   and additive residual error. Preserve original names, dose histories, and

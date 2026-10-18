@@ -86,6 +86,10 @@ apply_encoding(data.frame(x = 100, group = "B"), encoding)
 # 1 100      0      1
 ```
 
+For ordinary univariate screening, the [BIC screening guide](docs/bic-screening.md)
+explains the common analysis population, categorical penalties and numerical
+reference. Saturated models and non-finite BIC values now raise clear errors.
+
 The [encoding guide](docs/fitted-encoding.md) explains saved contrasts, unseen
 categories, and composition with imputation and scaling. For numeric screening,
 [`screen_covariates_lasso_imputed()`](docs/lasso-imputation.md) fits mean/median
