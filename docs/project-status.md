@@ -25,7 +25,9 @@ The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 The [BIC screening reference](bic-screening.md) (#229) checks the imported
 univariate screener against independent residual sums of squares and parameter
 penalties. Saturated models and non-finite BIC comparisons now fail clearly;
-the API remains experimental and the export count is unchanged.
+the API remains experimental and the export count is unchanged. The
+[stepwise AIC reference](aic-screening.md) (#231) covers additions, removal,
+whole-factor penalties and a local minimum, with guards on accepted models.
 
 ## What the evidence means
 

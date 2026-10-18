@@ -97,7 +97,9 @@ function.
   model correlation. BIC-based scores are not posterior probabilities from a
   joint Bayesian model. The [BIC screening guide](bic-screening.md) gives the
   independent RSS/penalty reference and the errors for saturated models or
-  non-finite BIC values; invalid comparisons stop the whole call.
+  non-finite BIC values; invalid comparisons stop the whole call. The
+  [stepwise AIC guide](aic-screening.md) traces forward additions and backward
+  removal, guards accepted models, and demonstrates a local search minimum.
 - `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
   explicit folds, with complete-case filtering and no preprocessing hook. The
   separate `screen_covariates_lasso_imputed()` refits mean/median or nearest-neighbor imputation and

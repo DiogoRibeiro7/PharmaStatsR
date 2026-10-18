@@ -89,6 +89,8 @@ apply_encoding(data.frame(x = 100, group = "B"), encoding)
 For ordinary univariate screening, the [BIC screening guide](docs/bic-screening.md)
 explains the common analysis population, categorical penalties and numerical
 reference. Saturated models and non-finite BIC values now raise clear errors.
+The [stepwise AIC guide](docs/aic-screening.md) adds a forward/backward search
+reference, invalid-model checks, and an example of a local minimum.
 
 The [encoding guide](docs/fitted-encoding.md) explains saved contrasts, unseen
 categories, and composition with imputation and scaling. For numeric screening,

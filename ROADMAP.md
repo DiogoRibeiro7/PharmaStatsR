@@ -104,7 +104,9 @@ reference tests are linked in the [inventory](docs/method-inventory.md).
 The imported [BIC covariate screener](docs/bic-screening.md) now has independent
 Gaussian RSS/rank-penalty references and rejects saturated or non-finite
 comparisons (#229). Its support level remains experimental; other imported
-helpers retain the evidence levels recorded in the inventory.
+helpers retain the evidence levels recorded in the inventory. The
+[stepwise AIC reference](docs/aic-screening.md) (#231) adds a forward/backward
+search ledger, accepted-model guards and an explicit local-minimum example.
 
 ## How we work
 

@@ -13,13 +13,35 @@
 #' response as a candidate are rejected. An empty candidate selection returns
 #' `character(0)` without fitting.
 #'
+#' The search starts with the intercept-only model and uses
+#' \code{\link[stats]{step}} with both additions and deletions. Its Gaussian
+#' \code{\link[stats]{extractAIC}} criterion is
+#' \eqn{n\log(RSS/n) + 2p}, where \eqn{p} is regression rank including the
+#' intercept. It differs from \code{AIC(lm(...))} by a constant on the shared
+#' cohort. Categorical candidates enter and leave as whole terms. The search
+#' is greedy and need not find the globally best subset; ties and nearly
+#' tied choices can depend on candidate order and numerical rounding.
+#' Independent Gaussian errors with constant variance are assumed; screening
+#' does not provide multiplicity correction or post-selection inference.
+#'
+#' The starting, accepted and returned search models must have positive
+#' residual degrees of freedom and a finite criterion. Invalid models stop
+#' the call with their original term names rather than return a selection.
+#' Non-finite criteria can arise from exact fits or numerical underflow or
+#' overflow; review exact fits and rescale extreme response values. Finite
+#' near-perfect fits are not rejected by a near-zero variance cutoff.
+#' These checks apply to accepted models, not every trial in the search.
+#' The full candidate design need not have full rank or positive residual
+#' degrees of freedom if the accepted path remains valid.
+#'
 #' @param data A `data.frame` containing the response and covariates.
 #' @param response Name of the response variable as a string.
 #' @param id Name of the subject identifier column. Its presence is checked but
 #'   its values are not used in fitting or complete-case filtering.
 #' @param covariates Character vector of unique covariate column names.
 #'
-#' @return Character vector of selected covariate names.
+#' @return Character vector of original selected covariate names, in the final
+#'   model's term order (which can differ from the supplied candidate order).
 #' @examples
 #' set.seed(123)
 #' df <- data.frame(
@@ -50,11 +72,37 @@ screen_covariates_stepwise <- function(data, response, id, covariates) {
 
   # Fit stepwise model ----------------------------------------------------
   base_model <- stats::lm(base_formula, data = data)
+  check_model <- function(model, aic) {
+    terms <- attr(stats::terms(model), "term.labels")
+    selected <- covariates[match(terms, candidate_names)]
+    context <- if (length(selected)) {
+      paste0("model with terms ", paste(sprintf("'%s'", selected), collapse = ", "))
+    } else {
+      "intercept-only model"
+    }
+    if (stats::df.residual(model) <= 0L) {
+      stop(sprintf(
+        "AIC screening %s needs positive residual degrees of freedom", context
+      ))
+    }
+    if (!is.finite(aic)) {
+      stop(sprintf(
+        paste0(
+          "AIC screening %s has a non-finite criterion; ",
+          "review exact fits and rescale extreme response values"
+        ),
+        context
+      ))
+    }
+    TRUE
+  }
+  check_model(base_model, stats::extractAIC(base_model)[2L])
   step_model <- stats::step(
     base_model,
     scope = list(lower = base_formula, upper = full_formula),
-    direction = "both", trace = 0
+    direction = "both", trace = 0, keep = check_model
   )
+  check_model(step_model, stats::extractAIC(step_model)[2L])
 
   # Extract selected terms ------------------------------------------------
   terms <- attr(stats::terms(step_model), "term.labels")
