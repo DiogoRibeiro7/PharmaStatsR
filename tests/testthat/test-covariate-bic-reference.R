@@ -87,8 +87,10 @@ test_that("selection preserves rows, literal names and equivalent designs", {
       )
     }
   }
+  previous_contrasts <- getOption("contrasts")
+  on.exit(options(contrasts = previous_contrasts), add = TRUE)
   for (contrasts in list(c("contr.sum", "contr.poly"), c("contr.helmert", "contr.poly"))) {
-    withr::local_options(contrasts = contrasts)
+    options(contrasts = contrasts)
     expect_identical(
       screen_covariates_bayesian(d, "y", c("x", "group", "weak")),
       c("x", "group")
