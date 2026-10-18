@@ -11,7 +11,8 @@ fit_nlmixr_allometric(
   response = "DV",
   id = "ID",
   time = "TIME",
-  control = list()
+  control = list(),
+  initial = list()
 )
 }
 \arguments{
@@ -45,10 +46,21 @@ required. These checks do not guarantee identifiability or convergence.}
 \item{control}{Named list of arguments to \code{\link[nlmixr2est:saemControl]{nlmixr2est::saemControl()}}.
 Defaults are those of the backend with \code{print = 0}; set \code{seed} explicitly
 for a recorded stochastic fit. Unknown control names are rejected.}
+
+\item{initial}{Named list of positive finite scalar starting values. Allowed
+names are \code{ka}, \code{cl}, \code{v}, \code{eta_ka_var}, \code{eta_cl_var}, and \code{residual_sd}.
+Unspecified values default to 1, except \code{v = exp(1)}. \code{ka}, \code{cl}, and \code{v}
+are on their natural scales, with clearance and volume at
+\code{reference_weight} and zero subject effects; they are logged internally.
+\code{eta_ka_var} and \code{eta_cl_var} are variances of the log-scale subject
+effects, not standard deviations or coefficients of variation.
+\code{residual_sd} is a standard deviation on the response scale. These are
+starting values for estimation, not fixed parameters or fitted estimates.}
 }
 \value{
 A native \code{nlmixr2FitData} object. Attribute \code{allometry} records
-\code{reference_weight}, the fixed \code{exponents}, and a \code{column_map} data frame
+\code{reference_weight}, the fixed \code{exponents}, a named numeric \code{initial} vector
+containing all six resolved natural-scale starts, and a \code{column_map} data frame
 with \code{role}, \code{original}, and \code{model} columns. Native fit tables can omit
 dose records and reorder observations; they are not input-row predictions.
 }
@@ -76,12 +88,20 @@ weight in \code{WT}, including on dosing records. The reference weight is a
 literal in the stored model; it is not recomputed from prediction data.
 SAEM controls, random streams, convergence and uncertainty are backend
 behavior. The wrapper does not restore RNG state or certify an optimum.
+Supply alternative \code{initial} values to investigate sensitivity to starts;
+there is no automatic multi-start search or selection. Changing the
+reference weight without changing initial clearance and volume changes
+the starting concentration curve. For an equivalent starting model, scale
+\code{cl} by \code{(new_reference / old_reference)^0.75} and \code{v} by
+\code{new_reference / old_reference}. All starts must be strictly positive;
+zero starts do not fix or remove a variance component.
 }
 \examples{
 \dontrun{
 fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd,
   weight = "WT",
-  reference_weight = 70, control = list(seed = 99)
+  reference_weight = 70, control = list(seed = 99),
+  initial = list(ka = 1.5, cl = 3.2, v = 32)
 )
 attr(fit, "allometry")
 head(fit$PRED)

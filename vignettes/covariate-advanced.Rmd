@@ -262,11 +262,21 @@ normal residual error. Optional `nlmixr2est` is required.
 ```{r allometric-fit, eval=FALSE}
 # Requires nlmixr2data too; a full stochastic SAEM fit can take several minutes.
 fit_pk <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
-  reference_weight = 70, control = list(seed = 99)
+  reference_weight = 70, control = list(seed = 99),
+  initial = list(ka = 1.5, cl = 3.2, v = 32,
+    eta_ka_var = 0.25, eta_cl_var = 0.36, residual_sd = 0.7)
 )
-attr(fit_pk, "allometry")
+attr(fit_pk, "allometry")$initial
 head(fit_pk$PRED)
 ```
+
+`initial` accepts positive finite natural-scale absorption, reference clearance
+and reference volume. `eta_ka_var` and `eta_cl_var` are log-scale subject-effect
+variances, while `residual_sd` is an additive response standard deviation.
+Unspecified entries keep their original defaults. The stored `initial` vector
+records all resolved starts, not fitted estimates. All parameters remain free
+for estimation. Compare prespecified starts and seeds to examine sensitivity;
+this interface does not search for or certify a global optimum.
 
 The input must include explicit oral dose and observation records (`EVID`,
 `AMT`), positive integer IDs, nonnegative time, and finite weight on every row.
