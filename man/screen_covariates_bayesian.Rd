@@ -27,6 +27,16 @@ same complete-case rows; it does not account for repeated measurements or
 adjust for the other candidate covariates.
 }
 \details{
+For Gaussian models on the same \eqn{n} rows, the score is
+\eqn{\log(BF_{10}) = [n\log(RSS_0/RSS_1) - (p_1-p_0)\log(n)]/2},
+where \eqn{RSS} is residual sum of squares and \eqn{p} is the fitted
+regression rank, including the intercept. A categorical candidate is one
+whole term, with a penalty for its additional fitted coefficients. The
+threshold is \code{min_bf} (\eqn{t}), and the comparison is inclusive: \eqn{\log(BF_{10}) \ge \log(t)}.
+This is an asymptotic BIC approximation, not an exact Bayes factor or a
+posterior inclusion probability. It assumes independent Gaussian errors
+with constant variance; repeated measurements are treated as independent.
+
 The response must be a real numeric vector; candidates may be real numeric,
 logical, character, or factor vectors. At least three complete-case rows are
 required. Infinite numeric values and constant variables on retained rows
@@ -35,6 +45,12 @@ Column names are interpreted literally, including spaces or formula
 operators. Duplicate column names, duplicate candidates, and using the
 response as a candidate are rejected. An empty candidate selection returns
 \code{character(0)} without fitting.
+Every fitted model must have positive residual degrees of freedom and a
+finite BIC. Saturated categorical models and non-finite BIC values raise
+an error naming the affected model; no partial selection is returned.
+A non-finite BIC can indicate a zero residual variance or numerical
+underflow/overflow: review exact fits and rescale extreme response units.
+Finite near-perfect fits are not rejected by a near-zero variance cutoff.
 }
 \examples{
 set.seed(123)

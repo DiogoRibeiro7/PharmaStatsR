@@ -95,7 +95,9 @@ function.
 - AIC/BIC screening uses a common complete-case cohort and ordinary linear
   regression. The stepwise `id` argument is checked for presence but does not
   model correlation. BIC-based scores are not posterior probabilities from a
-  joint Bayesian model.
+  joint Bayesian model. The [BIC screening guide](bic-screening.md) gives the
+  independent RSS/penalty reference and the errors for saturated models or
+  non-finite BIC values; invalid comparisons stop the whole call.
 - `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
   explicit folds, with complete-case filtering and no preprocessing hook. The
   separate `screen_covariates_lasso_imputed()` refits mean/median or nearest-neighbor imputation and

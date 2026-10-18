@@ -116,6 +116,12 @@ alternatives. Automated Chromium/axe checks cover its documented synthetic
 workflow; they do not establish accessibility conformance, screen-reader
 announcements, other browser engines, or large-data usability.
 
+The [BIC covariate screener](bic-screening.md) uses a shared complete-case cohort
+and univariate Gaussian comparisons. It requires positive residual degrees of
+freedom and finite BIC values; these checks do not validate the large-sample
+approximation, remove confounding, account for repeated measures, or provide
+multiplicity correction and post-selection inference.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.

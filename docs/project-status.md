@@ -22,6 +22,11 @@ The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 - **Six vignettes:** the original workflow and five covariate guides. See
   [installation](installation.md#worked-vignettes) to build them from GitHub.
 
+The [BIC screening reference](bic-screening.md) (#229) checks the imported
+univariate screener against independent residual sums of squares and parameter
+penalties. Saturated models and non-finite BIC comparisons now fail clearly;
+the API remains experimental and the export count is unchanged.
+
 ## What the evidence means
 
 - The [reference cases](core-reference-cases.md) fix expected values for six core inference helpers. They do not cover all methods or datasets.

@@ -101,6 +101,11 @@ Subsequent completed method issues include ANCOVA (#170), CMH (#172), McNemar
 (#190), and Mantel–Haenszel common risk ratio (#192). Their per-method guides and
 reference tests are linked in the [inventory](docs/method-inventory.md).
 
+The imported [BIC covariate screener](docs/bic-screening.md) now has independent
+Gaussian RSS/rank-penalty references and rejects saturated or non-finite
+comparisons (#229). Its support level remains experimental; other imported
+helpers retain the evidence levels recorded in the inventory.
+
 ## How we work
 
 1. Complete the release decision in #58 when the maintainer confirms its remaining choices. Work through the scoped numerical gaps above while that decision is pending; use the completed [#47 inventory](docs/method-inventory.md) to scope later issues.
