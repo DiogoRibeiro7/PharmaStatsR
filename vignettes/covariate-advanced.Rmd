@@ -267,7 +267,7 @@ fit_pk <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
     eta_ka_var = 0.25, eta_cl_var = 0.36, residual_sd = 0.7)
 )
 attr(fit_pk, "allometry")$initial
-head(fit_pk$PRED)
+head(predict_nlmixr_allometric(fit_pk, nlmixr2data::theo_sd))
 ```
 
 `initial` accepts positive finite natural-scale absorption, reference clearance
@@ -287,7 +287,17 @@ same units; dose, volume, response, clearance and time units must be consistent.
 The native fit can reorder rows and omit doses. Inspect convergence and model
 adequacy separately. `fit_nlmixr_model()` remains the original fixed example.
 
-See `help("fit_nlmixr_allometric")` for the complete event contract and metadata.
+`predict_nlmixr_allometric()` applies the saved original names and returns
+concentrations in input row order, with `NA` on dose rows. Supply the complete
+explicit dose history for each subject in every call; training doses are not
+borrowed. The response column is optional and ignored. Predictions use fitted
+parameters at zero subject effects, not fitted individual effects or a marginal
+mean integrated over random effects. There is no added noise or uncertainty.
+The helper also accepts restored fits, one-subject schedules, repeated doses,
+unsorted rows, and duplicate observation times.
+
+See `help("fit_nlmixr_allometric")` for the event contract and metadata, and
+`help("predict_nlmixr_allometric")` for the prediction interface.
 The [documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) includes
 workflow guides and the evidence inventory; the weight-allometric guide adds
 the equations and numerical references when this version is published.

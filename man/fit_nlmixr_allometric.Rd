@@ -83,7 +83,8 @@ units must be consistent; no unit conversion is done.
 Response, id, time and weight names are treated literally and must be
 distinct. Only those columns and the supported event columns reach the
 backend, under names \code{DV}, \code{ID}, \code{TIME}, \code{WT}, \code{EVID}, \code{AMT}, and \code{CMT}.
-Native prediction/simulation methods require these backend names and raw
+\code{\link[=predict_nlmixr_allometric]{predict_nlmixr_allometric()}} applies the saved original names and restores
+input row order. Native prediction/simulation methods require backend names and raw
 weight in \code{WT}, including on dosing records. The reference weight is a
 literal in the stored model; it is not recomputed from prediction data.
 SAEM controls, random streams, convergence and uncertainty are backend
@@ -108,5 +109,6 @@ head(fit$PRED)
 }
 }
 \seealso{
+\code{\link[=predict_nlmixr_allometric]{predict_nlmixr_allometric()}} for predictions using original names;
 \code{\link[=fit_nlmixr_model]{fit_nlmixr_model()}} for the unchanged example-only wrapper.
 }

@@ -6,8 +6,8 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **113 exports**: 107 functions
-and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Optional [starting values](allometric-nonlinear.md#explicit-starting-values) add compiled-initialization and saved-start evidence without changing the export count. The later `fit_imputation()` /
+The [inventory](method-inventory.md) now contains **114 exports**: 108 functions
+and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Optional [starting values](allometric-nonlinear.md#explicit-starting-values) add compiled-initialization and saved-start evidence without changing the export count. The [saved-fit prediction helper](allometric-nonlinear.md#predict-from-a-saved-fit) adds original-name mapping, input-row restoration, repeated-dose references, and native fitted-prediction checks. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
 [saved imputation](fitted-imputation.md) and [encoding](fitted-encoding.md).
@@ -31,10 +31,15 @@ mean/covariance references, explicit RNG behavior, and saved-model checks.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 
+The current [API policy](api-support-policy.md) assigns two stable, 99
+experimental, 11 example-only, and two deprecation-candidate labels. Use the
+current inventory for method evidence: the historical list below predates
+the subsequent numerical-reference work and covariate consolidation.
+
 ## Consolidation baseline: 15 October 2026
 
 At merged commit `65bc1be` on 15 October 2026, `NAMESPACE` contained **101 exports**:
-95 functions and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Optional [starting values](allometric-nonlinear.md#explicit-starting-values) add compiled-initialization and saved-start evidence without changing the export count. Every export has a source
+95 functions and six illustrative data objects. Every export has a source
 definition, one documented Rd alias, an inventory row, and a support level.
 The additional `pharmo_example` dataset has its own help topic and is loaded
 with `data()`; it is not another namespace export. The package contains six
@@ -53,11 +58,6 @@ The README, installation and quick-start guides, data inventory, migration
 guide, and status pages describe the consolidated package. The retired
 pharmoCovR repository is no longer linked as an installation or source endpoint;
 its original commit identifier and MIT attribution remain recorded.
-
-The current [API policy](api-support-policy.md) assigns two stable, 88
-experimental, 11 example-only, and two deprecation-candidate labels. Use the
-current inventory for method evidence: the historical list below predates
-the subsequent numerical-reference work and covariate consolidation.
 
 ## Historical scope of issue #56
 
