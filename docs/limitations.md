@@ -128,6 +128,14 @@ reject saturated or non-finite fits; they do not preflight every trial or make
 post-selection inference valid. The documented local-minimum reference shows
 this limitation even with complete, well-behaved numeric data.
 
+The [complete-case LASSO screener](lasso-screening.md) selects exact nonzero
+coefficients at the minimum CV error on a backend-generated path. Its new
+analytic references cover balanced orthogonal Gaussian LASSO fixtures, not all
+elastic-net or correlated designs. Ridge need not be sparse, and the CV error
+used to choose the penalty needs separate outer evaluation for performance
+assessment. Literal `(Intercept)` predictors are now distinguished from the
+fitted intercept; previously affected selections should be recomputed.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.

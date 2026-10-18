@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Fix `screen_covariates_lasso()` silently omitting a numeric predictor named
+  `(Intercept)`: exclude the fitted intercept by position and preserve original
+  candidate names/order. Add independent Gaussian LASSO coefficient-path,
+  held-out prediction and CV-error references, including negative effects,
+  multiple active terms and missing-row alignment. Update help, README and
+  guides; fitting defaults, fold construction and the public API are unchanged.
+
 - Require positive residual degrees of freedom and finite AIC criteria for
   starting, accepted and returned `screen_covariates_stepwise()` models. Stop
   invalid searches with original term names instead of returning saturated

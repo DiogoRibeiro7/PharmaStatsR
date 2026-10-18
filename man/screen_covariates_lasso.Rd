@@ -37,7 +37,9 @@ surviving labels are renumbered internally. At least three folds must
 remain. Supplying this vector avoids random fold generation.}
 }
 \value{
-Character vector of selected covariate names.
+Unnamed character vector of original selected covariate names in
+candidate order. The fitted intercept is excluded; a candidate literally
+named \code{"(Intercept)"} is eligible for selection.
 }
 \description{
 Performs covariate selection using the LASSO penalty with cross-validation.
@@ -54,6 +56,16 @@ The regression is Gaussian and does not model within-subject correlation.
 Grouping controls the split only: preprocessing performed before this call
 is not refitted within each training fold. Categorical encoding is not
 supported. Selection uses the nonzero coefficients at \code{lambda.min}.
+This is the penalty with minimum cross-validated mean squared error on
+the backend's generated path, not the one-standard-error choice. The
+backend fits an intercept and standardizes predictors by default. The
+exact nonzero comparison does not apply a separate coefficient tolerance;
+with \code{alpha = 0}, ridge coefficients generally do not give sparse selection.
+
+Candidate names are interpreted literally, including spaces, formula
+operators and \code{"(Intercept)"}. A candidate with that name remains distinct
+from the fitted intercept. The result contains original candidate names in
+their supplied order, without names attached to the character vector.
 }
 \examples{
 set.seed(123)

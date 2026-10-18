@@ -107,6 +107,9 @@ comparisons (#229). Its support level remains experimental; other imported
 helpers retain the evidence levels recorded in the inventory. The
 [stepwise AIC reference](docs/aic-screening.md) (#231) adds a forward/backward
 search ledger, accepted-model guards and an explicit local-minimum example.
+The [complete-case LASSO reference](docs/lasso-screening.md) (#233) checks
+coefficient paths and CV errors independently and preserves literal
+`(Intercept)` predictors in selected names.
 
 ## How we work
 

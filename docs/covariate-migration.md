@@ -102,6 +102,8 @@ function.
   removal, guards accepted models, and demonstrates a local search minimum.
 - `screen_covariates_lasso()` supports numeric candidates and subject-grouped or
   explicit folds, with complete-case filtering and no preprocessing hook. The
+  [complete-case LASSO guide](lasso-screening.md) gives analytic coefficient/CV
+  references and the correction for literal `(Intercept)` candidates. The
   separate `screen_covariates_lasso_imputed()` refits mean/median or nearest-neighbor imputation and
   standardization within training folds for a prespecified penalty grid. Its
   [`encode = TRUE` mode](lasso-encoding.md) also fits categorical encoding within

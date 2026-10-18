@@ -13,6 +13,16 @@
 #' Grouping controls the split only: preprocessing performed before this call
 #' is not refitted within each training fold. Categorical encoding is not
 #' supported. Selection uses the nonzero coefficients at `lambda.min`.
+#' This is the penalty with minimum cross-validated mean squared error on
+#' the backend's generated path, not the one-standard-error choice. The
+#' backend fits an intercept and standardizes predictors by default. The
+#' exact nonzero comparison does not apply a separate coefficient tolerance;
+#' with `alpha = 0`, ridge coefficients generally do not give sparse selection.
+#'
+#' Candidate names are interpreted literally, including spaces, formula
+#' operators and `"(Intercept)"`. A candidate with that name remains distinct
+#' from the fitted intercept. The result contains original candidate names in
+#' their supplied order, without names attached to the character vector.
 #'
 #' @param data A `data.frame` containing the response and covariates.
 #' @param response Name of the response variable as a string.
@@ -29,7 +39,9 @@
 #'   surviving labels are renumbered internally. At least three folds must
 #'   remain. Supplying this vector avoids random fold generation.
 #'
-#' @return Character vector of selected covariate names.
+#' @return Unnamed character vector of original selected covariate names in
+#'   candidate order. The fitted intercept is excluded; a candidate literally
+#'   named `"(Intercept)"` is eligible for selection.
 #' @seealso [screen_covariates_lasso_imputed()] for training-fold numeric
 #'   imputation with a prespecified penalty grid and held-out predictions.
 #' @examples
@@ -117,9 +129,9 @@ screen_covariates_lasso <- function(data, response, covariates, alpha = 1,
   cv <- glmnet::cv.glmnet(x, y, alpha = alpha, foldid = folds)
   coefs <- stats::coef(cv, s = "lambda.min")
 
-  selected <- rownames(coefs)[coefs[, 1] != 0]
-  selected <- setdiff(selected, "(Intercept)")
-  intersect(selected, covariates)
+  # The first row is the fitted intercept. Remaining rows follow x columns;
+  # matching by text would also discard a candidate named "(Intercept)".
+  unname(covariates[coefs[-1L, 1] != 0])
 }
 
 make_lasso_folds <- function(keep, subjects, nfolds, foldid) {
