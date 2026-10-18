@@ -61,15 +61,7 @@ predict_nlmixr_allometric <- function(object, newdata) {
     stop("Package 'nlmixr2est' is required for predict_nlmixr_allometric()")
   }
   saved <- allometric_prediction_components(object)
-  columns <- stats::setNames(
-    saved$metadata$column_map$original,
-    saved$metadata$column_map$role
-  )
-  events <- prepare_allometric_data(newdata,
-    weight = columns[["weight"]], reference_weight = saved$metadata$reference_weight,
-    response = columns[["response"]], id = columns[["id"]], time = columns[["time"]],
-    prediction = TRUE
-  )
+  events <- allometric_prediction_events(saved, newdata)
   values <- stats::setNames(rep(NA_real_, nrow(events)), rownames(newdata))
   observations <- which(events$EVID == 0L)
   if (!length(observations)) {
@@ -130,4 +122,16 @@ allometric_prediction_components <- function(object) {
     invalid()
   }
   list(metadata = metadata, ui = ui, theta = theta)
+}
+
+allometric_prediction_events <- function(saved, newdata) {
+  columns <- stats::setNames(
+    saved$metadata$column_map$original,
+    saved$metadata$column_map$role
+  )
+  prepare_allometric_data(newdata,
+    weight = columns[["weight"]], reference_weight = saved$metadata$reference_weight,
+    response = columns[["response"]], id = columns[["id"]], time = columns[["time"]],
+    prediction = TRUE
+  )
 }

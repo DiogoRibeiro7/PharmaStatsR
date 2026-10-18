@@ -284,6 +284,17 @@ test_that("real SAEM fitting retains allometry and native population predictions
   # Legacy allometric fits predate the optional starting-value metadata.
   attr(restored, "allometry")$initial <- NULL
   expect_equal(predict_nlmixr_allometric(restored, d), predictions)
+  set.seed(227)
+  simulated <- simulate_nlmixr_allometric(restored, d, 3)
+  parameters <- attr(simulated, "simulation_parameters")
+  expect_identical(parameters$theta, restored$theta)
+  expect_identical(parameters$omega, restored$omega)
+  expect_identical(parameters$sd_residual, unname(restored$theta["add.sd"]))
+  expect_true(all(is.finite(simulated[d$EVID == 0, ])))
+  expect_true(all(is.na(simulated[d$EVID != 0, ])))
+  set.seed(227)
+  expect_identical(simulate_nlmixr_allometric(fit, d, 3), simulated)
+
   for (part in c("reference_weight", "exponents", "column_map")) {
     broken <- restored
     attr(broken, "allometry")[[part]] <- NULL
@@ -430,5 +441,13 @@ test_that("custom starts reach a real fit and remain distinct from fitted estima
   expect_equal(solved$pred, fit$PRED, tolerance = 1e-6)
   predictions <- predict_nlmixr_allometric(restored, d[names(d) != "response value"])
   expect_equal(unname(predictions[d$EVID == 0]), fit$PRED, tolerance = 1e-6)
+  set.seed(228)
+  simulated <- simulate_nlmixr_allometric(restored, d[names(d) != "response value"], 2)
+  expect_identical(rownames(simulated), rownames(d))
+  expect_identical(attr(simulated, "simulation_parameters")$omega, fit$omega)
+  expect_true(all(is.finite(simulated[d$EVID == 0, ])))
+  set.seed(228)
+  expect_identical(simulate_nlmixr_allometric(fit, d, 2), simulated)
+
   expect_identical(names(predictions), rownames(d))
 })

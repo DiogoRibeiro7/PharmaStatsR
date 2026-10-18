@@ -127,6 +127,12 @@ maps original row names to bin numbers. Bin numbers index the collapsed breaks
 and can have gaps where intervals are empty. `vpc_settings` records those
 breaks, probabilities, coverage, replicate count, and quantile type.
 
+For a fitted weight-allometric oral model, the separate
+[allometric simulator](allometric-simulation.md) preserves complete explicit
+dose histories while generating response replicates. Its dose rows are `NA`;
+select the same observation rows from the data and response matrix before
+calling this plotting helper. Do not discard dose rows before simulation.
+
 ## Input boundaries
 
 - Use finite, real numeric time/response columns and a finite numeric matrix

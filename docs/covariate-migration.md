@@ -66,6 +66,7 @@ history was not imported into PharmaStatsR.
 | Mixed-model prediction | `predict_covariate_model()` | Original-name population or subject predictions from native fits, including saved name mappings. |
 | Mixed-model simulation (added after consolidation) | `simulate_covariate_model()` | Population response replicates from the fitted Gaussian random-intercept model, with parameters held fixed; see the [guide](covariate-simulation.md). |
 | Weight-allometric nonlinear fitting (added after consolidation) | `fit_nlmixr_allometric()` | Prespecified oral model with subject-constant weight and fixed clearance/volume exponents; optional natural-scale starting values and saved initialization metadata. See [equations and event contract](allometric-nonlinear.md). |
+| Allometric response simulation (added after consolidation) | `simulate_nlmixr_allometric()` | Population replications with fresh subject effects and additive residuals; original names and row order, fixed fitted parameters, explicit doses and seeded R draws. See the [worked guide](allometric-simulation.md). |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
 | Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
@@ -149,6 +150,8 @@ mixed-model wrapper. Optional integrations stay optional:
 - `nlmixr2est` fits the fixed nonlinear example and the weight-allometric model; `nlmixr2data` supplies their worked-example
   data. `predict_nlmixr_allometric()` also uses `nlmixr2est` to evaluate saved
   allometric fits with their original names and explicit new dosing schedules.
+  [`simulate_nlmixr_allometric()`](allometric-simulation.md) adds fresh subject
+  effects and residuals with fitted parameters held fixed.
   `cluster` supplies independent Gower reference tests, not the imputation
   implementation.
 

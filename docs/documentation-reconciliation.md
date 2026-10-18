@@ -6,8 +6,8 @@ not establish statistical validity for every method.
 
 ## Current inventory
 
-The [inventory](method-inventory.md) now contains **114 exports**: 108 functions
-and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Optional [starting values](allometric-nonlinear.md#explicit-starting-values) add compiled-initialization and saved-start evidence without changing the export count. The [saved-fit prediction helper](allometric-nonlinear.md#predict-from-a-saved-fit) adds original-name mapping, input-row restoration, repeated-dose references, and native fitted-prediction checks. The later `fit_imputation()` /
+The [inventory](method-inventory.md) now contains **115 exports**: 109 functions
+and six illustrative data objects. The [weight-allometric fitter](allometric-nonlinear.md) adds generated help, analytic concentration references, native-backend fitting tests, and a worked guide. Optional [starting values](allometric-nonlinear.md#explicit-starting-values) add compiled-initialization and saved-start evidence without changing the export count. The [saved-fit prediction helper](allometric-nonlinear.md#predict-from-a-saved-fit) adds original-name mapping, input-row restoration, repeated-dose references, and native fitted-prediction checks. The [allometric population simulator](allometric-simulation.md) adds independent seeded concentration references, duplicate-time variance checks, fitted variance extraction, and explicit random-stream/plotting contracts. The later `fit_imputation()` /
 `apply_imputation()` and `fit_encoding()` / `apply_encoding()` pairs have source,
 generated help, fixed numerical references, inventory rows, and guides for
 [saved imputation](fitted-imputation.md) and [encoding](fitted-encoding.md).
@@ -31,7 +31,7 @@ mean/covariance references, explicit RNG behavior, and saved-model checks.
 The package still has seven datasets and six vignettes. The reconciliation below
 preserves the earlier consolidation checks for their named source.
 
-The current [API policy](api-support-policy.md) assigns two stable, 99
+The current [API policy](api-support-policy.md) assigns two stable, 100
 experimental, 11 example-only, and two deprecation-candidate labels. Use the
 current inventory for method evidence: the historical list below predates
 the subsequent numerical-reference work and covariate consolidation.

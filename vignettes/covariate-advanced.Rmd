@@ -302,6 +302,34 @@ The [documentation site](https://diogoribeiro7.github.io/PharmaStatsR/) includes
 workflow guides and the evidence inventory; the weight-allometric guide adds
 the equations and numerical references when this version is published.
 
+### Simulate allometric population responses
+
+`simulate_nlmixr_allometric()` holds fitted parameters and variances fixed and
+draws fresh log-absorption/log-clearance subject effects and independent additive
+residuals in each replicate. Known training IDs receive fresh effects too.
+The response matrix preserves original rows and names, with `NA` on doses.
+Supply complete explicit dose histories and use the original column names;
+the response column is ignored. Negative responses remain possible under the
+additive normal error model and are not clipped or censored.
+
+```{r allometric-simulation, eval=FALSE}
+set.seed(227)
+responses <- simulate_nlmixr_allometric(fit_pk, nlmixr2data::theo_sd, nsim = 200)
+attr(responses, "simulation_parameters")
+observed <- nlmixr2data::theo_sd$EVID == 0
+plot_simulated_vpc(nlmixr2data::theo_sd[observed, ],
+  responses[observed, , drop = FALSE], time = "TIME", bins = 4)
+```
+
+Keep the dose rows until after simulation, then subset both plotting inputs
+identically. The helper consumes the current R random stream: each replicate
+draws absorption effects in subject first-appearance order, clearance effects
+in that order, then residuals in observation-row order. Reordering or splitting
+schedules can change seeded realizations. Empty and entirely dose-only batches
+draw nothing. This does not simulate parameter uncertainty, fitted individual
+effects, dropout, censoring or missingness; see
+`help("simulate_nlmixr_allometric")` for the complete contract.
+
 ## Interactive Diagnostics App
 
 ```{r eval=FALSE}

@@ -212,6 +212,15 @@ evaluates the stored model with `omega = NA` and `sigma = NA`, disabling
 subject-effect and residual simulation. An internal record identifier restores
 row order; missing, repeated, or nonfinite backend results raise an error.
 
+## Population response simulation
+
+Use [`simulate_nlmixr_allometric()`](allometric-simulation.md) to draw fresh
+subject effects and residual errors from the fitted model. It reuses the same
+original-name mapping and explicit dose histories, returns a response matrix
+with `NA` on dose rows, and holds fitted parameters and variances fixed.
+The worked guide covers R seeds, saved fits, negative additive-error responses,
+and observation-only subsetting for percentile diagnostics.
+
 ## Numerical references and limits of the evidence
 
 For a single oral dose \(D\) at zero, with zero subject effects,

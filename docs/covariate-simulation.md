@@ -9,7 +9,8 @@ directly to `plot_simulated_vpc()`.
 This experimental helper supports one random subject intercept with independent,
 constant-variance Gaussian residuals. It rejects random slopes, nested groups,
 nonlinear fits, residual correlation, and residual variance weights. It is not
-a general simulator for every `nlme` model.
+a general simulator for every `nlme` model. For the separate nonlinear oral
+model, see [population responses from allometric fits](allometric-simulation.md).
 
 ## Fit, simulate, and inspect
 

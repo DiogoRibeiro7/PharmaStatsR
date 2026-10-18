@@ -1,6 +1,14 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add experimental `simulate_nlmixr_allometric()` for population response
+  replicates from saved allometric fits, using fitted log-subject variances
+  and additive residual error. Preserve original names, dose histories, and
+  row alignment; expose simulation parameters and mark dose rows `NA`.
+  Document seeded R draws, negative responses, observation-only percentile
+  plotting, and the absence of parameter uncertainty. Add analytic seeded
+  repeated-dose references, covariance/stream boundaries, native-fit checks,
+  generated help, a worked guide, and updated README/vignette/inventories.
 
 - Add experimental `predict_nlmixr_allometric()` for saved allometric fits. It
   applies original column names and the stored reference weight, evaluates
