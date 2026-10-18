@@ -132,6 +132,7 @@ nav:
       - Predict from saved screening results: predict-lasso-imputed.md
       - Covariate mixed models and prediction: covariate-mixed-model.md
       - Weight-allometric nonlinear fitting: allometric-nonlinear.md
+      - Allometric population simulation: allometric-simulation.md
       - Simulation-based percentile diagnostics: simulated-vpc.md
       - Fitted mixed-model simulation: covariate-simulation.md
       - Interactive diagnostics app: diagnostics-app.md

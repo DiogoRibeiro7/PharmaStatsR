@@ -16,11 +16,11 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Comparisons, categorical outcomes, and study designs | [Method guide](docs/methods.md) |
 | Survival, correlated outcomes, and dose response | [Methods and evidence inventory](docs/method-inventory.md) |
 | Imputation, scaling, covariate screening, and mixed-model diagnostics | [Covariate workflow guide](docs/covariate-migration.md) |
-| Weight-allometric oral pharmacokinetics | [Nonlinear fitting and saved-model prediction](docs/allometric-nonlinear.md) |
+| Weight-allometric oral pharmacokinetics | [Nonlinear fitting and prediction](docs/allometric-nonlinear.md), [response simulation](docs/allometric-simulation.md) |
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **114 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **115 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -147,9 +147,23 @@ value per input row, with `NA` on dose rows. Supply each subject's explicit
 dose history in every call. Predictions use fitted parameters at zero subject
 effects; they do not integrate over random effects or include uncertainty.
 
+For population response replicates, use
+[`simulate_nlmixr_allometric()`](docs/allometric-simulation.md). It draws fresh
+absorption/clearance subject effects and additive residual errors, holding
+fitted parameters fixed. Set the R seed, retain complete dose histories, then
+select observation rows from both data and simulations for percentile plots:
+
+```r
+set.seed(227)
+responses <- simulate_nlmixr_allometric(fit, nlmixr2data::theo_sd, nsim = 200)
+observed <- nlmixr2data::theo_sd$EVID == 0
+plot_simulated_vpc(nlmixr2data::theo_sd[observed, ],
+  responses[observed, , drop = FALSE], time = "TIME", bins = 4)
+```
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 114 exports: two stable column-check helpers, 99 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 115 exports: two stable column-check helpers, 100 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 

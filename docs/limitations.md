@@ -16,6 +16,11 @@ The saved-model prediction helper uses zero subject effects and explicit dose
 history supplied in each call. These are typical-subject point predictions,
 not marginal population means, fitted individual predictions, or intervals.
 Missing historical doses cannot be inferred from the provided schedule.
+The [allometric response simulator](allometric-simulation.md) draws fresh
+subject effects and additive residual noise using fixed fitted variances.
+It does not sample parameter uncertainty or model censoring, dropout, or
+missingness. Negative simulated responses are retained under the additive
+error model; select observation rows from data and simulations before plotting.
 
 ## What the checks actually do
 
