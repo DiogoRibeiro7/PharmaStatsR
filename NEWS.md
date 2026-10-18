@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+
+- Add experimental `predict_nlmixr_allometric()` for saved allometric fits. It
+  applies original column names and the stored reference weight, evaluates
+  fitted parameters at zero subject effects, and restores input row order
+  including duplicate observation times. Every call supplies its explicit
+  dose history; dose rows return `NA`. Analytic repeated-dose references,
+  native fitted predictions, serialization, and event boundaries are tested.
 - Add optional natural-scale `initial` values to `fit_nlmixr_allometric()`, preserving its original defaults and positional arguments. Validate absorption, reference clearance/volume, log-subject-effect variances and residual SD; embed numeric starts into the backend model and retain all resolved starts in fit metadata. Add compiled-initialization, concentration, re-referencing, serialization and custom-start SAEM checks, plus updated help, README, guide and vignette. No new exports or dependencies.
 - Add experimental `fit_nlmixr_allometric()` for a one-compartment oral SAEM model with fixed weight exponents (0.75 on clearance, 1 on volume), independent absorption/clearance effects, and additive error. Validate explicit doses, complete observations and subject-constant weights; retain native fits with reference-weight and column metadata. Add analytic concentration, repeat-dose, re-referencing, saved-model and backend integration tests, generated help, a worked guide and updated README/vignette/inventories. The legacy example wrapper and dependency declarations are unchanged.
 - Improve diagnostics app keyboard access with a visible native upload control, named landmarks, page language, focus styles, and live status/bin feedback. Add explicit plot descriptions and expandable numerical tables that retain analysis rows and clear with invalidated fits. Add server value/escaping checks and Chromium keyboard, narrow-viewport, recovery, and axe checks in CI. Document use and evidence limits; require Shiny >= 1.6.0 for language and plot-alt support.

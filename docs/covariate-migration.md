@@ -147,7 +147,9 @@ mixed-model wrapper. Optional integrations stay optional:
 - `broom.mixed` optionally tidies report coefficients; the template retains its
   native `nlme` summary fallback.
 - `nlmixr2est` fits the fixed nonlinear example and the weight-allometric model; `nlmixr2data` supplies their worked-example
-  data. `cluster` supplies independent Gower reference tests, not the imputation
+  data. `predict_nlmixr_allometric()` also uses `nlmixr2est` to evaluate saved
+  allometric fits with their original names and explicit new dosing schedules.
+  `cluster` supplies independent Gower reference tests, not the imputation
   implementation.
 
 The report uses the installed `templates/covariate-report.Rmd` resource. A

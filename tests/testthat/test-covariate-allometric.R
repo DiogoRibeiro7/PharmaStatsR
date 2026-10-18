@@ -277,6 +277,24 @@ test_that("real SAEM fitting retains allometry and native population predictions
   restored <- unserialize(serialize(fit, NULL))
   expect_identical(attr(restored, "allometry"), metadata)
   expect_equal(restored$PRED, fit$PRED)
+  predictions <- predict_nlmixr_allometric(restored, d)
+  expect_equal(unname(predictions[d$EVID == 0]), fit$PRED, tolerance = 1e-6)
+  expect_true(all(is.na(predictions[d$EVID != 0])))
+  expect_identical(names(predictions), rownames(d))
+  # Legacy allometric fits predate the optional starting-value metadata.
+  attr(restored, "allometry")$initial <- NULL
+  expect_equal(predict_nlmixr_allometric(restored, d), predictions)
+  for (part in c("reference_weight", "exponents", "column_map")) {
+    broken <- restored
+    attr(broken, "allometry")[[part]] <- NULL
+    expect_error(predict_nlmixr_allometric(broken, d), "Invalid allometric fit")
+  }
+  broken <- restored
+  attr(broken, "allometry")$reference_weight <- 71
+  expect_error(predict_nlmixr_allometric(broken, d), "Invalid allometric fit")
+  broken <- restored
+  attr(broken, "allometry")$column_map$original[1] <- "ID"
+  expect_error(predict_nlmixr_allometric(broken, d), "Invalid allometric fit")
 })
 
 
@@ -381,7 +399,11 @@ test_that("custom starts reach a real fit and remain distinct from fitted estima
     eta_cl_var = 0.36, residual_sd = 0.7
   )
   original <- initial
-  fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd, "WT",
+  d <- nlmixr2data::theo_sd
+  names(d)[match(c("ID", "TIME", "DV", "WT"), names(d))] <-
+    c("subject id", "sample time", "response value", "body mass")
+  fit <- fit_nlmixr_allometric(d, "body mass",
+    response = "response value", id = "subject id", time = "sample time",
     control = list(seed = 99), initial = initial
   )
   expect_s3_class(fit, "nlmixr2FitData")
@@ -406,4 +428,7 @@ test_that("custom starts reach a real fit and remain distinct from fitted estima
     omega = NA, sigma = NA, returnType = "data.frame"
   )
   expect_equal(solved$pred, fit$PRED, tolerance = 1e-6)
+  predictions <- predict_nlmixr_allometric(restored, d[names(d) != "response value"])
+  expect_equal(unname(predictions[d$EVID == 0]), fit$PRED, tolerance = 1e-6)
+  expect_identical(names(predictions), rownames(d))
 })

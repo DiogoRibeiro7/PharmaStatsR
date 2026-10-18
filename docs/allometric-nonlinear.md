@@ -159,8 +159,58 @@ rows back to the original data by position. Native prediction or simulation
 methods need canonical backend names and raw weight in `WT`, including dose
 rows. They do not apply the wrapper's original-name mapping automatically.
 The metadata and stored model survive R serialization; load the appropriate
-backend before using its native methods after restoring a fit. This wrapper
-adds no general prediction or simulation API.
+backend before using its native methods after restoring a fit. The prediction
+helper below loads the backend and applies the saved mapping automatically.
+
+## Predict from a saved fit
+
+`predict_nlmixr_allometric()` evaluates the fitted structural model at **zero
+subject effects**. These are typical-subject population concentrations, not
+marginal means averaged over random effects. It adds neither fitted individual
+effects nor residual noise, parameter uncertainty, or intervals.
+
+```r
+schedule <- data.frame(
+  ID = 101, TIME = c(0, 0.5, 1, 2, 4), WT = 70,
+  EVID = c(1, 0, 0, 0, 0), AMT = c(100, 0, 0, 0, 0)
+)
+predict_nlmixr_allometric(fit, schedule)
+
+saved <- tempfile(fileext = ".rds")
+saveRDS(fit, saved)
+restored <- readRDS(saved)
+predict_nlmixr_allometric(restored, schedule)
+```
+
+For fits trained with names such as `subject id`, `sample time`, and `body
+mass`, use those same original names in `schedule`. The response column is
+unnecessary and ignored if present. Similarly named unused columns do not
+replace the selected ones. The stored reference and fitted parameters are
+reused without refitting; older saved fits without `initial` metadata work.
+Keep the fit's model, estimates, and allometry metadata intact.
+
+Each call must include the complete explicit dose history relevant to its
+predictions, including earlier doses with remaining contributions. The helper
+requires at least one dose per subject but cannot detect omitted historical
+doses. It never borrows doses from training data or another call. IDs define
+separate schedules; a training ID does not retrieve a fitted subject effect.
+Split batches by complete subject schedules, not arbitrary observation rows.
+
+Subject, time, weight, `EVID`, `AMT`, optional `CMT`, and unsupported-modifier
+rules remain as above. Prediction allows one subject, a single observation,
+dose-only schedules, and an empty table with the required typed columns.
+Weights must still be constant within a subject, including dose rows.
+
+Results are numeric, named by input row names, and have exactly one entry per
+row: concentrations on observations and `NA_real_` on doses. Interleaved
+subjects, unsorted times, and duplicate observation times preserve their input
+positions. A dose-only schedule returns only `NA`; empty input returns a named
+zero-length vector. Input data are unchanged.
+
+The backend [solver](https://nlmixr2.github.io/rxode2/reference/rxSolve.html)
+evaluates the stored model with `omega = NA` and `sigma = NA`, disabling
+subject-effect and residual simulation. An internal record identifier restores
+row order; missing, repeated, or nonfinite backend results raise an error.
 
 ## Numerical references and limits of the evidence
 
@@ -208,3 +258,11 @@ recovery or confidence-interval coverage, or validate arbitrary event designs.
 The optional-backend tests skip when the backend is absent; the all-Suggests
 CI job installs and exercises it. See the [support policy](api-support-policy.md)
 and [limitations](limitations.md).
+
+The [prediction tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-allometric-prediction.R)
+compare mapped output with the independent repeated-dose formula, preserve
+unsorted and duplicate observations, check complete-schedule batch invariance,
+and reject malformed backend output. Native-fit tests compare the public
+helper with fitted `PRED` values, including literal names and restored fits.
+These checks cover point predictions for the stated model, not predictive
+coverage, clinical suitability, or population extrapolation.

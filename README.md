@@ -16,11 +16,11 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Comparisons, categorical outcomes, and study designs | [Method guide](docs/methods.md) |
 | Survival, correlated outcomes, and dose response | [Methods and evidence inventory](docs/method-inventory.md) |
 | Imputation, scaling, covariate screening, and mixed-model diagnostics | [Covariate workflow guide](docs/covariate-migration.md) |
-| Weight-allometric oral pharmacokinetics | [Nonlinear mixed-effects fitting](docs/allometric-nonlinear.md) |
+| Weight-allometric oral pharmacokinetics | [Nonlinear fitting and saved-model prediction](docs/allometric-nonlinear.md) |
 | Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
-The package has **113 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
+The package has **114 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
 
 ## Install
 
@@ -132,6 +132,7 @@ fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd, weight = "WT",
   initial = list(ka = 1.5, cl = 3.2, v = 32)
 )
 attr(fit, "allometry")$initial
+head(predict_nlmixr_allometric(fit, nlmixr2data::theo_sd))
 ```
 
 Clearance scales with weight to the fixed power 0.75; volume scales linearly.
@@ -141,9 +142,14 @@ weight requirement, native result, and numerical-reference scope. Optional
 entries retain their defaults. The saved metadata distinguishes starts from
 fitted estimates.
 
+`predict_nlmixr_allometric()` uses the original column names and returns one
+value per input row, with `NA` on dose rows. Supply each subject's explicit
+dose history in every call. Predictions use fitted parameters at zero subject
+effects; they do not integrate over random effects or include uncertainty.
+
 ## Project status and documentation
 
-Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 113 exports: two stable column-check helpers, 98 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
+Version **0.1.63** remains in active development. The [API support policy](docs/api-support-policy.md) classifies all 114 exports: two stable column-check helpers, 99 experimental APIs, 11 example-only exports, and two callable historical names proposed for future deprecation. Statistical methods are experimental or example-only.
 
 The numerical-reference batches through #165 and the covariate consolidation are complete within their stated scopes. The [roadmap](ROADMAP.md), [project status](docs/project-status.md), and [evidence inventory](docs/method-inventory.md) distinguish completed work from remaining method gaps.
 

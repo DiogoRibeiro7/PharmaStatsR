@@ -12,6 +12,10 @@ concentration references test the structural model; a successful SAEM run does
 not establish identifiability, a global optimum, or calibrated uncertainty.
 Optional starting values enable sensitivity checks for this fixed model; they
 do not fix parameters, change bounds, or implement automatic multi-start selection.
+The saved-model prediction helper uses zero subject effects and explicit dose
+history supplied in each call. These are typical-subject point predictions,
+not marginal population means, fitted individual predictions, or intervals.
+Missing historical doses cannot be inferred from the provided schedule.
 
 ## What the checks actually do
 

@@ -51,7 +51,8 @@
 #'   Response, id, time and weight names are treated literally and must be
 #'   distinct. Only those columns and the supported event columns reach the
 #'   backend, under names `DV`, `ID`, `TIME`, `WT`, `EVID`, `AMT`, and `CMT`.
-#'   Native prediction/simulation methods require these backend names and raw
+#'   [predict_nlmixr_allometric()] applies the saved original names and restores
+#'   input row order. Native prediction/simulation methods require backend names and raw
 #'   weight in `WT`, including on dosing records. The reference weight is a
 #'   literal in the stored model; it is not recomputed from prediction data.
 #'   SAEM controls, random streams, convergence and uncertainty are backend
@@ -69,7 +70,8 @@
 #'   containing all six resolved natural-scale starts, and a `column_map` data frame
 #'   with `role`, `original`, and `model` columns. Native fit tables can omit
 #'   dose records and reorder observations; they are not input-row predictions.
-#' @seealso [fit_nlmixr_model()] for the unchanged example-only wrapper.
+#' @seealso [predict_nlmixr_allometric()] for predictions using original names;
+#'   [fit_nlmixr_model()] for the unchanged example-only wrapper.
 #' @examples
 #' \dontrun{
 #' fit <- fit_nlmixr_allometric(nlmixr2data::theo_sd,
@@ -116,7 +118,8 @@ fit_nlmixr_allometric <- function(data, weight, reference_weight = 70,
   fit
 }
 
-prepare_allometric_data <- function(data, weight, reference_weight, response, id, time) {
+prepare_allometric_data <- function(data, weight, reference_weight, response, id, time,
+                                    prediction = FALSE) {
   validate_data_frame_names(data)
   selected <- list(response = response, id = id, time = time, weight = weight)
   for (role in names(selected)) {
@@ -130,7 +133,8 @@ prepare_allometric_data <- function(data, weight, reference_weight, response, id
   if (anyDuplicated(columns) || any(columns %in% c("EVID", "AMT", "CMT"))) {
     stop("Response, id, time, weight, and event columns must be distinct")
   }
-  missing <- setdiff(c(columns, "EVID", "AMT"), names(data))
+  required <- if (prediction) c(id, time, weight) else columns
+  missing <- setdiff(c(required, "EVID", "AMT"), names(data))
   if (length(missing)) stop("Variables not found: ", paste(missing, collapse = ", "))
   modifiers <- intersect(toupper(names(data)), c(
     "RATE", "DUR", "II", "ADDL", "SS", "MDV", "CENS", "LIMIT", "DVID"
@@ -142,7 +146,7 @@ prepare_allometric_data <- function(data, weight, reference_weight, response, id
     !is.finite(reference_weight) || reference_weight <= 0) {
     stop("`reference_weight` must be one positive finite number")
   }
-  if (!nrow(data)) stop("`data` must contain dosing and observation records")
+  if (!prediction && !nrow(data)) stop("`data` must contain dosing and observation records")
   for (name in c(id, time, weight, "EVID", "AMT")) {
     x <- data[[name]]
     if (!is_numeric_vector(x) || any(!is.finite(x))) {
@@ -153,7 +157,7 @@ prepare_allometric_data <- function(data, weight, reference_weight, response, id
   if (any(subject <= 0 | subject != floor(subject) | subject > .Machine$integer.max)) {
     stop("Subject identifiers must be positive integers within R's integer range")
   }
-  if (length(unique(subject)) < 2L) stop("At least two subjects are required")
+  if (!prediction && length(unique(subject)) < 2L) stop("At least two subjects are required")
   if (any(data[[time]] < 0)) stop("Time must be nonnegative")
   wt <- data[[weight]]
   ratio <- wt / reference_weight
@@ -169,10 +173,13 @@ prepare_allometric_data <- function(data, weight, reference_weight, response, id
     stop("Doses require positive AMT; observations require zero AMT")
   }
   groups <- split(dose, subject)
-  if (any(vapply(groups, function(x) !any(x) || sum(!x) < 2L, logical(1)))) {
+  if (prediction && any(vapply(groups, function(x) !any(x), logical(1)))) {
+    stop("Each prediction subject needs explicit dose history in `newdata`")
+  }
+  if (!prediction && any(vapply(groups, function(x) !any(x) || sum(!x) < 2L, logical(1)))) {
     stop("Each subject needs at least one dose and two observations")
   }
-  dv <- data[[response]]
+  dv <- if (prediction) rep(0, nrow(data)) else data[[response]]
   if (!is_numeric_vector(dv) || any(!is.finite(dv[!dose])) || any(is.infinite(dv[dose]))) {
     stop("Responses must be real numeric and finite on observations; dosing responses may be missing")
   }
