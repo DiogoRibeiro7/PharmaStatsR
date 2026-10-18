@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Require positive residual degrees of freedom and finite AIC criteria for
+  starting, accepted and returned `screen_covariates_stepwise()` models. Stop
+  invalid searches with original term names instead of returning saturated
+  selections. Add an independent forward/backward RSS ledger, categorical
+  penalties, a local-minimum example and meaningful boundaries. Update help,
+  README and guides; preserve the existing greedy search and public API.
+
 - Harden `screen_covariates_bayesian()` against saturated models and non-finite
   Gaussian BIC values. These cases now raise contextual errors instead of
   selecting a saturated candidate or silently returning an empty selection.

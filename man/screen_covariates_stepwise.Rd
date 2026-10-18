@@ -17,7 +17,8 @@ its values are not used in fitting or complete-case filtering.}
 \item{covariates}{Character vector of unique covariate column names.}
 }
 \value{
-Character vector of selected covariate names.
+Character vector of original selected covariate names, in the final
+model's term order (which can differ from the supplied candidate order).
 }
 \description{
 Performs forward and backward stepwise selection based on AIC using ordinary
@@ -33,6 +34,27 @@ Column names are interpreted literally, including spaces or formula
 operators. Duplicate column names, duplicate candidates, and using the
 response as a candidate are rejected. An empty candidate selection returns
 \code{character(0)} without fitting.
+
+The search starts with the intercept-only model and uses
+\code{\link[stats]{step}} with both additions and deletions. Its Gaussian
+\code{\link[stats]{extractAIC}} criterion is
+\eqn{n\log(RSS/n) + 2p}, where \eqn{p} is regression rank including the
+intercept. It differs from \code{AIC(lm(...))} by a constant on the shared
+cohort. Categorical candidates enter and leave as whole terms. The search
+is greedy and need not find the globally best subset; ties and nearly
+tied choices can depend on candidate order and numerical rounding.
+Independent Gaussian errors with constant variance are assumed; screening
+does not provide multiplicity correction or post-selection inference.
+
+The starting, accepted and returned search models must have positive
+residual degrees of freedom and a finite criterion. Invalid models stop
+the call with their original term names rather than return a selection.
+Non-finite criteria can arise from exact fits or numerical underflow or
+overflow; review exact fits and rescale extreme response values. Finite
+near-perfect fits are not rejected by a near-zero variance cutoff.
+These checks apply to accepted models, not every trial in the search.
+The full candidate design need not have full rank or positive residual
+degrees of freedom if the accepted path remains valid.
 }
 \examples{
 set.seed(123)

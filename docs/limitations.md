@@ -122,6 +122,12 @@ freedom and finite BIC values; these checks do not validate the large-sample
 approximation, remove confounding, account for repeated measures, or provide
 multiplicity correction and post-selection inference.
 
+The [stepwise AIC screener](aic-screening.md) follows a greedy forward/backward
+path and can stop short of the globally best subset. Its accepted-model guards
+reject saturated or non-finite fits; they do not preflight every trial or make
+post-selection inference valid. The documented local-minimum reference shows
+this limitation even with complete, well-behaved numeric data.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.
