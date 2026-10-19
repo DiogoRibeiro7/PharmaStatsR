@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Recover representable sample standard deviations in `center_scale()` when
+  direct variance arithmetic overflows or underflows. Normalize centered
+  differences where possible, and reuse saved-parameter application for safe
+  training transformations. Add independent ordinary/extreme-unit references,
+  large-offset and subtraction-overflow cases, and documented precision limits.
+  Ordinary finite estimates and existing saved parameter tables remain valid.
+
 - Fix observed/predicted diagnostics using an unrelated `preds` input column
   instead of model predictions. Reject recycled, multi-column or infinite
   prediction/residual output, invalid diagnostic columns and invalid bin counts.

@@ -51,7 +51,7 @@ test_that("unestimable scales fail instead of returning invalid values", {
       "at least two observed values"
     )
   }
-  for (column in list(c(2, 2, NA_real_), c(1e200, 2e200))) {
+  for (column in list(c(2, 2, NA_real_), c(-1.3e308, 1.3e308))) {
     expect_error(
       center_scale(data.frame(x = column), "x"),
       "positive, finite standard deviation"

@@ -127,6 +127,7 @@ nav:
       - Covariate workflows and migration: covariate-migration.md
       - Stepwise AIC screening: aic-screening.md
       - BIC covariate screening: bic-screening.md
+      - Centering and scaling reference: scaling-reference.md
       - Complete-case LASSO screening: lasso-screening.md
       - Training-fitted imputation: fitted-imputation.md
       - Training-fitted encoding: fitted-encoding.md

@@ -55,6 +55,8 @@ Here the completed training values are `(1, 4, 3, 8)`, with mean `4` and sample
 standard deviation `sqrt(26 / 3)`. The missing validation entries become zero
 after scaling. Scaling still requires a nonconstant training column with at
 least two observations; imputation alone permits singleton or constant columns.
+The [scaling reference](scaling-reference.md) records the independent sample-SD
+targets, fallback for extreme units, and remaining floating-point limits.
 
 ## Refit inside every training fold
 

@@ -7,6 +7,16 @@
 #' and remain missing in the result. Each selected variable must have at least
 #' two observed values, a finite mean, and a finite, positive sample standard
 #' deviation. Constant columns and infinite values are rejected.
+#' The sample standard deviation uses the observed count minus one. If its
+#' direct computation is zero or non-finite, normalized intermediate values
+#' are used to avoid variance underflow/overflow where the final standard
+#' deviation is representable. Ordinary positive finite results are unchanged.
+#' Centering precedes normalization when possible, preserving small differences
+#' at large offsets. Transformation uses the same arithmetic as
+#' [apply_center_scale()], including its overflow-safe subtraction fallback.
+#' Floating-point precision still limits the estimated mean, spread and output;
+#' differences already lost in the input cannot be recovered.
+#'
 #' To reuse these parameters for new data without refitting, pass the returned
 #' \code{params} to \code{\link{apply_center_scale}}.
 #'
@@ -39,7 +49,7 @@ center_scale <- function(data, vars) {
       ))
     }
     col_mean <- mean(column, na.rm = TRUE)
-    col_sd <- stats::sd(column, na.rm = TRUE)
+    col_sd <- scaling_sample_sd(column, col_mean)
     if (!is.finite(col_mean) || !is.finite(col_sd) || col_sd <= 0) {
       stop(sprintf(
         paste0(
@@ -49,9 +59,30 @@ center_scale <- function(data, vars) {
         v
       ))
     }
-    data[[v]] <- (column - col_mean) / col_sd
     params <- rbind(params, data.frame(var = v, mean = col_mean, sd = col_sd))
   }
 
-  list(data = data, params = params)
+  list(data = apply_center_scale(data, params), params = params)
+}
+
+# Keep ordinary results; normalize only when direct variance arithmetic fails.
+scaling_sample_sd <- function(column, center) {
+  spread <- stats::sd(column, na.rm = TRUE)
+  if (is.finite(spread) && spread > 0) {
+    return(spread)
+  }
+  if (!is.finite(center)) {
+    return(spread)
+  }
+
+  observed <- column[!is.na(column)]
+  deviations <- observed - center
+  # Opposite-sign extremes can overflow subtraction. Scaling the original
+  # values is then safe; otherwise centered differences retain more precision.
+  values <- if (any(!is.finite(deviations))) observed else deviations
+  magnitude <- max(abs(values))
+  if (magnitude == 0) {
+    return(spread)
+  }
+  magnitude * stats::sd(values / magnitude)
 }

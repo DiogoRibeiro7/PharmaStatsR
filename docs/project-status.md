@@ -35,6 +35,10 @@ The [diagnostic plot references](covariate-diagnostic-plots.md) (#235) check
 subject predictions, raw/normalized residuals and binned percentiles. They also
 prevent prediction-name collisions and reject mismatched output lengths.
 
+The [scaling reference](scaling-reference.md) (#237) covers ordinary and extreme
+numeric units, small differences at large offsets, saved-parameter reuse and
+representability boundaries. Ordinary finite estimates are retained.
+
 ## What the evidence means
 
 - The [reference cases](core-reference-cases.md) fix expected values for six core inference helpers. They do not cover all methods or datasets.
