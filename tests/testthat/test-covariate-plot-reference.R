@@ -43,6 +43,8 @@ test_that("caller column names cannot override plotted predictions", {
   model <- stats::lm(DV ~ Time, data = d)
   original <- d
   p <- plot_obs_vs_pred(model, d)
+  retained <- setdiff(names(d), "preds")
+  expect_identical(p$data[retained], d[retained])
   # Mean response=3, mean time=2.5; cross-product=7 and time SS=5.
   expect_equal(ggplot2::ggplot_build(p)$data[[1]]$x, c(0.9, 2.3, 3.7, 5.1))
   expect_identical(d, original)

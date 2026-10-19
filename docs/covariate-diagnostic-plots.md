@@ -13,7 +13,8 @@ needed by the model's native `predict()` method. Each point pairs the prediction
 for that row with its `DV`; the red reference line has slope one and intercept
 zero. Missing coordinates remain in the plot data and are omitted when drawn.
 An unrelated column named `preds` no longer replaces the calculated predictions.
-The returned plot data contains the two coordinate columns `preds` and `DV`.
+The returned plot data retains the original columns for customization, with
+`preds` replaced by the calculated predictions. The caller's data are unchanged.
 
 For an `lme` model, [native prediction defaults](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/predict.lme.html)
 include the fitted subject effects. Unknown subjects yield missing predictions;

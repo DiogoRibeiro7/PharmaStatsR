@@ -33,8 +33,9 @@ plot_obs_vs_pred <- function(model, data) {
   validate_diagnostic_values(data$DV, nrow(data), "DV")
   preds <- stats::predict(model, data)
   validate_diagnostic_values(preds, nrow(data), "Predictions")
-  # Isolate plot coordinates so caller columns cannot mask local predictions.
-  plotted <- data.frame(preds = as.numeric(preds), DV = data$DV)
+  # Store predictions in a copy while retaining columns for plot customization.
+  plotted <- data
+  plotted$preds <- as.numeric(preds)
 
   ggplot2::ggplot(plotted, ggplot2::aes(x = preds, y = DV)) +
     ggplot2::geom_point() +
