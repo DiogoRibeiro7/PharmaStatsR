@@ -2,7 +2,8 @@
 
 ## Unreleased
 - Recover representable sample standard deviations in `center_scale()` when
-  direct variance arithmetic overflows or underflows. Normalize centered
+  direct variance arithmetic overflows or underflows, and recover non-finite
+  direct means by normalizing the inputs. Normalize centered
   differences where possible, and reuse saved-parameter application for safe
   training transformations. Add independent ordinary/extreme-unit references,
   large-offset and subtraction-overflow cases, and documented precision limits.

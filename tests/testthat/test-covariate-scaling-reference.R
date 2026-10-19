@@ -48,24 +48,31 @@ test_that("large offsets retain small representable differences", {
 
 test_that("overflowing subtraction still gives finite training and saved results", {
   unit <- 1e308
-  d <- data.frame(x = c(-1.5, 1.5, 1.5, 1.5, 1.5) * unit)
-  fitted <- center_scale(d, "x")
-  # A lone value -1.5 among four 1.5 values: mean=.9, sample SD=3/sqrt(5).
-  expect_equal(fitted$params$mean / unit, 0.9, tolerance = 1e-14)
-  expect_equal(fitted$params$sd / unit, 3 / sqrt(5), tolerance = 1e-14)
-  expect_equal(fitted$data$x, c(-4, 1, 1, 1, 1) / sqrt(5), tolerance = 1e-14)
-  expect_true(all(is.finite(fitted$data$x)))
-  expect_identical(apply_center_scale(d, fitted$params), fitted$data)
-  file <- tempfile(fileext = ".rds")
-  on.exit(unlink(file), add = TRUE)
-  saveRDS(fitted$params, file)
-  params <- readRDS(file)
-  new <- data.frame(x = c(-1.5, 0, 1.5, NA_real_) * unit)
-  expected <- c(-4, -1.5, 1, NA_real_) / sqrt(5)
-  expect_equal(apply_center_scale(new, params)$x, expected, tolerance = 1e-14)
-  expect_identical(params, fitted$params)
-  augmented <- rbind(new, data.frame(x = 0.5 * unit))
-  expect_identical(apply_center_scale(augmented, params)$x[1:4], apply_center_scale(new, params)$x)
+  # Also exercises non-finite direct mean correction on macOS ARM.
+  for (direction in c(1, -1)) {
+    d <- data.frame(x = direction * c(-1.5, 1.5, 1.5, 1.5, 1.5) * unit)
+    fitted <- center_scale(d, "x")
+    # A lone value -1.5 among four 1.5 values: mean=.9, sample SD=3/sqrt(5).
+    expect_equal(fitted$params$mean / unit, direction * 0.9, tolerance = 1e-14)
+    expect_equal(fitted$params$sd / unit, 3 / sqrt(5), tolerance = 1e-14)
+    expect_equal(fitted$data$x, direction * c(-4, 1, 1, 1, 1) / sqrt(5), tolerance = 1e-14)
+    expect_true(all(is.finite(fitted$data$x)))
+    expect_identical(apply_center_scale(d, fitted$params), fitted$data)
+    file <- tempfile(fileext = ".rds")
+    on.exit(unlink(file), add = TRUE)
+    saveRDS(fitted$params, file)
+    params <- readRDS(file)
+    new <- data.frame(x = direction * c(-1.5, 0, 1.5, NA_real_) * unit)
+    expected <- direction * c(-4, -1.5, 1, NA_real_) / sqrt(5)
+    expect_equal(apply_center_scale(new, params)$x, expected, tolerance = 1e-14)
+    expect_identical(params, fitted$params)
+    augmented <- rbind(new, data.frame(x = 0.5 * unit))
+    expect_identical(apply_center_scale(augmented, params)$x[1:4], apply_center_scale(new, params)$x)
+    order <- c(5, 2, 1, 3, 4)
+    shuffled <- center_scale(d[order, , drop = FALSE], "x")
+    expect_equal(shuffled$params$mean / unit, direction * 0.9, tolerance = 1e-14)
+    expect_equal(shuffled$data$x, fitted$data$x[order], tolerance = 1e-14)
+  }
 })
 
 test_that("ordinary finite mean and SD estimates retain their exact results", {

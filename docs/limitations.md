@@ -144,8 +144,8 @@ not every residual covariance structure. The descriptive binned ribbon is
 not simulated predictive uncertainty; observed and predicted summaries omit
 missing values separately and can refer to different rows.
 
-The [scaling fallback](scaling-reference.md) addresses zero or non-finite direct
-sample-SD calculations; positive finite estimates still have ordinary floating-
+The [scaling fallback](scaling-reference.md) recovers non-finite direct means
+and addresses zero or non-finite direct sample-SD calculations; positive finite estimates still have ordinary floating-
 point precision. Input differences already rounded away cannot be recovered.
 A rounded stored mean can leave nonzero mean standardized values at extreme
 offsets. Truly unrepresentable scales or transformed values still raise errors.

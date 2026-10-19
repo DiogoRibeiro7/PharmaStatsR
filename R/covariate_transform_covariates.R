@@ -10,7 +10,8 @@
 #' The sample standard deviation uses the observed count minus one. If its
 #' direct computation is zero or non-finite, normalized intermediate values
 #' are used to avoid variance underflow/overflow where the final standard
-#' deviation is representable. Ordinary positive finite results are unchanged.
+#' deviation is representable. A non-finite direct mean is recomputed after
+#' normalizing the original values. Ordinary finite estimates are unchanged.
 #' Centering precedes normalization when possible, preserving small differences
 #' at large offsets. Transformation uses the same arithmetic as
 #' [apply_center_scale()], including its overflow-safe subtraction fallback.
@@ -49,6 +50,11 @@ center_scale <- function(data, vars) {
       ))
     }
     col_mean <- mean(column, na.rm = TRUE)
+    if (!is.finite(col_mean)) {
+      # Mean correction can overflow on platforms without wider accumulators.
+      magnitude <- max(abs(column), na.rm = TRUE)
+      col_mean <- magnitude * mean(column / magnitude, na.rm = TRUE)
+    }
     col_sd <- scaling_sample_sd(column, col_mean)
     if (!is.finite(col_mean) || !is.finite(col_sd) || col_sd <= 0) {
       stop(sprintf(

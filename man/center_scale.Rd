@@ -27,7 +27,8 @@ deviation. Constant columns and infinite values are rejected.
 The sample standard deviation uses the observed count minus one. If its
 direct computation is zero or non-finite, normalized intermediate values
 are used to avoid variance underflow/overflow where the final standard
-deviation is representable. Ordinary positive finite results are unchanged.
+deviation is representable. A non-finite direct mean is recomputed after
+normalizing the original values. Ordinary finite estimates are unchanged.
 Centering precedes normalization when possible, preserving small differences
 at large offsets. Transformation uses the same arithmetic as
 \code{\link[=apply_center_scale]{apply_center_scale()}}, including its overflow-safe subtraction fallback.

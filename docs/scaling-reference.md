@@ -49,6 +49,11 @@ result triggers the fallback: center the observed values, normalize by their
 largest absolute magnitude, compute SD in those units, and restore the units.
 If centering itself overflows, normalize the original observed values instead.
 Centering first where possible avoids losing small differences at large offsets.
+If the direct mean is non-finite, it is recomputed after normalizing the
+original values by their largest absolute magnitude. This also avoids overflow
+in mean correction on platforms without a wider internal accumulator. Finite
+direct means are retained.
+
 Training transformations then use `apply_center_scale()`'s existing arithmetic,
 which can divide before subtracting when direct subtraction overflows.
 
@@ -60,6 +65,7 @@ The tests include these independent targets:
 | `-1.5, 1.5, 1.5, 1.5, 1.5` | `1e308` | 0.9 | `3/sqrt(5)` | `c(-4,1,1,1,1)/sqrt(5)` |
 
 The second case also overflows direct subtraction for the negative value.
+Both signs and reordered rows are checked across Windows, Linux and macOS.
 The tests compare scale estimates **after dividing out the unit**, so an
 incorrect zero cannot pass merely because the expected scale is tiny.
 
