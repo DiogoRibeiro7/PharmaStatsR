@@ -136,6 +136,7 @@ nav:
       - Covariate mixed models and prediction: covariate-mixed-model.md
       - Weight-allometric nonlinear fitting: allometric-nonlinear.md
       - Allometric population simulation: allometric-simulation.md
+      - Covariate diagnostic plot values: covariate-diagnostic-plots.md
       - Simulation-based percentile diagnostics: simulated-vpc.md
       - Fitted mixed-model simulation: covariate-simulation.md
       - Interactive diagnostics app: diagnostics-app.md

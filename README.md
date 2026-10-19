@@ -45,7 +45,9 @@ Existing scripts can replace `library(pharmoCovR)` with `library(PharmaStatsR)` 
 
 The [interactive diagnostics guide](docs/diagnostics-app.md) covers CSV fitting,
 keyboard navigation, plot descriptions and numerical tables, with the scope of
-the browser accessibility checks.
+the browser accessibility checks. The [diagnostic plot guide](docs/covariate-diagnostic-plots.md)
+records numerical coordinate references, prediction-length checks and the fix
+for input columns named `preds` shadowing model predictions.
 
 ## Quick start
 

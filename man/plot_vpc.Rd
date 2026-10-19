@@ -7,11 +7,13 @@
 plot_vpc(model, data, bins = 10)
 }
 \arguments{
-\item{model}{A fitted model with a \code{predict} method.}
+\item{model}{A fitted model with a \code{predict} method returning a numeric vector.}
 
-\item{data}{A \code{data.frame} containing \code{Time} and \code{DV} columns.}
+\item{data}{A uniquely named \code{data.frame} containing real numeric \code{Time} and
+\code{DV} columns, finite or missing, and the native model's required columns.}
 
-\item{bins}{Number of bins to divide the time variable into.}
+\item{bins}{Positive integer number of requested time bins. Duplicate edges
+can reduce the number of bins; empty bins can have missing summaries.}
 }
 \value{
 A \code{ggplot} object with observed ribbons and predicted median line.
@@ -22,6 +24,19 @@ The observed ribbon describes the data distribution. This function does not
 simulate new observations or estimate predictive uncertainty, so it is not
 a simulation-based visual predictive check. The function name is retained
 for compatibility.
+}
+\details{
+Bin edges and observed percentiles use R's type-7 sample quantiles.
+Duplicate edges are collapsed; intervals are right-closed and include the
+lowest time. Each x coordinate is the mean observed time in that bin, not
+the midpoint of its edges. At least two distinct observed times are needed.
+Missing times do not enter summaries. Within each bin, missing observations
+and predictions are removed separately, so their summaries can use different
+rows. A bin with no values for a summary has a missing result.
+
+Native prediction defaults are retained. Predictions must be a real numeric
+vector with one value per input row, in input order; recycling and matrix
+predictions are rejected. Infinite data or predictions raise errors.
 }
 \examples{
 df <- data.frame(

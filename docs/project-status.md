@@ -1,6 +1,6 @@
 # Project status
 
-**18 October 2026 · version 0.1.63 · active development · not on CRAN**
+**19 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
@@ -30,6 +30,10 @@ the API remains experimental and the export count is unchanged. The
 whole-factor penalties and a local minimum, with guards on accepted models.
 The [complete-case LASSO reference](lasso-screening.md) (#233) adds independent
 orthogonal coefficient/CV targets and fixes literal `(Intercept)` selection.
+
+The [diagnostic plot references](covariate-diagnostic-plots.md) (#235) check
+subject predictions, raw/normalized residuals and binned percentiles. They also
+prevent prediction-name collisions and reject mismatched output lengths.
 
 ## What the evidence means
 

@@ -137,6 +137,11 @@ function.
   Gaussian random-intercept replications using fixed fitted parameters. It
   redraws all subject effects, including for training IDs, and excludes
   parameter uncertainty. Other model simulators remain future work.
+- The [diagnostic plot guide](covariate-diagnostic-plots.md) records independent
+  point/residual/percentile references. Observed/predicted plots now use actual
+  predictions even when data contain `preds`; regenerate affected plots.
+  Prediction and residual vectors must match their source rows without recycling.
+  Binned observed and predicted summaries retain separate missing-value removal.
 - The diagnostics app fits `DV` by `Time` with a random subject intercept.
   [Keyboard access and numerical alternatives](diagnostics-app.md) complement
   its plots. Server and Chromium browser tests cover upload, fitting, rendering,

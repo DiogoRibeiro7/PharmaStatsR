@@ -1,6 +1,14 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Fix observed/predicted diagnostics using an unrelated `preds` input column
+  instead of model predictions. Reject recycled, multi-column or infinite
+  prediction/residual output, invalid diagnostic columns and invalid bin counts.
+  Add independent subject-prediction, residual and binned-percentile coordinate
+  references, including row order, missing positions and duplicate bin edges.
+  Update help, README and guides; native model defaults and valid summaries
+  remain unchanged. Regenerate plots affected by the `preds` name collision.
+
 - Fix `screen_covariates_lasso()` silently omitting a numeric predictor named
   `(Intercept)`: exclude the fitted intercept by position and preserve original
   candidate names/order. Add independent Gaussian LASSO coefficient-path,

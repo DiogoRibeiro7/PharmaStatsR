@@ -7,13 +7,23 @@
 plot_residuals(model)
 }
 \arguments{
-\item{model}{A fitted model object from \code{nlme::lme} or similar.}
+\item{model}{A fitted model object from \code{nlme::lme} or similar, with stored
+data containing a real numeric \code{Time} column (finite or missing). It must
+support both response and normalized residual vectors.}
 }
 \value{
 A faceted \code{ggplot} object with residuals.
 }
 \description{
 Generates raw and normalized residual plots over time for a fitted model.
+}
+\details{
+Both residual vectors must have one real numeric entry per row of
+\code{model$data}, in its stored order. Missing values are retained; infinite
+values and mismatched lengths raise errors. Use \code{na.exclude} when fitting
+with omitted rows so residuals are padded to the original data length.
+Native residual defaults are retained: \code{lme} uses the innermost subject
+level, and normalized residuals account for its fitted residual covariance.
 }
 \examples{
 df <- data.frame(
