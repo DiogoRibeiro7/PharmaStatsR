@@ -7,15 +7,24 @@
 plot_obs_vs_pred(model, data)
 }
 \arguments{
-\item{model}{An object with a \code{predict} method.}
+\item{model}{An object with a \code{predict} method returning a numeric vector.}
 
-\item{data}{A \code{data.frame} containing the observed response column \code{DV}.}
+\item{data}{A uniquely named \code{data.frame} containing a real numeric \code{DV}
+column. Values must be finite or missing. Supply the column names expected
+by the native model, including repaired names when applicable.}
 }
 \value{
 A \code{ggplot} object showing observed vs. predicted values.
 }
 \description{
 Creates a scatter plot comparing observed responses to model predictions.
+}
+\details{
+Predictions use the model's native defaults: for \code{lme}, these include fitted
+subject effects. The method must return one real numeric value per input
+row, in input order. Matrices, lists, wrong lengths and infinite values raise
+errors. Missing values are retained for ggplot2 to omit when drawing points.
+An unrelated input column named \code{preds} cannot replace model predictions.
 }
 \examples{
 df <- data.frame(

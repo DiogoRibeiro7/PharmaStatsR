@@ -136,6 +136,14 @@ used to choose the penalty needs separate outer evaluation for performance
 assessment. Literal `(Intercept)` predictors are now distinguished from the
 fitted intercept; previously affected selections should be recomputed.
 
+The [covariate diagnostic plots](covariate-diagnostic-plots.md) preserve native
+prediction/residual defaults and require one numeric value per source row.
+They cannot detect a backend that silently reorders an equal-length vector.
+The numerical residual reference covers a balanced random-intercept model,
+not every residual covariance structure. The descriptive binned ribbon is
+not simulated predictive uncertainty; observed and predicted summaries omit
+missing values separately and can refer to different rows.
+
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.

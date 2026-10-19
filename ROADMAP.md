@@ -4,7 +4,7 @@
 
 [Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) is complete: [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195) merged the full pharmoCovR module with its existing APIs and regression tests. The standalone repository was then deleted. See the [migration guide](docs/covariate-migration.md) for preserved provenance, package references, and method limits. The integration does not resolve the release-candidate gate.
 
-**Status (18 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
+**Status (19 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -110,6 +110,11 @@ search ledger, accepted-model guards and an explicit local-minimum example.
 The [complete-case LASSO reference](docs/lasso-screening.md) (#233) checks
 coefficient paths and CV errors independently and preserves literal
 `(Intercept)` predictors in selected names.
+
+
+The [diagnostic plot references](docs/covariate-diagnostic-plots.md) (#235)
+check subject predictions, raw/normalized residuals and binned percentiles,
+with corrections for prediction-name collisions and recycled output.
 
 ## How we work
 
