@@ -28,6 +28,8 @@ penalties. Saturated models and non-finite BIC comparisons now fail clearly;
 the API remains experimental and the export count is unchanged. The
 [stepwise AIC reference](aic-screening.md) (#231) covers additions, removal,
 whole-factor penalties and a local minimum, with guards on accepted models.
+The [complete-case LASSO reference](lasso-screening.md) (#233) adds independent
+orthogonal coefficient/CV targets and fixes literal `(Intercept)` selection.
 
 ## What the evidence means
 
