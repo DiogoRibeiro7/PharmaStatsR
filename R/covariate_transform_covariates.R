@@ -49,12 +49,7 @@ center_scale <- function(data, vars) {
         "Variable '%s' needs at least two observed values for scaling", v
       ))
     }
-    col_mean <- mean(column, na.rm = TRUE)
-    if (!is.finite(col_mean)) {
-      # Mean correction can overflow on platforms without wider accumulators.
-      magnitude <- max(abs(column), na.rm = TRUE)
-      col_mean <- magnitude * mean(column / magnitude, na.rm = TRUE)
-    }
+    col_mean <- preprocessing_mean(column, na.rm = TRUE)
     col_sd <- scaling_sample_sd(column, col_mean)
     if (!is.finite(col_mean) || !is.finite(col_sd) || col_sd <= 0) {
       stop(sprintf(

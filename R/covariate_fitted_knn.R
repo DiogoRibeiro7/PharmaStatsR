@@ -97,6 +97,10 @@ fit_knn_imputation <- function(data, vars, predictors, k = 5L, weights = NULL) {
 #' levels are unsupported; ordinary missing values are allowed. Selected numeric
 #' columns must be finite or missing. Zero-weight predictors need not be present.
 #'
+#' Non-finite direct donor means are recomputed in normalized units to avoid
+#' intermediate overflow with finite targets. Finite means are retained.
+#' This does not change donor selection or add missing-data uncertainty.
+#'
 #' @param data Data frame containing the targets and positive-weight predictors.
 #'   Empty data and entirely missing new target columns are allowed.
 #' @param model Unmodified model returned by [fit_knn_imputation()].
@@ -140,7 +144,7 @@ apply_knn_imputation <- function(data, model) {
       }
       nearest <- comparable[order(distances[comparable])]
       selected <- donors[utils::head(nearest, model$k)]
-      data[[variable]][row] <- mean(model$donor_targets[[variable]][selected])
+      data[[variable]][row] <- preprocessing_mean(model$donor_targets[[variable]][selected])
     }
     if (unavailable > 0L) {
       warning(sprintf(

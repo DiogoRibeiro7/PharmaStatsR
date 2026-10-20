@@ -32,6 +32,10 @@ factors or character values from the saved levels; the training order always
 applies, and unseen observed levels raise an error. Explicit \code{NA} factor
 levels are unsupported; ordinary missing values are allowed. Selected numeric
 columns must be finite or missing. Zero-weight predictors need not be present.
+
+Non-finite direct donor means are recomputed in normalized units to avoid
+intermediate overflow with finite targets. Finite means are retained.
+This does not change donor selection or add missing-data uncertainty.
 }
 \examples{
 model <- fit_knn_imputation(data.frame(y = c(2, 5), x = c(0, 10)),

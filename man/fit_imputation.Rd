@@ -38,6 +38,10 @@ training column raises an error because no replacement can be estimated;
 this differs from the warning-and-leave-missing behavior of \code{\link[=impute_mean]{impute_mean()}}
 and \code{\link[=impute_median]{impute_median()}}. Single-value imputation does not quantify missing-data
 uncertainty or make assumptions about missingness valid.
+A non-finite direct mean is recomputed after normalizing observed values,
+avoiding intermediate overflow where the mean is representable. Finite
+direct estimates and median calculations are unchanged; floating-point
+precision still limits both estimates and the supplied observations.
 }
 \examples{
 training <- data.frame(x = c(1, NA, 3, 8))

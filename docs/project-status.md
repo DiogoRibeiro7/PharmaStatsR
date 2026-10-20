@@ -1,6 +1,6 @@
 # Project status
 
-**19 October 2026 · version 0.1.63 · active development · not on CRAN**
+**20 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
@@ -38,6 +38,10 @@ prevent prediction-name collisions and reject mismatched output lengths.
 The [scaling reference](scaling-reference.md) (#237) covers ordinary and extreme
 numeric units, small differences at large offsets, saved-parameter reuse and
 representability boundaries. Ordinary finite estimates are retained.
+
+The [numeric imputation reference](imputation-reference.md) (#239) adds fixed
+location and donor targets, shares the finite-mean fallback across preprocessing,
+and checks that saved replacements remain independent of new batches.
 
 ## What the evidence means
 

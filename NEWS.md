@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Keep numeric imputation means finite when direct intermediate arithmetic
+  overflows for finite observations. Share the normalized fallback with scaling,
+  covering location fitting, selected neighbor means and internal Euclidean
+  predictor filling. Add independent location/donor references and saved-reuse
+  checks; ordinary finite means, median calculations and missing-data policies
+  are unchanged. Recompute previously affected imputations.
+
 - Recover representable sample standard deviations in `center_scale()` when
   direct variance arithmetic overflows or underflows, and recover non-finite
   direct means by normalizing the inputs. Normalize centered

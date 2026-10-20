@@ -109,6 +109,10 @@ function.
   [`encode = TRUE` mode](lasso-encoding.md) also fits categorical encoding within
   folds and records selected raw variables and design columns. Both
   use Gaussian models and observation-weighted scoring, not mixed models.
+- [Numeric imputation](imputation-reference.md) now recovers non-finite direct
+  means from finite observations in location estimates, donor averages and
+  Euclidean predictor filling. Recompute affected imputations; ordinary finite
+  results, median calculations and saved formats are unchanged.
 - [Centering and scaling](scaling-reference.md) uses observed means and sample
   SDs. A normalized fallback now recovers some representable scales previously
   rejected after variance overflow/underflow. Reuse saved parameters for new

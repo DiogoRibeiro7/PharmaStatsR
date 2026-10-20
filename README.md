@@ -112,6 +112,8 @@ apply the saved imputer and optional encoding in the correct column order, inclu
 after restoring an RDS file in a fresh session.
 The [training-preprocessing guide](docs/fitted-imputation.md) shows saved scaling,
 serialization, and fitting fresh parameters within each subject-level fold.
+The [numeric imputation reference](docs/imputation-reference.md) records fixed
+mean/median and donor targets, extreme-value handling and migration guidance.
 The [scaling reference](docs/scaling-reference.md) covers sample-SD arithmetic,
 extreme numeric units, saved-parameter reuse and floating-point limits.
 

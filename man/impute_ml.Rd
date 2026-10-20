@@ -83,6 +83,9 @@ Zero-weight predictors are excluded before their types or values are checked.
 Weights affect neighbor selection, not the mean or mode of selected donors.
 Internally rescaling weights limits overflow without changing their relative
 influence. Extreme relative scales can still lose precision.
+Numeric donor means and Euclidean predictor-fill means are recomputed in
+normalized units only if the direct result is non-finite. Ordinary finite
+means are retained. This does not change selected donors or categorical modes.
 
 Equidistant donors are ordered by their original row order, and tied modes
 use the first value among the selected neighbors. Targets are processed in
