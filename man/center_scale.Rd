@@ -24,6 +24,18 @@ Missing values (\code{NA} or \code{NaN}) are omitted when estimating the paramet
 and remain missing in the result. Each selected variable must have at least
 two observed values, a finite mean, and a finite, positive sample standard
 deviation. Constant columns and infinite values are rejected.
+The sample standard deviation uses the observed count minus one. If its
+direct computation is zero or non-finite, normalized intermediate values
+are used to avoid variance underflow/overflow where the final standard
+deviation is representable. A non-finite direct mean is recomputed after
+normalizing the original values. Ordinary finite estimates are unchanged.
+Centering precedes normalization when possible, preserving small differences
+at large offsets. Transformation uses the same arithmetic as
+\code{\link[=apply_center_scale]{apply_center_scale()}}, including its overflow-safe subtraction fallback.
+Floating-point precision still limits the estimated mean, spread and output;
+differences already lost in the input cannot be recovered.
+}
+\details{
 To reuse these parameters for new data without refitting, pass the returned
 \code{params} to \code{\link{apply_center_scale}}.
 }

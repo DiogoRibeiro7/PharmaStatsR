@@ -116,6 +116,10 @@ The [diagnostic plot references](docs/covariate-diagnostic-plots.md) (#235)
 check subject predictions, raw/normalized residuals and binned percentiles,
 with corrections for prediction-name collisions and recycled output.
 
+The [scaling reference](docs/scaling-reference.md) (#237) adds independent
+sample-SD targets and a fallback for avoidable variance overflow/underflow,
+with saved-parameter reuse and explicit floating-point limits.
+
 ## How we work
 
 1. Complete the release decision in #58 when the maintainer confirms its remaining choices. Work through the scoped numerical gaps above while that decision is pending; use the completed [#47 inventory](docs/method-inventory.md) to scope later issues.

@@ -109,6 +109,10 @@ function.
   [`encode = TRUE` mode](lasso-encoding.md) also fits categorical encoding within
   folds and records selected raw variables and design columns. Both
   use Gaussian models and observation-weighted scoring, not mixed models.
+- [Centering and scaling](scaling-reference.md) uses observed means and sample
+  SDs. A normalized fallback now recovers some representable scales previously
+  rejected after variance overflow/underflow. Reuse saved parameters for new
+  data; ordinary finite estimates and missing positions remain unchanged.
 - Euclidean distance retains predictor units and categorical factor codes.
   Gower uses observed-range scaling and available-pair weighted averages.
   Predictor weights affect donor selection; selected donors contribute equally
