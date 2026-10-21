@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Reject ambiguous expanded column names and non-finite coding for observed
+  covariates in `prepare_model_matrix()`. Add independent indicator, treatment,
+  sum, polynomial and custom-coding references, term metadata and fixed linear
+  predictions. Preserve missing inputs and native coding; document the supplied
+  row boundary and saved encoding's all-level checks. Rename conflicting inputs
+  or correct invalid contrasts and rebuild affected designs or recipes.
+
 - Keep numeric imputation means finite when direct intermediate arithmetic
   overflows for finite observations. Share the normalized fallback with scaling,
   covering location fitting, selected neighbor means and internal Euclidean

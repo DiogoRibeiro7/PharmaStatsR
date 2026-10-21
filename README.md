@@ -97,7 +97,10 @@ The [complete-case LASSO guide](docs/lasso-screening.md) gives analytic
 coefficient/CV references and the correction for predictors named `(Intercept)`.
 
 The [encoding guide](docs/fitted-encoding.md) explains saved contrasts, unseen
-categories, and composition with imputation and scaling. For numeric screening,
+categories, and composition with imputation and scaling. Its
+[one-table design checks](docs/fitted-encoding.md#one-table-design-checks) cover
+independent coding references, ambiguous output names, and invalid contrasts.
+For numeric screening,
 [`screen_covariates_lasso_imputed()`](docs/lasso-imputation.md) fits mean/median
 replacements or nearest-neighbor donors (`method = "knn"`) inside training folds and returns held-out predictions,
 saved fold parameters, and the final model for a prespecified penalty grid.
