@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Reject duplicate retained row keys before wide-to-long conversion in
+  `reshape_timevarying()`, matching the existing long-to-wide uniqueness rule.
+  Add fixed-table references for typed values, metadata keys, ordering and
+  structural missing cells. Document round-trip limits and migration: reconcile
+  duplicate source records or supply a meaningful distinguishing key; no records
+  are automatically aggregated or discarded.
+
 - Reject ambiguous expanded column names and non-finite coding for observed
   covariates in `prepare_model_matrix()`. Add independent indicator, treatment,
   sum, polynomial and custom-coding references, term metadata and fixed linear

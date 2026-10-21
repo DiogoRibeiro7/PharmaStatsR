@@ -120,6 +120,11 @@ mean/median and donor targets, extreme-value handling and migration guidance.
 The [scaling reference](docs/scaling-reference.md) covers sample-SD arithmetic,
 extreme numeric units, saved-parameter reuse and floating-point limits.
 
+The [time-varying table guide](docs/timevarying-covariates.md) explains reshape
+keys, row ordering and structural missing cells. Duplicate wide keys now fail
+before creating ambiguous long records; all retained metadata participate in
+row identity.
+
 For numeric nearest-neighbor imputation, [`fit_knn_imputation()` and
 `apply_knn_imputation()`](docs/fitted-knn.md) save training donors and mixed-data
 Gower scales. New batches reuse them without contributing donors or changing
