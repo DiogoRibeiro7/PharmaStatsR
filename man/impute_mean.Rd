@@ -19,6 +19,9 @@ Data frame with imputed values. Columns consisting entirely of
 Replaces missing values (\code{NA} or \code{NaN}) in specified numeric columns with
 the observed column mean. Infinite values and nonnumeric targets are
 rejected. Constant columns with observed values can be imputed.
+A non-finite direct mean is recomputed in normalized units to avoid
+intermediate overflow for finite observations. Finite direct results are
+retained; this fallback does not recover precision already lost in inputs.
 }
 \examples{
 df <- data.frame(a = c(1, NA, 3), b = c(NA, NA, 2))

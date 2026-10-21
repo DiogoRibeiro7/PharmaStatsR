@@ -39,6 +39,13 @@ and reload with `readRDS("imputation.rds")`. `apply_imputation()` uses `var` and
 `value`; the `method` column is metadata, and additional columns are ignored.
 Column names match literally, including spaces and punctuation.
 
+## Numeric limits
+
+Mean fitting uses a normalized fallback when a direct mean is non-finite for
+finite observations. Ordinary finite estimates and median calculations are
+retained. The [numeric imputation reference](imputation-reference.md) gives
+fixed arithmetic targets, extreme-value cases, migration guidance and limits.
+
 ## Combine with saved scaling
 
 Fit scaling on the completed training data, then apply both saved transformations
@@ -116,7 +123,8 @@ a separate follow-up.
   applying it leaves the input unchanged.
 - These are single-value replacements. They do not quantify missing-data
   uncertainty, establish valid missingness assumptions, or perform multiple
-  imputation. Neither helper changes the existing imputation functions.
+  imputation. The saved pair reuses training estimates; legacy helpers continue
+  to estimate within the supplied table.
 
 The [reference tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-fitted-imputation.R)
 fix arithmetic means, medians, completed datasets, and the imputation/scaling

@@ -86,6 +86,12 @@ That screening interface supports numeric predictors only. The original `impute_
 uses donors and scales from its supplied dataset and supports categorical targets;
 this saved model supports numeric targets and Gower distance only.
 
+Numeric donor averages use the same [overflow fallback](imputation-reference.md)
+as location imputation. A non-finite direct mean of finite selected targets is
+recomputed in normalized units; ordinary finite means and donor selection are
+retained. The added references check selected subsets, signed extremes and RDS
+reuse without new-batch donors.
+
 ## Boundaries and evidence
 
 Targets must be finite real numeric vectors or missing (`NA`/`NaN`), with at

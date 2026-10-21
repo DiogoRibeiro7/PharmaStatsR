@@ -4,7 +4,7 @@
 
 [Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) is complete: [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195) merged the full pharmoCovR module with its existing APIs and regression tests. The standalone repository was then deleted. See the [migration guide](docs/covariate-migration.md) for preserved provenance, package references, and method limits. The integration does not resolve the release-candidate gate.
 
-**Status (19 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
+**Status (20 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -119,6 +119,10 @@ with corrections for prediction-name collisions and recycled output.
 The [scaling reference](docs/scaling-reference.md) (#237) adds independent
 sample-SD targets and a fallback for avoidable variance overflow/underflow,
 with saved-parameter reuse and explicit floating-point limits.
+
+The [numeric imputation reference](docs/imputation-reference.md) (#239) extends
+finite-mean recovery to location fitting, selected donors and Euclidean
+predictor filling, with independent targets and saved-batch separation checks.
 
 ## How we work
 

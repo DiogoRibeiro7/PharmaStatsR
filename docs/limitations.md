@@ -153,3 +153,9 @@ offsets. Truly unrepresentable scales or transformed values still raise errors.
 ## Validation for a real analysis
 
 Document the planned estimand, population, endpoint, intervention, handling of intercurrent events and missing data, and a suitable method. Compare results against independent software or analytic references and review them in the study context. A green CI check or a successful column-presence report does not replace that work.
+
+The [imputation mean fallback](imputation-reference.md) applies only after a
+non-finite direct result. Finite estimates can still lose precision, and input
+rounding cannot be undone. Neighbor averaging remains unweighted after donor
+selection; numerical stability does not establish a missingness assumption or
+quantify missing-data uncertainty.

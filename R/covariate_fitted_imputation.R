@@ -16,6 +16,10 @@
 #' this differs from the warning-and-leave-missing behavior of [impute_mean()]
 #' and [impute_median()]. Single-value imputation does not quantify missing-data
 #' uncertainty or make assumptions about missingness valid.
+#' A non-finite direct mean is recomputed after normalizing observed values,
+#' avoiding intermediate overflow where the mean is representable. Finite
+#' direct estimates and median calculations are unchanged; floating-point
+#' precision still limits both estimates and the supplied observations.
 #'
 #' @param data A training `data.frame` with unique, nonmissing, nonempty names.
 #' @param vars Character vector of unique numeric column names. Names match
@@ -39,7 +43,7 @@
 fit_imputation <- function(data, vars, method = c("mean", "median")) {
   method <- match.arg(method)
   validate_preprocessing_vars(data, vars)
-  summary_function <- if (method == "mean") mean else stats::median
+  summary_function <- if (method == "mean") preprocessing_mean else stats::median
   values <- vapply(vars, function(variable) {
     column <- data[[variable]]
     if (all(is.na(column))) {

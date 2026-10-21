@@ -3,6 +3,9 @@
 #' Replaces missing values (`NA` or `NaN`) in specified numeric columns with
 #' the observed column mean. Infinite values and nonnumeric targets are
 #' rejected. Constant columns with observed values can be imputed.
+#' A non-finite direct mean is recomputed in normalized units to avoid
+#' intermediate overflow for finite observations. Finite direct results are
+#' retained; this fallback does not recover precision already lost in inputs.
 #'
 #' @param data A `data.frame` containing variables to impute.
 #' @param vars Character vector of unique numeric column names to impute.
@@ -16,7 +19,7 @@
 #'   replacements reused on new data.
 #' @export
 impute_mean <- function(data, vars) {
-  impute_location(data, vars, mean)
+  impute_location(data, vars, preprocessing_mean)
 }
 
 #' Impute missing values using the median
@@ -101,6 +104,9 @@ impute_location <- function(data, vars, summary_function) {
 #' Weights affect neighbor selection, not the mean or mode of selected donors.
 #' Internally rescaling weights limits overflow without changing their relative
 #' influence. Extreme relative scales can still lose precision.
+#' Numeric donor means and Euclidean predictor-fill means are recomputed in
+#' normalized units only if the direct result is non-finite. Ordinary finite
+#' means are retained. This does not change selected donors or categorical modes.
 #'
 #' Equidistant donors are ordered by their original row order, and tied modes
 #' use the first value among the selected neighbors. Targets are processed in
@@ -236,7 +242,7 @@ impute_ml <- function(data, vars, k = 5L, predictors = NULL,
       neighbors <- y[nn]
 
       if (is.numeric(y)) {
-        data[[target]][i] <- mean(neighbors, na.rm = TRUE)
+        data[[target]][i] <- preprocessing_mean(neighbors, na.rm = TRUE)
       } else {
         data[[target]][i] <- mode_value(neighbors)
       }
@@ -266,7 +272,7 @@ prepare_euclidean_predictors <- function(data) {
   xmat <- as.matrix(xmat)
   for (j in seq_len(ncol(xmat))) {
     column <- xmat[, j]
-    value <- mean(column, na.rm = TRUE)
+    value <- preprocessing_mean(column, na.rm = TRUE)
     if (is.na(value)) {
       value <- 0
     }
