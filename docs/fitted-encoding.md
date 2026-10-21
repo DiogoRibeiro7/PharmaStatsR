@@ -51,6 +51,54 @@ If the analysis needs an explicit other category, define its scientific meaning
 and recoding policy before fitting and use that policy consistently. No category
 pooling is performed by these helpers.
 
+## One-table design checks
+
+`prepare_model_matrix()` uses the supplied table and current contrast settings.
+The selected covariate order determines which categorical term gets full
+indicator coding in the additive, no-intercept design. Subsequent categorical
+terms use their factor attributes or active contrast options. Numeric values,
+row names, row order, and R's `assign` and `contrasts` attributes are preserved.
+`assign` maps each expanded column back to its selected covariate.
+
+The [independent design references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-design-reference.R)
+fix the following values without using `model.matrix()` to calculate expected
+answers. Here `group` is the first categorical term and `stage` is a later
+ordered factor with levels `low`, `mid`, `high`:
+
+| Input | Expected coding |
+| --- | --- |
+| `group = A, B, C` | Indicator rows `(1, 0, 0)`, `(0, 1, 0)`, `(0, 0, 1)` |
+| Later three-level factor, treatment contrasts | Rows `(0, 0)`, `(1, 0)`, `(0, 1)` |
+| Later three-level factor, sum contrasts | Rows `(1, 0)`, `(0, 1)`, `(-1, -1)` |
+| `stage = low, mid, high` | Linear column `(-1, 0, 1) / sqrt(2)` and quadratic column `(1, -2, 1) / sqrt(6)` |
+| Later logical term `FALSE, TRUE` | One column `(0, 1)` under treatment contrasts |
+
+For three rows with `x = 1, 2, 3`, `group = A, B, C`,
+`stage = low, mid, high`, and `flag = FALSE, TRUE, FALSE`, coefficients
+`(2, 10, 20, 30, sqrt(2), sqrt(6), 5)` for the ordered columns
+`x, groupA, groupB, groupC, stage.L, stage.Q, flagTRUE` yield predictions
+`12, 27, 38`. The tests also cover reordered covariates and rows, custom contrast
+matrices, logical full indicators, unused levels, and missing/empty rows.
+
+Expanded column names must be unique. For example, selecting factor `group`
+with level `A` together with a numeric column named `groupA` would create two
+columns named `groupA`; this now raises an error. Rename the conflicting input
+or level explicitly and rebuild the design. Names are not silently repaired.
+
+Generated coding must be finite wherever its own covariate is observed.
+Invalid custom contrasts raise an error naming that covariate, even when a
+different variable is missing in the same row. Numeric `NA`/`NaN` and missing
+categorical blocks remain allowed; global `na.action` settings do not drop rows.
+These one-table checks examine coding emitted for supplied rows: an invalid
+contrast for an unused category can remain undetected. `fit_encoding()` probes
+all declared levels before saving its coding. Correct non-finite contrast values
+and rebuild any affected design or recipe.
+
+Finite coding and unique labels do not imply full rank or identifiable effects.
+The helper does not save training settings; use `fit_encoding()` and
+`apply_encoding()` when later batches must retain training levels and coding.
+Neither workflow chooses a scientific contrast or a train/test split for you.
+
 ## Save the recipe
 
 The plain list contains `version = 1L`, `variables`, and ordered `columns`.

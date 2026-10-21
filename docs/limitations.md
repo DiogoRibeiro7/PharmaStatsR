@@ -88,6 +88,12 @@ structures. The original `fit_nlmixr_model()` SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 
+The [one-table design helper](fitted-encoding.md#one-table-design-checks) rejects
+ambiguous expanded names and non-finite coding for observed covariates while
+retaining missing input rows. It does not check unused-category coding or full
+rank. Saved encoding checks all declared levels; neither helper establishes
+identifiability or chooses contrasts appropriate to a scientific question.
+
 The later [fitted-imputation helpers](fitted-imputation.md) save numeric
 mean/median replacements for reuse. Their fit/apply separation enables manual
 training-fold preprocessing, but does not automatically refit transformations

@@ -129,6 +129,11 @@ function.
   imputations and bounded contributions for values outside training ranges.
   Numeric screening uses it within folds via `method = "knn"`; unavailable
   donors raise contextual errors rather than leaving a model matrix incomplete.
+- `prepare_model_matrix()` now rejects duplicate expanded labels and non-finite
+  coding for observed covariates. Rename conflicting variables/levels or correct
+  contrast values and rebuild affected designs. Missing inputs remain allowed;
+  invalid coding for unused levels is checked by saved fitting rather than the
+  one-table helper. See the [design references](fitted-encoding.md#one-table-design-checks).
 - `fit_encoding()` and `apply_encoding()` save training categorical coding and
   column order. New observed categories raise errors. Fit inside each training
   fold manually or through `screen_covariates_lasso_imputed(encode = TRUE)`.

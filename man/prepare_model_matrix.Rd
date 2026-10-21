@@ -15,6 +15,9 @@ prepare_model_matrix(data, covariates)
 A numeric matrix with one row per input row. Categorical terms may
 expand into multiple columns according to R's contrast rules. The first
 categorical term uses full indicator coding in this no-intercept design.
+The \code{assign} attribute maps output columns to selected covariates;
+\code{contrasts} records R's contrast specifications. Coding follows current
+options and factor attributes; use the saved encoding pair for new data.
 }
 \description{
 Converts character columns to factors and returns a model matrix without an
@@ -30,6 +33,11 @@ least two levels for contrast coding. Character columns derive their levels
 from observed values. Constant numeric columns are allowed; this helper does
 not guarantee a full-rank design. Columns named \code{...} or \code{..1}, \code{..2}, etc.
 must be renamed because R treats these as special evaluation symbols.
+Expanded output names must also be unique; rename colliding covariates or
+factor levels rather than relying on ambiguous labels. Non-finite generated
+coding for an observed covariate raises an error identifying that variable.
+Missing inputs remain allowed. These checks apply to the supplied rows, not
+unobserved categories; \code{\link[=fit_encoding]{fit_encoding()}} probes every declared level.
 }
 \examples{
 df <- data.frame(id = 1:3, age = c(20, 25, 30), sex = c("M", "F", "F"))

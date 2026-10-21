@@ -1,6 +1,6 @@
 # Project status
 
-**20 October 2026 · version 0.1.63 · active development · not on CRAN**
+**21 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
@@ -42,6 +42,12 @@ representability boundaries. Ordinary finite estimates are retained.
 The [numeric imputation reference](imputation-reference.md) (#239) adds fixed
 location and donor targets, shares the finite-mean fallback across preprocessing,
 and checks that saved replacements remain independent of new batches.
+
+The [one-table design reference](fitted-encoding.md#one-table-design-checks)
+(#241) fixes indicator/contrast values, term metadata and linear predictions.
+Expanded labels must be unique and observed coding finite; missing rows remain
+supported. Saved encoding also checks unused declared levels. The API and
+support classifications remain unchanged.
 
 ## What the evidence means
 

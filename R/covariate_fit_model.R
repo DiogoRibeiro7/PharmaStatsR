@@ -12,6 +12,11 @@
 #' from observed values. Constant numeric columns are allowed; this helper does
 #' not guarantee a full-rank design. Columns named `...` or `..1`, `..2`, etc.
 #' must be renamed because R treats these as special evaluation symbols.
+#' Expanded output names must also be unique; rename colliding covariates or
+#' factor levels rather than relying on ambiguous labels. Non-finite generated
+#' coding for an observed covariate raises an error identifying that variable.
+#' Missing inputs remain allowed. These checks apply to the supplied rows, not
+#' unobserved categories; [fit_encoding()] probes every declared level.
 #'
 #' @param data A `data.frame` containing covariate columns.
 #' @param covariates Character vector of unique covariate column names.
@@ -19,6 +24,9 @@
 #' @return A numeric matrix with one row per input row. Categorical terms may
 #'   expand into multiple columns according to R's contrast rules. The first
 #'   categorical term uses full indicator coding in this no-intercept design.
+#'   The `assign` attribute maps output columns to selected covariates;
+#'   `contrasts` records R's contrast specifications. Coding follows current
+#'   options and factor attributes; use the saved encoding pair for new data.
 #' @examples
 #' df <- data.frame(id = 1:3, age = c(20, 25, 30), sex = c("M", "F", "F"))
 #' prepare_model_matrix(df, c("age", "sex"))
@@ -40,7 +48,22 @@ prepare_model_matrix <- function(data, covariates) {
     ~ 0 + .,
     data = frame, na.action = stats::na.pass
   )
-  stats::model.matrix(~ 0 + ., data = frame)
+  design <- stats::model.matrix(~ 0 + ., data = frame)
+  if (anyDuplicated(colnames(design))) {
+    stop("Model matrix creates ambiguous output column names; rename covariates or levels")
+  }
+  assignment <- attr(design, "assign")
+  for (i in seq_along(covariates)) {
+    observed <- !is.na(frame[[i]])
+    columns <- which(assignment == i)
+    if (any(!is.finite(design[observed, columns, drop = FALSE]))) {
+      stop(sprintf(
+        "Non-finite model-matrix coding for observed covariate '%s'; check contrasts",
+        covariates[i]
+      ))
+    }
+  }
+  design
 }
 
 #' Fit mixed-effects model with covariates
