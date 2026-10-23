@@ -12,14 +12,26 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Summary
 
-The following table summarizes parameter estimates.
+The table reports fixed effects from the native nlme summary. Standard errors,
+denominator degrees of freedom, t statistics and two-sided p-values retain the
+model summary defaults. Values use six significant digits; p-values below
+1e-6 are displayed as <1e-6. Random-effect and residual variance estimates are
+not included in this table.
 
 ```{r}
-if (requireNamespace("broom.mixed", quietly = TRUE)) {
-  broom.mixed::tidy(params$model)
-} else {
-  as.data.frame(summary(params$model)$tTable)
-}
+coefficients <- summary(params$model)$tTable
+shown <- lapply(as.data.frame(coefficients), function(x) {
+  trimws(formatC(x, format = "g", digits = 6, decimal.mark = "."))
+})
+small_p <- !is.na(coefficients[, "p-value"]) & coefficients[, "p-value"] < 1e-6
+shown[["p-value"]][small_p] <- "<1e-6"
+fixed_effects <- data.frame(Term = rownames(coefficients), shown, check.names = FALSE)
+names(fixed_effects) <- c("Term", "Estimate", "Std. Error", "DF", "t statistic", "p value")
+knitr::kable(fixed_effects,
+  format = if (knitr::is_latex_output()) "latex" else "html",
+  row.names = FALSE, align = c("l", rep("r", 5)),
+  caption = "Fixed effects", escape = TRUE
+)
 ```
 
 # Diagnostics

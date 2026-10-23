@@ -26,7 +26,7 @@ Imports: survival, stats, utils, nlme, broom, gsDesign, parallel,
 Suggests: testthat (>= 3.2.0), knitr, rmarkdown, flexdashboard, shiny (>= 1.6.0), rstanarm,
     bayesplot, mice, future, future.apply, caret, cmprsk, openssl, lme4, geepack,
     metafor, netmeta, JM, mstate, openxlsx, flextable,
-    officer, reticulate, cluster, nlmixr2est, nlmixr2data, broom.mixed
+    officer, reticulate, cluster, nlmixr2est, nlmixr2data
 SystemRequirements: Python with SciPy (optional, for the SciPy t-test bridge),
     Pandoc (optional, for reports), LaTeX (optional, for PDF reports)
 VignetteBuilder: knitr, rmarkdown

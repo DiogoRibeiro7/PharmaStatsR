@@ -1,6 +1,6 @@
 # Project status
 
-**21 October 2026 · version 0.1.63 · active development · not on CRAN**
+**23 October 2026 · version 0.1.63 · active development · not on CRAN**
 
 The [repository roadmap](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/ROADMAP.md) is the detailed plan. Its issues define completion criteria. Closing an issue records work within that scope; it does not validate every exported method or qualify the package for clinical decisions.
 
@@ -53,6 +53,11 @@ The [time-varying table reference](timevarying-covariates.md) (#243)
 checks typed values, metadata-defined keys, ordering and structural missing
 cells. Duplicate wide keys now fail consistently with the long-input rule;
 round-trip limits and source-record reconciliation are documented.
+
+The [covariate report reference](covariate-reports.md) (#245) checks
+rendered fixed-effect estimates, uncertainty and p-values against balanced REML
+arithmetic. Reports use a consistent native summary with explicit precision and
+escaped labels; the unused optional tidier suggestion is removed.
 
 ## What the evidence means
 

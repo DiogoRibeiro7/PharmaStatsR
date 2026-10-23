@@ -17,7 +17,7 @@ The package is under development and is **not on CRAN**. Its methods and sample 
 | Survival, correlated outcomes, and dose response | [Methods and evidence inventory](docs/method-inventory.md) |
 | Imputation, scaling, covariate screening, and mixed-model diagnostics | [Covariate workflow guide](docs/covariate-migration.md) |
 | Weight-allometric oral pharmacokinetics | [Nonlinear fitting and prediction](docs/allometric-nonlinear.md), [response simulation](docs/allometric-simulation.md) |
-| Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md) and [covariate reports/apps](docs/covariate-migration.md#dependencies-and-installed-resources) |
+| Model tables, rendered reports, and example apps | [Table exports](docs/report-exports.md), [covariate reports](docs/covariate-reports.md), and [diagnostics app](docs/diagnostics-app.md) |
 | Reproducible demonstrations | [Seven illustrative datasets](docs/simulated-data.md) and [six vignettes](docs/covariate-migration.md#worked-vignettes-and-evidence) |
 
 The package has **115 namespace exports**. Optional integrations report missing backends when called; install the dependencies needed for your workflow using the [installation guide](docs/installation.md).
@@ -129,6 +129,11 @@ For numeric nearest-neighbor imputation, [`fit_knn_imputation()` and
 `apply_knn_imputation()`](docs/fitted-knn.md) save training donors and mixed-data
 Gower scales. New batches reuse them without contributing donors or changing
 other rows' imputations.
+
+The [covariate report guide](docs/covariate-reports.md) explains the consistent
+fixed-effects table, rendered numerical references, display precision and
+HTML/PDF requirements. Coefficient labels are escaped, and report columns no
+longer depend on an optional tidier.
 
 For [covariate mixed models](docs/covariate-mixed-model.md),
 `fit_covariate_model(..., repair_names = TRUE)` accepts literal column names

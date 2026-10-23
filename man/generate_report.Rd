@@ -12,9 +12,15 @@ generate_report(
 )
 }
 \arguments{
-\item{model}{A fitted mixed-effects model object.}
+\item{model}{A native \code{nlme::lme} fitted model with stored data containing
+numeric \code{Time}. Residuals must align with those stored rows; use
+\code{na.exclude} when fitting with omitted rows.}
 
-\item{data}{A data.frame used for diagnostics and tables.}
+\item{data}{A uniquely named \code{data.frame} for observed/predicted diagnostics,
+containing numeric \code{DV} and the native model's required prediction columns.
+The fixed-effects table and residual plot use the fitted model, not this
+table. Renamed/repaired models require their native predictor names and
+the diagnostic \code{DV}/\code{Time} columns; no automatic name mapping is performed.}
 
 \item{output_format}{Output document format. Either 'html_document' or
 'pdf_document'.}
@@ -27,7 +33,22 @@ one for the selected format. Existing output files may be overwritten.}
 The absolute path to the file produced by the renderer.
 }
 \description{
-Renders an analysis report summarizing model parameters and diagnostic plots.
+Renders a fixed-effects table and diagnostic plots for a native \code{nlme::lme}
+model. The table always uses \code{summary(model)$tTable}, independently of
+\code{broom.mixed} availability. It includes estimates, standard errors,
+denominator degrees of freedom, t statistics and two-sided p-values, retaining
+native summary defaults (including the default sigma adjustment for ML fits).
+Numeric values display six significant digits; p-values below \code{1e-6} display
+as \verb{<1e-6}. Coefficient labels are escaped for HTML/PDF output. Obtain full
+precision from the fitted model; the report does not return a numeric table.
+Random-effect and residual variance rows are not included.
+}
+\details{
+Diagnostics retain native model defaults, including fitted subject effects.
+See \code{\link[=plot_obs_vs_pred]{plot_obs_vs_pred()}} and \code{\link[=plot_residuals]{plot_residuals()}} for data and row-alignment
+requirements. This report does not validate a model or add simultaneous
+inference, post-selection adjustments, or predictive uncertainty.
+
 Relative output paths are resolved from the caller's working directory.
 Missing parent directories are created. The installed template is copied
 to a temporary workspace, which is removed after rendering, including on
@@ -35,7 +56,10 @@ failure. Rendering requires Pandoc; PDF output also requires LaTeX.
 }
 \examples{
 \dontrun{
-model <- nlme::lme(DV ~ Time, random = ~ 1 | SubjectID, data = example_data)
-generate_report(model, example_data)
+df <- data.frame(SubjectID = rep(1:4, each = 3), Time = rep(c(-1, 0, 1), 4))
+df$DV <- 2 + 1.5 * df$Time + rep(c(-3, -1, 1, 3), each = 3) +
+  rep(c(1, -2, 1), 4)
+model <- fit_covariate_model(df, "DV", "SubjectID", "Time")
+generate_report(model, df)
 }
 }

@@ -4,7 +4,7 @@
 
 [Issue #194](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/194) is complete: [PR #195](https://github.com/DiogoRibeiro7/PharmaStatsR/pull/195) merged the full pharmoCovR module with its existing APIs and regression tests. The standalone repository was then deleted. See the [migration guide](docs/covariate-migration.md) for preserved provenance, package references, and method limits. The integration does not resolve the release-candidate gate.
 
-**Status (21 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
+**Status (23 October 2026):** active development, version 0.1.63; not on CRAN. The P0/P1 scope reviews and numerical-reference batches through #165 are complete within their stated scopes. Subsequent method additions and the covariate consolidation are merged. The [API support policy](docs/api-support-policy.md) classifies all 115 exports; the [data guide](docs/simulated-data.md) covers seven datasets, and the package contains six vignettes. The exact-commit release-candidate gate in [#58](https://github.com/DiogoRibeiro7/PharmaStatsR/issues/58) remains open. A passing check is evidence for tested paths, not validation of every statistical method.
 
 This roadmap orders work by the risk of misleading results and the evidence needed to support the public API. Issues carry the scope and completion criteria; dates and a CRAN submission decision depend on passing the gates below. The [export and evidence inventory](docs/method-inventory.md) identifies methods that still lack independent numerical checks.
 
@@ -134,6 +134,11 @@ The [time-varying table reference](docs/timevarying-covariates.md) (#243)
 checks typed values, metadata-defined keys, ordering and structural missing
 cells. Duplicate wide keys now fail consistently with the long-input rule;
 round-trip limits and source-record reconciliation are documented.
+
+The [covariate report reference](docs/covariate-reports.md) (#245) checks
+rendered fixed-effect estimates, uncertainty and p-values against balanced REML
+arithmetic. Reports use a consistent native summary with explicit precision and
+escaped labels; the unused optional tidier suggestion is removed.
 
 ## How we work
 

@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Make covariate reports use a consistent native `nlme` fixed-effects table,
+  independent of optional tidier availability; remove the unused `broom.mixed`
+  suggestion. Display six significant digits and bound p-values below `1e-6`.
+  Render escaped HTML/LaTeX coefficient labels and add independent references
+  for the actual report values, saved fits and transformed responses. Update
+  help and guides; regenerate reports where table scope or labels matter.
+
 - Reject duplicate retained row keys before wide-to-long conversion in
   `reshape_timevarying()`, matching the existing long-to-wide uniqueness rule.
   Add fixed-table references for typed values, metadata keys, ordering and
