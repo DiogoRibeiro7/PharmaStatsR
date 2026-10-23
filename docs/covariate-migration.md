@@ -68,7 +68,7 @@ history was not imported into PharmaStatsR.
 | Weight-allometric nonlinear fitting (added after consolidation) | `fit_nlmixr_allometric()` | Prespecified oral model with subject-constant weight and fixed clearance/volume exponents; optional natural-scale starting values and saved initialization metadata. See [equations and event contract](allometric-nonlinear.md). |
 | Allometric response simulation (added after consolidation) | `simulate_nlmixr_allometric()` | Population replications with fresh subject effects and additive residuals; original names and row order, fixed fitted parameters, explicit doses and seeded R draws. See the [worked guide](allometric-simulation.md). |
 | Nonlinear example | `fit_nlmixr_model()` | Fixed one-compartment SAEM example; dose records are required. Supplied covariates are checked but ignored with a warning. |
-| Repeated measurements | `reshape_timevarying()` | Explicit mapping of wide covariate/time columns to long data, preserving literal names. |
+| Repeated measurements | `reshape_timevarying()` | Literal covariate/time mapping, unique retained keys in both directions and explicit structural missingness; see the [guide](timevarying-covariates.md). |
 | Plots | `plot_obs_vs_pred()`, `plot_residuals()`, `plot_vpc()` | Observed/fitted and residual plots; `plot_vpc()` is a descriptive binned summary, not a simulation-based predictive check. |
 | Simulated percentile checks (added after consolidation) | `plot_simulated_vpc()` | Observed percentiles against replicate-wise simulation bands, with numerical summaries and row/bin membership; see the [guide](simulated-vpc.md). The caller supplies complete response replicates. |
 | App and reports | `run_diagnostics_app()`, `generate_report()` | CSV diagnostics with failure feedback; HTML/PDF reports with isolated rendering and explicit output paths. |
@@ -129,6 +129,11 @@ function.
   imputations and bounded contributions for values outside training ranges.
   Numeric screening uses it within folds via `method = "knn"`; unavailable
   donors raise contextual errors rather than leaving a model matrix incomplete.
+- `reshape_timevarying()` now rejects duplicate retained keys in wide input,
+  matching the existing long-input key/time rule. Reconcile duplicate records
+  or supply a meaningful replicate key before reshaping. Every retained column
+  participates in row identity; structural missing cells and output ordering
+  are described in the [time-varying table guide](timevarying-covariates.md).
 - `prepare_model_matrix()` now rejects duplicate expanded labels and non-finite
   coding for observed covariates. Rename conflicting variables/levels or correct
   contrast values and rebuild affected designs. Missing inputs remain allowed;

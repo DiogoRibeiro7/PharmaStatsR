@@ -32,8 +32,12 @@ labels are preserved. A wide column must match exactly one selected
 covariate prefix; ambiguous names and empty time suffixes raise errors.
 }
 \details{
-All other columns identify wide rows. Duplicate combinations of these
-columns and time are rejected rather than aggregated into list columns.
+All other columns, including \code{id}, jointly identify wide rows. They must
+be unique in wide input; in long input, their combination with time must
+be unique. Duplicate keys raise an error even when covariate values agree;
+rows are never silently aggregated or discarded. Differing retained metadata
+define separate keys, including for the same subject. Missing key values are
+allowed and count as equal when detecting duplicates.
 Missing combinations are filled with missing values by the pivot. Time
 values must be nonmissing, nonempty atomic values. On conversion to long
 format, labels become numeric only if distinct labels remain distinct;
@@ -43,6 +47,14 @@ reshaped when their column names supply the covariate/time mapping.
 Retained columns other than the identifier must not start with a selected
 covariate prefix followed by an underscore, which would be ambiguous on a
 subsequent conversion to long format.
+
+Wide rows follow the first appearance of each retained key; columns follow
+selected covariate order, with times in first-appearance order within each
+covariate. Long output keeps each wide row's times together, following their
+first appearance in the wide column names. Value columns follow their first
+appearance in those names, not necessarily the selection vector. Missing
+measurement rows are retained. Round trips may add structurally missing cells
+and do not restore original interleaved row order, row names, or time classes.
 }
 \examples{
 df <- data.frame(

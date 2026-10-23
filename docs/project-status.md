@@ -49,6 +49,11 @@ Expanded labels must be unique and observed coding finite; missing rows remain
 supported. Saved encoding also checks unused declared levels. The API and
 support classifications remain unchanged.
 
+The [time-varying table reference](timevarying-covariates.md) (#243)
+checks typed values, metadata-defined keys, ordering and structural missing
+cells. Duplicate wide keys now fail consistently with the long-input rule;
+round-trip limits and source-record reconciliation are documented.
+
 ## What the evidence means
 
 - The [reference cases](core-reference-cases.md) fix expected values for six core inference helpers. They do not cover all methods or datasets.
