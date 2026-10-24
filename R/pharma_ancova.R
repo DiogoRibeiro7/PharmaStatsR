@@ -12,7 +12,8 @@
 #' @param conf.level Confidence level for adjusted-mean intervals.
 #' @param ... Additional arguments passed to both `stats::lm()` fits.
 #'
-#' @return A list with the additive `model`, the `interaction_model`,
+#' @return An object of class `pharma_ancova` (also a list) with the additive
+#'   `model`, the `interaction_model`,
 #'   `slope_homogeneity` comparison, treatment `adjusted_means`,
 #'   `covariate_mean`, and the detected treatment/covariate names.
 #' @details
@@ -20,47 +21,56 @@
 #' assumption; a large p-value does not prove equal slopes. Adjusted means are
 #' predictions from the additive model at the overall observed covariate mean.
 #' Missing or nonfinite model values are rejected before fitting.
+#' Use `summary(result)` for the additive model's familiar `lm` output plus
+#' the slope comparison and adjusted means; `coef(summary(result))` extracts
+#' its coefficient table. See [summary.pharma_ancova()].
 #' @export
 #'
 #' @examples
 #' dat <- data.frame(
-#'   response = c(1, 3, 5, 7, 4, 6, 8, 10),
+#'   response = c(11, 11, 13, 17, 14, 16, 20, 26),
 #'   treatment = factor(rep(c("A", "B"), each = 4)),
 #'   baseline = rep(0:3, 2)
 #' )
-#' pharma_ancova(response ~ treatment + baseline, dat)
+#' fit <- pharma_ancova(response ~ treatment + baseline, dat)
+#' summary(fit)
+#' coef(summary(fit))
 pharma_ancova <- function(formula, data, conf.level = 0.95, ...) {
   pharma_log("INFO", "Running pharma_ancova")
   validate_inputs(data, formula)
 
   if (!is.numeric(conf.level) || length(conf.level) != 1L ||
-      is.na(conf.level) || !is.finite(conf.level) ||
-      conf.level <= 0 || conf.level >= 1) {
+    is.na(conf.level) || !is.finite(conf.level) ||
+    conf.level <= 0 || conf.level >= 1) {
     stop("conf.level must be one finite number strictly between 0 and 1",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   mf <- stats::model.frame(formula, data = data, na.action = stats::na.pass)
   if (anyNA(mf)) {
     stop("Variables used by formula contain NA values; remove or impute them before calling pharma_ancova",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   trm <- stats::terms(mf)
   labels <- attr(trm, "term.labels")
   if (attr(trm, "intercept") != 1L || length(labels) != 2L ||
-      any(attr(trm, "order") != 1L) || ncol(mf) != 3L) {
+    any(attr(trm, "order") != 1L) || ncol(mf) != 3L) {
     stop("pharma_ancova requires response ~ treatment + covariate with an intercept and no interaction",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
   if (!all(labels %in% names(data))) {
     stop("treatment and covariate terms must be direct column names in data",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   response <- mf[[1L]]
   if (!is.numeric(response) || !is.null(dim(response)) ||
-      !all(is.finite(response))) {
+    !all(is.finite(response))) {
     stop("Response must be one finite numeric vector", call. = FALSE)
   }
 
@@ -77,7 +87,8 @@ pharma_ancova <- function(formula, data, conf.level = 0.95, ...) {
   )
   if (sum(is_cat) != 1L || sum(is_num) != 1L) {
     stop("ANCOVA requires exactly one categorical treatment and one numeric covariate",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   treatment_name <- names(predictors)[which(is_cat)]
@@ -90,7 +101,8 @@ pharma_ancova <- function(formula, data, conf.level = 0.95, ...) {
   }
   if (!all(is.finite(covariate)) || length(unique(covariate)) < 2L) {
     stop("Covariate must contain at least two distinct finite values",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   model <- stats::lm(formula = formula, data = data, ...)
