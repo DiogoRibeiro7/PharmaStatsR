@@ -99,6 +99,11 @@ prepare_model_matrix <- function(data, covariates) {
 #' names. Name repair does not change the model, estimation, or missing-data
 #' policy, and does not imply support for formula expressions in column inputs.
 #'
+#' Use `summary(model)` for the native mixed-model summary and
+#' `coef(summary(model))` for its fixed-effect estimates, standard errors,
+#' denominator degrees of freedom, t statistics and p-values. Native `nlme`
+#' summary defaults apply; ordinary linear-model R-squared is not added.
+#'
 #' @param data A `data.frame` with response, id and covariate columns.
 #' @param response Name of the response variable.
 #' @param id Name of the subject ID variable.
@@ -118,7 +123,9 @@ prepare_model_matrix <- function(data, covariates) {
 #'   DV = rnorm(30),
 #'   WT = rnorm(30, 70, 5)
 #' )
-#' fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+#' fit <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+#' summary(fit)
+#' coef(summary(fit))
 #' names(df)[names(df) == "WT"] <- "body mass"
 #' repaired <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "body mass"),
 #'   repair_names = TRUE

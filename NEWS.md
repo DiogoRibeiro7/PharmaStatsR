@@ -1,6 +1,13 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add registered `summary()` and summary-print methods for ANCOVA results.
+  Retain native `lm` coefficient inference, residuals, R-squared and the overall
+  F test, followed by stored adjusted means and the separate common-slope
+  diagnostic. Support `coef(summary(fit))`, correlation/printing options and
+  saved fits without refitting. Add analytic summary references and document
+  the console summary workflow for ANCOVA and existing native model classes.
+
 - Make covariate reports use a consistent native `nlme` fixed-effects table,
   independent of optional tidier availability; remove the unused `broom.mixed`
   suggestion. Display six significant digits and bound p-values below `1e-6`.

@@ -43,6 +43,20 @@ records each role. It is present only when name repair is requested. Keep the
 model and map intact when saving them; neither fitting nor prediction changes
 the caller's object.
 
+## Inspect the fitted model
+
+```r
+summary(model)
+coef(summary(model))
+```
+
+These use the native `nlme` summary, including fixed-effect estimates, standard
+errors, denominator degrees of freedom, t statistics and p-values. The full
+display also includes variance components, residuals and fit information.
+Repaired names remain backend names in the summary. See the
+[console summary guide](model-summaries.md) for extraction and model-family
+differences; the [report guide](covariate-reports.md) covers HTML/PDF output.
+
 ## Predict original columns
 
 ```r
