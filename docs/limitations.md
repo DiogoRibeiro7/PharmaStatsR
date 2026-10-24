@@ -88,6 +88,13 @@ structures. The original `fit_nlmixr_model()` SAEM
 helper is an example-only fixed model and warns that supplied covariates are
 ignored. These boundaries are preserved by the consolidation.
 
+The [covariate report](covariate-reports.md) displays the native `nlme`
+fixed-effects table with six significant digits and bounded small p-values.
+Its inference retains backend defaults; random/residual variance rows,
+post-selection adjustments and confidence intervals are absent. Diagnostics
+still require native predictor names and `DV`/`Time`; a report is not a model
+validation or a substitute for the fitted object's full-precision results.
+
 The [time-varying reshape helper](timevarying-covariates.md) treats all retained
 metadata as part of the row key. It rejects duplicate keys in either direction,
 but does not establish subject identity. Round trips can add structural missing
