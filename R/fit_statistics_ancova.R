@@ -72,6 +72,7 @@
 #' BIC(fit)
 #' @seealso [coef.pharma_ancova()], [summary.pharma_ancova()],
 #'   [stats::residuals()], [stats::logLik()], [stats::AIC()]
+#' @importFrom stats fitted residuals nobs df.residual deviance logLik
 #' @export
 residuals.pharma_ancova <- function(object, ...) {
   stats::residuals(ancova_additive_model(object), ...)

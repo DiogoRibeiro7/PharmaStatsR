@@ -1,5 +1,41 @@
 local_edition(3)
 
+test_that("ANCOVA methods load when only base R is attached", {
+  package_path <- getNamespaceInfo(asNamespace("PharmaStatsR"), "path")
+  skip_if_not(
+    file.exists(file.path(package_path, "Meta", "package.rds")),
+    "requires an installed package"
+  )
+  script <- tempfile(fileext = ".R")
+  on.exit(unlink(script))
+  r_tests <- Sys.getenv("R_TESTS", unset = NA_character_)
+  on.exit(if (is.na(r_tests)) Sys.unsetenv("R_TESTS") else Sys.setenv(R_TESTS = r_tests), add = TRUE)
+  Sys.unsetenv("R_TESTS")
+  writeLines(c(
+    paste0(".libPaths(", paste(deparse(.libPaths()), collapse = ""), ")"),
+    'stopifnot(!"package:stats" %in% search())',
+    paste0("loadNamespace('PharmaStatsR', lib.loc = ", deparse(dirname(package_path)), ")"),
+    'stopifnot(!"package:stats" %in% search())',
+    "d <- data.frame(response = c(11, 11, 13, 17, 14, 16, 20, 26),",
+    "  treatment = factor(rep(c('A', 'B'), each = 4)), baseline = rep(0:3, 2))",
+    "fit <- PharmaStatsR::pharma_ancova(",
+    "  stats::as.formula('response ~ treatment + baseline', env = baseenv()), d)",
+    "stopifnot(length(stats::fitted(fit)) == 8L, length(stats::residuals(fit)) == 8L,",
+    "  stats::nobs(fit) == 8, stats::df.residual(fit) == 5,",
+    "  abs(stats::deviance(fit) - 18) < 1e-10,",
+    "  is.finite(stats::logLik(fit)), is.finite(stats::AIC(fit)), is.finite(stats::BIC(fit)))",
+    "cat('ANCOVA_BASE_NAMESPACE_OK\\n')"
+  ), script)
+  rscript <- file.path(R.home("bin"), if (.Platform$OS.type == "windows") "Rscript.exe" else "Rscript")
+  output <- suppressWarnings(system2(rscript,
+    c("--vanilla", "--default-packages=NULL", shQuote(script)),
+    stdout = TRUE, stderr = TRUE
+  ))
+  status <- attr(output, "status")
+  expect_true(is.null(status) || identical(status, 0L), info = paste(output, collapse = "\n"))
+  expect_true("ANCOVA_BASE_NAMESPACE_OK" %in% output, info = paste(output, collapse = "\n"))
+})
+
 ancova_statistics_data <- function() {
   data.frame(
     response = c(11, 11, 13, 17, 14, 16, 20, 26),
