@@ -65,7 +65,7 @@ fold and on the final development data. Mean/median allow categorical-only
 designs (an empty numeric replacement table); kNN needs a numeric target.}
 }
 \value{
-A plain list containing:
+An object of class \code{pharma_lasso_imputed} (also a list) containing:
 \describe{
 \item{selected}{Raw covariates with any nonzero final-model design column
 at \code{lambda.min}, in input order.}
@@ -91,6 +91,10 @@ Save the result with \code{\link[base:saveRDS]{base::saveRDS()}}. Use \code{\lin
 its final imputer, restore predictor order, and predict at \code{lambda.min} or
 other penalties from the fitted grid. The model already includes its training
 standardization; do not impute or rescale new data before this helper.
+Use \code{summary(result)} for selected-penalty coefficients, tuning error,
+and analysis-row/fold counts; \code{coef(summary(result))} extracts the estimate
+matrix. See \code{\link[=summary.pharma_lasso_imputed]{summary.pharma_lasso_imputed()}} for interpretation and older
+saved-list migration.
 }
 \description{
 Fits mean, median, or nearest-neighbor imputation on each training fold, fits a
@@ -171,6 +175,8 @@ result <- screen_covariates_lasso_imputed(
 )
 result$cv # MSE: 8/3, 1, 1/4
 result$selected # "x1"
+summary(result)
+coef(summary(result))
 new_data <- data.frame(x1 = c(NA, 1), x2 = c(1, -1))
 predict_lasso_imputed(result, new_data)
 neighbors <- screen_covariates_lasso_imputed(

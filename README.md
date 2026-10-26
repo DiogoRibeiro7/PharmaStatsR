@@ -93,6 +93,12 @@ Native linear, generalized linear, survival and mixed-model results retain
 their own summaries and statistics. See the [model summary guide](docs/model-summaries.md)
 for extraction, saved fits, and differences between model families.
 
+Imputed LASSO/elastic-net screening results also support `summary(fit)` and
+`coef(summary(fit))`: penalized estimates at the selected penalty, CV tuning
+error, preprocessing settings, and retained/excluded row and fold counts.
+See [LASSO console summaries](docs/model-summaries.md#imputed-lasso-and-elastic-net)
+for examples and older saved-result migration.
+
 For worked examples and assumptions, read the [method guide](https://diogoribeiro7.github.io/PharmaStatsR/methods/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd).
 
 Fit numeric imputation on training data and reuse its saved replacements:

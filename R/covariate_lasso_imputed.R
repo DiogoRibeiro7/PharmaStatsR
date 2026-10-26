@@ -97,7 +97,7 @@
 #'   fold and on the final development data. Mean/median allow categorical-only
 #'   designs (an empty numeric replacement table); kNN needs a numeric target.
 #'
-#' @return A plain list containing:
+#' @return An object of class `pharma_lasso_imputed` (also a list) containing:
 #' \describe{
 #'   \item{selected}{Raw covariates with any nonzero final-model design column
 #'     at `lambda.min`, in input order.}
@@ -123,6 +123,10 @@
 #' its final imputer, restore predictor order, and predict at `lambda.min` or
 #' other penalties from the fitted grid. The model already includes its training
 #' standardization; do not impute or rescale new data before this helper.
+#' Use `summary(result)` for selected-penalty coefficients, tuning error,
+#' and analysis-row/fold counts; `coef(summary(result))` extracts the estimate
+#' matrix. See [summary.pharma_lasso_imputed()] for interpretation and older
+#' saved-list migration.
 #' @examples
 #' block <- data.frame(
 #'   x1 = c(-1, -1, 1, 1, NA, NA), x2 = c(-1, 1, -1, 1, -1, 1),
@@ -136,6 +140,8 @@
 #' )
 #' result$cv # MSE: 8/3, 1, 1/4
 #' result$selected # "x1"
+#' summary(result)
+#' coef(summary(result))
 #' new_data <- data.frame(x1 = c(NA, 1), x2 = c(1, -1))
 #' predict_lasso_imputed(result, new_data)
 #' neighbors <- screen_covariates_lasso_imputed(
@@ -286,7 +292,7 @@ screen_covariates_lasso_imputed <- function(data, response, covariates, lambda,
     result$fold_encoding <- fold_encoding
     result$selected_columns <- selected_columns
   }
-  result
+  structure(result, class = c("pharma_lasso_imputed", "list"))
 }
 
 fit_imputed_lasso_path <- function(data, response, covariates, method,
