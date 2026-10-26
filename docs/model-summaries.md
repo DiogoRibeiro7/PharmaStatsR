@@ -39,6 +39,10 @@ print(summary(fit, correlation = TRUE), digits = 5, signif.stars = FALSE)
 summary(fit$interaction_model) # inspect the separate interaction fit
 ```
 
+For [weighted or subsetted ANCOVA](ancova.md#weights-and-row-selection),
+the summary describes the selected rows and fitted precision weights.
+The adjusted means use those rows' unweighted covariate mean.
+
 The following sections show the stored treatment-by-covariate interaction F
 comparison and treatment adjusted means at the original covariate mean.
 The interaction test is a common-slope diagnostic; it differs from the

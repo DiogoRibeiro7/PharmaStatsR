@@ -1,6 +1,14 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Fix ANCOVA forwarding of weights and subsets. Resolve data-dependent options
+  once, fit both models on the selected rows, and use those rows' unweighted
+  covariate mean for adjusted means. Accept finite positive precision weights,
+  reject unsupported offsets/custom omission callbacks, and require estimable
+  designs with residual degrees of freedom. Preserve readable native fit calls
+  and support logical treatment predictions. Add weighted normal-equation
+  references, row-selection checks, and migration/interpretation guidance.
+
 - Add registered `summary()` and summary-print methods for ANCOVA results.
   Retain native `lm` coefficient inference, residuals, R-squared and the overall
   F test, followed by stored adjusted means and the separate common-slope

@@ -15,7 +15,17 @@ be categorical and the covariate numeric. Terms must be direct column names.}
 
 \item{conf.level}{Confidence level for adjusted-mean intervals.}
 
-\item{...}{Additional arguments passed to both \code{stats::lm()} fits.}
+\item{...}{Named options: \code{weights} and \code{subset} use the native
+\code{\link[stats:model.frame]{stats::model.frame()}} lookup rules (data first, then the formula's
+environment) and are evaluated once for both models. Weights must be
+finite, strictly positive numeric values on selected rows; \code{NULL} uses
+ordinary least squares. Use \code{subset} to exclude zero-weight observations
+explicitly. \code{contrasts}, \code{tol}, \code{singular.ok}, \code{x} and \code{y} are passed
+to both fits. \code{model} and \code{qr} must be \code{TRUE}, \code{method} must be
+\code{"qr"}, and \code{tol} must be strictly between zero and one. Standard
+\code{na.action} choices are accepted but selected missing values are always
+rejected; custom callbacks and other options, including offsets, are
+unsupported.}
 }
 \value{
 An object of class \code{pharma_ancova} (also a list) with the additive
@@ -26,14 +36,27 @@ An object of class \code{pharma_ancova} (also a list) with the additive
 \description{
 Fit an additive linear model with one categorical treatment and one numeric
 covariate, compare it with the corresponding treatment-by-covariate
-interaction model, and report treatment adjusted means at the observed
-covariate mean.
+interaction model, and report treatment adjusted means at the unweighted
+arithmetic covariate mean of the selected observations.
 }
 \details{
 The interaction comparison is a model diagnostic for the common-slope
 assumption; a large p-value does not prove equal slopes. Adjusted means are
-predictions from the additive model at the overall observed covariate mean.
-Missing or nonfinite model values are rejected before fitting.
+predictions from the additive model at the unweighted covariate mean of
+the selected rows. Positive weights specify relative precision in weighted
+least squares, with variance proportional to \code{1 / weights}; they are not
+treated as replication counts or survey-design weights. Model-based standard
+errors, individual confidence intervals and the nested-model F test use
+that assumption. Multiplying all weights by one positive constant preserves
+coefficients, coefficient standard errors, adjusted-mean intervals and
+the interaction test, up to numerical tolerance.
+
+Selection occurs before checking model values, weights and treatment levels.
+Missing or nonfinite selected model values are rejected regardless of
+\code{na.action}; incomplete rows outside the subset do not affect the analysis.
+Both additive and interaction designs must have full column rank and positive
+residual degrees of freedom. Offsets require an explicit choice for adjusted
+predictions and are rejected; use \code{stats::lm()} directly for that workflow.
 Use \code{summary(result)} for the additive model's familiar \code{lm} output plus
 the slope comparison and adjusted means; \code{coef(summary(result))} extracts
 its coefficient table. See \code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}}.
@@ -47,4 +70,9 @@ dat <- data.frame(
 fit <- pharma_ancova(response ~ treatment + baseline, dat)
 summary(fit)
 coef(summary(fit))
+dat$precision <- seq_len(nrow(dat))
+weighted <- pharma_ancova(response ~ treatment + baseline, dat,
+  weights = precision, subset = baseline > 0
+)
+summary(weighted)
 }
