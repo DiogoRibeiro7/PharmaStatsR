@@ -61,7 +61,8 @@ Use \code{summary(result)} for the additive model's familiar \code{lm} output pl
 the slope comparison and adjusted means; \code{coef(summary(result))} extracts
 its coefficient table. Use \code{coef(result)}, \code{vcov(result)}, \code{confint(result)}
 and \code{predict(result, newdata)} directly for the additive model. See
-\code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}} and \code{\link[=coef.pharma_ancova]{coef.pharma_ancova()}}.
+\code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}} and \code{\link[=coef.pharma_ancova]{coef.pharma_ancova()}}. Fitted values, residuals,
+row counts, deviance and likelihood are covered in \code{\link[=residuals.pharma_ancova]{residuals.pharma_ancova()}}.
 }
 \examples{
 dat <- data.frame(

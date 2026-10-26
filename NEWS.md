@@ -1,6 +1,10 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add ANCOVA fitted-value, residual, observation-count, residual-df, deviance
+  and log-likelihood methods. Native ML/REML likelihoods also enable `AIC()`
+  and `BIC()`. Document precision-weight semantics and comparison limits,
+  with independent ordinary/weighted references and saved-fit tests.
 - Add ANCOVA `coef()`, `vcov()`, `confint()` and `predict()` methods that use
   the saved additive `lm` fit. Preserve native interval, standard-error,
   precision-weight and row-selection behavior without refitting. Add ordinary

@@ -88,6 +88,26 @@ own `level`, defaulting to 0.95, independently of the fit's adjusted-mean
 `conf.level`. See the [ANCOVA guide](ancova.md#coefficients-intervals-and-predictions)
 for weighted intervals, row handling and numerical references.
 
+Inspect the same additive model's residuals and fit statistics directly:
+
+```r
+fitted(fit)
+residuals(fit)
+c(n = nobs(fit), residual_df = df.residual(fit), SSE = deviance(fit))
+logLik(fit)
+AIC(fit)
+BIC(fit)
+```
+
+`nobs()` counts retained rows, including for precision-weighted fits. Default
+residuals are raw response differences; `type = "pearson"` scales them by
+the square root of the weights without standardizing by residual variance.
+`AIC()` and `BIC()` use the native Gaussian ML likelihood, including the error
+variance parameter. `logLik(fit, REML = TRUE)` is available separately; avoid
+REML comparisons across different fixed-effect designs. The
+[fit-statistic guide](ancova.md#residuals-and-fit-statistics) gives the native
+options, independent references and comparison limits.
+
 ## Covariate mixed models
 
 ```r

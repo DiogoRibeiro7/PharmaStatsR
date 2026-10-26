@@ -166,6 +166,58 @@ each new precision weight. `pred.var` can instead supply a chosen future error
 variance. Native warnings and defaults for omitted prediction weights are
 retained; training weights do not establish the precision of new observations.
 
+## Residuals and fit statistics
+
+The fitted result also supports standard inspection of the saved additive model:
+
+```r
+fitted(result)
+residuals(result)
+residuals(weighted, type = "pearson")
+residuals(result, type = "partial")
+c(n = nobs(result), residual_df = df.residual(result), SSE = deviance(result))
+logLik(result)
+logLik(result, REML = TRUE)
+AIC(result)
+BIC(result)
+```
+
+`fitted()` returns the fitted additive mean for each retained row. Default
+residuals (`type = "working"`, also `"response"`) are the observed response
+minus that mean. For a weighted fit, `"pearson"` and `"deviance"` multiply
+the raw residual by the square root of its precision weight; they do not
+divide by a residual standard deviation or adjust for leverage. `"partial"`
+returns the native matrix of partial residuals, one column per model term.
+`fitted.values()` and `resid()` are available aliases.
+
+Vectors keep the stored analysis rows' names and order, including an explicit
+subset order. They do not pad excluded input rows. `nobs()` counts retained
+rows, not the sum of weights or all input rows. With additive rank `p` and
+`n` retained rows, `df.residual()` is `n - p`. `deviance()` is residual SSE,
+`sum(w * residual^2)` for precision weights `w`, and the ordinary sum of
+squared residuals otherwise. These values concern the additive model, not
+the interaction fit. For standardized residuals, leverage and Cook's distances,
+use `pharma_model_diagnostics(result$model)`.
+
+`logLik()` returns the native Gaussian likelihood with its `df`, `nobs` and
+`nall` attributes. ML is the default and includes weight-dependent likelihood
+constants. It estimates error variance using `SSE / n`; the residual variance
+in `summary()` uses `SSE / (n - p)`. The likelihood's parameter count includes
+the error variance. With `REML = TRUE`, its native `nobs` attribute is `n - p`,
+while `nobs(result)` continues to count the retained rows.
+
+`AIC()` and `BIC()` work through `logLik()` and use ML by default. Native
+multi-model comparisons and `AIC(..., k = ...)` remain available. Compare
+criteria only for the same observations and response scale, with comparable
+likelihood and weighting assumptions. Do not compare REML likelihoods across
+different fixed-effect designs. Native checks are retained, but they do not
+establish that a comparison is valid or that a model is adequate. Inspect the
+same measures on `result$interaction_model` when that separate fit is intended.
+
+All these methods work with saved results after loading PharmaStatsR, without
+the original training data or refitting. They preserve coefficients,
+predictions, adjusted means, the interaction diagnostic and RNG state.
+
 ## Independent reference
 
 The example uses baseline values `(0, 1, 2, 3)` in both treatment groups.
@@ -196,6 +248,14 @@ for `(A, 0)`, `(B, 2)`, `(A, 1.5)`, and `(B, 3)` are
 Ordinary prediction intervals add `18/5` to each variance before taking the
 square root and multiplying by the relevant `t_5` quantile. Coefficient
 intervals use the covariance matrix above and the same residual df.
+
+Fitted values are `(8.5, 11.5, 14.5, 17.5, 14.5, 17.5, 20.5, 23.5)` and raw
+residuals are `(2.5, -0.5, -1.5, -0.5, -0.5, -1.5, -0.5, 2.5)`. Thus
+`nobs = 8`, residual df is `5`, and deviance is `18`. Gaussian ML log-likelihood
+is `-4 * (log(2*pi) + 1 + log(18/8))`; its parameter count is `4` (three
+coefficients plus error variance). AIC is `-2*logLik + 2*4`; BIC is
+`-2*logLik + log(8)*4`. The determinant of `X'X` is `160`, giving REML
+log-likelihood `-0.5 * (5*(log(2*pi) + 1 + log(18/5)) + log(160))`.
 
 The [fit references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-ancova-reference.R)
 also verify affine response transformations and invariance of adjusted means
@@ -240,6 +300,20 @@ design row `x0` and precision `w0`. They also cover native option forwarding,
 weight-scale invariance, missing/empty rows, selected-row order, saved fits,
 and unchanged RNG state and model contents.
 
+For the full weighted reference, `nobs = 8`, residual df is `5`, and deviance
+is `848/15`. Raw residuals are `(199, 32, -45, -32, 23, -54, -41, 62)/45`.
+The determinant of `X'WX` is `10800`. ML log-likelihood is
+`0.5 * (sum(log(1:8)) - 8*(log(2*pi) + 1 + log((848/15)/8)))`;
+REML log-likelihood is
+`0.5 * (sum(log(1:8)) - 5*(log(2*pi) + 1 + log((848/15)/5))) - 0.5*log(10800)`.
+A common positive rescaling of all precision weights scales deviance and
+squared Pearson residuals by that factor, while preserving raw residuals,
+fitted means, ML/REML likelihoods, AIC and BIC.
+
+The [fit-statistic references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-ancova-fit-statistics.R)
+check these targets, partial residuals, subset order and counts, multi-model
+criteria, weight rescaling, native attributes and saved results without refitting.
+
 ## Interpretation limits
 
 The model assumes a linear covariate effect and independent errors with constant
@@ -251,4 +325,5 @@ using the overall covariate mean for a study estimand. The summary adds no
 robust standard errors, multiplicity adjustment or post-selection correction.
 
 Full arguments and return values: [ANCOVA fit help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/pharma_ancova.Rd)
-and [summary help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/summary.pharma_ancova.Rd).
+[summary help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/summary.pharma_ancova.Rd),
+and [residual/fit-statistic help](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/man/residuals.pharma_ancova.Rd).

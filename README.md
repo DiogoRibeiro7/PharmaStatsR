@@ -82,6 +82,9 @@ fit <- pharma_ancova(response ~ treatment + baseline, trial)
 summary(fit)
 coef(summary(fit)) # Estimate, Std. Error, t value, Pr(>|t|)
 coef(fit)
+fitted(fit)
+residuals(fit)
+c(n = nobs(fit), residual_df = df.residual(fit), AIC = AIC(fit))
 confint(fit, parm = "treatmentB")
 predict(fit, data.frame(treatment = c("A", "B"), baseline = c(1, 2)),
         interval = "confidence")
@@ -91,6 +94,10 @@ ANCOVA also supports `vcov(fit)`. These methods use the saved additive `lm`
 model, preserving native prediction and interval options. See the
 [ANCOVA model interface](docs/ancova.md#coefficients-intervals-and-predictions)
 for weighted predictions and the distinction between mean and observation intervals.
+
+Use `deviance(fit)` for residual SSE and `logLik(fit)` for the Gaussian ML
+likelihood; `BIC(fit)` is available too. The [residual and fit-statistic guide](docs/ancova.md#residuals-and-fit-statistics)
+explains precision-scaled residuals, retained-row counts, ML/REML and valid comparisons.
 
 ANCOVA also accepts `weights = precision` and `subset = include` expressions
 using columns in your data. Both models use the same selected rows; adjusted
