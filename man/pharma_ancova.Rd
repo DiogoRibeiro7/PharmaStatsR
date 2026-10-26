@@ -59,7 +59,9 @@ residual degrees of freedom. Offsets require an explicit choice for adjusted
 predictions and are rejected; use \code{stats::lm()} directly for that workflow.
 Use \code{summary(result)} for the additive model's familiar \code{lm} output plus
 the slope comparison and adjusted means; \code{coef(summary(result))} extracts
-its coefficient table. See \code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}}.
+its coefficient table. Use \code{coef(result)}, \code{vcov(result)}, \code{confint(result)}
+and \code{predict(result, newdata)} directly for the additive model. See
+\code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}} and \code{\link[=coef.pharma_ancova]{coef.pharma_ancova()}}.
 }
 \examples{
 dat <- data.frame(

@@ -46,7 +46,9 @@
 #' predictions and are rejected; use `stats::lm()` directly for that workflow.
 #' Use `summary(result)` for the additive model's familiar `lm` output plus
 #' the slope comparison and adjusted means; `coef(summary(result))` extracts
-#' its coefficient table. See [summary.pharma_ancova()].
+#' its coefficient table. Use `coef(result)`, `vcov(result)`, `confint(result)`
+#' and `predict(result, newdata)` directly for the additive model. See
+#' [summary.pharma_ancova()] and [coef.pharma_ancova()].
 #' @export
 #'
 #' @examples

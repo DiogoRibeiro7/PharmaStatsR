@@ -1,6 +1,10 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add ANCOVA `coef()`, `vcov()`, `confint()` and `predict()` methods that use
+  the saved additive `lm` fit. Preserve native interval, standard-error,
+  precision-weight and row-selection behavior without refitting. Add ordinary
+  and weighted numerical references, saved-fit tests, and model-interface docs.
 - Add registered `coef()` and `predict()` methods for imputed LASSO/elastic-net
   screening results. Reuse the saved model and preprocessing at selected or
   explicitly requested fitted penalties, with stable matrix shapes and literal

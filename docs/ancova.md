@@ -108,6 +108,64 @@ differs from the additive model's overall F test. Summary methods preserve the
 stored confidence limits and adjustment point without refitting or changing
 the fitted result.
 
+## Coefficients, intervals and predictions
+
+Use the standard R methods directly on the ANCOVA result:
+
+```r
+coef(result)
+vcov(result)
+confint(result, parm = c("treatmentB", "baseline"), level = 0.9)
+future <- data.frame(treatment = c("A", "B"), baseline = c(1, 2))
+predict(result, future)
+predict(result, future, interval = "confidence", level = 0.9)
+predict(result, future, se.fit = TRUE)
+predict(result) # selected analysis rows, in their stored order
+```
+
+The methods use `result$model`, the saved additive fit. `coef()` returns its
+named coefficient vector, `vcov()` its model-based covariance matrix, and
+`confint()` a matrix of coefficient confidence limits. Select coefficients by
+name or position with `parm`. The methods preserve the corresponding native
+`lm` behavior; they do not choose or refit another model. To inspect the
+interaction model, use the same methods on `result$interaction_model`.
+
+Prediction follows [`predict.lm()`](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/predict.lm.html),
+including `se.fit`, `interval`, `level`, `type`, `terms`, `na.action`, `scale`,
+`df`, `weights`, and `pred.var`. Its ordinary result is a named vector;
+intervals produce a matrix with `fit`, `lwr`, and `upr` columns; `se.fit = TRUE`
+returns a list with predictions, their standard errors, residual df and scale.
+Term contributions retain the native matrix attributes and optional standard
+errors. Missing predictors, empty/singleton inputs, unfamiliar treatment levels,
+and warnings follow the installed R version's native method.
+
+Omitting `newdata` uses the stored analysis rows, including any order imposed
+by `subset`. It does not restore excluded rows from the original data frame.
+New rows must supply the original treatment/covariate columns. Neither the
+training data object nor a refit is needed to use a saved result after loading
+PharmaStatsR. The saved additive model must remain an `lm` fit.
+
+`confint()` intervals concern coefficients. Prediction confidence intervals
+concern the mean response; prediction intervals add error variation for a
+future observation. These are individual model-based intervals without
+multiplicity or robust-covariance adjustments. New interval calls default to
+`level = 0.95`; they do not inherit the `conf.level` used for the stored
+adjusted means, and they do not overwrite those means or intervals.
+
+For a weighted fit, specify the future observations' relative precision when
+requesting prediction intervals:
+
+```r
+future$precision <- c(2, 4)
+predict(weighted, future, interval = "prediction", level = 0.9,
+        weights = ~precision)
+```
+
+The assumed future error variance is the fitted residual variance divided by
+each new precision weight. `pred.var` can instead supply a chosen future error
+variance. Native warnings and defaults for omitted prediction weights are
+retained; training weights do not establish the precision of new observations.
+
 ## Independent reference
 
 The example uses baseline values `(0, 1, 2, 3)` in both treatment groups.
@@ -130,6 +188,14 @@ The interaction model has coefficients `(10, 3, 2, 2)`, residual SSE `8`, and
 The overall covariate mean is `1.5`. Adjusted means from the additive model
 are `13` for A and `19` for B. Each has SE `sqrt((18/5)/4) = sqrt(0.9)`,
 and confidence limits use the `t_5` quantile at the requested level.
+
+For a new row at baseline `x`, the mean-response variance is
+`(18/5) * (1/4 + (x - 1.5)^2/10)` in either treatment group. Thus predictions
+for `(A, 0)`, `(B, 2)`, `(A, 1.5)`, and `(B, 3)` are
+`(8.5, 20.5, 13, 23.5)` with mean variances `(1.71, 0.99, 0.9, 1.71)`.
+Ordinary prediction intervals add `18/5` to each variance before taking the
+square root and multiplying by the relevant `t_5` quantile. Coefficient
+intervals use the covariance matrix above and the same residual df.
 
 The [fit references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-ancova-reference.R)
 also verify affine response transformations and invariance of adjusted means
@@ -166,6 +232,13 @@ The [weighted references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/mai
 check these rational targets, direct native fits, weight-scale invariance,
 contrasts, selected rows and levels, single evaluation, logical treatments,
 saved-model summary/prediction and invalid configurations.
+
+The [standard-method references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-ancova-methods.R)
+check coefficient covariance and intervals, the ordinary prediction targets
+above, and weighted prediction variance `x0' V x0 + (848/75)/w0` for new
+design row `x0` and precision `w0`. They also cover native option forwarding,
+weight-scale invariance, missing/empty rows, selected-row order, saved fits,
+and unchanged RNG state and model contents.
 
 ## Interpretation limits
 
