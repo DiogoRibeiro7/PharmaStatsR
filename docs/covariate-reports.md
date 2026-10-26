@@ -4,6 +4,10 @@
 a native `nlme::lme` fit. HTML needs `rmarkdown`, `knitr`, and Pandoc; PDF also
 needs LaTeX. The report is an experimental summary of a fitted analysis.
 
+For an interactive console summary, use `summary(model)` and
+`coef(summary(model))`. The [model summary guide](model-summaries.md) explains
+the shared R workflow and the statistics each model supplies.
+
 ## Render a reproducible example
 
 ```r

@@ -57,6 +57,11 @@ names, backend names, and roles. Use \code{\link[=predict_covariate_model]{predi
 rows to apply that map. Native \code{\link[stats:predict]{stats::predict()}} still expects the backend
 names. Name repair does not change the model, estimation, or missing-data
 policy, and does not imply support for formula expressions in column inputs.
+
+Use \code{summary(model)} for the native mixed-model summary and
+\code{coef(summary(model))} for its fixed-effect estimates, standard errors,
+denominator degrees of freedom, t statistics and p-values. Native \code{nlme}
+summary defaults apply; ordinary linear-model R-squared is not added.
 }
 \examples{
 df <- data.frame(
@@ -65,7 +70,9 @@ df <- data.frame(
   DV = rnorm(30),
   WT = rnorm(30, 70, 5)
 )
-fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+fit <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "WT"))
+summary(fit)
+coef(summary(fit))
 names(df)[names(df) == "WT"] <- "body mass"
 repaired <- fit_covariate_model(df, "DV", "SubjectID", c("Time", "body mass"),
   repair_names = TRUE

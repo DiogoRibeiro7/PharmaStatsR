@@ -68,6 +68,25 @@ fit <- pharma_survival_fit(
 summary(fit)
 ```
 
+Use the familiar `summary(fit)` workflow for model results. ANCOVA now prints
+the additive model's coefficient tests, residual standard error, R-squared and
+overall F test, followed by adjusted means and the common-slope diagnostic:
+
+```r
+trial <- data.frame(
+  response = c(11, 11, 13, 17, 14, 16, 20, 26),
+  treatment = factor(rep(c("A", "B"), each = 4)),
+  baseline = rep(0:3, 2)
+)
+fit <- pharma_ancova(response ~ treatment + baseline, trial)
+summary(fit)
+coef(summary(fit)) # Estimate, Std. Error, t value, Pr(>|t|)
+```
+
+Native linear, generalized linear, survival and mixed-model results retain
+their own summaries and statistics. See the [model summary guide](docs/model-summaries.md)
+for extraction, saved fits, and differences between model families.
+
 For worked examples and assumptions, read the [method guide](https://diogoribeiro7.github.io/PharmaStatsR/methods/), [equivalence testing guide](https://diogoribeiro7.github.io/PharmaStatsR/equivalence/), and [workflow vignette](vignettes/pharma_workflow.Rmd).
 
 Fit numeric imputation on training data and reuse its saved replacements:

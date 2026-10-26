@@ -18,7 +18,8 @@ be categorical and the covariate numeric. Terms must be direct column names.}
 \item{...}{Additional arguments passed to both \code{stats::lm()} fits.}
 }
 \value{
-A list with the additive \code{model}, the \code{interaction_model},
+An object of class \code{pharma_ancova} (also a list) with the additive
+\code{model}, the \code{interaction_model},
 \code{slope_homogeneity} comparison, treatment \code{adjusted_means},
 \code{covariate_mean}, and the detected treatment/covariate names.
 }
@@ -33,12 +34,17 @@ The interaction comparison is a model diagnostic for the common-slope
 assumption; a large p-value does not prove equal slopes. Adjusted means are
 predictions from the additive model at the overall observed covariate mean.
 Missing or nonfinite model values are rejected before fitting.
+Use \code{summary(result)} for the additive model's familiar \code{lm} output plus
+the slope comparison and adjusted means; \code{coef(summary(result))} extracts
+its coefficient table. See \code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}}.
 }
 \examples{
 dat <- data.frame(
-  response = c(1, 3, 5, 7, 4, 6, 8, 10),
+  response = c(11, 11, 13, 17, 14, 16, 20, 26),
   treatment = factor(rep(c("A", "B"), each = 4)),
   baseline = rep(0:3, 2)
 )
-pharma_ancova(response ~ treatment + baseline, dat)
+fit <- pharma_ancova(response ~ treatment + baseline, dat)
+summary(fit)
+coef(summary(fit))
 }
