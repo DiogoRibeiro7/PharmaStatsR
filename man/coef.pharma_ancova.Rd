@@ -85,5 +85,6 @@ predict(fit, future, interval = "confidence", level = 0.9)
 predict(fit, future, se.fit = TRUE)
 }
 \seealso{
-\code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}}, \code{\link[stats:predict.lm]{stats::predict.lm()}}, \code{\link[stats:confint]{stats::confint()}}
+\code{\link[=summary.pharma_ancova]{summary.pharma_ancova()}}, \code{\link[=residuals.pharma_ancova]{residuals.pharma_ancova()}},
+\code{\link[stats:predict.lm]{stats::predict.lm()}}, \code{\link[stats:confint]{stats::confint()}}
 }

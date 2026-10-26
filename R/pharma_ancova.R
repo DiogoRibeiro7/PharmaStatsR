@@ -48,7 +48,8 @@
 #' the slope comparison and adjusted means; `coef(summary(result))` extracts
 #' its coefficient table. Use `coef(result)`, `vcov(result)`, `confint(result)`
 #' and `predict(result, newdata)` directly for the additive model. See
-#' [summary.pharma_ancova()] and [coef.pharma_ancova()].
+#' [summary.pharma_ancova()] and [coef.pharma_ancova()]. Fitted values, residuals,
+#' row counts, deviance and likelihood are covered in [residuals.pharma_ancova()].
 #' @export
 #'
 #' @examples

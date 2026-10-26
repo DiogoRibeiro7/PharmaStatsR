@@ -59,7 +59,8 @@
 #' predict(fit, future)
 #' predict(fit, future, interval = "confidence", level = 0.9)
 #' predict(fit, future, se.fit = TRUE)
-#' @seealso [summary.pharma_ancova()], [stats::predict.lm()], [stats::confint()]
+#' @seealso [summary.pharma_ancova()], [residuals.pharma_ancova()],
+#'   [stats::predict.lm()], [stats::confint()]
 #' @export
 coef.pharma_ancova <- function(object, ...) {
   stats::coef(ancova_additive_model(object), ...)
