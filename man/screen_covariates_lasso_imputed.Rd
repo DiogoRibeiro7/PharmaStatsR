@@ -93,7 +93,9 @@ other penalties from the fitted grid. The model already includes its training
 standardization; do not impute or rescale new data before this helper.
 Use \code{summary(result)} for selected-penalty coefficients, tuning error,
 and analysis-row/fold counts; \code{coef(summary(result))} extracts the estimate
-matrix. See \code{\link[=summary.pharma_lasso_imputed]{summary.pharma_lasso_imputed()}} for interpretation and older
+table. Use \code{coef(result)} for saved coefficients and \code{predict(result, newdata)} for raw-row predictions, optionally at requested fitted penalties.
+See \code{\link[=coef.pharma_lasso_imputed]{coef.pharma_lasso_imputed()}} for the standard model methods and
+\code{\link[=summary.pharma_lasso_imputed]{summary.pharma_lasso_imputed()}} for interpretation and older
 saved-list migration.
 }
 \description{

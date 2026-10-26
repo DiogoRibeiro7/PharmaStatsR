@@ -101,7 +101,7 @@ summary.pharma_lasso_imputed <- function(object, ...) {
     anyDuplicated(selected) || !all(selected %in% specification$covariates)) {
     invalid("selected candidates must be unique original predictor names")
   }
-  coefficients <- as.matrix(stats::coef(object$fit))[, best, drop = FALSE]
+  coefficients <- specification$coefficients[, best, drop = FALSE]
   colnames(coefficients) <- "Estimate"
   slopes <- coefficients[-1L, 1L]
   structure(list(

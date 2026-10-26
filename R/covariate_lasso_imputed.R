@@ -125,7 +125,10 @@
 #' standardization; do not impute or rescale new data before this helper.
 #' Use `summary(result)` for selected-penalty coefficients, tuning error,
 #' and analysis-row/fold counts; `coef(summary(result))` extracts the estimate
-#' matrix. See [summary.pharma_lasso_imputed()] for interpretation and older
+#' table. Use `coef(result)` for saved coefficients and `predict(result,
+#' newdata)` for raw-row predictions, optionally at requested fitted penalties.
+#' See [coef.pharma_lasso_imputed()] for the standard model methods and
+#' [summary.pharma_lasso_imputed()] for interpretation and older
 #' saved-list migration.
 #' @examples
 #' block <- data.frame(
