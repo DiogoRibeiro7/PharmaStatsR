@@ -64,9 +64,10 @@ test_that("encoded methods retain raw-data prediction and identifiable coefficie
     expect_equal(as.vector(coefficients[, 2]), rep(0, 4), tolerance = 1e-6)
     expected <- cbind(c(2.5, beta - 2.5, -beta + 2.5), 0)
     dimnames(expected) <- list(rownames(future), c("lambda_4", "lambda_1"))
-    prediction <- withr::with_options(
-      list(contrasts = c("contr.sum", "contr.poly")),
-      predict(fit, future, lambda = c(0.5, 4))
+    previous_options <- options(contrasts = c("contr.sum", "contr.poly"))
+    prediction <- tryCatch(
+      predict(fit, future, lambda = c(0.5, 4)),
+      finally = options(previous_options)
     )
     expect_equal(prediction, expected, tolerance = 1e-6)
     expect_identical(predict(fit, future), predict_lasso_imputed(fit, future))
