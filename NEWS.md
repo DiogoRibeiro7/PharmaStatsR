@@ -1,6 +1,12 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add console summaries for imputed LASSO/elastic-net screening results.
+  New results retain their list entries and gain an S3 class for `summary()`;
+  show selected-penalty estimates, CV tuning error, preprocessing and row/fold
+  counts. Support `coef(summary(fit))` without refitting or adding ordinary OLS
+  inference. Add fixed numerical references and saved-list migration guidance.
+
 - Fix ANCOVA forwarding of weights and subsets. Resolve data-dependent options
   once, fit both models on the selected rows, and use those rows' unweighted
   covariate mean for adjusted means. Accept finite positive precision weights,

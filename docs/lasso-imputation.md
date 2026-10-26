@@ -217,8 +217,15 @@ invalid inputs or incomplete model paths.
 
 ## Scope and existing workflows
 
+Use `summary(result)` for the final selected-penalty estimates, minimum CV MSE,
+preprocessing settings, and row/fold counts. `coef(summary(result))` extracts
+the coefficient matrix, including zero coefficients. The [console summary
+guide](model-summaries.md#imputed-lasso-and-elastic-net) explains the structured
+fields, penalized-model interpretation, and migration of older saved lists.
+
 `screen_covariates_lasso()` retains its complete-case, numeric-only behavior and
-character-vector return. The new helper returns a list and retains rows with
+character-vector return. The imputed helper returns a list with class
+`pharma_lasso_imputed` and retains rows with
 missing predictors; this is an explicit choice of a different screening
 procedure. It does not change the existing function's defaults.
 
