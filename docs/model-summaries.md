@@ -67,6 +67,27 @@ The fitted object still exposes `fit$model`, `fit$interaction_model`, and its
 other list components. The new summary inherits from `summary.lm`, so its
 standard coefficient extraction works without a new top-level function.
 
+The fitted result supports the usual extraction and prediction methods too:
+
+```r
+coef(fit) # named coefficient vector
+vcov(fit) # model-based coefficient covariance matrix
+confint(fit, parm = c("treatmentB", "baseline"), level = 0.9)
+future <- data.frame(treatment = c("A", "B"), baseline = c(1, 2))
+predict(fit, future, interval = "confidence", level = 0.9)
+predict(fit, future, se.fit = TRUE)
+predict(fit) # selected analysis rows in their stored order
+```
+
+These calls delegate to the saved additive `lm`, without refitting or changing
+the interaction fit or adjusted means. Native return types, arguments and
+warnings are retained. `confint()` describes coefficient uncertainty;
+prediction confidence intervals describe the model mean, while prediction
+intervals include future-observation error. Each new interval call uses its
+own `level`, defaulting to 0.95, independently of the fit's adjusted-mean
+`conf.level`. See the [ANCOVA guide](ancova.md#coefficients-intervals-and-predictions)
+for weighted intervals, row handling and numerical references.
+
 ## Covariate mixed models
 
 ```r

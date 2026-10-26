@@ -81,7 +81,16 @@ trial <- data.frame(
 fit <- pharma_ancova(response ~ treatment + baseline, trial)
 summary(fit)
 coef(summary(fit)) # Estimate, Std. Error, t value, Pr(>|t|)
+coef(fit)
+confint(fit, parm = "treatmentB")
+predict(fit, data.frame(treatment = c("A", "B"), baseline = c(1, 2)),
+        interval = "confidence")
 ```
+
+ANCOVA also supports `vcov(fit)`. These methods use the saved additive `lm`
+model, preserving native prediction and interval options. See the
+[ANCOVA model interface](docs/ancova.md#coefficients-intervals-and-predictions)
+for weighted predictions and the distinction between mean and observation intervals.
 
 ANCOVA also accepts `weights = precision` and `subset = include` expressions
 using columns in your data. Both models use the same selected rows; adjusted
