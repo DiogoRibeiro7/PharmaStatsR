@@ -39,6 +39,10 @@
 #' prediction inputs raise errors. Treat fitted results as output, not an
 #' editing interface.
 #'
+#' New classed results also support `predict(object, newdata, lambda = NULL)`
+#' with identical behavior. See [coef.pharma_lasso_imputed()] for coefficient
+#' extraction and the standard R model interface.
+#'
 #' @param object Result from [screen_covariates_lasso_imputed()], or its RDS
 #'   round trip. Its final imputation parameters, Gaussian model, selected
 #'   penalty, recorded penalty grid, and encoding recipe (if fitted) must
@@ -76,15 +80,7 @@ predict_lasso_imputed <- function(object, newdata, lambda = NULL) {
   # RDS restoration does not itself register the backend's S3 methods.
   loadNamespace("glmnet")
   specification <- validate_lasso_prediction(object)
-  if (is.null(lambda)) lambda <- object$lambda.min
-  if (!is_numeric_vector(lambda) || length(lambda) == 0L ||
-    any(!is.finite(lambda)) || anyDuplicated(lambda)) {
-    stop("`lambda` must be a nonempty vector of distinct fitted penalties")
-  }
-  selected <- match(lambda, specification$grid)
-  if (anyNA(selected)) {
-    stop("Every requested `lambda` must be a value in `object$cv$lambda`")
-  }
+  selected <- lasso_penalty_indices(lambda, specification$grid, object$lambda.min)
   completed <- tryCatch(
     apply_lasso_design(
       newdata, object$imputation, specification$method,
@@ -184,5 +180,21 @@ validate_lasso_prediction <- function(object) {
     any(!is.finite(coefficients))) {
     invalid("model coefficients disagree with the candidate predictor order or are nonfinite")
   }
-  list(method = method, covariates = covariates, grid = grid, encoding = encoding)
+  list(
+    method = method, covariates = covariates, grid = grid,
+    encoding = encoding, coefficients = coefficients
+  )
+}
+
+lasso_penalty_indices <- function(lambda, grid, selected) {
+  if (is.null(lambda)) lambda <- selected
+  if (!is_numeric_vector(lambda) || length(lambda) == 0L ||
+    any(!is.finite(lambda)) || anyDuplicated(lambda)) {
+    stop("`lambda` must be a nonempty vector of distinct fitted penalties")
+  }
+  indices <- match(lambda, grid)
+  if (anyNA(indices)) {
+    stop("Every requested `lambda` must be a value in `object$cv$lambda`")
+  }
+  indices
 }

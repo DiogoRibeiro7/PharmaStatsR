@@ -96,6 +96,9 @@ for extraction, saved fits, and differences between model families.
 Imputed LASSO/elastic-net screening results also support `summary(fit)` and
 `coef(summary(fit))`: penalized estimates at the selected penalty, CV tuning
 error, preprocessing settings, and retained/excluded row and fold counts.
+Use `coef(fit)` and `predict(fit, newdata)` for saved coefficients and raw-row
+predictions; both accept `lambda` values from the fitted grid and preserve a
+matrix shape. Prediction reuses the saved imputation and optional encoding.
 See [LASSO console summaries](docs/model-summaries.md#imputed-lasso-and-elastic-net)
 for examples and older saved-result migration.
 

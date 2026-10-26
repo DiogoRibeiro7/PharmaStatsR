@@ -67,6 +67,10 @@ callers need only load PharmaStatsR. Older mean/median results lacking both
 replacement table supplies those values. Other incomplete or inconsistent
 prediction inputs raise errors. Treat fitted results as output, not an
 editing interface.
+
+New classed results also support \code{predict(object, newdata, lambda = NULL)}
+with identical behavior. See \code{\link[=coef.pharma_lasso_imputed]{coef.pharma_lasso_imputed()}} for coefficient
+extraction and the standard R model interface.
 }
 \examples{
 block <- data.frame(

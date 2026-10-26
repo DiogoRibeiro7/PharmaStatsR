@@ -5,6 +5,10 @@
 imputation, restores the complete training predictor order, and returns a
 numeric prediction matrix. No new-data statistics are fitted.
 
+Classed screening results also support the standard `predict(result, newdata)`
+method. It delegates to the same helper and accepts the same `lambda` argument.
+Use `coef(result)` to inspect the saved coefficients at those penalties.
+
 ## Fit once and predict raw new rows
 
 ```r
@@ -25,6 +29,8 @@ predict_lasso_imputed(result, future)
 # new-a   0.000000
 # new-b   1.387628
 # new-c  -1.387628
+predict(result, future) # identical to the explicit helper above
+coef(result) # intercept and all design coefficients, including zeros
 ```
 
 Column order in `future` differs from training; the helper restores it. Include
@@ -65,6 +71,23 @@ Column `lambda_j` refers to row `j` of `result$cv`. The result remains a matrix
 for a single row or penalty; an empty new data frame produces zero rows with
 the requested columns. Input row names and order are retained.
 
+The standard methods use the same penalty selection and column labels:
+
+```r
+coef(result, lambda = c(0.5, 2))
+#             lambda_3 lambda_1
+# (Intercept) 0.000000        0
+# x1          1.387628        0
+# x2          0.000000        0
+predict(result, future, lambda = c(0.5, 2))
+```
+
+Coefficient rows retain literal design labels, including a candidate named
+`(Intercept)`; the first row is the fitted intercept. With encoding, these
+are design-column coefficients, while `result$selected` contains raw names.
+Both methods reject additional arguments such as backend `s`, `type`, `exact`,
+or interval options. Prediction requires explicit `newdata`.
+
 The backend can interpolate or refit for new penalties, as described in the
 [glmnet prediction reference](https://glmnet.stanford.edu/reference/predict.glmnet.html).
 This helper selects columns from the already fitted path. It rejects new values
@@ -89,6 +112,12 @@ introduced are also accepted when their original replacement table provides
 both. Current results use the explicit metadata and check it against the saved
 imputer and fitted coefficient order. Do not edit fitted results.
 
+New results already have the class needed for standard-method dispatch. For
+an older plain list, the explicit prediction helper still works; opt into
+`coef()` and `predict()` with
+`class(restored) <- c("pharma_lasso_imputed", "list")` after loading PharmaStatsR.
+This changes dispatch only and does not reconstruct missing metadata.
+
 kNN results retain selected training predictor values in their donor models.
 Save and handle them as training data. New rows never become donors or change
 one another's imputation. If a missing target has no comparable saved donor,
@@ -110,3 +139,8 @@ serialization and historical metadata, empty/singleton rows, nonfinite outputs,
 inconsistent saved inputs, and no-donor errors. Tests also prevent fitting or
 rescaling during prediction. The [inventory](method-inventory.md) records the
 experimental support level.
+
+The [standard-method tests](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-covariate-lasso-methods.R)
+also verify analytic coefficient paths and encoded contrasts, prediction
+dispatch, stable shapes and labels, exact penalty ordering, saved/legacy fits,
+RNG preservation, and rejection of unsupported arguments.

@@ -106,6 +106,29 @@ coef(s)
 s$cv
 ```
 
+The fitted result also supports direct extraction and prediction:
+
+```r
+coef(fit)
+future <- data.frame(x1 = c(NA, 1, -1), x2 = c(1, -1, 1))
+predict(fit, future)
+coef(fit, lambda = c(0.5, 2))
+predict(fit, future, lambda = c(0.5, 2))
+```
+
+Both methods return numeric matrices, even for a single penalty. Coefficient
+rows contain the intercept and all final design columns. Prediction rows retain
+the new data's order and names. Column `lambda_j` corresponds to row `j` of
+`fit$cv`, so the last two calls return `lambda_3` followed by `lambda_1`.
+The default is `fit$lambda.min`; unsupported penalties and extra arguments fail.
+`coef(summary(fit))` continues to use its single `Estimate` column.
+
+Supply every raw predictor to `predict()`, including candidates with zero
+coefficients. It delegates to `predict_lasso_imputed()` and reuses the saved
+imputer and optional encoding recipe. It does not learn from the new rows or
+return held-out predictions. See the [prediction guide](predict-lasso-imputed.md)
+for missing values, empty batches, and saved-result behavior.
+
 The printed summary shows the retained/excluded row counts, number of folds,
 imputation and encoding settings, mixing parameter, selected penalty, coefficient
 table, selected raw candidates, and minimum held-out MSE. For this example,
@@ -147,7 +170,7 @@ PharmaStatsR:
 # summary(older)
 ```
 
-This adds a class without refitting. The saved model, CV curve, fold labels,
+This enables `summary()`, `coef()` and `predict()` without refitting. The saved model, CV curve, fold labels,
 mixing parameter and selection metadata must still be present and consistent;
 incomplete saved results fail with a diagnostic. Existing plain lists continue
 to work with the prediction helper without this class assignment. New results
@@ -170,7 +193,7 @@ for structured fields.
 | ANOVA (`aov`, `aovlist`) | `summary(fit)` | ANOVA tables, with separate strata where applicable |
 | Tests returning `htest` | `print(result)` | Test statistic, p-value and other test-specific results |
 | Covariate screeners returning names | Inspect the returned vector | Selected names are not a fitted-model summary |
-| Imputed LASSO screening result | `summary(fit)`, `coef(summary(fit))`, `summary(fit)$cv` | Penalized estimates and tuning error; ordinary unpenalized t tests are not supplied |
+| Imputed LASSO screening result | `summary(fit)`, `coef(fit)`, `predict(fit, newdata)` | Saved penalized estimates, raw-row predictions and tuning summaries; ordinary unpenalized t tests are not supplied |
 
 In particular, [lme4 documents its p-value choices](https://lme4.github.io/lme4/reference/pvalues.html);
 PharmaStatsR does not silently choose an additional approximation. Model

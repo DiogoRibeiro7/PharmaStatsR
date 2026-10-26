@@ -1,6 +1,11 @@
 # PharmaStatsR News
 
 ## Unreleased
+- Add registered `coef()` and `predict()` methods for imputed LASSO/elastic-net
+  screening results. Reuse the saved model and preprocessing at selected or
+  explicitly requested fitted penalties, with stable matrix shapes and literal
+  labels. Share penalty validation with the existing prediction helper, retain
+  plain-list compatibility, and add independent coefficient/prediction tests.
 - Add console summaries for imputed LASSO/elastic-net screening results.
   New results retain their list entries and gain an S3 class for `summary()`;
   show selected-penalty estimates, CV tuning error, preprocessing and row/fold
