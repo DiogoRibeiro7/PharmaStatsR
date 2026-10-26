@@ -1,9 +1,10 @@
 # ANCOVA with one continuous covariate
 
-`pharma_ancova()` fits an additive ordinary linear model with exactly one
+`pharma_ancova()` fits an additive linear model with exactly one
 categorical treatment and one numeric covariate. It also fits the corresponding
 treatment-by-covariate interaction model as a common-slope diagnostic and
-reports treatment adjusted means at the overall observed covariate mean.
+reports treatment adjusted means at the unweighted covariate mean of the
+selected observations.
 
 ```r
 trial_data <- data.frame(
@@ -22,6 +23,66 @@ The input formula must be additive and contain direct column names only. The
 helper rejects extra predictors, interactions, missing/nonfinite model values,
 a treatment with fewer than two observed levels, and a constant covariate.
 
+## Weights and row selection
+
+```r
+trial_data$precision <- seq_len(nrow(trial_data))
+weighted <- pharma_ancova(
+  response ~ treatment + baseline, trial_data,
+  weights = precision, subset = baseline > 0
+)
+summary(weighted)
+weighted$covariate_mean # 2: arithmetic mean of the selected baseline values
+rownames(weighted$model$model)
+weighted$model$weights
+```
+
+Weights and subsets follow [R's model-frame lookup rules](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/model.frame.html):
+columns in `data` are searched before the formula's environment. Expressions
+and external vectors are supported. The function evaluates each option once
+and uses the same selected values in the additive and interaction fits. Row order follows
+the subset; inspect the stored model frames to see which observations were used.
+Unused treatment levels disappear after selection. Logical treatments remain
+logical when constructing adjusted predictions.
+
+The selected weights must be finite, numeric and strictly positive. `NULL`
+uses ordinary least squares. To exclude zero-weight rows, select them out
+explicitly, for example `subset = precision > 0`. Missing or nonfinite weights
+on selected rows are errors. Missing or nonfinite selected model values are
+also errors, even with `na.action = na.omit`; explicitly filter incomplete
+rows first. Missing values outside the subset are allowed. A subset that
+produces missing rows, or removes all but one treatment level, is rejected.
+
+These are relative precision weights: the model assumes error variance
+proportional to `1 / weights`. They are not frequency counts or survey-design
+weights. Standard errors, individual confidence limits and the nested-model F
+comparison follow [weighted least squares in lm](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html).
+The adjustment point remains the selected observations' unweighted arithmetic
+covariate mean; precision weighting does not redefine that target. Confidence
+intervals are for model means, not future observations. A common positive
+rescaling of weights preserves coefficients, standard errors, adjusted-mean
+intervals and the interaction test up to numerical tolerance.
+
+Supported controls include `contrasts`, `tol`, `singular.ok`, `x`, and `y`.
+The stored model frame and QR decomposition are required (`model = TRUE`,
+`qr = TRUE`); `method` must be `"qr"` and `tol` must lie strictly between
+zero and one. Both model designs require full column rank and positive residual
+degrees of freedom. Standard `na.action` choices are accepted for compatibility
+but do not override the complete-selected-row rule. Custom omission callbacks,
+unknown/unnamed/duplicate options and offsets are rejected. For an offset model,
+fit with `stats::lm()` directly and specify the offset for adjusted predictions.
+
+### Migration
+
+Refit analyses that failed with `..1 used in an incorrect context` when passing
+weights. For subsets, adjusted means now use the selected rows and treatment
+levels, rather than the full input frame. Review that change of adjustment
+point when comparing old and new results. Unweighted fits without a subset
+retain the existing numerical reference. Saturated or rank-deficient designs
+now fail early; simplify the design or obtain sufficient observations rather
+than interpreting undefined interaction tests. Existing saved fitted objects
+and their summaries remain readable.
+
 ## Summary and returned components
 
 `summary(result)` displays the additive model in the familiar `lm` format:
@@ -37,8 +98,8 @@ The fitted result remains a list with class `pharma_ancova`:
 - `model`: the additive ANCOVA `lm` fit.
 - `interaction_model`: the treatment-by-covariate `lm` fit.
 - `slope_homogeneity`: the nested-model partial F comparison.
-- `adjusted_means`: treatment predictions at the overall observed covariate
-  mean, with individual model-based confidence intervals.
+- `adjusted_means`: treatment predictions at the selected rows' unweighted
+  covariate mean, with individual model-based confidence intervals.
 - `covariate_mean`: the value used for adjustment.
 - `treatment` and `covariate`: detected column names.
 
@@ -77,10 +138,39 @@ The [summary references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main
 check the coefficients, SEs, t tests and fit statistics above, plus native
 correlation options, retained intervals, printing and saved results.
 
+## Independent weighted reference
+
+Use the same eight responses above with precision weights `1:8` and all rows.
+For columns `(1, treatmentB, baseline)`, the exact cross-product matrix is:
+
+```text
+X' W X = [36  26   64]
+          [26  26   44]
+          [64  44  156]
+```
+
+Solving the weighted normal equations gives additive coefficients
+`(296/45, 311/45, 167/45)`, weighted residual SSE `848/15`, and residual df
+`5`. The diagonal of the inverse cross-product is
+`(53/270, 19/135, 13/540)`; multiplying by `(848/15)/5` gives coefficient
+variances. Coefficient tests use the native `t_5` reference.
+
+The interaction coefficients are `(46/5, 147/41, 12/5, 354/205)`, with
+weighted SSE `6948/205` and residual df `4`. Thus the partial F statistic is
+`((848/15 - 6948/205)/1)/((6948/205)/4)`, on `(1, 4)` degrees of freedom.
+At the unweighted baseline mean `1.5`, adjusted means are
+`(1093/90, 343/18)` with variances `(12137/10125, 901/2025)`.
+Their intervals use the `t_5` quantile at the requested confidence level.
+
+The [weighted references](https://github.com/DiogoRibeiro7/PharmaStatsR/blob/main/tests/testthat/test-ancova-weights.R)
+check these rational targets, direct native fits, weight-scale invariance,
+contrasts, selected rows and levels, single evaluation, logical treatments,
+saved-model summary/prediction and invalid configurations.
+
 ## Interpretation limits
 
-The model assumes a linear covariate effect and ordinary linear-model error
-structure. Treatment/covariate interaction should be considered substantively,
+The model assumes a linear covariate effect and independent errors with constant
+variance, or variance proportional to the inverse precision weights. Treatment/covariate interaction should be considered substantively,
 not accepted or rejected by a mechanical p-value rule. The helper does not
 establish randomization validity, causal effects, baseline balance, normality,
 homoscedasticity, absence of influential observations, or appropriateness of

@@ -83,6 +83,12 @@ summary(fit)
 coef(summary(fit)) # Estimate, Std. Error, t value, Pr(>|t|)
 ```
 
+ANCOVA also accepts `weights = precision` and `subset = include` expressions
+using columns in your data. Both models use the same selected rows; adjusted
+means use their unweighted covariate mean. Weights must be finite and positive.
+See the [weighted ANCOVA guide](docs/ancova.md#weights-and-row-selection) for
+examples, interval assumptions and unsupported offsets.
+
 Native linear, generalized linear, survival and mixed-model results retain
 their own summaries and statistics. See the [model summary guide](docs/model-summaries.md)
 for extraction, saved fits, and differences between model families.
